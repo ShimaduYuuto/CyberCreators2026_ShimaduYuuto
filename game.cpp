@@ -22,7 +22,8 @@ CGame::CGame() :
 	m_pTime(nullptr),
 	m_pEnemyManager(nullptr),
 	m_pLockon(nullptr),
-	m_pWall(nullptr)
+	m_pWall(nullptr),
+	m_pGimmickManager(nullptr)
 {
 	
 }
@@ -64,6 +65,12 @@ HRESULT CGame::Init()
 		m_pEnemyManager = new CEnemyManager;
 	}
 
+	//ギミックマネージャーの生成
+	if (m_pGimmickManager == nullptr)
+	{
+		m_pGimmickManager = new CGimmickManager;
+	}
+
 	//壁の生成
 	if (m_pWall == nullptr)
 	{
@@ -102,6 +109,12 @@ void CGame::Uninit()
 	if (m_pEnemyManager != nullptr)
 	{
 		m_pEnemyManager = nullptr;
+	}
+
+	//メモリの破棄
+	if (m_pGimmickManager != nullptr)
+	{
+		m_pGimmickManager = nullptr;
 	}
 
 	//メモリの破棄

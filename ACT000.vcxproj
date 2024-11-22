@@ -178,6 +178,7 @@
     <ClInclude Include="gauge_playerlife.h" />
     <ClInclude Include="gauge_slow.h" />
     <ClInclude Include="gimmick.h" />
+    <ClInclude Include="gimmickmanager.h" />
     <ClInclude Include="impactmesh.h" />
     <ClInclude Include="impactrange.h" />
     <ClInclude Include="input.h" />
@@ -257,6 +258,7 @@
     <ClCompile Include="gauge_playerlife.cpp" />
     <ClCompile Include="gauge_slow.cpp" />
     <ClCompile Include="gimmick.cpp" />
+    <ClCompile Include="gimmickmanager.cpp" />
     <ClCompile Include="impactmesh.cpp" />
     <ClCompile Include="impactrange.cpp" />
     <ClCompile Include="input.cpp" />

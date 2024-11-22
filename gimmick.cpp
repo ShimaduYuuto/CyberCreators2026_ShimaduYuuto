@@ -7,6 +7,8 @@
 
 //ヘッダーのインクルード
 #include "gimmick.h"
+#include "manager.h"
+#include "game.h"
 
 //============================
 //コンストラクタ
@@ -14,7 +16,11 @@
 CGimmick::CGimmick(int nPriority) : CObjectX(nPriority),
 m_Collision(nullptr)
 {
+	//ゲームシーンの取得
+	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
 
+	//マネージャーに登録
+	pGame->GetGimmickManager()->Regist(this);
 }
 
 //============================
@@ -22,6 +28,12 @@ m_Collision(nullptr)
 //============================
 CGimmick::~CGimmick()
 {
+	//ゲームシーンの取得
+	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+
+	//マネージャーから削除
+	pGame->GetGimmickManager()->Erase(this);
+
 	//当たり判定の消去
 	if (m_Collision != nullptr)
 	{

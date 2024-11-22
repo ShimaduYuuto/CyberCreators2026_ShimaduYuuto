@@ -44,7 +44,7 @@ public:
 	ENEMYTYPE& GetType() { return m_EnemyType; }					//エネミーの種類を返す
 
 	//パラメータの設定と取得
-	CCollision GetCollision() { return *m_Collision; }				//当たり判定の取得
+	CCollision* GetCollision() { return m_Collision; }				//当たり判定の取得
 
 	//状態処理の関数
 	virtual bool SetBlowOff();

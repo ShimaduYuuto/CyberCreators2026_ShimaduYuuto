@@ -14,6 +14,7 @@
 #include "field.h"
 #include "time.h"
 #include "enemymanager.h"
+#include "gimmickmanager.h"
 #include "collision_wall.h"
 #include "lockon.h"
 
@@ -34,20 +35,22 @@ public:
 	void Load() override;			//読み込み
 
 	//インスタンスの取得
-	CPlayer* GetGamePlayer() { if (m_pPlayer == nullptr) { return nullptr; } return m_pPlayer; }						//プレイヤーの取得
-	CField* GetGameField() { if (m_pField == nullptr) { return nullptr; } return m_pField; }							//フィールドの取得
-	CTime* GetTime() { if (m_pTime == nullptr) { return nullptr; } return m_pTime; }									//時間の取得
-	CEnemyManager* GetEnemyManager() { if (m_pEnemyManager == nullptr) { return nullptr; } return m_pEnemyManager; }	//エネミーマネージャーの取得
-	CCollision_Wall* GetWall() { if (m_pWall == nullptr) { return nullptr; } return m_pWall; }							//壁の取得
+	CPlayer* GetGamePlayer() { if (m_pPlayer == nullptr) { return nullptr; } return m_pPlayer; }								//プレイヤーの取得
+	CField* GetGameField() { if (m_pField == nullptr) { return nullptr; } return m_pField; }									//フィールドの取得
+	CTime* GetTime() { if (m_pTime == nullptr) { return nullptr; } return m_pTime; }											//時間の取得
+	CEnemyManager* GetEnemyManager() { if (m_pEnemyManager == nullptr) { return nullptr; } return m_pEnemyManager; }			//エネミーマネージャーの取得
+	CGimmickManager* GetGimmickManager() { if (m_pGimmickManager == nullptr) { return nullptr; } return m_pGimmickManager; }	//ギミックマネージャーの取得
+	CCollision_Wall* GetWall() { if (m_pWall == nullptr) { return nullptr; } return m_pWall; }									//壁の取得
 	void SetLockon(bool lockon);	//ロックオンの設定
 
 private:
-	CPlayer* m_pPlayer;				//プレイヤー
-	CField* m_pField;				//フィールド
-	CTime* m_pTime;					//タイムクラス
-	CEnemyManager* m_pEnemyManager; //エネミーマネージャー
-	CLockon* m_pLockon;				//ロックオン
-	CCollision_Wall* m_pWall;		//壁
+	CPlayer* m_pPlayer;					//プレイヤー
+	CField* m_pField;					//フィールド
+	CTime* m_pTime;						//タイムクラス
+	CEnemyManager* m_pEnemyManager;		//エネミーマネージャー
+	CGimmickManager* m_pGimmickManager;	//ギミックマネージャー
+	CLockon* m_pLockon;					//ロックオン
+	CCollision_Wall* m_pWall;			//壁
 };
 
 #endif

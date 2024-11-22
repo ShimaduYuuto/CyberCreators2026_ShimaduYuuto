@@ -63,7 +63,7 @@ void CLockon::Update()
 		for (auto& iter : pGame->GetEnemyManager()->GetList())
 		{
 			//“G‚ÌˆÊ’u‚ðŽæ“¾
-			D3DXVECTOR3 EnemyLength = iter->GetCollision().GetCollisionPos() - PlayerPos;
+			D3DXVECTOR3 EnemyLength = iter->GetCollision()->GetPos() - PlayerPos;
 
 			float fXZ = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.z * EnemyLength.z); //‹——£‚ðŽZo‚·‚é
 			float fXY = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.y * EnemyLength.y); //‹——£‚ðŽZo‚·‚é
@@ -75,7 +75,7 @@ void CLockon::Update()
 				bool bLock = false;
 
 				//ƒJƒƒ‰‚É“ü‚Á‚Ä‚¢‚é‚©‚ðŠm”F
-				bLock = CManager::GetInstance()->GetCamera()->GetViewObject(iter->GetCollision().GetCollisionPos());
+				bLock = CManager::GetInstance()->GetCamera()->GetViewObject(iter->GetCollision()->GetPos());
 
 				/*if (bLock)
 				{

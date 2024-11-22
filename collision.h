@@ -29,7 +29,10 @@ public:
 
 	//当たり判定のローカル位置
 	void SetCollisionPos(D3DXVECTOR3 pos) { m_CollisionPos = pos; }	//設定
-	D3DXVECTOR3& GetCollisionPos() { return m_Pos; }				//取得
+	D3DXVECTOR3& GetCollisionPos() { return m_CollisionPos; }		//取得
+
+	//当たり判定のワールド位置
+	D3DXVECTOR3& GetPos() { return m_Pos; }					//取得
 
 	//当たり判定の半径
 	void SetRadius(float radius) { m_fRadius = radius; }	//設定

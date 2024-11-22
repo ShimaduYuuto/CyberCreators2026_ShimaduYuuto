@@ -359,7 +359,7 @@ void CPlayerBehavior_Attack::Behavior(CPlayer* player)
 				}
 
 				//“G‚ÌˆÊ’u‚ğæ“¾
-				D3DXVECTOR3 EnemyLength = iter->GetCollision().GetCollisionPos() - AttackPos;
+				D3DXVECTOR3 EnemyLength = iter->GetCollision()->GetPos() - AttackPos;
 
 				float fXZ = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.z * EnemyLength.z); //XZ‹——£‚ğZo‚·‚é
 				float fXY = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.y * EnemyLength.y); //XY‹——£‚ğZo‚·‚é

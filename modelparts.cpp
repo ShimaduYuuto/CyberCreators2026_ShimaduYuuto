@@ -268,45 +268,7 @@ CModelparts* CModelparts::Create(const char* filename, D3DXVECTOR3 pos, D3DXVECT
 D3DXVECTOR3 CModelparts::GetWorldPos()
 {
 	//ローカル変数宣言
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
-	D3DXMATRIX mtxRot, mtxTrans;										//計算用マトリックス
-	D3DXMATRIX mtxWorld = GetMtx();										//マトリックスの取得
-	D3DXVECTOR3 pos = GetPos();											//位置の取得
-	D3DXVECTOR3 rot = GetRot();											//向きの取得
-
-	////ワールドの初期化
-	//D3DXMatrixIdentity(&mtxWorld);
-
-	////向きを反映
-	//D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.x, rot.z);
-
-	//D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);
-
-	////位置を反映
-	//D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
-
-	//D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);
-
-	//親の行列の取得
-	//D3DXMATRIX mtxParent;
-
-	////親がいるなら
-	//if (m_pParent != nullptr)
-	//{
-	//	//親のワールド変換行列を取得
-	//	mtxParent = m_pParent->GetMtx();
-	//}
-	//else
-	//{
-	//	//最後のワールド変換行列を取得(プレイヤーの行列)
-	//	pDevice->GetTransform(D3DTS_WORLD, &mtxParent);
-	//}
-
-	////パーツのワールド変換行列と親の行列をかけ合わせる
-	//D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxParent);
-
-	//ワールドマトリックスの設定
-	//pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);
+	D3DXMATRIX mtxWorld = GetMtx();		//マトリックスの取得
 
 	//ワールド変換後の座標
 	return D3DXVECTOR3(mtxWorld._41, mtxWorld._42, mtxWorld._43);

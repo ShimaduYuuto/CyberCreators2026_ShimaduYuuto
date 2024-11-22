@@ -1,18 +1,18 @@
 //======================================
 //
-//	エネミーの管理をする処理[enemymanager.cpp]
+//	ギミックの管理をする処理[gimmickmanager.cpp]
 //	Author : Yuuto Shimadu
 //
 //======================================
 
 //ヘッダーのインクルード
-#include "enemymanager.h"
+#include "gimmickmanager.h"
 #include "manager.h"
 
 //============================
 //コンストラクタ
 //============================
-CEnemyManager::CEnemyManager():
+CGimmickManager::CGimmickManager() :
 	m_apManager()
 {
 	m_apManager.clear();
@@ -21,7 +21,7 @@ CEnemyManager::CEnemyManager():
 //============================
 //デストラクタ
 //============================
-CEnemyManager::~CEnemyManager()
+CGimmickManager::~CGimmickManager()
 {
 
 }
@@ -29,7 +29,7 @@ CEnemyManager::~CEnemyManager()
 //============================
 //初期化
 //============================
-HRESULT CEnemyManager::Init()
+HRESULT CGimmickManager::Init()
 {
 	return S_OK;
 }
@@ -37,7 +37,7 @@ HRESULT CEnemyManager::Init()
 //============================
 //終了処理
 //============================
-void CEnemyManager::Uninit()
+void CGimmickManager::Uninit()
 {
 	m_apManager.clear();
 }
@@ -45,16 +45,16 @@ void CEnemyManager::Uninit()
 //============================
 //登録処理
 //============================
-void CEnemyManager::Regist(CEnemy* enemy)
+void CGimmickManager::Regist(CGimmick* gimmick)
 {
 	//敵の情報を登録
-	m_apManager.push_back(enemy);
+	m_apManager.push_back(gimmick);
 }
 
 //============================
 //削除処理
 //============================
-void CEnemyManager::Erase(CEnemy* enemy)
+void CGimmickManager::Erase(CGimmick* gimmick)
 {
 	//サイズが0なら抜ける
 	if (m_apManager.size() == 0)
@@ -62,5 +62,5 @@ void CEnemyManager::Erase(CEnemy* enemy)
 		return;
 	}
 	//敵の情報を削除
-	m_apManager.remove(enemy);
+	m_apManager.remove(gimmick);
 }

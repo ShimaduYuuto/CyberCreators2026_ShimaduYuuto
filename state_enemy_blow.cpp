@@ -39,6 +39,23 @@ void CState_Enemy_Blow::UpdateState(CEnemy* enemy)
 		CManager::GetInstance()->GetCamera()->SetShake(5, 15);	//ヒット時カメラを揺らす
 	}
 
+	//敵の周回
+	for (auto& iter : pGame->GetGimmickManager()->GetList())
+	{
+		//位置の取得
+		D3DXVECTOR3 Pos = iter->GetCollision()->GetPos();
+		D3DXVECTOR3 EnemyPos = enemy->GetCollision()->GetPos();
+
+		//距離を計算
+		float fLength = sqrtf((EnemyPos.x - Pos.x) * (EnemyPos.x - Pos.x) + (EnemyPos.z - Pos.z) * (EnemyPos.z - Pos.z));
+
+		//範囲内の確認
+		if (fLength < iter->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius())
+		{
+			iter->Uninit();
+		}
+	}
+
 	//カウントが周り切ったら状態を切り替える
 	if (enemy->GetOnStand())
 	{
