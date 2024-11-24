@@ -27,6 +27,9 @@ public:
 	~CState_Enemy_Normal() {};				//デストラクタ
 
 	//状態ごとの更新
+	void UpdateState(CEnemy* enemy) override;	//状態の更新
+
+	//状態ごとの更新
 	void SetDamage(CEnemy* enemy, int damage) override { enemy->SetDamage(damage); }	//ダメージの設定
 };
 

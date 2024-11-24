@@ -528,7 +528,7 @@ void CField::Draw()
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
 	//テクスチャの設定
-	pDevice->SetTexture(0, pTexture->GetAddress(pTexture->Regist("data\\TEXTURE\\FieldTexture000.jpeg")));
+	pDevice->SetTexture(0, pTexture->GetAddress(pTexture->Regist("data\\TEXTURE\\Castle000.jpg")));
 	
 
 	//ポリゴンの描画

@@ -171,6 +171,7 @@
     <ClInclude Include="enemy001.h" />
     <ClInclude Include="enemymanager.h" />
     <ClInclude Include="explodingbarrel.h" />
+    <ClInclude Include="explosion.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="game.h" />
@@ -198,6 +199,7 @@
     <ClInclude Include="object3D.h" />
     <ClInclude Include="objectbillboard.h" />
     <ClInclude Include="objectcylinder.h" />
+    <ClInclude Include="objectdome.h" />
     <ClInclude Include="objectmesh.h" />
     <ClInclude Include="objectX.h" />
     <ClInclude Include="orbit.h" />
@@ -278,6 +280,7 @@
     <ClCompile Include="object3D.cpp" />
     <ClCompile Include="objectbillboard.cpp" />
     <ClCompile Include="objectcylinder.cpp" />
+    <ClCompile Include="objectdome.cpp" />
     <ClCompile Include="objectmesh.cpp" />
     <ClCompile Include="objectX.cpp" />
     <ClCompile Include="orbit.cpp" />

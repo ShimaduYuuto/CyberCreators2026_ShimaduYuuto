@@ -12,6 +12,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "explodingbarrel.h"
+#include "objectdome.h"
 
 //============================
 //ゲームのコンストラクタ
@@ -77,7 +78,8 @@ HRESULT CGame::Init()
 		m_pWall = CCollision_Wall::Create({ 0.0f, 0.0f, 0.0f }, 500.0f);
 	}
 
-	CExplodingBarrel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f });
+	//CExplodingBarrel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f });
+	CObjectDome::Create({ 0.0f, 0.0f, 0.0f }, 200.0f);
 	
 	return S_OK;
 }

@@ -25,8 +25,6 @@ CState_Enemy_Blow::CState_Enemy_Blow()
 //====================================
 void CState_Enemy_Blow::UpdateState(CEnemy* enemy)
 {
-	//Œ¸ŠŒã‚ÉˆÚ“®—Ê‚ð‰ÁŽZ
-
 	//ƒQ[ƒ€ƒV[ƒ“‚ÌŽæ“¾
 	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
 
@@ -39,7 +37,7 @@ void CState_Enemy_Blow::UpdateState(CEnemy* enemy)
 		CManager::GetInstance()->GetCamera()->SetShake(5, 15);	//ƒqƒbƒgŽžƒJƒƒ‰‚ð—h‚ç‚·
 	}
 
-	//“G‚ÌŽü‰ñ
+	//ŠeƒMƒ~ƒbƒN‚Æ‚Ì“–‚½‚è”»’è
 	for (auto& iter : pGame->GetGimmickManager()->GetList())
 	{
 		//ˆÊ’u‚ÌŽæ“¾

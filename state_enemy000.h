@@ -35,7 +35,9 @@ public:
 
 	//状態の更新
 	void UpdateState(CEnemy* enemy) override
-	{}
+	{
+		CState_Enemy_Normal::UpdateState(enemy);
+	}
 };
 
 //========================
@@ -57,6 +59,12 @@ public:
 		SetAction(new CEnemyAction());
 		SetEndTime(60);
 	};	//コンストラクタ
+
+	//状態の更新
+	void UpdateState(CEnemy* enemy) override
+	{
+		CState_Enemy_Damage::UpdateState(enemy);
+	}
 };
 
 //========================
