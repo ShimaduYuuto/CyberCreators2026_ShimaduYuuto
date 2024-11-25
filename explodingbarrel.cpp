@@ -7,6 +7,8 @@
 
 //ヘッダーのインクルード
 #include "explodingbarrel.h"
+#include "explosion.h"
+#include "manager.h"
 
 //定数
 const std::string CExplodingBarrel::FILEPATH = "data\\MODEL\\ExplodingBarrel000.x";
@@ -45,6 +47,12 @@ HRESULT CExplodingBarrel::Init()
 //============================
 void CExplodingBarrel::Uninit()
 {
+	//カメラを揺らす
+	CManager::GetInstance()->GetCamera()->SetShake(30, 20);	//ヒット時カメラを揺らす
+
+	//爆発の生成
+	CExplosion::Create(GetPos());
+
 	//終了処理
 	CGimmick::Uninit();
 }
@@ -54,6 +62,12 @@ void CExplodingBarrel::Uninit()
 //============================
 void CExplodingBarrel::Update()
 {
+	//死んでいたら抜ける
+	if (CObject::GetDeath())
+	{
+		return;
+	}
+
 	//ゲームオブジェクトの共通処理更新
 	CGimmick::Update();
 }

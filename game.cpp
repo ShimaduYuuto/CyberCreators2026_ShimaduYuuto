@@ -72,14 +72,20 @@ HRESULT CGame::Init()
 		m_pGimmickManager = new CGimmickManager;
 	}
 
+	//爆発マネージャーの生成
+	if (m_pExplosionManager == nullptr)
+	{
+		m_pExplosionManager = new CExplosionManager;
+	}
+
 	//壁の生成
 	if (m_pWall == nullptr)
 	{
 		m_pWall = CCollision_Wall::Create({ 0.0f, 0.0f, 0.0f }, 500.0f);
 	}
 
-	//CExplodingBarrel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f });
-	CObjectDome::Create({ 0.0f, 0.0f, 0.0f }, 200.0f);
+	CExplodingBarrel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f });
+	//CObjectDome::Create({ 0.0f, 0.0f, 0.0f }, 200.0f);
 	
 	return S_OK;
 }
@@ -117,6 +123,12 @@ void CGame::Uninit()
 	if (m_pGimmickManager != nullptr)
 	{
 		m_pGimmickManager = nullptr;
+	}
+
+	//メモリの破棄
+	if (m_pExplosionManager != nullptr)
+	{
+		m_pExplosionManager = nullptr;
 	}
 
 	//メモリの破棄
@@ -158,6 +170,10 @@ void CGame::Update()
 	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_2))
 	{
 		CEnemy::Create({ 0.0f, 0.0f, 0.0f }, CEnemy::ENEMYTYPE_ENEMY001);
+	}
+	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_3))
+	{
+		CExplodingBarrel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f });
 	}
 #endif
 

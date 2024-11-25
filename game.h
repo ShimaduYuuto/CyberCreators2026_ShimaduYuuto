@@ -15,6 +15,7 @@
 #include "time.h"
 #include "enemymanager.h"
 #include "gimmickmanager.h"
+#include "explosionmanager.h"
 #include "collision_wall.h"
 #include "lockon.h"
 
@@ -40,6 +41,7 @@ public:
 	CTime* GetTime() { if (m_pTime == nullptr) { return nullptr; } return m_pTime; }											//時間の取得
 	CEnemyManager* GetEnemyManager() { if (m_pEnemyManager == nullptr) { return nullptr; } return m_pEnemyManager; }			//エネミーマネージャーの取得
 	CGimmickManager* GetGimmickManager() { if (m_pGimmickManager == nullptr) { return nullptr; } return m_pGimmickManager; }	//ギミックマネージャーの取得
+	CExplosionManager* GetExplosionManager() { if (m_pExplosionManager == nullptr) { return nullptr; } return m_pExplosionManager; }	//爆発マネージャーの取得
 	CCollision_Wall* GetWall() { if (m_pWall == nullptr) { return nullptr; } return m_pWall; }									//壁の取得
 	void SetLockon(bool lockon);	//ロックオンの設定
 
@@ -49,6 +51,7 @@ private:
 	CTime* m_pTime;						//タイムクラス
 	CEnemyManager* m_pEnemyManager;		//エネミーマネージャー
 	CGimmickManager* m_pGimmickManager;	//ギミックマネージャー
+	CExplosionManager* m_pExplosionManager;	//爆発マネージャー
 	CLockon* m_pLockon;					//ロックオン
 	CCollision_Wall* m_pWall;			//壁
 };

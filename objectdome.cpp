@@ -56,6 +56,8 @@ CObjectDome::~CObjectDome()
 		m_pIdxBuff->Release();
 		m_pIdxBuff = nullptr;
 	}
+
+	CObject::Uninit();
 }
 
 //============================
@@ -296,28 +298,44 @@ void CObjectDome::Uninit()
 //============================
 void CObjectDome::Update()
 {
+	VERTEX_3D* pVtx; //追加情報のポインタ
 
-	//VERTEX_3D* pVtx; //追加情報のポインタ
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
-	////頂点バッファをロックし、頂点情報へのポインタを取得
-	//m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
-	////上下の数周回
-	//for (int j = 0; j < 2; j++)
-	//{
-	//	//角の数だけ周回
-	//	for (int i = 0; i < NUM_CORNER; i++)
-	//	{
-	//		//角度を算出
-	//		float fAngle = (D3DX_PI * 2) * (float)(i / (float)NUM_CORNER);
+	int nX = 0;
+	int nHeightCount = 0;
 
-	//		//各変数に値を代入
-	//		pVtx[i + NUM_CORNER * j].pos = D3DXVECTOR3(sinf(fAngle) * m_fRadius * m_fRate, HEIGHT - (HEIGHT * j), cosf(fAngle) * m_fRadius * m_fRate);	//位置
-	//	}
-	//}
+	//一番上の頂点を別で初期化する
+	pVtx[0].pos = D3DXVECTOR3(0.0f, m_fRadius * m_fRate, 0.0f);
+	pVtx++;	//次のポインタに進める
 
-	////頂点バッファをアンロックする
-	//m_pVtxBuff->Unlock();
+	//上下の数周回
+	for (int j = 1; j < NUM_VIRTICAL; j++)
+	{
+		//倍率
+		float fHeightRate = 1.0f - ((float)j / (NUM_VIRTICAL - 1));
+		float fWidthRate = ((float)j / (NUM_VIRTICAL - 1));
+
+		//角の数だけ周回
+		for (int i = 0; i < NUM_CORNER; i++)
+		{
+			//角度を算出
+			float fAngle = (D3DX_PI * 2) * (float)(i / (float)NUM_CORNER);
+
+			//各変数に値を代入
+			pVtx[i + NUM_CORNER * (j - 1)].pos = D3DXVECTOR3(
+				sinf(fAngle) * m_fRadius * cosf(fHeightRate * D3DX_PI * 0.5f) * m_fRate,
+				sinf(fHeightRate * D3DX_PI * 0.5f) * m_fRadius * m_fRate,
+				cosf(fAngle) * m_fRadius * cosf(fHeightRate * D3DX_PI * 0.5f) * m_fRate);
+		}
+	}
+
+	pVtx--;	//ポインタを元に戻す
+
+	//頂点バッファをアンロックする
+	m_pVtxBuff->Unlock();
 }
 
 //============================

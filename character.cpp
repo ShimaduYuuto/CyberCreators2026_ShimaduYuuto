@@ -439,6 +439,7 @@ void CCharacter::UpdatePos()
 	//‚«”ò‚Ñ—Ê‚ğŒ¸Š
 	m_BlowValue.x += (0.0f - m_BlowValue.x) * 0.1f;
 	m_BlowValue.z += (0.0f - m_BlowValue.z) * 0.1f;
+	//m_BlowValue = GravityMove(m_BlowValue);
 
 	//ˆÚ“®—Ê‚ğŒ¸Š
 	m_Move.x += (0.0f - m_Move.x) * 0.5f;

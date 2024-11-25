@@ -65,11 +65,11 @@ HRESULT CGimmick::Init()
 void CGimmick::Uninit()
 {
 	//“–‚½‚è”»’è‚ÌÁ‹
-	if (m_Collision != nullptr)
+	/*if (m_Collision != nullptr)
 	{
 		m_Collision->Uninit();
 		m_Collision = nullptr;
-	}
+	}*/
 
 	//‰Šú‰»
 	CObjectX::Uninit();
