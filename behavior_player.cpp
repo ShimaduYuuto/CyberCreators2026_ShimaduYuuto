@@ -174,8 +174,34 @@ void CPlayerBehavior_Move::Action(CPlayer* player)
 		//アクションをしていないなら
 		if (GetNextBehavior() == nullptr)
 		{
-			//スマッシュアクションを生成
-			SetNextBehavior(new CPlayerBehavior_Dash(player));
+			//ゲームシーンなら判定
+			if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
+			{
+				//ゲームシーンの取得
+				CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+
+				//ロックオン相手の確認
+				if (pGame->GetLockon() != nullptr)
+				{
+					if (pGame->GetLockon()->GetTarget() != nullptr)
+					{
+						//ターゲットにダッシュ
+						D3DXVECTOR3 TagPos = pGame->GetLockon()->GetTarget()->GetPos();
+						D3DXVECTOR3 Length = TagPos - player->GetPos();
+						float fLength = sqrtf((Length.x * Length.x) + (Length.z * Length.z));
+
+						//ダッシュが止まる範囲の外ならダッシュ
+						if (fLength > CPlayerBehavior_Dash::STOP_LENGYH)
+						{
+							//ダッシュを生成
+							SetNextBehavior(new CPlayerBehavior_Dash(player));
+						}
+					}
+
+				}
+			}
+			//ダッシュを生成
+			//SetNextBehavior(new CPlayerBehavior_Dash(player));
 		}
 	}
 
@@ -247,6 +273,7 @@ void CPlayerBehavior_Move::Action(CPlayer* player)
 CPlayerBehavior_Dash::CPlayerBehavior_Dash(CPlayer* player)
 {
 	//モーションの設定をする予定
+	player->SetMotion(CPlayer::PLAYERMOTION_JUMP);
 }
 
 //============================
@@ -260,9 +287,44 @@ void CPlayerBehavior_Dash::Behavior(CPlayer* player)
 		//返す用の変数
 		D3DXVECTOR3 move = { 0.0f, 0.0f, 0.0f };
 
-		//現在の向きに合わせてダッシュ
-		move.x = sinf(player->GetRot().y + D3DX_PI) * DASH_SPEED;
-		move.z = cosf(player->GetRot().y + D3DX_PI) * DASH_SPEED;
+		//ゲームシーンなら判定
+		if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
+		{
+			//ゲームシーンの取得
+			CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+
+			//ロックオン相手の確認
+			if (pGame->GetLockon() != nullptr)
+			{
+				if (pGame->GetLockon()->GetTarget() != nullptr)
+				{
+					//ターゲットにダッシュ
+					D3DXVECTOR3 TagPos = pGame->GetLockon()->GetTarget()->GetPos();
+					float fAngle = atan2f(TagPos.x - player->GetPos().x, TagPos.z - player->GetPos().z);
+					move.x = sinf(fAngle) * DASH_SPEED;
+					move.z = cosf(fAngle) * DASH_SPEED;
+
+					//ロックオンの方に向ける
+					player->SetGoalRot({ 0.0f, fAngle + D3DX_PI, 0.0f });
+
+					D3DXVECTOR3 Length = TagPos - player->GetPos();
+					float fLength = sqrtf((Length.x * Length.x) + (Length.z * Length.z));
+
+					if (fLength < STOP_LENGYH)
+					{
+						//移動状態にする
+						SetNextBehavior(new CPlayerBehavior_Move(player));
+					}
+				}
+				
+			}
+		}
+		else
+		{
+			//現在の向きに合わせてダッシュ
+			move.x = sinf(player->GetRot().y + D3DX_PI) * DASH_SPEED;
+			move.z = cosf(player->GetRot().y + D3DX_PI) * DASH_SPEED;
+		}
 
 		//移動量の設定
 		player->SetMove({ move.x , player->GetMove().y, move.z });

@@ -10,6 +10,7 @@
 
 //ヘッダーのインクルード
 #include "main.h"
+#include "collision.h"
 
 //カメラクラス
 class CCamera
@@ -19,6 +20,7 @@ public:
 	//定数
 	static const float LENGTH_NORMAL;	//通常のカメラの距離
 	static const float LENGTH_SLOW;		//スロー時のカメラの距離
+	static constexpr float LENGTH_POSR{100.0f};	//注視点とプレイヤーの位置
 
 	//メンバ関数
 	CCamera();				//コンストラクタ

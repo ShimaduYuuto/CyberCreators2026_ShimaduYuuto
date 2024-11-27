@@ -10,6 +10,8 @@
 
 //ヘッダーのインクルード
 #include "main.h"
+#include "lockonmark.h"
+#include "enemy.h"
 
 //ロックオンクラス
 class CLockon
@@ -23,9 +25,19 @@ public:
 	void Uninit();				//終了
 	void Update();				//更新
 	static CLockon* Create();	//生成
+	void Regist(CEnemy* enemy);	//登録
+	void Erase(CEnemy* enemy);	//削除
+
+	//印
+	CLockonMark* GetMark() { return m_pMark; }	//取得
+
+	//ロックオン対象
+	CEnemy* GetTarget() { return m_pTarget; }	//取得
 
 private:
-	D3DXVECTOR3 m_TargetPos;	//ターゲットの位置
+	CLockonMark* m_pMark;				//印
+	CEnemy* m_pTarget;					//ターゲットのポインタ
+	std::list<CEnemy*> m_LockonList;	//ロックオンリスト
 };
 
 #endif

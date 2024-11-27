@@ -13,6 +13,8 @@
 #include "enemy.h"
 #include "explodingbarrel.h"
 #include "objectdome.h"
+#include "spawn_enemy.h"
+#include "sky.h"
 
 //============================
 //ゲームのコンストラクタ
@@ -85,7 +87,7 @@ HRESULT CGame::Init()
 	}
 
 	CExplodingBarrel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f });
-	//CObjectDome::Create({ 0.0f, 0.0f, 0.0f }, 200.0f);
+	CSky::Create();
 	
 	return S_OK;
 }
@@ -165,7 +167,8 @@ void CGame::Update()
 #if _DEBUG
 	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_1))
 	{
-		CEnemy::Create({ 0.0f, 0.0f, 0.0f }, CEnemy::ENEMYTYPE_ENEMY000);
+		CSpawn_Enemy::Create({ 0.0f, 10.0f, 0.0f }, CEnemy::ENEMYTYPE_ENEMY000);
+		//CEnemy::Create({ 0.0f, 0.0f, 0.0f }, CEnemy::ENEMYTYPE_ENEMY000);
 	}
 	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_2))
 	{

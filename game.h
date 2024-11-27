@@ -43,7 +43,8 @@ public:
 	CGimmickManager* GetGimmickManager() { if (m_pGimmickManager == nullptr) { return nullptr; } return m_pGimmickManager; }	//ギミックマネージャーの取得
 	CExplosionManager* GetExplosionManager() { if (m_pExplosionManager == nullptr) { return nullptr; } return m_pExplosionManager; }	//爆発マネージャーの取得
 	CCollision_Wall* GetWall() { if (m_pWall == nullptr) { return nullptr; } return m_pWall; }									//壁の取得
-	void SetLockon(bool lockon);	//ロックオンの設定
+	CLockon* GetLockon() { if (m_pLockon == nullptr) { return nullptr; } return m_pLockon; }									//ロックオンの取得
+	void SetLockon(bool lockon);																								//ロックオンの設定
 
 private:
 	CPlayer* m_pPlayer;					//プレイヤー

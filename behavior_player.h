@@ -86,7 +86,8 @@ class CPlayerBehavior_Dash : public CPlayerBehavior
 public:
 
 	//定数
-	static constexpr float DASH_SPEED{ 8.0f };	//ダッシュの速度
+	static constexpr float DASH_SPEED{ 14.0f };		//ダッシュの速度
+	static constexpr float STOP_LENGYH{ 100.0f };	//止まる距離
 
 	//メンバ関数
 	CPlayerBehavior_Dash() {}						//コンストラクタ

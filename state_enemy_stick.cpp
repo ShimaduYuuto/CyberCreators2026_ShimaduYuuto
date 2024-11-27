@@ -32,6 +32,10 @@ CState_Enemy_Stick::CState_Enemy_Stick(CEnemy* enemy)
 	enemy->SetEnableGravity(false);
 	enemy->SetBlowValue({ 0.0f, 0.0f, 0.0f });
 	enemy->SetMove({ enemy->GetMove().x, 0.0f, enemy->GetMove().z });
+
+	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();	//ゲームシーンの取得
+	pGame->SetLockon(true);
+	pGame->GetLockon()->Regist(enemy);
 }
 
 //====================================
@@ -55,6 +59,7 @@ void CState_Enemy_Stick::UpdateState(CEnemy* enemy)
 		{
 			//状態のリセット
 			enemy->StateReset();
+			pGame->GetLockon()->Erase(enemy);
 		}
 	}
 

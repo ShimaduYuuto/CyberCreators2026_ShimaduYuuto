@@ -68,9 +68,8 @@ public:
 	//静的関数
 	static CPlayer* Create();	//Playerの生成
 private:
+
 	//メンバ変数
-	//CAction_Player* m_pAction;		//アクションのインスタンス
-	//COrbit* m_pOrbit;				//軌跡のポインタ
 	CGauge_PlayerLife* m_pLifeGauge;//体力ゲージのポインタ
 	CState_Player* m_pState;		//状態のインスタンス
 };

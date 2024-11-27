@@ -65,8 +65,15 @@ void CCollision_Wall::Update()
 //============================
 void CCollision_Wall::Draw()
 {
+	//デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
+
+	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+
 	//描画処理
 	CObjectCylinder::Draw(FILEPATH.c_str());
+
+	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
 //================================

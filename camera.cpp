@@ -62,7 +62,7 @@ HRESULT CCamera::Init()
 //============================
 void CCamera::Uninit()
 {
-
+	
 }
 
 //============================
@@ -88,7 +88,7 @@ void CCamera::Update()
 
 			//プレイヤーの位置を注視点に代入
 			m_posR = pGame->GetGamePlayer()->GetPos();				//プレイヤーの位置を注視点に代入
-			m_posV.y = pGame->GetGamePlayer()->GetPos().y + 50.0f;
+			//m_posV.y = pGame->GetGamePlayer()->GetPos().y + 50.0f;
 			
 
 			//マウスの移動量で向きを変更
@@ -111,13 +111,13 @@ void CCamera::Update()
 				m_rot.y += D3DX_PI * 2.0f;
 			}
 
-			if (m_rot.x > D3DX_PI * 0.5f)
+			if (m_rot.x > D3DX_PI * 0.4f)
 			{
-				m_rot.x = D3DX_PI * 0.5f;
+				m_rot.x = D3DX_PI * 0.4f;
 			}
-			if (m_rot.x < D3DX_PI * -0.5f)
+			if (m_rot.x < D3DX_PI * -0.4f)
 			{
-				m_rot.x = D3DX_PI * -0.5f;
+				m_rot.x = D3DX_PI * -0.4f;
 			}
 
 			//時間の状態に応じて距離を変更
@@ -139,11 +139,44 @@ void CCamera::Update()
 					m_fLength = LENGTH_NORMAL;
 				}
 			}
+
+			//注視点の更新
+			/*m_posR.y = sinf(m_rot.x) * LENGTH_POSR;
+			m_posR.x = sinf(m_rot.y + D3DX_PI) * cosf(m_rot.x) * LENGTH_POSR;
+			m_posR.z = cosf(m_rot.y + D3DX_PI) * cosf(m_rot.x) * LENGTH_POSR;
+			m_posR += pGame->GetGamePlayer()->GetPos();*/
+
+			//m_posR.y = -sinf(m_rot.x + D3DX_PI) * LENGTH_POSR;
+			//m_posR.x = sinf(m_rot.y) * cosf(m_rot.x + D3DX_PI) * LENGTH_POSR;
+			//m_posR.z = cosf(m_rot.y) * cosf(m_rot.x + D3DX_PI) * LENGTH_POSR;
+			//m_posR += pGame->GetGamePlayer()->GetPos();
 			
-			//視点の更新
-			m_posV.y = m_posR.y + -sinf(m_rot.x) * m_fLength;
+			//視点の更新(今までのやつ)
+			/*m_posV.y = m_posR.y + -sinf(m_rot.x) * m_fLength;
 			m_posV.x = m_posR.x + sinf(m_rot.y + D3DX_PI) * cosf(m_rot.x) * m_fLength;
-			m_posV.z = m_posR.z + cosf(m_rot.y + D3DX_PI) * cosf(m_rot.x) * m_fLength;
+			m_posV.z = m_posR.z + cosf(m_rot.y + D3DX_PI) * cosf(m_rot.x) * m_fLength;*/
+
+			m_posV.y =/* m_posR.y + */-sinf(m_rot.x) * m_fLength;
+			m_posV.x =/* m_posR.x + */sinf(m_rot.y + D3DX_PI) * cosf(m_rot.x) * m_fLength;
+			m_posV.z =/* m_posR.z + */cosf(m_rot.y + D3DX_PI) * cosf(m_rot.x) * m_fLength;
+			m_posV += pGame->GetGamePlayer()->GetPos();
+
+			//視点の更新
+			D3DXVECTOR3 PosVLength = pGame->GetGamePlayer()->GetPos() - m_posR;
+			PosVLength = m_posR - pGame->GetGamePlayer()->GetPos();
+			float fAngleY = atan2f(PosVLength.x, PosVLength.z);	//y軸の角度を算出
+			float fAngleX = atan2f(PosVLength.z, PosVLength.y);	//x軸の角度を算出
+			float fAngleZ = atan2f(PosVLength.x, PosVLength.y);	//z軸の角度を算出
+
+			//m_posV.y = cosf(fAngleX/* + D3DX_PI * 0.5f*/)/* * cosf(fAngleY)*/ * m_fLength;
+			//m_posV.y = pGame->GetGamePlayer()->GetPos().y;
+			//m_posV.x = sinf(fAngleY)/* * sinf(fAngleX)*/ * m_fLength;
+			//m_posV.z = cosf(fAngleY)/* * sinf(fAngleX)*/ * m_fLength;
+
+			//m_posV.y = m_fLength * cos(fAngleX) * sin(fAngleZ);
+			//m_posV.x = m_fLength * cos(fAngleX) * cos(fAngleZ);
+			//m_posV.z = m_fLength * sin(fAngleX);
+			//m_posV += pGame->GetGamePlayer()->GetPos();
 		}
 		
 		break;

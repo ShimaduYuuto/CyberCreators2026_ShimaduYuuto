@@ -206,7 +206,7 @@ void CObjectBillboard::Draw(const char* texturepath)
 	pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	//Zの比較方法変更
-	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+	//pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
 
 	//Zバッファに書き込まない
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
@@ -244,7 +244,7 @@ void CObjectBillboard::Draw(const char* texturepath)
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 
 	//Zの比較方法変更
-	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+	//pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
 
 	//Zバッファに書き込む
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);

@@ -150,8 +150,17 @@ void CExplosion::Update()
 //============================
 void CExplosion::Draw()
 {
+	//ローカル変数宣言
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
+	
+	//カリング方法を変更
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
+
 	//オブジェクトの描画
-	CObjectDome::Draw(/*FILEPATH.c_str()*/);
+	CObjectDome::Draw(FILEPATH.c_str());
+
+	//カリング方法を変更
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 //============================

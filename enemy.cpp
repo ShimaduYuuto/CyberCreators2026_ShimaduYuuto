@@ -56,6 +56,7 @@ CEnemy::~CEnemy()
 
 		//マネージャーから削除
 		pGame->GetEnemyManager()->Erase(this);
+		pGame->GetLockon()->Erase(this);
 	}
 
 	//当たり判定の消去
