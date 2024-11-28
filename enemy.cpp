@@ -12,6 +12,7 @@
 #include "enemy000.h"
 #include "enemy001.h"
 #include "state_enemy_damage.h"
+#include "battleareamanager.h"
 
 //============================
 //エネミーのコンストラクタ
@@ -56,7 +57,17 @@ CEnemy::~CEnemy()
 
 		//マネージャーから削除
 		pGame->GetEnemyManager()->Erase(this);
-		pGame->GetLockon()->Erase(this);
+
+		if (pGame->GetLockon() != nullptr)
+		{
+			pGame->GetLockon()->Erase(this);
+		}
+	}
+
+	//敵の数を減らす
+	if (CBattleAreaManager::GetInstance()->GetCurrentBattleArea() != nullptr)
+	{
+		CBattleAreaManager::GetInstance()->GetCurrentBattleArea()->DecrementEnemyNum();
 	}
 
 	//当たり判定の消去
@@ -77,7 +88,7 @@ HRESULT CEnemy::Init()
 
 	//パラメータの初期化
 	CCharacter::SetRot({ 0.0f, 0.0f, 0.0f });
-	CCharacter::SetPos({ 1.0f, 50.0f, 0.0f });
+	//CCharacter::SetPos({ 1.0f, 50.0f, 0.0f });
 
 	return S_OK;
 }

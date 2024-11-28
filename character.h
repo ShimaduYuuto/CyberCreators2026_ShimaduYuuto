@@ -141,6 +141,10 @@ public:
 	void SetBlowValue(D3DXVECTOR3 value) { m_BlowValue = value; }				//設定
 	D3DXVECTOR3 GetBlowValue() { return m_BlowValue; }							//取得
 
+	//すでに張り付いたか
+	void SetEnteredStick(bool enter) { m_bEnteredStick = enter; }	//設定
+	bool GetEnteredStick() { return m_bEnteredStick; }				//取得
+
 	//モーション
 	void SetMotionInfo(const char* motionfilename);								//モーション情報の設定
 	void SetMotion(int motion);													//モーションの設定

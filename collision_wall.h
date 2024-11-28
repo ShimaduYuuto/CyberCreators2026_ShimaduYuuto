@@ -20,6 +20,7 @@ public:
 	static const std::string FILEPATH;	//読み込むファイル
 	static const int NUM_CORNER;		//円柱の数
 	static const float HEIGHT;			//高さ
+	static constexpr float ADD_ALPHA{ 0.03f };	//加算するα値
 
 	//メンバ関数
 	CCollision_Wall(int nPriority = 3);		//コンストラクタ
@@ -32,8 +33,15 @@ public:
 	//当たり判定を返す
 	bool GetHit(D3DXVECTOR3& pos, float radius);
 
+	//終了判定
+	void SetEnd(bool end) { m_bEnd = end; }	//設定
+
 	//生成
 	static CCollision_Wall* Create(D3DXVECTOR3 pos, float radius);
+
+private:
+	float m_fAlpha;	//α値
+	bool m_bEnd;	//終了か
 };
 
 #endif

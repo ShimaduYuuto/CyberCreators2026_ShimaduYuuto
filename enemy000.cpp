@@ -86,8 +86,13 @@ void CEnemy000::Draw()
 //============================
 void CEnemy000::SetDamage(int damage, float rotY)
 {
-	//状態の変更
-	ChangeState(new CState_Enemy000_Damage(this));
+	//張り付いていないならダメージ状態に
+	if (!GetEnteredStick())
+	{
+		//状態の変更
+		ChangeState(new CState_Enemy000_Damage(this));
+	}
+	
 
 	//基底の処理
 	CEnemy::SetDamage(damage, rotY);

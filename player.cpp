@@ -14,6 +14,7 @@
 #include "state_player_normal.h"
 #include "state_player_damage.h"
 #include "state_player_knockback.h"
+#include "battleareamanager.h"
 
 //静的メンバの初期化
 const float CPlayer::DAMAGE_IMPULSE = 10.0f;
@@ -193,8 +194,12 @@ void CPlayer::UpdatePos()
 		//移動量を位置に加算
 		pos += GetMove();
 
-		//壁との当たり判定
-		pGame->GetWall()->GetHit(pos, GetSizeRadius());
+		//エリアの確認
+		if (CBattleAreaManager::GetInstance()->GetCurrentBattleArea() != nullptr)
+		{
+			//壁との当たり判定
+			CBattleAreaManager::GetInstance()->GetCurrentBattleArea()->GetWall()->GetHit(pos, GetSizeRadius());
+		}
 
 		//立っていないなら
 		if (!GetOnStand())

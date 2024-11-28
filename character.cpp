@@ -9,6 +9,7 @@
 #include "character.h"
 #include "manager.h"
 #include "game.h"
+#include "battleareamanager.h"
 
 //定数の設定
 const float CCharacter::ROTATE_SPEED = 0.2f;	//回転の速度
@@ -61,7 +62,6 @@ HRESULT CCharacter::Init()
 	m_bChangeMotion = true;
 	m_fFrameCount = 0.0f;
 	m_nMotionCount = 0;
-	//m_nDamageStateCount = 0;
 
 	return S_OK;
 }
@@ -413,8 +413,12 @@ void CCharacter::UpdatePos()
 		//位置に移動量を加算
 		pos += pGame->GetTime()->GetValue<D3DXVECTOR3>(m_Move);
 
-		//壁との当たり判定
-		pGame->GetWall()->GetHit(pos, m_fRadiusSize);
+		//エリアの確認
+		if (CBattleAreaManager::GetInstance()->GetCurrentBattleArea() != nullptr)
+		{
+			//壁との当たり判定
+			CBattleAreaManager::GetInstance()->GetCurrentBattleArea()->GetWall()->GetHit(pos, m_fRadiusSize);
+		}
 
 		//立っていないなら
 		if (!m_bOnStand)

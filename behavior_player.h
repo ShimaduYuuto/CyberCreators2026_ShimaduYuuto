@@ -223,8 +223,9 @@ class CPlayerBehavior_NormalAttack002 : public CPlayerBehavior_NormalAttack
 public:
 
 	//定数
-	static constexpr float MAX_RATE{ 200.0f };		//最大倍率
-	static constexpr int ACCEPT_CANCELTIME{ 10 };	//キャンセルを受け付ける時間
+	static constexpr float MAX_RATE{ 200.0f };			//最大倍率
+	static constexpr int ACCEPT_CANCELTIME{ 10 };		//キャンセルを受け付ける時間
+	static constexpr float ACCELERATION_VALUE{ 0.03f };	//1フレームに加速度に加算する値
 
 	//メンバ関数
 	CPlayerBehavior_NormalAttack002() {};						//コンストラクタ
@@ -234,20 +235,17 @@ public:
 
 	//行動
 	void Behavior(CPlayer* player) override;
-	//{
-	//	//通常攻撃
-	//	CPlayerBehavior_NormalAttack::Behavior(player);
-	//}
-
+	
 private:
 
 	//ダメージを与える
 	void Damage(CPlayer* player, CEnemy* enemy, int damage) override;
 
 	//チャージに使う変数
-	bool m_bChargeEnd;	//チャージが終わったか
-	float m_fChargeRate;//チャージの倍率
-	int m_nCancelCount;	//キャンセルのカウント
+	bool m_bChargeEnd;				//チャージが終わったか
+	float m_fChargeRate;			//チャージの倍率
+	int m_nCancelCount;				//キャンセルのカウント
+	float m_fChargeAcceleration;	//チャージの加速度
 };
 
 //==========================

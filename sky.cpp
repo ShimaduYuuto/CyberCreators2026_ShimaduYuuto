@@ -85,7 +85,7 @@ CSky* CSky::Create()
 	pSky = new CSky;
 
 	pSky->SetRadius(100.0f);	//”¼Œa
-	pSky->SetRate(10.0f);
+	pSky->SetRate(100.0f);
 
 	//‰Šú‰»
 	pSky->Init();

@@ -40,6 +40,11 @@ public:
 	void SetRadius(float radius) { m_fRadius = radius; }//半径の設定
 	float& GetRadius() { return m_fRadius; }			//半径の取得
 
+	//頂点に関する処理
+	//頂点カラー
+	void SetColor(D3DXCOLOR color);						//設定
+	D3DXCOLOR GetColor() { return m_Color; }			//取得
+
 private:
 
 	//メンバ変数

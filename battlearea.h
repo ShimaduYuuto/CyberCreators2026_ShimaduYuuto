@@ -17,25 +17,37 @@ class CBattleArea
 {
 public:
 
-	//バトルステージ情報
-	struct BattleInfo
-	{
-		D3DXVECTOR3 StagePos;			//ステージ位置
-		float fRadius;					//ステージの半径
-		CCollision_Wall* pWall;			//ステージの壁
-		std::list<CEnemy*> EnemyList;	//敵のリスト
-	};
+	static constexpr float RADIUS_ENTEREDAREA{ 150.0f };	//エリアに入ったかを感知する半径
 
 	//メンバ関数
 	CBattleArea();		//コンストラクタ
 	~CBattleArea();		//デストラクタ
 	HRESULT Init();		//初期化
 	void Uninit();		//終了
+	void Update();		//更新
+
+	//生成
+	static CBattleArea* Create(D3DXVECTOR3 pos);
+
+	//ステージの壁
+	CCollision_Wall* GetWall() { return m_pWall; }	//取得
+
+	//敵の数を減らす
+	void DecrementEnemyNum() { if (m_nEnemyNum > 0) { m_nEnemyNum--; } }
+
+	//終了判定
+	bool GetEnd() { return m_bEnd; }	//取得
 
 private:
 
 	//メンバ変数
-	std::list<BattleInfo*> m_apArea;	//エリアを管理
+	D3DXVECTOR3 m_StagePos;			//ステージ位置
+	float m_fRadius;				//ステージの半径
+	CCollision_Wall* m_pWall;		//ステージの壁
+	std::list<CEnemy*> m_EnemyList;	//敵のリスト
+	bool m_bEnteredArea;			//エリアに入ったか
+	int m_nEnemyNum;				//敵の数
+	bool m_bEnd;					//終了したか
 };
 
 #endif

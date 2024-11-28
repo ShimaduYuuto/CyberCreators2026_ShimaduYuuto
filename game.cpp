@@ -15,6 +15,7 @@
 #include "objectdome.h"
 #include "spawn_enemy.h"
 #include "sky.h"
+#include "battleareamanager.h"
 
 //============================
 //ゲームのコンストラクタ
@@ -25,8 +26,8 @@ CGame::CGame() :
 	m_pTime(nullptr),
 	m_pEnemyManager(nullptr),
 	m_pLockon(nullptr),
-	m_pWall(nullptr),
-	m_pGimmickManager(nullptr)
+	m_pGimmickManager(nullptr),
+	m_pExplosionManager(nullptr)
 {
 	
 }
@@ -80,13 +81,10 @@ HRESULT CGame::Init()
 		m_pExplosionManager = new CExplosionManager;
 	}
 
-	//壁の生成
-	if (m_pWall == nullptr)
-	{
-		m_pWall = CCollision_Wall::Create({ 0.0f, 0.0f, 0.0f }, 500.0f);
-	}
+	//バトルエリアの初期化
+	CBattleAreaManager::GetInstance()->Init();
 
-	CExplodingBarrel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f });
+	//CExplodingBarrel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f });
 	CSky::Create();
 	
 	return S_OK;
@@ -139,11 +137,8 @@ void CGame::Uninit()
 		m_pLockon = nullptr;
 	}
 
-	//メモリの破棄
-	if (m_pWall != nullptr)
-	{
-		m_pWall = nullptr;
-	}
+	//バトルエリアの初期化
+	CBattleAreaManager::GetInstance()->Uninit();
 
 	//終了処理
 	CScene::Uninit();
@@ -157,6 +152,9 @@ void CGame::Update()
 	//時間の更新
 	m_pTime->Update();
 
+	//エリアマネージャー更新
+	CBattleAreaManager::GetInstance()->Update();
+
 	//ロックオンの更新
 	if (m_pLockon != nullptr)
 	{
@@ -168,7 +166,6 @@ void CGame::Update()
 	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_1))
 	{
 		CSpawn_Enemy::Create({ 0.0f, 10.0f, 0.0f }, CEnemy::ENEMYTYPE_ENEMY000);
-		//CEnemy::Create({ 0.0f, 0.0f, 0.0f }, CEnemy::ENEMYTYPE_ENEMY000);
 	}
 	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_2))
 	{

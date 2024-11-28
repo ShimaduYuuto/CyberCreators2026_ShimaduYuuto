@@ -10,7 +10,7 @@
 #include "manager.h"
 #include "game.h"
 
-//オブジェクトメッシュクラスの定数の初期化
+//定数の初期化
 const std::string CCollision_Wall::FILEPATH = "data\\TEXTURE\\SmashMesh000.png";//テクスチャパス
 const int CCollision_Wall::NUM_CORNER = 20;										//角の数
 const float CCollision_Wall::HEIGHT = 50.0f;									//高さ
@@ -18,7 +18,7 @@ const float CCollision_Wall::HEIGHT = 50.0f;									//高さ
 //============================
 //コンストラクタ
 //============================
-CCollision_Wall::CCollision_Wall(int nPriority) : CObjectCylinder(nPriority)
+CCollision_Wall::CCollision_Wall(int nPriority) : CObjectCylinder(nPriority), m_bEnd(false), m_fAlpha(0.0f)
 {
 
 }
@@ -38,6 +38,7 @@ HRESULT CCollision_Wall::Init()
 {
 	//基底の初期化
 	CObjectCylinder::Init();
+	SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));	//頂点を透明に
 
 	return S_OK;
 }
@@ -56,6 +57,34 @@ void CCollision_Wall::Uninit()
 //============================
 void CCollision_Wall::Update()
 {
+	//透明度を徐々に不透明にする処理
+	if (m_fAlpha < 1.0f && !m_bEnd)
+	{
+		m_fAlpha += ADD_ALPHA;	//加算
+
+		if (m_fAlpha > 1.0f)	//補正
+		{
+			m_fAlpha = 1.0f;
+		}
+
+		//頂点の色を設定
+		SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_fAlpha));
+	}
+	else if (m_bEnd)
+	{
+		m_fAlpha -= ADD_ALPHA;	//減算
+
+		if (m_fAlpha <= 0.0f)	//補正
+		{
+			m_fAlpha = 0.0f;
+			Uninit();
+			return;
+		}
+
+		//頂点の色を設定
+		SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_fAlpha));
+	}
+
 	//更新
 	CObjectCylinder::Update();
 }

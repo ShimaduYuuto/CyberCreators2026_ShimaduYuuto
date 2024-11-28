@@ -10,6 +10,7 @@
 #include "state_enemy_normal.h"
 #include "game.h"
 #include "manager.h"
+#include "battleareamanager.h"
 
 //====================================
 //コンストラクタ
@@ -28,13 +29,30 @@ void CState_Enemy_Blow::UpdateState(CEnemy* enemy)
 	//ゲームシーンの取得
 	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
 
-	//壁に触れていたら
-	if (pGame->GetWall()->GetHit(enemy->GetPos(), enemy->GetSizeRadius()))
+	//エリアの確認
+	if (CBattleAreaManager::GetInstance()->GetCurrentBattleArea() != nullptr)
 	{
-		enemy->ChangeStickState();
+		//壁に触れていたら
+		if (CBattleAreaManager::GetInstance()->GetCurrentBattleArea()->GetWall()->GetHit(enemy->GetPos(), enemy->GetSizeRadius()))
+		{
+			//連続じゃないなら張り付く
+			if (!enemy->GetEnteredStick())
+			{
+				//張り付き状態に変更
+				enemy->ChangeStickState();
 
-		//カメラを揺らす
-		CManager::GetInstance()->GetCamera()->SetShake(5, 15);	//ヒット時カメラを揺らす
+				//カメラを揺らす
+				CManager::GetInstance()->GetCamera()->SetShake(5, 15);	//ヒット時カメラを揺らす
+			}
+			else
+			{
+				//反射
+				enemy->SetBlowValue(enemy->GetBlowValue() * -1.0f);
+				enemy->SetEnableGravity(true);
+				enemy->SetEnteredStick(false);
+				pGame->GetLockon()->Erase(enemy);
+			}
+		}
 	}
 
 	//各ギミックとの当たり判定

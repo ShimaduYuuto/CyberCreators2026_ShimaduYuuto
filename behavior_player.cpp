@@ -566,7 +566,7 @@ void CPlayerBehavior_NormalAttack001::Cancel(CPlayer* player)
 //============================
 //コンストラクタ
 //============================
-CPlayerBehavior_NormalAttack002::CPlayerBehavior_NormalAttack002(CPlayer* player) : m_bChargeEnd(false),m_fChargeRate(0.5f)
+CPlayerBehavior_NormalAttack002::CPlayerBehavior_NormalAttack002(CPlayer* player) : m_bChargeEnd(false),m_fChargeRate(0.5f), m_fChargeAcceleration(0.0f)
 {
 	player->SetMotion(player->PLAYERMOTION_ATTACKCHARGE);
 
@@ -594,12 +594,14 @@ void CPlayerBehavior_NormalAttack002::Behavior(CPlayer* player)
 		//マックスまでチャージ
 		if (m_fChargeRate < MAX_RATE)
 		{
-			m_fChargeRate++;
+			m_fChargeAcceleration += ACCELERATION_VALUE;
+			m_fChargeRate += m_fChargeAcceleration;
 		}
 
 		//攻撃ボタンを離したら攻撃
 		if (CManager::GetInstance()->GetMouse()->GetRerease(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_LEFT))
 		{
+			//キャンセル時間後に離したらチャージ
 			if (m_nCancelCount >= ACCEPT_CANCELTIME)
 			{
 				//攻撃モーション
@@ -643,7 +645,7 @@ void CPlayerBehavior_NormalAttack002::Damage(CPlayer* player, CEnemy* enemy, int
 	else
 	{
 		//ダメージ
-		enemy->SetBlowDamage(damage, player->GetRot().y, m_fChargeRate * 0.3f);
+		enemy->SetBlowDamage(damage * 3, player->GetRot().y, m_fChargeRate * 0.5f);
 	}
 }
 
@@ -705,11 +707,6 @@ void CPlayerBehavior_Arial001::Cancel(CPlayer* player)
 		//次の攻撃の生成
 		SetNextBehavior(new CPlayerBehavior_Arial002(player));
 	}
-	//else if (CManager::GetInstance()->GetMouse()->GetTrigger(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_RIGHT))
-	//{
-	//	//次の攻撃の生成
-	//	SetNextBehavior(new CPlayerBehavior_Smash(player));
-	//}
 }
 
 //============================

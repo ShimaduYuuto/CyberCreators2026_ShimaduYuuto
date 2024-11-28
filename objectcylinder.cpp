@@ -356,3 +356,30 @@ CObjectCylinder* CObjectCylinder::Create(D3DXVECTOR3 pos, float radius)
 
 	return pObject;
 }
+
+//================================
+//頂点カラーの設定
+//================================
+void CObjectCylinder::SetColor(D3DXCOLOR color)
+{
+	VERTEX_3D* pVtx; //追加情報のポインタ
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	//上下の数周回
+	for (int j = 0; j < 2; j++)
+	{
+		//角の数だけ周回
+		for (int i = 0; i < NUM_CORNER; i++)
+		{
+			pVtx[i + NUM_CORNER * j].col = color;	//色
+		}
+	}
+
+	//頂点バッファをアンロックする
+	m_pVtxBuff->Unlock();
+
+	//変数に保存
+	m_Color = color;
+}
