@@ -12,7 +12,7 @@
 //フィールドクラスの定数の初期化
 const std::string CField::FILEPATH = "data\\MODEL\\Block001.x";		//テクスチャパス
 const D3DXVECTOR3 CField::BLOCK = { 50.0f, 0, 50.0f };				//ブロック数
-const D3DXVECTOR3 CField::SIZE = { 3000.0f, -2.0f, 3000.0f };		//サイズ
+const D3DXVECTOR3 CField::SIZE = { 1000.0f, -2.0f, 3000.0f };		//サイズ
 
 //============================
 //フィールドのコンストラクタ

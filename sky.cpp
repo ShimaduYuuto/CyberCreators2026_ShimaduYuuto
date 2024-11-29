@@ -86,6 +86,7 @@ CSky* CSky::Create()
 
 	pSky->SetRadius(100.0f);	//”¼Œa
 	pSky->SetRate(100.0f);
+	pSky->SetPos(D3DXVECTOR3(0.0f, -100.0f, 0.0f));
 
 	//‰Šú‰»
 	pSky->Init();

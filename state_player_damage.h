@@ -20,12 +20,13 @@ public:
 	CState_Player_Damage() {};					//コンストラクタ
 	CState_Player_Damage(CPlayer* player)
 	{
-		//SetBehavior(new CPlayerBehavior(player));
+		SetEndTime(30);
 	};	//コンストラクタ
 	~CState_Player_Damage() {};					//デストラクタ
 
 	//状態ごとの更新
-	void UpdateState(CPlayer* player) override;	//状態の更新
+	void UpdateState(CPlayer* player) override;				//状態の更新
+	void SetDamage(CPlayer* player, int damage) override;	//ダメージの設定
 };
 
 #endif

@@ -17,8 +17,8 @@
 #include "state_enemy_stick.h"
 
 //‘O•ûéŒ¾
-class CEnemy000;
-class CEnemy000Action;
+//class CEnemy000;
+//class CEnemy000Action;
 
 //========================
 //’Êíó‘Ô

@@ -18,8 +18,11 @@ public:
 	//サウンドの列挙型
 	typedef enum
 	{
-		SOUND_LABEL_BGM = 0,		//BGM
-		SOUND_LABEL_MAX,			//最大値
+		SOUND_LABEL_BGM = 0,	//BGM
+		SOUND_LABEL_BATTLE,		//バトル
+		SOUND_LABEL_ATTACK,		//攻撃
+		SOUND_LABEL_STICK,		//張り付き
+		SOUND_LABEL_MAX,		//最大値
 	}SOUND_LABEL;
 
 	//*****************************************************************************

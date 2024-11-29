@@ -100,10 +100,34 @@ void CPlayer::Uninit()
 //============================
 void CPlayer::Update()
 {
+	//次の状態があるなら変更
+	if (m_pState->GetNextState() != nullptr)
+	{
+		//次の状態に変更
+		CState_Player* pNext = m_pState->GetNextState();
+		delete m_pState;
+		m_pState = nullptr;
+
+		//代入
+		m_pState = pNext;
+	}
+
 	//状態に応じた更新処理
 	if (m_pState != nullptr)
 	{
 		m_pState->Update(this);
+
+		//次の状態があるなら変更
+		if (m_pState->GetNextState() != nullptr)
+		{
+			//次の状態に変更
+			CState_Player* pNext = m_pState->GetNextState();
+			delete m_pState;
+			m_pState = nullptr;
+
+			//代入
+			m_pState = pNext;
+		}
 	}
 
 	//共通処理の更新
@@ -277,7 +301,7 @@ void CPlayer::SetKnockBack(int time)
 	//移動量の加算
 	Move += AddMove;
 	SetMove(Move);
-	SetState(new CState_Player_Knockback());
+	ChangeState(new CState_Player_Knockback(this));
 }
 
 //============================

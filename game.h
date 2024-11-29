@@ -34,7 +34,7 @@ public:
 	void Draw() override;			//描画
 	void Load() override;			//読み込み
 
-	//インスタンスの取得
+	//ポインタの取得
 	CPlayer* GetGamePlayer() { if (m_pPlayer == nullptr) { return nullptr; } return m_pPlayer; }								//プレイヤーの取得
 	CField* GetGameField() { if (m_pField == nullptr) { return nullptr; } return m_pField; }									//フィールドの取得
 	CTime* GetTime() { if (m_pTime == nullptr) { return nullptr; } return m_pTime; }											//時間の取得
@@ -44,6 +44,9 @@ public:
 	CLockon* GetLockon() { if (m_pLockon == nullptr) { return nullptr; } return m_pLockon; }									//ロックオンの取得
 	void SetLockon(bool lockon);																								//ロックオンの設定
 
+	//クリア判定
+	void SetClear(bool crear) { m_bClear = crear; }	//設定
+
 private:
 	CPlayer* m_pPlayer;					//プレイヤー
 	CField* m_pField;					//フィールド
@@ -52,6 +55,9 @@ private:
 	CGimmickManager* m_pGimmickManager;	//ギミックマネージャー
 	CExplosionManager* m_pExplosionManager;	//爆発マネージャー
 	CLockon* m_pLockon;					//ロックオン
+
+	//クリア判定
+	bool m_bClear;;
 };
 
 #endif

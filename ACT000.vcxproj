@@ -171,6 +171,7 @@
     <ClInclude Include="collision_view.h" />
     <ClInclude Include="collision_wall.h" />
     <ClInclude Include="debugproc.h" />
+    <ClInclude Include="effect_hitattack.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemy000.h" />
     <ClInclude Include="enemy001.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="fade.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="game_character.h" />
     <ClInclude Include="gauge.h" />
     <ClInclude Include="gauge_playerlife.h" />
     <ClInclude Include="gauge_slow.h" />
@@ -215,6 +217,7 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="result.h" />
+    <ClInclude Include="result_bg.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="shield.h" />
     <ClInclude Include="sky.h" />
@@ -225,6 +228,7 @@
     <ClInclude Include="state.h" />
     <ClInclude Include="state_enemy.h" />
     <ClInclude Include="state_enemy000.h" />
+    <ClInclude Include="state_enemy001.h" />
     <ClInclude Include="state_enemy_blow.h" />
     <ClInclude Include="state_enemy_damage.h" />
     <ClInclude Include="state_enemy_normal.h" />
@@ -237,6 +241,7 @@
     <ClInclude Include="texture.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="title_logo.h" />
     <ClInclude Include="xfile.h" />
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +249,7 @@
     <ClCompile Include="action_enemy000.cpp" />
     <ClCompile Include="action_enemy001.cpp" />
     <ClCompile Include="action_player.cpp" />
+    <ClCompile Include="animation.cpp" />
     <ClCompile Include="arial.cpp" />
     <ClCompile Include="arial000.cpp" />
     <ClCompile Include="arial001.cpp" />
@@ -262,6 +268,7 @@
     <ClCompile Include="collision_view.cpp" />
     <ClCompile Include="collision_wall.cpp" />
     <ClCompile Include="debugproc.cpp" />
+    <ClCompile Include="effect_hitattack.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemy000.cpp" />
     <ClCompile Include="enemy001.cpp" />
@@ -272,6 +279,7 @@
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="game_character.cpp" />
     <ClCompile Include="gauge.cpp" />
     <ClCompile Include="gauge_playerlife.cpp" />
     <ClCompile Include="gauge_slow.cpp" />
@@ -306,6 +314,7 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="result.cpp" />
+    <ClCompile Include="result_bg.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="shield.cpp" />
     <ClCompile Include="sky.cpp" />
@@ -327,6 +336,7 @@
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="time.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="title_logo.cpp" />
     <ClCompile Include="xfile.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

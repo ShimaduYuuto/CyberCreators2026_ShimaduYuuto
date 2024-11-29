@@ -8,6 +8,7 @@
 //ヘッダーのインクルード
 #include "title.h"
 #include "manager.h"
+#include "title_logo.h"
 
 //============================
 //タイトルのコンストラクタ
@@ -30,6 +31,7 @@ CTitle::~CTitle()
 //============================
 HRESULT CTitle::Init()
 {
+	CTitle_Logo::Create({ 640.0f, 200.0f, 0.0f });
 	return S_OK;
 }
 

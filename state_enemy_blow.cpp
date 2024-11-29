@@ -72,7 +72,7 @@ void CState_Enemy_Blow::UpdateState(CEnemy* enemy)
 		}
 	}
 
-	//カウントが周り切ったら状態を切り替える
+	//地面に付いたら通常状態にする
 	if (enemy->GetOnStand())
 	{
 		//次の状態を設定
@@ -80,6 +80,7 @@ void CState_Enemy_Blow::UpdateState(CEnemy* enemy)
 		{
 			//状態の設定
 			enemy->StateReset();
+			enemy->SetBlowValue({0.0f, 0.0f, 0.0f});
 		}
 	}
 }

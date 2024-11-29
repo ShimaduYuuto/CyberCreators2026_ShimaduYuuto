@@ -27,7 +27,8 @@ CGame::CGame() :
 	m_pEnemyManager(nullptr),
 	m_pLockon(nullptr),
 	m_pGimmickManager(nullptr),
-	m_pExplosionManager(nullptr)
+	m_pExplosionManager(nullptr),
+	m_bClear(false)
 {
 	
 }
@@ -122,12 +123,14 @@ void CGame::Uninit()
 	//メモリの破棄
 	if (m_pGimmickManager != nullptr)
 	{
+		delete m_pGimmickManager;
 		m_pGimmickManager = nullptr;
 	}
 
 	//メモリの破棄
 	if (m_pExplosionManager != nullptr)
 	{
+		delete m_pExplosionManager;
 		m_pExplosionManager = nullptr;
 	}
 
@@ -177,6 +180,19 @@ void CGame::Update()
 	}
 #endif
 
+	//マネージャーのインスタンスを取得
+	CManager* pManager = CManager::GetInstance();
+
+	//フェードが終わっていたら更新
+	if (CManager::GetInstance()->GetFade()->GetEnd())
+	{
+		//エンターで画面遷移
+		if (pManager->GetKeyboard()->GetTrigger(DIK_RETURN) || pManager->GetJoypad()->GetPress(CInputJoypad::JOYKEY_A) || pManager->GetJoypad()->GetPress(CInputJoypad::JOYKEY_START) || m_bClear)
+		{
+			//ゲームに画面遷移
+			pManager->GetFade()->SetFade(CScene::MODE_RESULT);
+		}
+	}
 	
 }
 

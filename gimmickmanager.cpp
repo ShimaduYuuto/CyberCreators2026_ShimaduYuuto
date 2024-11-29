@@ -23,7 +23,7 @@ CGimmickManager::CGimmickManager() :
 //============================
 CGimmickManager::~CGimmickManager()
 {
-
+	m_apManager.clear();
 }
 
 //============================
@@ -61,6 +61,26 @@ void CGimmickManager::Erase(CGimmick* gimmick)
 	{
 		return;
 	}
-	//“G‚Ìî•ñ‚ğíœ
+
+	//“o˜^Ï‚İ‚©
+	bool bRegisted = false;
+
+	//“¯‚¶‚à‚Ì‚ª–³‚¢‚©‚ğŠm”F
+	for (auto itr : m_apManager)
+	{
+		if (itr == gimmick)
+		{
+			bRegisted = true;
+			break;
+		}
+	}
+
+	//“o˜^‚³‚ê‚Ä‚¢‚È‚¢‚È‚ç”²‚¯‚é
+	if (!bRegisted)
+	{
+		return;
+	}
+
+	//ƒMƒ~ƒbƒN‚Ìî•ñ‚ğíœ
 	m_apManager.remove(gimmick);
 }

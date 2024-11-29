@@ -22,11 +22,11 @@ CState_Player::~CState_Player()
 	}
 
 	//次の状態のインスタンスを破棄
-	if (m_pNextState != nullptr)
+	/*if (m_pNextState != nullptr)
 	{
 		delete m_pNextState;
 		m_pNextState = nullptr;
-	}
+	}*/
 }
 
 //====================================

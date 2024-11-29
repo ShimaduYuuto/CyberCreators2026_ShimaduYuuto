@@ -7,6 +7,8 @@
 
 //ヘッダーのインクルード
 #include "battleareamanager.h"
+#include "game.h"
+#include "manager.h"
 
 //============================
 //コンストラクタ
@@ -71,6 +73,14 @@ void CBattleAreaManager::Update()
 			//リストから削除
 			Erase(m_pCurrentBattleArea);
 		}
+	}
+
+	//残りのエリアが無くなったらクリア判定にする(一旦)
+	if (m_BattleAreaList.size() == 0)
+	{
+		//ゲームシーンの取得
+		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+		pGame->SetClear(true);
 	}
 }
 
@@ -150,6 +160,6 @@ void CBattleAreaManager::Erase(CBattleArea* area)
 		m_pCurrentBattleArea = nullptr;
 	}
 
-	//敵の情報を削除
+	//エリアの情報を削除
 	m_BattleAreaList.remove(area);
 }

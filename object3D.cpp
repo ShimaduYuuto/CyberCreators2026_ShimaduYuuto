@@ -365,3 +365,23 @@ void CObject3D::Calculation(D3DXVECTOR3 rot, TYPE type)
 	//頂点バッファをアンロックする
 	m_pVtxBuff->Unlock();
 }
+
+//============================
+//テクスチャの座標設定
+//============================
+void CObject3D::SetTextureUV(float u1, float u2, float v1, float v2)
+{
+	VERTEX_3D* pVtx; //追加情報のポインタ
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	//テクスチャ座標の設定
+	pVtx[0].tex = D3DXVECTOR2(u1, v1);//u.v
+	pVtx[1].tex = D3DXVECTOR2(u2, v1);
+	pVtx[2].tex = D3DXVECTOR2(u1, v2);
+	pVtx[3].tex = D3DXVECTOR2(u2, v2);
+
+	//頂点バッファをアンロックする
+	m_pVtxBuff->Unlock();
+}

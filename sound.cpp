@@ -15,7 +15,10 @@ HRESULT ReadChunkData(HANDLE hFile, void* pBuffer, DWORD dwBuffersize, DWORD dwB
 // サウンドの情報
 const CSound::SOUNDINFO CSound::SOUND_INFO[CSound::SOUND_LABEL_MAX] =
 {
-	{"data\\BGM\\BGM.wav", -1, 0.5f},							//ステージ中のBGM
+	{"data\\BGM\\BGM.wav", -1, 0.5f},				//ステージ中のBGM
+	{"data\\BGM\\battle000.wav", -1, 0.2f},			//戦いのBGM
+	{"data\\SE\\attack000.wav", 0, 0.5f},			//攻撃のSE
+	{"data\\SE\\stick000.wav", 0, 0.75f},			//貼り付けのSE
 };
 
 //=============================================================================

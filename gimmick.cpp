@@ -32,7 +32,10 @@ CGimmick::~CGimmick()
 	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
 
 	//マネージャーから削除
-	pGame->GetGimmickManager()->Erase(this);
+	if (pGame->GetGimmickManager() != nullptr)
+	{
+		pGame->GetGimmickManager()->Erase(this);
+	}	
 
 	//当たり判定の消去
 	if (m_Collision != nullptr)

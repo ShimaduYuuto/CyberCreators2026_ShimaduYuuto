@@ -112,9 +112,10 @@ void CExplosion::Update()
 					//吹き飛び処理
 					iter->SetBlowValue(D3DXVECTOR3(
 						sinf(fAngleXZ) * cosf(fAngleXY) * 40.0f,
-						0.0f,
+						10.0f,
 						cosf(fAngleXZ) * cosf(fAngleXY) * 40.0f));
-					iter->AddMove({ 0.0f, 10.0f,  0.0f });
+					iter->AddMove({ 0.0f, 0.0f,  0.0f });
+					iter->SetDamage(3);
 
 				}
 			}
@@ -130,6 +131,7 @@ void CExplosion::Update()
 		}
 	}
 
+	//倍率の設定
 	SetRate(m_fSizeRate);
 
 	//寿命の更新
@@ -143,6 +145,9 @@ void CExplosion::Update()
 
 	//ゲームオブジェクトの共通処理更新
 	CObjectDome::Update();
+
+	//当たり判定の更新
+	m_pCollision->Update(GetPos());
 }
 
 //============================

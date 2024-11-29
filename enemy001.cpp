@@ -9,9 +9,7 @@
 #include "enemy001.h"
 #include "manager.h"
 #include "game.h"
-#include "player.h"
-#include "behavior_enemy001.h"
-#include "state_enemy_normal.h"
+#include "state_enemy001.h"
 
 //定数の宣言
 const float CEnemy001::MOVE_VALUE = 2.0f;
@@ -21,10 +19,11 @@ const float CEnemy001::STARTATTACK_RANGE = 50.0f;
 //エネミーのコンストラクタ
 //============================
 CEnemy001::CEnemy001() :
-	m_pShield(nullptr)
+	m_pShield(nullptr),
+	m_bDamageJudge(false)
 {
 	//ポインタに行動を設定
-	ChangeState(new CState_Enemy_Normal());
+	ChangeState(new CState_Enemy001_Normal(this));
 }
 
 //============================
@@ -44,7 +43,7 @@ HRESULT CEnemy001::Init()
 	CEnemy::Init();
 
 	//パラメータの初期化
-	CCharacter::SetLife(10);	//体力
+	CCharacter::SetLife(20);	//体力
 
 	//モーションの読み込み
 	SetMotionInfo("data\\enemy011motion.txt");
@@ -104,18 +103,30 @@ void CEnemy001::Draw()
 //============================
 void CEnemy001::SetDamage(int damage)
 {
-	//シールドを持っていたらダメージを受けない
-	if (m_pShield != nullptr)
+	//ダメージの設定
+	CEnemy::SetDamage(damage);
+}
+
+//============================
+//ダメージの設定
+//============================
+void CEnemy001::SetDamage(int damage, float rotY)
+{
+	//ダメージを受けるかの判定
+	if (!m_bDamageJudge)
 	{
-		//ゲームシーンのプレイヤーの位置を取得
-		CGame* pGame = nullptr;
-		pGame = (CGame*)CManager::GetInstance()->GetScene();	//ゲームシーンの取得
-		pGame->GetGamePlayer()->SetKnockBack(20);				//ノックバック
 		return;
 	}
 
-	//ダメージの設定
-	CEnemy::SetDamage(damage);
+	//張り付いていないならダメージ状態に
+	if (!GetEnteredStick())
+	{
+		//状態の変更
+		ChangeState(new CState_Enemy001_Damage(this));
+	}
+
+	//基底の処理
+	CEnemy::SetDamage(damage, rotY);
 }
 
 //============================
@@ -150,4 +161,15 @@ bool CEnemy001::SetBlowOff()
 	}
 
 	return bHit;
+}
+
+//============================
+//ダメージ影響処理
+//============================
+void CEnemy001::DamageEffect(CPlayer* player)
+{
+	if (!m_bDamageJudge)
+	{
+		player->SetKnockBack(30);
+	}
 }

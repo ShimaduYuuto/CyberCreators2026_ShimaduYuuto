@@ -10,6 +10,7 @@
 #include "manager.h"
 #include "game.h"
 #include "gauge_slow.h"
+#include "effect_hitattack.h"
 
 //定数
 const D3DXVECTOR3 CPlayerBehavior_Attack::POS_OFFSET{ 0.0f, 20.0f, 30.0f };
@@ -478,6 +479,9 @@ void CPlayerBehavior_Attack::Damage(CPlayer* player, CEnemy* enemy, int damage)
 {
 	//ダメージ
 	enemy->SetDamage(damage, player->GetRot().y);
+	enemy->DamageEffect(player);
+	CEffect_HitAttack::Create(enemy->GetCollision()->GetPos());
+	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_ATTACK);
 }
 
 //============================
@@ -647,6 +651,9 @@ void CPlayerBehavior_NormalAttack002::Damage(CPlayer* player, CEnemy* enemy, int
 		//ダメージ
 		enemy->SetBlowDamage(damage * 3, player->GetRot().y, m_fChargeRate * 0.5f);
 	}
+
+	CEffect_HitAttack::Create(enemy->GetCollision()->GetPos());
+	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_ATTACK);
 }
 
 //=================================================

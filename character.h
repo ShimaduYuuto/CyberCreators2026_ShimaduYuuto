@@ -34,15 +34,6 @@ public:
 		CHARACTER_TYPE_MAX,		//列挙の最大
 	}CHARACTER_TYPE;
 
-	//状態の種類の列挙型
-	//typedef enum
-	//{
-	//	DAMAGESTATE_NORMAL = 0,	//通常状態
-	//	DAMAGESTATE_DAMAGE,		//ダメージ状態
-	//	DAMAGESTATE_INVINCIBLE,	//無敵状態
-	//	DAMAGESTATE_MAX,		//列挙の最大
-	//}DAMAGESTATE;
-
 	//キーの構造体
 	struct Key
 	{

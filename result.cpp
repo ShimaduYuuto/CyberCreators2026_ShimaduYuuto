@@ -8,6 +8,7 @@
 //ヘッダーのインクルード
 #include "result.h"
 #include "manager.h"
+#include "result_bg.h"
 
 //============================
 //リザルトのコンストラクタ
@@ -30,6 +31,8 @@ CResult::~CResult()
 //============================
 HRESULT CResult::Init()
 {
+	CResult_Bg::Create();
+
 	return S_OK;
 }
 

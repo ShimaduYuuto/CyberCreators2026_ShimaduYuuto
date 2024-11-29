@@ -38,6 +38,9 @@ CState_Enemy_Stick::CState_Enemy_Stick(CEnemy* enemy)
 	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();	//ƒQ[ƒ€ƒV[ƒ“‚ÌŽæ“¾
 	pGame->SetLockon(true);
 	pGame->GetLockon()->Regist(enemy);
+
+	//Œø‰Ê‰¹
+	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_STICK);
 }
 
 //====================================

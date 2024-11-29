@@ -11,6 +11,7 @@
 #include "game.h"
 #include "battleareamanager.h"
 #include "spawn_enemy.h"
+#include "explodingbarrel.h"
 
 //============================
 //コンストラクタ
@@ -21,7 +22,8 @@ CBattleArea::CBattleArea() :
 	m_pWall(nullptr),
 	m_StagePos(),
 	m_nEnemyNum(0),
-	m_bEnd(false)
+	m_bEnd(false),
+	m_bEnteredArea(false)
 {
 	
 }
@@ -67,6 +69,8 @@ void CBattleArea::Update()
 	}
 	else if (m_bEnteredArea && m_nEnemyNum == 0)	//敵が全滅したいたら破棄
 	{
+		//BGMストップ
+		CManager::GetInstance()->GetSound()->Stop(CSound::SOUND_LABEL_BATTLE);
 		m_bEnd = true;
 		return;
 	}
@@ -97,6 +101,12 @@ void CBattleArea::Update()
 			CSpawn_Enemy::Create(m_StagePos + D3DXVECTOR3(150.0f, 0.0f, 150.0f), CEnemy::ENEMYTYPE_ENEMY000);
 			CSpawn_Enemy::Create(m_StagePos + D3DXVECTOR3(-150.0f, 0.0f, -150.0f), CEnemy::ENEMYTYPE_ENEMY000);
 			m_nEnemyNum += 3;
+
+			CExplodingBarrel::Create(m_StagePos, { 0.0f, 0.0f, 0.0f });
+			CExplodingBarrel::Create(m_StagePos + D3DXVECTOR3(150.0f, 0.0f, 150.0f), { 0.0f, 0.0f, 0.0f });
+
+			//BGMスタート
+			CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_BATTLE);
 		}
 	}
 }

@@ -12,9 +12,11 @@
 #include "character.h"
 #include "collision.h"
 #include "state_enemy.h"
+//#include "player.h"
 
 //前方宣言
 class CState_Enemy;
+class CPlayer;
 
 //エネミークラス
 class CEnemy : public CCharacter
@@ -58,6 +60,9 @@ public:
 	//状態変更
 	void ChangeState(CState_Enemy* state);
 	CState_Enemy* GetState() { if (m_pState != nullptr) { return m_pState; } return nullptr; }
+
+	//ダメージを与えた際に与える影響
+	virtual void DamageEffect(CPlayer* player) {}
 
 	//状態のリセット
 	virtual void StateReset()

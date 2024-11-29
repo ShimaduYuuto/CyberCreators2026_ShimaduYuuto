@@ -23,12 +23,14 @@ public:
 	CState_Player_Knockback() : m_nKnockbackCount(TIME_KNOCKBACK){};					//コンストラクタ
 	CState_Player_Knockback(CPlayer* player) : m_nKnockbackCount(TIME_KNOCKBACK)
 	{
-		//SetBehavior(new CPlayerBehavior(player));
+		SetBehavior(new CPlayerBehavior(player));
+		SetEndTime(TIME_KNOCKBACK);
 	};	//コンストラクタ
 	~CState_Player_Knockback() {};	//デストラクタ
 
 	//状態の更新
 	void UpdateState(CPlayer* player) override;	
+	void SetDamage(CPlayer* player, int damage) override;	//ダメージの設定
 private:
 	int m_nKnockbackCount;
 };

@@ -10,7 +10,7 @@
 
 //ヘッダーのインクルード
 #include "enemy.h"
-#include "action_enemy001.h"
+#include "state_enemy001.h"
 #include "shield.h"
 
 //エネミークラス
@@ -49,9 +49,34 @@ public:
 	//状態処理の関数
 	bool SetBlowOff() override;
 
+	//ダメージの設定
+	void SetDamage(int damage, float rotY) override;
+
+	//状態のリセット
+	void StateReset() override
+	{
+		//通常の状態に戻す
+		ChangeState(new CState_Enemy001_Normal(this));
+		SetEnableGravity(true);
+	}
+
+	//貼り付け状態に変更
+	void ChangeStickState() override
+	{
+		ChangeState(new CState_Enemy001_Stick(this));
+	}
+
+	//ダメージを与えた際に与える影響
+	void DamageEffect(CPlayer* player) override;
+
+	//ダメージ判定
+	void SetDamageJudge(bool judge) { m_bDamageJudge = judge; }	//設定
+	bool GetDamageJudge() { return m_bDamageJudge; }			//取得
+
 private:
 
-	CShield* m_pShield;				//盾のインスタンス
+	CShield* m_pShield;	//盾のインスタンス
+	bool m_bDamageJudge;//ダメージを受けるかの判定
 };
 
 #endif
