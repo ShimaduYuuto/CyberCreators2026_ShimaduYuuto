@@ -240,6 +240,9 @@ void CPlayer::UpdatePos()
 			//ˆÊ’u‚ğ•â³
 			pos = pGame->GetGameField()->ConvertMeshPos(pos);
 		}
+
+		//‰¡‚Ì“–‚½‚è”»’è
+		pos = pGame->GetGameField()->WidthCollision(pos);
 	}
 
 	//ˆÚ“®—Ê‚ğŒ¸Š

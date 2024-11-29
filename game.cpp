@@ -16,6 +16,7 @@
 #include "spawn_enemy.h"
 #include "sky.h"
 #include "battleareamanager.h"
+#include "model.h"
 
 //============================
 //ゲームのコンストラクタ
@@ -87,6 +88,7 @@ HRESULT CGame::Init()
 
 	//CExplodingBarrel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f });
 	CSky::Create();
+	//CModel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, CModel::MODEL_TYPE_TREE);
 	
 	return S_OK;
 }

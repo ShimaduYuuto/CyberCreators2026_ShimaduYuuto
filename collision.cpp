@@ -66,8 +66,10 @@ void CCollision::Update(D3DXVECTOR3 offsetpos)
 {
 	//ˆÊ’u‚ðŽZo
 	m_Pos = offsetpos + m_CollisionPos;
+#if _DEBUG
 	m_pCollisionView->SetSize({ m_fRadius * 2.0f, m_fRadius * 2.0f, 0.0f });
 	m_pCollisionView->Update();
+#endif
 }
 
 //============================

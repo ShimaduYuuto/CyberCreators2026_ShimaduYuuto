@@ -12,7 +12,7 @@
 //フィールドクラスの定数の初期化
 const std::string CField::FILEPATH = "data\\MODEL\\Block001.x";		//テクスチャパス
 const D3DXVECTOR3 CField::BLOCK = { 50.0f, 0, 50.0f };				//ブロック数
-const D3DXVECTOR3 CField::SIZE = { 1000.0f, -2.0f, 3000.0f };		//サイズ
+const D3DXVECTOR3 CField::SIZE = { 10000.0f, -2.0f, 10000.0f };		//サイズ
 
 //============================
 //フィールドのコンストラクタ
@@ -81,9 +81,11 @@ HRESULT CField::Init()
 
 		//テクスチャの読み込み
 		pVtx[nCount].tex = D3DXVECTOR2(1.0f * (nX / (float)BLOCK.x), 1.0f * (nZ / (float)BLOCK.z));
+		pVtx[nCount].tex = D3DXVECTOR2(nX, nZ);
 
 		nX++;
 
+		//Zを進める
 		if (nX == BLOCK.x + 1)
 		{
 			nX = 0;
@@ -324,11 +326,6 @@ bool CField::MeshCollision(D3DXVECTOR3& pos)
 		//ポリゴンの中にいたら色を変化
 		if (Vec1.y >= 0.0f && Vec2.y >= 0.0f && Vec3.y >= 0.0f)
 		{
-			//色を変更
-			//vtx0->col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-			//vtx1->col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-			//vtx2->col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-
 			//内積の計算から高さを算出
 			PlayerHeight = MeshIPCluculation(pos - vtx0->pos, m_SurfaceNorVec[nCnt]) + vtx0->pos.y;
 
@@ -448,11 +445,6 @@ D3DXVECTOR3 CField::ConvertMeshPos(D3DXVECTOR3 pos)
 		//ポリゴンの中にいたら色を変化
 		if (Vec1.y >= 0.0f && Vec2.y >= 0.0f && Vec3.y >= 0.0f)
 		{
-			//色を変更
-			//vtx0->col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-			//vtx1->col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-			//vtx2->col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-
 			//内積の計算から高さを算出
 			PlayerHeight = MeshIPCluculation(pos - vtx0->pos, m_SurfaceNorVec[nCnt]) + vtx0->pos.y;
 
@@ -490,6 +482,28 @@ float CField::MeshIPCluculation(D3DXVECTOR3 vec1, D3DXVECTOR3 vec2)
 
 	//高さを返す
 	return Vec1_y;
+}
+
+//===================================
+//横の判定
+//===================================
+D3DXVECTOR3 CField::WidthCollision(D3DXVECTOR3 pos)
+{
+	//返す用の位置
+	D3DXVECTOR3 Pos = pos;
+
+	//左の判定
+	if (Pos.x < GetPos().x + COLLISION_WIDTH * -0.5f)
+	{
+		Pos.x = GetPos().x + COLLISION_WIDTH * -0.5f;
+	}
+	//右の判定
+	else if (Pos.x > GetPos().x + COLLISION_WIDTH * 0.5f)
+	{
+		Pos.x = GetPos().x + COLLISION_WIDTH * 0.5f;
+	}
+
+	return Pos;
 }
 
 //============================

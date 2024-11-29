@@ -100,9 +100,9 @@ public:
 		SetEndTime(60);
 	};	//コンストラクタ
 
-	CState_Enemy001_Stick(CEnemy* enemy)
+	CState_Enemy001_Stick(CEnemy* enemy) : CState_Enemy_Stick(enemy)
 	{
-		SetEndTime(60);
+		SetEndTime(160);
 	};	//コンストラクタ
 
 	//状態の更新

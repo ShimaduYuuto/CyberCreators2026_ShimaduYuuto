@@ -196,6 +196,7 @@
     <ClInclude Include="lockonmark.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
+    <ClInclude Include="model.h" />
     <ClInclude Include="modelparts.h" />
     <ClInclude Include="normalattack.h" />
     <ClInclude Include="normalattack000.h" />
@@ -242,6 +243,7 @@
     <ClInclude Include="time.h" />
     <ClInclude Include="title.h" />
     <ClInclude Include="title_logo.h" />
+    <ClInclude Include="tree.h" />
     <ClInclude Include="xfile.h" />
   </ItemGroup>
   <ItemGroup>
@@ -293,6 +295,7 @@
     <ClCompile Include="lockonmark.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
+    <ClCompile Include="model.cpp" />
     <ClCompile Include="modelparts.cpp" />
     <ClCompile Include="normalattack.cpp" />
     <ClCompile Include="normalattack000.cpp" />
@@ -337,6 +340,7 @@
     <ClCompile Include="time.cpp" />
     <ClCompile Include="title.cpp" />
     <ClCompile Include="title_logo.cpp" />
+    <ClCompile Include="tree.cpp" />
     <ClCompile Include="xfile.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

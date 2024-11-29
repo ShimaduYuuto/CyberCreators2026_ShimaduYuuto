@@ -87,7 +87,7 @@ public:
 
 	//定数
 	static constexpr float DASH_SPEED{ 14.0f };		//ダッシュの速度
-	static constexpr float STOP_LENGYH{ 100.0f };	//止まる距離
+	static constexpr float STOP_LENGYH{ 50.0f };	//止まる距離
 
 	//メンバ関数
 	CPlayerBehavior_Dash() {}						//コンストラクタ
@@ -368,46 +368,67 @@ private:
 	int m_nSlowTime;			//スロウの時間
 };
 
-//======================================================================
-//以下はバックアップ
-//======================================================================
+//==========================
+//ダッシュ攻撃
+//==========================
+class CPlayerBehavior_DashAttack : public CPlayerBehavior_Attack
+{
+public:
+
+	//定数
+	static constexpr int END_TIME{ 20 };			//終了までの時間
+	static constexpr int START_COLLISION{ 4 };	//コリジョンの判定を始めるカウント
+	static constexpr int START_CANCELTIME{ 10 };	//キャンセルが始める時間
+
+	CPlayerBehavior_DashAttack() {}
+	CPlayerBehavior_DashAttack(CPlayer* player)
+	{
+		//パラメータの設定
+		SetCancelTime(START_CANCELTIME);	//キャンセル
+		SetEndTime(END_TIME);				//終了時間
+		SetCollisionTime(START_COLLISION);	//当たり判定
+	}
+	~CPlayerBehavior_DashAttack() override {}			//デストラクタ
+
+	//行動
+	void Behavior(CPlayer* player) override {};
+};
 
 //==========================
-//連続攻撃ストラテジー
+//ダッシュ攻撃(1段目)
 //==========================
-//class CContinuousAttack : public CAction_Player
-//{
-//public:
-//	//定数
-//	static const int END_TIME = 30;						//終了までの時間
-//	static const int START_COLLISION = 10;				//コリジョンの判定を始めるカウント
-//	static const int START_CANCEL = 15;					//キャンセルが始める時間
-//	static constexpr float ATTACK_LENGTH = 100.0f;		//攻撃の距離
-//
-//	//メンバ関数
-//	CContinuousAttack();					//コンストラクタ
-//	~CContinuousAttack() override ;			//デストラクタ
-//	HRESULT Init() override ;				//初期化
-//	void Update() override ;				//更新
-//
-//	//パラメーターの設定
-//	void SetCancelTime(int time) { m_nCancelStartTime = time; }			//キャンセル時間の設定
-//	void SetEndTime(int time) { m_nEndTime = time; }					//終了時間の設定
-//	void SetCollisionTime(int time) { m_nCollisionlTime = time; }		//当たり判定出現時間
-//	void SetAttackLength(float length) { m_fAttackLength = length; }	//攻撃の距離の設定
-//	virtual void Cancel() {};											//キャンセルの処理
-//
-//	//パラメータの取得
-//	int GetCount() { return m_nEndCount; }	//カウントの取得
-//
-//private:
-//	int m_nEndCount;				//終了カウント
-//	std::list<CEnemy*> m_HitEnemy;	//当たった敵保存用
-//	int m_nCancelStartTime;			//キャンセル出来るカウント
-//	int m_nEndTime;					//終了時間
-//	int m_nCollisionlTime;			//当たり判定が出現する時間
-//	float m_fAttackLength;			//攻撃の距離
-//};
+class CPlayerBehavior_DashAttack000 : public CPlayerBehavior_DashAttack
+{
+public:
+
+	CPlayerBehavior_DashAttack000() {}
+	CPlayerBehavior_DashAttack000(CPlayer* player);		//コンストラクタ
+	~CPlayerBehavior_DashAttack000() override {}			//デストラクタ
+
+	//行動
+	void Behavior(CPlayer* player) override;
+
+	//キャンセル時の処理
+	void Cancel(CPlayer* player) override;
+};
+
+//==========================
+//ダッシュ攻撃(2段目)
+//==========================
+class CPlayerBehavior_DashAttack001 : public CPlayerBehavior_DashAttack
+{
+public:
+
+	CPlayerBehavior_DashAttack001() {}
+	CPlayerBehavior_DashAttack001(CPlayer* player);		//コンストラクタ
+	~CPlayerBehavior_DashAttack001() override {}			//デストラクタ
+
+	//行動
+	void Behavior(CPlayer* player) override;
+
+	//キャンセル時の処理
+	void Cancel(CPlayer* player) override;
+};
 
 
 #endif

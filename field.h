@@ -17,9 +17,10 @@ class CField : public CObject
 public:
 
 	//定数の宣言
-	static const std::string FILEPATH;	//読み込むファイル
-	static const D3DXVECTOR3 BLOCK;		//ブロック数
-	static const D3DXVECTOR3 SIZE;		//サイズ
+	static const std::string FILEPATH;					//読み込むファイル
+	static const D3DXVECTOR3 BLOCK;						//ブロック数
+	static const D3DXVECTOR3 SIZE;						//サイズ
+	static constexpr float COLLISION_WIDTH{ 1000.0f };	//当たり判定をする幅
 
 	//メンバ関数
 	CField(int nPriority = 3);					//コンストラクタ
@@ -30,6 +31,7 @@ public:
 	void Draw() override;						//描画
 	bool MeshCollision(D3DXVECTOR3& pos);				//メッシュの当たり判定
 	D3DXVECTOR3 ConvertMeshPos(D3DXVECTOR3 pos);		//メッシュの位置に変換
+	D3DXVECTOR3 WidthCollision(D3DXVECTOR3 pos);		//メッシュの横の当たり判定
 
 	static CField* Create(D3DXVECTOR3 pos);		//フィールドの生成
 

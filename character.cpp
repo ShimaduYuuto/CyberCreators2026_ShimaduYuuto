@@ -398,6 +398,9 @@ void CCharacter::UpdatePos()
 	//前回の位置を保存
 	m_OldPos = pos;
 
+	//ゲームシーンの取得
+	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+
 	//重力の処理
 	if (m_bEnableGravity)
 	{
@@ -407,9 +410,6 @@ void CCharacter::UpdatePos()
 	//ゲームシーンなら判定
 	if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
 	{
-		//ゲームシーンの取得
-		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
-
 		//位置に移動量を加算
 		pos += pGame->GetTime()->GetValue<D3DXVECTOR3>(m_Move);
 
@@ -448,6 +448,9 @@ void CCharacter::UpdatePos()
 	//移動量を減衰
 	m_Move.x += (0.0f - m_Move.x) * 0.5f;
 	m_Move.z += (0.0f - m_Move.z) * 0.5f;
+
+	//横の当たり判定
+	pos = pGame->GetGameField()->WidthCollision(pos);
 
 	//パラメータの設定
 	CObject::SetPos(pos);	//位置

@@ -9,7 +9,7 @@
 #include "enemy001.h"
 #include "manager.h"
 #include "game.h"
-#include "state_enemy001.h"
+//#include "state_enemy001.h"
 
 //定数の宣言
 const float CEnemy001::MOVE_VALUE = 2.0f;
@@ -115,7 +115,28 @@ void CEnemy001::SetDamage(int damage, float rotY)
 	//ダメージを受けるかの判定
 	if (!m_bDamageJudge)
 	{
-		return;
+		//絶対値に変換後に角度の誤差を計算する
+		float fAttackRot = rotY;
+		float fRot = GetRot().y;
+		float fMin = rotY - D3DX_PI * 0.5f;
+		float fMax = rotY + D3DX_PI * 0.5f;
+
+		//後ろからの攻撃なら通す
+		if (fRot > fMin && fRot < fMax)
+		{
+			m_bDamageJudge = true;
+
+			//盾を持っているなら
+			if (m_pShield != nullptr)
+			{
+				m_pShield->Uninit();
+				m_pShield = nullptr;
+			}
+		}
+		else
+		{
+			return;
+		}
 	}
 
 	//張り付いていないならダメージ状態に

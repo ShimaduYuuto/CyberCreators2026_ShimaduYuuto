@@ -186,19 +186,21 @@ void CPlayerBehavior_Move::Action(CPlayer* player)
 				{
 					if (pGame->GetLockon()->GetTarget() != nullptr)
 					{
-						//ターゲットにダッシュ
-						D3DXVECTOR3 TagPos = pGame->GetLockon()->GetTarget()->GetPos();
-						D3DXVECTOR3 Length = TagPos - player->GetPos();
-						float fLength = sqrtf((Length.x * Length.x) + (Length.z * Length.z));
+						////ターゲットにダッシュ
+						//D3DXVECTOR3 TagPos = pGame->GetLockon()->GetTarget()->GetPos();
+						//D3DXVECTOR3 Length = TagPos - player->GetPos();
+						//float fLength = sqrtf((Length.x * Length.x) + (Length.z * Length.z));
 
-						//ダッシュが止まる範囲の外ならダッシュ
-						if (fLength > CPlayerBehavior_Dash::STOP_LENGYH)
-						{
-							//ダッシュを生成
-							SetNextBehavior(new CPlayerBehavior_Dash(player));
-						}
+						////ダッシュが止まる範囲の外ならダッシュ
+						//if (fLength > CPlayerBehavior_Dash::STOP_LENGYH)
+						//{
+						//	//ダッシュを生成
+						//	SetNextBehavior(new CPlayerBehavior_Dash(player));
+						//}
+
+						//ダッシュを生成
+						SetNextBehavior(new CPlayerBehavior_Dash(player));
 					}
-
 				}
 			}
 			//ダッシュを生成
@@ -314,7 +316,7 @@ void CPlayerBehavior_Dash::Behavior(CPlayer* player)
 					if (fLength < STOP_LENGYH)
 					{
 						//移動状態にする
-						SetNextBehavior(new CPlayerBehavior_Move(player));
+						SetNextBehavior(new CPlayerBehavior_DashAttack000(player));
 					}
 				}
 				
@@ -852,4 +854,92 @@ void CPlayerBehavior_Smash::Behavior(CPlayer* player)
 		//位置の更新
 		m_pImpact->SetPos(Pos);
 	}
+}
+
+//=================================================
+//ダッシュ攻撃(1段目)
+//=================================================
+
+//============================
+//コンストラクタ
+//============================
+CPlayerBehavior_DashAttack000::CPlayerBehavior_DashAttack000(CPlayer* player) : CPlayerBehavior_DashAttack(player)
+{
+	player->SetMotion(player->PLAYERMOTION_DASHATTACK000);
+	player->SetEnableGravity(false);
+	player->SetMove({ player->GetMove().x, 0.0f, player->GetMove().z });
+}
+
+//============================
+//キャンセル処理
+//============================
+void CPlayerBehavior_DashAttack000::Cancel(CPlayer* player)
+{
+	//左クリックをしたら
+	if (CManager::GetInstance()->GetMouse()->GetTrigger(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_LEFT))
+	{
+		//ゲームシーンの取得
+		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+
+		//ロックオン相手の確認
+		if (pGame->GetLockon() != nullptr)
+		{
+			if (pGame->GetLockon()->GetTarget() != nullptr)
+			{
+				//次の攻撃の生成
+				SetNextBehavior(new CPlayerBehavior_DashAttack001(player));
+			}
+		}
+	}
+}
+
+//============================
+//行動処理(攻撃)
+//============================
+void CPlayerBehavior_DashAttack000::Behavior(CPlayer* player)
+{
+	CPlayerBehavior_Attack::Behavior(player);
+}
+
+//=================================================
+//ダッシュ攻撃(2段目)
+//=================================================
+
+//============================
+//コンストラクタ
+//============================
+CPlayerBehavior_DashAttack001::CPlayerBehavior_DashAttack001(CPlayer* player) : CPlayerBehavior_DashAttack(player)
+{
+	player->SetMotion(player->PLAYERMOTION_DASHATTACK001);
+}
+
+//============================
+//キャンセル処理
+//============================
+void CPlayerBehavior_DashAttack001::Cancel(CPlayer* player)
+{
+	//左クリックをしたら
+	if (CManager::GetInstance()->GetMouse()->GetTrigger(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_LEFT))
+	{
+		//ゲームシーンの取得
+		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+
+		//ロックオン相手の確認
+		if (pGame->GetLockon() != nullptr)
+		{
+			if (pGame->GetLockon()->GetTarget() != nullptr)
+			{
+				//次の攻撃の生成
+				SetNextBehavior(new CPlayerBehavior_DashAttack000(player));
+			}
+		}
+	}
+}
+
+//============================
+//行動処理(攻撃)
+//============================
+void CPlayerBehavior_DashAttack001::Behavior(CPlayer* player)
+{
+	CPlayerBehavior_Attack::Behavior(player);
 }

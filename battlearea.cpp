@@ -99,8 +99,8 @@ void CBattleArea::Update()
 			//âºÇÃìGê∂ê¨
 			CSpawn_Enemy::Create(m_StagePos, CEnemy::ENEMYTYPE_ENEMY000);
 			CSpawn_Enemy::Create(m_StagePos + D3DXVECTOR3(150.0f, 0.0f, 150.0f), CEnemy::ENEMYTYPE_ENEMY000);
-			CSpawn_Enemy::Create(m_StagePos + D3DXVECTOR3(-150.0f, 0.0f, -150.0f), CEnemy::ENEMYTYPE_ENEMY000);
-			m_nEnemyNum += 3;
+			CSpawn_Enemy::Create(m_StagePos + D3DXVECTOR3(-150.0f, 0.0f, -150.0f), CEnemy::ENEMYTYPE_ENEMY001);
+			m_nEnemyNum += 3;	//ê∂ê¨ÇµÇΩìGÇÃêîÇæÇØâ¡éZÇ∑ÇÈ
 
 			CExplodingBarrel::Create(m_StagePos, { 0.0f, 0.0f, 0.0f });
 			CExplodingBarrel::Create(m_StagePos + D3DXVECTOR3(150.0f, 0.0f, 150.0f), { 0.0f, 0.0f, 0.0f });
