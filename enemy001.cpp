@@ -144,10 +144,15 @@ void CEnemy001::SetDamage(int damage, float rotY)
 	{
 		//ó‘Ô‚Ì•ÏX
 		ChangeState(new CState_Enemy001_Damage(this));
-	}
 
-	//Šî’ê‚Ìˆ—
-	CEnemy::SetDamage(damage, rotY);
+		//Šî’ê‚Ìˆ—
+		CEnemy::SetDamage(damage, rotY);
+	}
+	else
+	{
+		//Šî’ê‚Ìˆ—
+		CEnemy::SetDamage(damage);
+	}
 }
 
 //============================

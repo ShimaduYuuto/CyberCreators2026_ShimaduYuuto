@@ -97,10 +97,10 @@ void CBattleArea::Update()
 			CBattleAreaManager::GetInstance()->SetCurrentBattleArea(this);	//Œ»İ‚ÌƒGƒŠƒA‚Æ‚µ‚Ä“o˜^
 
 			//‰¼‚Ì“G¶¬
-			CSpawn_Enemy::Create(m_StagePos, CEnemy::ENEMYTYPE_ENEMY000);
-			CSpawn_Enemy::Create(m_StagePos + D3DXVECTOR3(150.0f, 0.0f, 150.0f), CEnemy::ENEMYTYPE_ENEMY000);
-			CSpawn_Enemy::Create(m_StagePos + D3DXVECTOR3(-150.0f, 0.0f, -150.0f), CEnemy::ENEMYTYPE_ENEMY001);
-			m_nEnemyNum += 3;	//¶¬‚µ‚½“G‚Ì”‚¾‚¯‰ÁZ‚·‚é
+			CSpawn_Enemy::Create(m_StagePos, CEnemy::ENEMYTYPE_ENEMY003);
+			//CSpawn_Enemy::Create(m_StagePos + D3DXVECTOR3(150.0f, 0.0f, 150.0f), CEnemy::ENEMYTYPE_ENEMY003);
+			//CSpawn_Enemy::Create(m_StagePos + D3DXVECTOR3(-150.0f, 0.0f, -150.0f), CEnemy::ENEMYTYPE_ENEMY003);
+			m_nEnemyNum += 1;	//¶¬‚µ‚½“G‚Ì”‚¾‚¯‰ÁZ‚·‚é
 
 			CExplodingBarrel::Create(m_StagePos, { 0.0f, 0.0f, 0.0f });
 			CExplodingBarrel::Create(m_StagePos + D3DXVECTOR3(150.0f, 0.0f, 150.0f), { 0.0f, 0.0f, 0.0f });

@@ -14,6 +14,17 @@
 //======================================================================
 
 //====================================
+//コンストラクタ
+//====================================
+CEnemyAction_Chase001::CEnemyAction_Chase001(CEnemy* enemy)
+{
+	//モーションの設定
+	enemy->SetMotion(1);
+	CEnemy001* enemy001 = (CEnemy001*)enemy;
+	enemy001->SetDamageJudge(false);
+}
+
+//====================================
 //次の行動を設定
 //====================================
 void CEnemyAction_Chase001::NextAction(CEnemy* enemy)
@@ -22,21 +33,22 @@ void CEnemyAction_Chase001::NextAction(CEnemy* enemy)
 	SetNextAction(new CEnemyAction_Attack001(enemy));
 }
 
+//======================================================================
+//攻撃
+//======================================================================
 
 //====================================
 //コンストラクタ
 //====================================
-CEnemy001Attack::CEnemy001Attack()
+CEnemyAction_Attack001::CEnemyAction_Attack001(CEnemy* enemy)
 {
-	SetParam();
-}
+	//設定
+	GetAttackInstanse()->SetCollisionTime(45);
+	GetAttackInstanse()->SetEndTime(100.0f);
+	GetAttackInstanse()->SetDamageValue(1);
+	SetAttackLength(50.0f);
 
-//====================================
-//コンストラクタ(オーバーロード)
-//====================================
-CEnemy001Attack::CEnemy001Attack(CEnemy* enemy)
-{
-	//初期化
-	enemy->SetMotion(CEnemy001::ENEMY001MOTION_ATTACK);
-	SetParam();
+	enemy->SetMotion(5);
+	CEnemy001* enemy001 = (CEnemy001*)enemy;
+	enemy001->SetDamageJudge(true);
 }

@@ -20,6 +20,7 @@ CObjectX::CObjectX(int nPriority) : CObject(nPriority)
 {
 	//パラメータの初期化
 	m_rot = { 0.0f, 0.0f, 0.0f };	//向き
+	m_Scale = { 1.0f, 1.0f, 1.0f };	//スケール
 }
 
 //============================
@@ -66,7 +67,7 @@ void CObjectX::Draw()
 {
 	//ローカル変数宣言
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
-	D3DXMATRIX mtxRot, mtxTrans;										//計算用マトリックス
+	D3DXMATRIX mtxRot, mtxTrans, mtxScale;								//計算用マトリックス
 	D3DMATERIAL9 matDef;												//現在のマテリアル保存用
 	D3DXMATERIAL* pMat;													//マテリアルデータへのポインタ
 	D3DXVECTOR3 Pos = GetPos();											//位置の取得
@@ -76,6 +77,11 @@ void CObjectX::Draw()
 
 	//ワールドの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
+
+	//スケールを反映
+	D3DXMatrixScaling(&mtxScale, m_Scale.x, m_Scale.y, m_Scale.z);
+
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxScale);
 
 	//向きを反映
 	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
@@ -138,7 +144,7 @@ void CObjectX::Draw(const char* pfilepath)
 {
 	//ローカル変数宣言
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
-	D3DXMATRIX mtxRot, mtxTrans;										//計算用マトリックス
+	D3DXMATRIX mtxRot, mtxTrans, mtxScale;								//計算用マトリックス
 	D3DMATERIAL9 matDef;												//現在のマテリアル保存用
 	D3DXMATERIAL* pMat;													//マテリアルデータへのポインタ
 	D3DXVECTOR3 Pos = GetPos();											//位置の取得
@@ -148,6 +154,11 @@ void CObjectX::Draw(const char* pfilepath)
 
 	//ワールドの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
+
+	//スケールを反映
+	D3DXMatrixScaling(&mtxScale, m_Scale.x, m_Scale.y, m_Scale.z);
+
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxScale);
 
 	//向きを反映
 	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);

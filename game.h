@@ -16,6 +16,7 @@
 #include "enemymanager.h"
 #include "gimmickmanager.h"
 #include "explosionmanager.h"
+#include "enemybulletmanager.h"
 #include "lockon.h"
 
 class CPlayer;
@@ -41,6 +42,7 @@ public:
 	CEnemyManager* GetEnemyManager() { if (m_pEnemyManager == nullptr) { return nullptr; } return m_pEnemyManager; }			//エネミーマネージャーの取得
 	CGimmickManager* GetGimmickManager() { if (m_pGimmickManager == nullptr) { return nullptr; } return m_pGimmickManager; }	//ギミックマネージャーの取得
 	CExplosionManager* GetExplosionManager() { if (m_pExplosionManager == nullptr) { return nullptr; } return m_pExplosionManager; }	//爆発マネージャーの取得
+	CEnemyBulletManager* GetEnemyBulletManager() { if (m_pEnemyBulletManager == nullptr)  { return nullptr; } return m_pEnemyBulletManager;}	//エネミー弾の取得
 	CLockon* GetLockon() { if (m_pLockon == nullptr) { return nullptr; } return m_pLockon; }									//ロックオンの取得
 	void SetLockon(bool lockon);																								//ロックオンの設定
 
@@ -54,7 +56,8 @@ private:
 	CEnemyManager* m_pEnemyManager;		//エネミーマネージャー
 	CGimmickManager* m_pGimmickManager;	//ギミックマネージャー
 	CExplosionManager* m_pExplosionManager;	//爆発マネージャー
-	CLockon* m_pLockon;					//ロックオン
+	CLockon* m_pLockon;						//ロックオン
+	CEnemyBulletManager* m_pEnemyBulletManager;	//エネミー弾マネージャー
 
 	//クリア判定
 	bool m_bClear;;

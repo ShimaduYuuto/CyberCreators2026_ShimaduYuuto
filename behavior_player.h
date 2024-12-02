@@ -379,6 +379,7 @@ public:
 	static constexpr int END_TIME{ 20 };			//終了までの時間
 	static constexpr int START_COLLISION{ 4 };	//コリジョンの判定を始めるカウント
 	static constexpr int START_CANCELTIME{ 10 };	//キャンセルが始める時間
+	static constexpr float ATTACK_LENGTH{ 75.0f };		//攻撃の距離
 
 	CPlayerBehavior_DashAttack() {}
 	CPlayerBehavior_DashAttack(CPlayer* player)
@@ -387,6 +388,7 @@ public:
 		SetCancelTime(START_CANCELTIME);	//キャンセル
 		SetEndTime(END_TIME);				//終了時間
 		SetCollisionTime(START_COLLISION);	//当たり判定
+		SetAttackLength(ATTACK_LENGTH);		//攻撃の距離
 	}
 	~CPlayerBehavior_DashAttack() override {}			//デストラクタ
 

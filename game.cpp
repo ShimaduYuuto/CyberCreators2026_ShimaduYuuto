@@ -83,12 +83,18 @@ HRESULT CGame::Init()
 		m_pExplosionManager = new CExplosionManager;
 	}
 
+	//エネミー弾マネージャーの生成
+	if (m_pEnemyBulletManager == nullptr)
+	{
+		m_pEnemyBulletManager = new CEnemyBulletManager;
+	}
+
 	//バトルエリアの初期化
 	CBattleAreaManager::GetInstance()->Init();
 
 	//CExplodingBarrel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f });
 	CSky::Create();
-	//CModel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, CModel::MODEL_TYPE_TREE);
+	CModel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, CModel::MODEL_TYPE_TREE);
 	
 	return S_OK;
 }
@@ -134,6 +140,13 @@ void CGame::Uninit()
 	{
 		delete m_pExplosionManager;
 		m_pExplosionManager = nullptr;
+	}
+
+	//メモリの破棄
+	if (m_pEnemyBulletManager != nullptr)
+	{
+		delete m_pEnemyBulletManager;
+		m_pEnemyBulletManager = nullptr;
 	}
 
 	//メモリの破棄

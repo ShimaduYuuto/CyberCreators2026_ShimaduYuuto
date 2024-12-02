@@ -451,6 +451,29 @@ void CPlayerBehavior_Attack::Behavior(CPlayer* player)
 				}
 			}
 
+			//弾との当たり判定
+			for (auto& iter : pGame->GetEnemyBulletManager()->GetList())
+			{
+				//反射済みは飛ばす
+				if (iter->GetReflection())
+				{
+					continue;
+				}
+
+				//敵の位置を取得
+				D3DXVECTOR3 Length = iter->GetCollision()->GetPos() - AttackPos;
+
+				float fXZ = sqrtf(Length.x * Length.x + Length.z * Length.z); //XZ距離を算出する
+				float fXY = sqrtf(Length.x * Length.x + Length.y * Length.y); //XY距離を算出する
+				float fLength = sqrtf(fXZ * fXZ + fXY * fXY);	//距離を算出
+
+				//敵の判定内なら
+				if (fLength < m_fAttackLength + iter->GetCollision()->GetRadius())
+				{
+					iter->Reflection();
+				}
+			}
+
 			//キャンセルのカウント以上になったら
 			if (m_nEndCount > m_nCancelStartTime)
 			{

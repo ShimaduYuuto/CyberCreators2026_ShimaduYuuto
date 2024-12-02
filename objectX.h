@@ -34,11 +34,14 @@ public:
 	D3DXVECTOR3& GetRot() { return m_rot; }						//向きを取得
 	void SetMtx(D3DXMATRIX mtx) { m_mtxWorld = mtx; }			//マトリックスの設定
 	D3DXMATRIX& GetMtx() { return m_mtxWorld; }					//マトリックスの取得
+	void SetScale(D3DXVECTOR3 scale) { m_Scale = scale; }		//スケールの設定
+	D3DXVECTOR3& GetScale() { return m_Scale; }					//スケールの取得
 
 private:
 
 	//メンバ変数
 	D3DXMATRIX m_mtxWorld;			//マトリックス
+	D3DXVECTOR3 m_Scale;			//スケール
 	D3DXVECTOR3 m_rot;				//向き
 };
 

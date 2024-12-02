@@ -70,7 +70,10 @@ public:
 	void DamageEffect(CPlayer* player) override;
 
 	//ƒ_ƒ[ƒW”»’è
-	void SetDamageJudge(bool judge) { m_bDamageJudge = judge; }	//İ’è
+	void SetDamageJudge(bool judge) { 
+		if (judge && m_pShield == nullptr) { return; }
+		m_bDamageJudge = judge; 
+	}	//İ’è
 	bool GetDamageJudge() { return m_bDamageJudge; }			//æ“¾
 
 private:

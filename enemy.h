@@ -32,6 +32,8 @@ public:
 	{
 		ENEMYTYPE_ENEMY000 = 0,	//通常のエネミー
 		ENEMYTYPE_ENEMY001,		//盾持ちのエネミー
+		ENEMYTYPE_ENEMY002,		//ボスのエネミー
+		ENEMYTYPE_ENEMY003,		//突進のエネミー
 		ENEMYTYPE_MAX,			//最大値
 	}ENEMYTYPE;
 

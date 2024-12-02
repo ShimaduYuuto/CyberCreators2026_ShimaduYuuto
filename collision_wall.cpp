@@ -99,6 +99,15 @@ void CCollision_Wall::Draw()
 
 	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
+	//カリング方法を変更
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
+
+	//描画処理
+	CObjectCylinder::Draw(FILEPATH.c_str());
+
+	//カリング方法を変更
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
 	//描画処理
 	CObjectCylinder::Draw(FILEPATH.c_str());
 

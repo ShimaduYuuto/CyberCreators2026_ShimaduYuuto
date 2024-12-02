@@ -1,32 +1,28 @@
 //======================================
 //
-//	エネミーの処理[enemy000.cpp]
+//	エネミーの処理[enemy002.cpp]
 //	Author : Yuuto Shimadu
 //
 //======================================
 
 //ヘッダーのインクルード
-#include "enemy000.h"
+#include "enemy002.h"
 #include "manager.h"
-#include "state_enemy000.h"
-
-//定数の宣言
-const float CEnemy000::MOVE_VALUE = 2.0f;
-const float CEnemy000::STARTATTACK_RANGE = 50.0f;
+#include "state_enemy002.h"
 
 //============================
 //エネミーのコンストラクタ
 //============================
-CEnemy000::CEnemy000()
+CEnemy002::CEnemy002()
 {
 	//ポインタに行動を設定
-	ChangeState(new CState_Enemy000_Normal(this));
+	ChangeState(new CState_Enemy002_Normal(this));
 }
 
 //============================
 //エネミーのデストラクタ
 //============================
-CEnemy000::~CEnemy000()
+CEnemy002::~CEnemy002()
 {
 
 }
@@ -34,7 +30,7 @@ CEnemy000::~CEnemy000()
 //============================
 //エネミーの初期化
 //============================
-HRESULT CEnemy000::Init()
+HRESULT CEnemy002::Init()
 {
 	//初期化
 	CEnemy::Init();
@@ -43,7 +39,7 @@ HRESULT CEnemy000::Init()
 	CCharacter::SetLife(20);	//体力
 
 	//モーションの読み込み
-	SetMotionInfo("data\\enemy010motion.txt");
+	SetMotionInfo("data\\enemy012motion.txt");
 
 	return S_OK;
 }
@@ -51,7 +47,7 @@ HRESULT CEnemy000::Init()
 //============================
 //エネミーの終了処理
 //============================
-void CEnemy000::Uninit()
+void CEnemy002::Uninit()
 {
 	//初期化
 	CEnemy::Uninit();
@@ -60,7 +56,7 @@ void CEnemy000::Uninit()
 //============================
 //エネミーの更新
 //============================
-void CEnemy000::Update()
+void CEnemy002::Update()
 {
 	//死亡フラグが立っているなら抜ける
 	if (GetDeath())
@@ -75,7 +71,7 @@ void CEnemy000::Update()
 //============================
 //エネミーの描画
 //============================
-void CEnemy000::Draw()
+void CEnemy002::Draw()
 {
 	//描画
 	CCharacter::Draw();
@@ -84,13 +80,13 @@ void CEnemy000::Draw()
 //============================
 //ダメージの設定
 //============================
-void CEnemy000::SetDamage(int damage, float rotY)
+void CEnemy002::SetDamage(int damage, float rotY)
 {
 	//張り付いていないならダメージ状態に
 	if (!GetEnteredStick())
 	{
 		//状態の変更
-		ChangeState(new CState_Enemy000_Damage(this));
+		ChangeState(new CState_Enemy002_Damage(this));
 
 		//基底の処理
 		CEnemy::SetDamage(damage, rotY);

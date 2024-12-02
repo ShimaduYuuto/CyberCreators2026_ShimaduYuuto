@@ -96,7 +96,7 @@ HRESULT CField::Init()
 		pVtx[nCount].nor = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 		//頂点カラーの設定
-		pVtx[nCount].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[nCount].col = D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f);
 	}
 
 	//インデックスの計算用の変数

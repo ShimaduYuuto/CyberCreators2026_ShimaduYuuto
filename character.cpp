@@ -545,10 +545,6 @@ void CCharacter::SetDamage(int damage)
 	//ダメージを受ける
 	m_nLife -= damage;
 
-	//ダメージを受けている状態
-	//m_DamageState = DAMAGESTATE_DAMAGE;
-	//m_nDamageStateCount = DAMAGE_TIME;	//ダメージ時間の設定
-
 	//0未満なら0にする
 	if (m_nLife <= 0)
 	{

@@ -11,6 +11,8 @@
 #include "game.h"
 #include "enemy000.h"
 #include "enemy001.h"
+#include "enemy002.h"
+#include "enemy003.h"
 #include "state_enemy_damage.h"
 #include "battleareamanager.h"
 
@@ -40,7 +42,6 @@ CEnemy::CEnemy(int nPriority) :
 		{
 			m_Collision = CCollision::Create(GetSizeRadius(), D3DXVECTOR3(0.0f, 30.0f, 0.0f));
 		}
-		
 	}
 }
 
@@ -166,6 +167,18 @@ CEnemy* CEnemy::Create(D3DXVECTOR3 pos, ENEMYTYPE type)
 
 	//“G‚Ìƒƒ‚ƒŠŠm•Û
 		pEnemy = new CEnemy001;
+		break;
+
+	case ENEMYTYPE_ENEMY002:	//ƒ{ƒX‚Ì“G
+
+	//“G‚Ìƒƒ‚ƒŠŠm•Û
+		pEnemy = new CEnemy002;
+		break;
+
+	case ENEMYTYPE_ENEMY003:	//“Ëi‚Ì“G
+
+	//“G‚Ìƒƒ‚ƒŠŠm•Û
+		pEnemy = new CEnemy003;
 		break;
 	}
 

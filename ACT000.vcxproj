@@ -163,6 +163,8 @@
     <ClInclude Include="behavior_enemy.h" />
     <ClInclude Include="behavior_enemy000.h" />
     <ClInclude Include="behavior_enemy001.h" />
+    <ClInclude Include="behavior_enemy002.h" />
+    <ClInclude Include="behavior_enemy003.h" />
     <ClInclude Include="behavior_player.h" />
     <ClInclude Include="billboardeffect.h" />
     <ClInclude Include="camera.h" />
@@ -175,6 +177,10 @@
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemy000.h" />
     <ClInclude Include="enemy001.h" />
+    <ClInclude Include="enemy002.h" />
+    <ClInclude Include="enemy003.h" />
+    <ClInclude Include="enemybullet.h" />
+    <ClInclude Include="enemybulletmanager.h" />
     <ClInclude Include="enemymanager.h" />
     <ClInclude Include="explodingbarrel.h" />
     <ClInclude Include="explosion.h" />
@@ -230,6 +236,8 @@
     <ClInclude Include="state_enemy.h" />
     <ClInclude Include="state_enemy000.h" />
     <ClInclude Include="state_enemy001.h" />
+    <ClInclude Include="state_enemy002.h" />
+    <ClInclude Include="state_enemy003.h" />
     <ClInclude Include="state_enemy_blow.h" />
     <ClInclude Include="state_enemy_damage.h" />
     <ClInclude Include="state_enemy_normal.h" />
@@ -262,6 +270,8 @@
     <ClCompile Include="behavior_enemy.cpp" />
     <ClCompile Include="behavior_enemy000.cpp" />
     <ClCompile Include="behavior_enemy001.cpp" />
+    <ClCompile Include="behavior_enemy002.cpp" />
+    <ClCompile Include="behavior_enemy003.cpp" />
     <ClCompile Include="behavior_player.cpp" />
     <ClCompile Include="billboardeffect.cpp" />
     <ClCompile Include="camera.cpp" />
@@ -274,6 +284,10 @@
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemy000.cpp" />
     <ClCompile Include="enemy001.cpp" />
+    <ClCompile Include="enemy002.cpp" />
+    <ClCompile Include="enemy003.cpp" />
+    <ClCompile Include="enemybullet.cpp" />
+    <ClCompile Include="enemybulletmanager.cpp" />
     <ClCompile Include="enemymanager.cpp" />
     <ClCompile Include="explodingbarrel.cpp" />
     <ClCompile Include="explosion.cpp" />
