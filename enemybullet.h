@@ -46,6 +46,10 @@ public:
 	//”½Ë‚³‚¹‚éˆ—
 	void Reflection();	//”½Ëˆ—
 
+	//Œ‚‚½‚ê‚½‚©
+	void SetShooting(bool shooting) { m_bShooting = shooting; }	//İ’è
+	bool GetShooting() { return m_bShooting; }					//æ“¾
+
 	//“–‚½‚è”»’è
 	CCollision* GetCollision() { return m_Collision; }		//æ“¾
 
@@ -55,6 +59,7 @@ private:
 	D3DXVECTOR3 m_Move;			//ˆÚ“®—Ê
 	float m_fSizeRate;			///ƒTƒCƒY”{—¦
 	bool m_bReflection;			//”½Ë‚µ‚½‚©
+	bool m_bShooting;			//Œ‚‚½‚ê‚½‚©
 	CCollision* m_Collision;	//“–‚½‚è”»’è
 };
 

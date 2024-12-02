@@ -40,7 +40,7 @@ public:
 	void Draw() override;				//描画
 
 	//ダメージの設定
-	void SetDamage(int damage, float rotY) override;	//ダメージの設定
+	bool SetDamage(int damage, float rotY) override;	//ダメージの設定
 
 	//状態のリセット
 	void StateReset() override
@@ -54,6 +54,12 @@ public:
 	void ChangeStickState() override
 	{
 		ChangeState(new CState_Enemy000_Stick(this));
+	}
+
+	//スタン状態に変更
+	void ChangeStanState() override
+	{
+		ChangeState(new CState_Enemy000_Stan(this));
 	}
 };
 

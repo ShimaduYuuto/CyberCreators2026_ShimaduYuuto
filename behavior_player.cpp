@@ -455,7 +455,7 @@ void CPlayerBehavior_Attack::Behavior(CPlayer* player)
 			for (auto& iter : pGame->GetEnemyBulletManager()->GetList())
 			{
 				//反射済みは飛ばす
-				if (iter->GetReflection())
+				if (iter->GetReflection() || !iter->GetShooting())
 				{
 					continue;
 				}
@@ -503,10 +503,13 @@ void CPlayerBehavior_Attack::Behavior(CPlayer* player)
 void CPlayerBehavior_Attack::Damage(CPlayer* player, CEnemy* enemy, int damage)
 {
 	//ダメージ
-	enemy->SetDamage(damage, player->GetRot().y);
-	enemy->DamageEffect(player);
-	CEffect_HitAttack::Create(enemy->GetCollision()->GetPos());
-	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_ATTACK);
+	if (enemy->SetDamage(damage, player->GetRot().y))
+	{
+		//ヒット時の処理
+		enemy->DamageEffect(player);
+		CEffect_HitAttack::Create(enemy->GetCollision()->GetPos());
+		CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_ATTACK);
+	}
 }
 
 //============================
@@ -666,19 +669,26 @@ void CPlayerBehavior_NormalAttack002::Behavior(CPlayer* player)
 //============================
 void CPlayerBehavior_NormalAttack002::Damage(CPlayer* player, CEnemy* enemy, int damage)
 {
+	//ヒットしたか
+	bool bHit = false;
+
 	//キャンセルカウントの加算
 	if (m_nCancelCount < ACCEPT_CANCELTIME)
 	{
-		enemy->SetBlowDamage(damage, player->GetRot().y);
+		bHit = enemy->SetBlowDamage(damage, player->GetRot().y);
 	}
 	else
 	{
 		//ダメージ
-		enemy->SetBlowDamage(damage * 3, player->GetRot().y, m_fChargeRate * 0.5f);
+		bHit = enemy->SetBlowDamage(damage * 3, player->GetRot().y, m_fChargeRate * 0.5f);
 	}
 
-	CEffect_HitAttack::Create(enemy->GetCollision()->GetPos());
-	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_ATTACK);
+	//ヒット時の処理
+	if (bHit)
+	{
+		CEffect_HitAttack::Create(enemy->GetCollision()->GetPos());
+		CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_ATTACK);
+	}
 }
 
 //=================================================

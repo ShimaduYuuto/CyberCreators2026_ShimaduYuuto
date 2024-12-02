@@ -54,10 +54,10 @@ public:
 	virtual bool SetBlowOff();
 
 	//ダメージの設定
-	void SetDamage(int damage) override;			//ダメージの設定
-	virtual void SetDamage(int damage, float rotY);	//ダメージの設定
-	void SetBlowDamage(int damage, float rotY);		//吹き飛ばしてダメージを与える
-	void SetBlowDamage(int damage, float rotY, float value);		//吹き飛ばしてダメージを与える
+	bool SetDamage(int damage) override;							//ダメージの設定
+	virtual bool SetDamage(int damage, float rotY);					//ダメージの設定
+	virtual bool SetBlowDamage(int damage, float rotY);				//吹き飛ばしてダメージを与える
+	virtual bool SetBlowDamage(int damage, float rotY, float value);//吹き飛ばしてダメージを与える
 
 	//状態変更
 	void ChangeState(CState_Enemy* state);
@@ -74,6 +74,12 @@ public:
 
 	//貼り付け状態に変更
 	virtual void ChangeStickState()
+	{
+
+	}
+
+	//スタン状態に変更
+	virtual void ChangeStanState()
 	{
 
 	}

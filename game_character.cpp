@@ -180,7 +180,7 @@ D3DXVECTOR3 CGame_Character::GravityMove(D3DXVECTOR3 move)
 //============================
 //キャラクターのダメージを設定
 //============================
-void CGame_Character::SetDamage(int damage)
+bool CGame_Character::SetDamage(int damage)
 {
 	//ダメージを受ける
 	m_nLife -= damage;
@@ -193,6 +193,8 @@ void CGame_Character::SetDamage(int damage)
 
 		Uninit();
 	}
+
+	return true;
 }
 
 //============================

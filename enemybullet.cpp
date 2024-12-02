@@ -19,7 +19,8 @@ const std::string CEnemyBullet::FILEPATH = "data\\MODEL\\enemybullet.x";
 CEnemyBullet::CEnemyBullet(int nPriority) : CObjectX(nPriority),
 	m_Move(),
 	m_fSizeRate(0.0f),
-	m_bReflection(false)
+	m_bReflection(false),
+	m_bShooting(false)
 {
 	m_fSizeRate = 1.0f;
 
@@ -103,23 +104,73 @@ void CEnemyBullet::Update()
 		m_Collision->Update(Pos);
 	}
 
-	//ゲームシーンの取得
-	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
-
-	//変数宣言
-	D3DXVECTOR3 PlayerPos = pGame->GetGamePlayer()->GetPos();	//プレイヤーの位置
-
-	//距離を計算
-	float fXZ = sqrtf((m_Collision->GetPos().x - PlayerPos.x) * (m_Collision->GetPos().x - PlayerPos.x) + (m_Collision->GetPos().z - PlayerPos.z) * (m_Collision->GetPos().z - PlayerPos.z)); //距離を算出する
-	float fXY = sqrtf((m_Collision->GetPos().x - PlayerPos.x) * (m_Collision->GetPos().x - PlayerPos.x) + (m_Collision->GetPos().y - PlayerPos.y) * (m_Collision->GetPos().y - PlayerPos.y)); //距離を算出する
-	float fLength = sqrtf(fXZ * fXZ + fXY * fXY);	//距離を算出
-
-	//攻撃の範囲内なら
-	if (fLength < m_Collision->GetRadius() + 20.0f)
+	//撃たれていないなら抜ける
+	if (!m_bShooting)
 	{
-		//プレイヤーにダメージを与える
-		pGame->GetGamePlayer()->SetDamage(1);
-		Uninit();
+		return;
+	}
+
+	//反射されていないならプレイヤーに当たる
+	if (!m_bReflection)
+	{
+		//ゲームシーンの取得
+		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+
+		//変数宣言
+		D3DXVECTOR3 PlayerPos = pGame->GetGamePlayer()->GetPos();	//プレイヤーの位置
+
+		//距離を計算
+		float fXZ = sqrtf((m_Collision->GetPos().x - PlayerPos.x) * (m_Collision->GetPos().x - PlayerPos.x) + (m_Collision->GetPos().z - PlayerPos.z) * (m_Collision->GetPos().z - PlayerPos.z)); //距離を算出する
+		float fXY = sqrtf((m_Collision->GetPos().x - PlayerPos.x) * (m_Collision->GetPos().x - PlayerPos.x) + (m_Collision->GetPos().y - PlayerPos.y) * (m_Collision->GetPos().y - PlayerPos.y)); //距離を算出する
+		float fLength = sqrtf(fXZ * fXZ + fXY * fXY);	//距離を算出
+
+		//攻撃の範囲内なら
+		if (fLength < m_Collision->GetRadius() + 20.0f)
+		{
+			//プレイヤーにダメージを与える
+			pGame->GetGamePlayer()->SetDamage(1);
+			Uninit();
+
+			//カメラを揺らす
+			CManager::GetInstance()->GetCamera()->SetShake(20, 30);	//ヒット時カメラを揺らす
+		}
+	}
+	else
+	{
+		//ゲームシーンの取得
+		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+
+		//敵の周回
+		for (auto& iter : pGame->GetEnemyManager()->GetList())
+		{
+			//当たったか
+			bool bHit = false;
+
+			//すでに当たっていたら飛ばす
+			if (bHit)
+			{
+				continue;
+			}
+
+			//敵の位置を取得
+			D3DXVECTOR3 Length = iter->GetCollision()->GetPos() - m_Collision->GetPos();
+
+			float fXZ = sqrtf(Length.x * Length.x + Length.z * Length.z); //XZ距離を算出する
+			float fXY = sqrtf(Length.x * Length.x + Length.y * Length.y); //XY距離を算出する
+			float fLength = sqrtf(fXZ * fXZ + fXY * fXY);	//距離を算出
+
+			//敵の判定内なら
+			if (fLength < iter->GetCollision()->GetRadius() + m_Collision->GetRadius())
+			{
+				//ダメージ処理
+				iter->ChangeStanState();
+				iter->SetDamage(3);
+				Uninit();
+
+				CManager::GetInstance()->GetCamera()->SetShake(20, 30);	//ヒット時カメラを揺らす
+				break;
+			}
+		}
 	}
 
 	//ゲームオブジェクトの共通処理更新

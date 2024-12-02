@@ -52,7 +52,7 @@ public:
 	void Uninit() override;					//終了
 	void Update() override;					//更新
 	void Draw() override;					//描画
-	void SetDamage(int damage) override;	//ダメージを設定
+	bool SetDamage(int damage) override;	//ダメージを設定
 	D3DXVECTOR3 GravityMove(D3DXVECTOR3 move) override;	//重力の処理
 	void UpdatePos() override;				//位置の更新
 

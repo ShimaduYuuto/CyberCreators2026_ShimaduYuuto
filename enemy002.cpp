@@ -80,8 +80,31 @@ void CEnemy002::Draw()
 //============================
 //ダメージの設定
 //============================
-void CEnemy002::SetDamage(int damage, float rotY)
+bool CEnemy002::SetDamage(int damage)
 {
+	//実体化していないなら当たらない
+	if (!m_bMaterialized)
+	{
+		return false;
+	}
+
+	//基底の処理
+	CEnemy::SetDamage(damage);
+
+	return true;
+}
+
+//============================
+//ダメージの設定
+//============================
+bool CEnemy002::SetDamage(int damage, float rotY)
+{
+	//実体化していないなら当たらない
+	if (!m_bMaterialized)
+	{
+		return false;
+	}
+
 	//張り付いていないならダメージ状態に
 	if (!GetEnteredStick())
 	{
@@ -96,4 +119,38 @@ void CEnemy002::SetDamage(int damage, float rotY)
 		//基底の処理
 		CEnemy::SetDamage(damage);
 	}
+
+	return true;
+}
+
+//============================
+//ダメージの設定
+//============================
+bool CEnemy002::SetBlowDamage(int damage, float rotY)
+{
+	//実体化していないなら当たらない
+	if (!m_bMaterialized)
+	{
+		return false;
+	}
+
+	CEnemy::SetBlowDamage(damage, rotY);
+
+	return true;
+}
+
+//============================
+//ダメージの設定
+//============================
+bool CEnemy002::SetBlowDamage(int damage, float rotY, float value)
+{
+	//実体化していないなら当たらない
+	if (!m_bMaterialized)
+	{
+		return false;
+	}
+
+	CEnemy::SetBlowDamage(damage, rotY, value);
+
+	return true;
 }

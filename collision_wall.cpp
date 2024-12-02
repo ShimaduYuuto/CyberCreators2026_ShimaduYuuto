@@ -97,10 +97,11 @@ void CCollision_Wall::Draw()
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
+	//ライトをオフ
 	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	//カリング方法を変更
-	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	//描画処理
 	CObjectCylinder::Draw(FILEPATH.c_str());
@@ -108,9 +109,7 @@ void CCollision_Wall::Draw()
 	//カリング方法を変更
 	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
-	//描画処理
-	CObjectCylinder::Draw(FILEPATH.c_str());
-
+	//ライトをオン
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 

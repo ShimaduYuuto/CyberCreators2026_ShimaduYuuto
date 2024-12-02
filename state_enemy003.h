@@ -15,6 +15,7 @@
 #include "state_enemy_damage.h"
 #include "state_enemy_blow.h"
 #include "state_enemy_stick.h"
+#include "state_enemy_stan.h"
 
 //========================
 //通常状態
@@ -110,6 +111,33 @@ public:
 	void UpdateState(CEnemy* enemy) override
 	{
 		CState_Enemy_Stick::UpdateState(enemy);
+	}
+};
+
+//========================
+//スタン状態
+//========================
+class CState_Enemy003_Stan : public CState_Enemy_Stan
+{
+public:
+
+	//メンバ関数
+	CState_Enemy003_Stan()
+	{
+		SetAction(new CEnemyAction());
+		SetEndTime(60);
+	};	//コンストラクタ
+
+	CState_Enemy003_Stan(CEnemy* enemy)
+	{
+		SetAction(new CEnemyAction());
+		SetEndTime(180);
+	};	//コンストラクタ
+
+	//状態の更新
+	void UpdateState(CEnemy* enemy) override
+	{
+		CState_Enemy_Stan::UpdateState(enemy);
 	}
 };
 

@@ -195,19 +195,21 @@ CEnemy* CEnemy::Create(D3DXVECTOR3 pos, ENEMYTYPE type)
 //============================
 //ダメージの設定
 //============================
-void CEnemy::SetDamage(int damage)
+bool CEnemy::SetDamage(int damage)
 {
 	//攻撃を止める
-	SetMotion(0);
+	//SetMotion(0);
 
 	//ダメージの設定
 	CCharacter::SetDamage(damage);
+
+	return true;
 }
 
 //============================
 //ダメージの設定
 //============================
-void CEnemy::SetDamage(int damage, float rotY)
+bool CEnemy::SetDamage(int damage, float rotY)
 {
 	//ノックバックの設定
 	D3DXVECTOR3 Move = {sinf(rotY + D3DX_PI) * VALUE_KNOCKBACK, 0.0f, cosf(rotY + D3DX_PI) * VALUE_KNOCKBACK };
@@ -217,12 +219,14 @@ void CEnemy::SetDamage(int damage, float rotY)
 
 	//ダメージの設定
 	CEnemy::SetDamage(damage);
+
+	return true;
 }
 
 //============================
 //吹き飛ばしてダメージの設定
 //============================
-void CEnemy::SetBlowDamage(int damage, float rotY)
+bool CEnemy::SetBlowDamage(int damage, float rotY)
 {
 	//浮かせながら吹き飛ばす
 	AddMove(D3DXVECTOR3(0.0f, 7.0f, 0.0f));
@@ -233,22 +237,26 @@ void CEnemy::SetBlowDamage(int damage, float rotY)
 
 	//吹き飛び状態に変更
 	ChangeState(new CState_Enemy_Blow(this));
+
+	return true;
 }
 
 //============================
 //吹き飛ばしてダメージの設定
 //============================
-void CEnemy::SetBlowDamage(int damage, float rotY, float value)
+bool CEnemy::SetBlowDamage(int damage, float rotY, float value)
 {
 	//浮かせながら吹き飛ばす
 	AddMove(D3DXVECTOR3(0.0f, 7.0f, 0.0f));
 	D3DXVECTOR3 Blow = { sinf(rotY + D3DX_PI) * value, 0.0f, cosf(rotY + D3DX_PI) * value };
 	SetBlowValue(Blow);
 	SetOnStand(false);
-	CEnemy::SetDamage(damage, rotY);
+	SetDamage(damage, rotY);
 
 	//吹き飛び状態に変更
 	ChangeState(new CState_Enemy_Blow(this));
+
+	return true;
 }
 
 //============================
@@ -270,7 +278,7 @@ bool CEnemy::SetBlowOff()
 void CEnemy::ChangeState(CState_Enemy* state)
 {
 	//チェック後に開放
-	if (m_pState == nullptr)
+	if (m_pState != nullptr)
 	{
 		delete m_pState;
 	}

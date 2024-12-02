@@ -101,16 +101,18 @@ void CEnemy001::Draw()
 //============================
 //ダメージの設定
 //============================
-void CEnemy001::SetDamage(int damage)
+bool CEnemy001::SetDamage(int damage)
 {
 	//ダメージの設定
 	CEnemy::SetDamage(damage);
+
+	return true;
 }
 
 //============================
 //ダメージの設定
 //============================
-void CEnemy001::SetDamage(int damage, float rotY)
+bool CEnemy001::SetDamage(int damage, float rotY)
 {
 	//ダメージを受けるかの判定
 	if (!m_bDamageJudge)
@@ -135,7 +137,7 @@ void CEnemy001::SetDamage(int damage, float rotY)
 		}
 		else
 		{
-			return;
+			return false;
 		}
 	}
 
@@ -153,6 +155,8 @@ void CEnemy001::SetDamage(int damage, float rotY)
 		//基底の処理
 		CEnemy::SetDamage(damage);
 	}
+
+	return true;
 }
 
 //============================

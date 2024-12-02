@@ -44,13 +44,13 @@ public:
 	void Draw() override;				//描画
 
 	//パラメータ関数
-	void SetDamage(int damage) override;	//ダメージの設定
+	bool SetDamage(int damage) override;	//ダメージの設定
 
 	//状態処理の関数
 	bool SetBlowOff() override;
 
 	//ダメージの設定
-	void SetDamage(int damage, float rotY) override;
+	bool SetDamage(int damage, float rotY) override;
 
 	//状態のリセット
 	void StateReset() override
@@ -75,6 +75,12 @@ public:
 		m_bDamageJudge = judge; 
 	}	//設定
 	bool GetDamageJudge() { return m_bDamageJudge; }			//取得
+
+	//スタン状態に変更
+	void ChangeStanState() override
+	{
+		ChangeState(new CState_Enemy001_Stan(this));
+	}
 
 private:
 

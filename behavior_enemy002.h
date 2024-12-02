@@ -78,7 +78,8 @@ public:
 
 	static constexpr int CHARGE_TIME{ 230 };		//チャージ時間
 	static constexpr int CREATE_BULLET_TIME{ 50 };	//弾の生成時間
-	static constexpr float ADD_SCALE_VALUE{ 0.03f };		//スケールの加算量
+	static constexpr int END_TIME{ 300 };			//アクション終了時間
+	static constexpr float ADD_SCALE_VALUE{ 0.03f };//スケールの加算量
 
 	//コンストラクタ
 	CEnemyAction_ChargeShot() {};

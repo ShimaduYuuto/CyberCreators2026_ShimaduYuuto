@@ -137,10 +137,12 @@ void CPlayer::Update()
 //============================
 //ダメージ時の処理
 //============================
-void CPlayer::SetDamage(int damage)
+bool CPlayer::SetDamage(int damage)
 {
 	//ダメージの設定
 	m_pState->SetDamage(this, damage);
+
+	return true;
 }
 
 //============================

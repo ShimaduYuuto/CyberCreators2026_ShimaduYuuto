@@ -241,6 +241,7 @@
     <ClInclude Include="state_enemy_blow.h" />
     <ClInclude Include="state_enemy_damage.h" />
     <ClInclude Include="state_enemy_normal.h" />
+    <ClInclude Include="state_enemy_stan.h" />
     <ClInclude Include="state_enemy_stick.h" />
     <ClInclude Include="state_player.h" />
     <ClInclude Include="state_player_damage.h" />
@@ -345,6 +346,7 @@
     <ClCompile Include="state_enemy_blow.cpp" />
     <ClCompile Include="state_enemy_damage.cpp" />
     <ClCompile Include="state_enemy_normal.cpp" />
+    <ClCompile Include="state_enemy_stan.cpp" />
     <ClCompile Include="state_enemy_stick.cpp" />
     <ClCompile Include="state_player.cpp" />
     <ClCompile Include="state_player_damage.cpp" />

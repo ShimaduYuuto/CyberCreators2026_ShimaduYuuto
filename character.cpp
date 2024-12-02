@@ -540,7 +540,7 @@ D3DXVECTOR3 CCharacter::GravityMove(D3DXVECTOR3 move)
 //============================
 //キャラクターのダメージを設定
 //============================
-void CCharacter::SetDamage(int damage)
+bool CCharacter::SetDamage(int damage)
 {
 	//ダメージを受ける
 	m_nLife -= damage;
@@ -553,6 +553,8 @@ void CCharacter::SetDamage(int damage)
 
 		Uninit();
 	}
+
+	return true;
 }
 
 //===================================

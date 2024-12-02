@@ -86,9 +86,17 @@ void CEnemyAction_ChargeShot::Action(CEnemy* enemy)
 			//チャージ時間を終えたら発射
 			if (m_nChargeCount > CHARGE_TIME)
 			{
+				//向いている方向に撃つ
 				m_pBullet->SetMove({ sinf(fAngle) * 3.0f, 0.0f, cosf(fAngle) * 3.0f });
+				m_pBullet->SetShooting(true);
 			}
 		}
+	}
+
+	//終了の時間になったら待機アクション
+	if (m_nChargeCount > END_TIME)
+	{
+		SetNextAction(new CEnemyAction_Standby(enemy));
 	}
 
 	//当たっていたら消す
@@ -97,6 +105,7 @@ void CEnemyAction_ChargeShot::Action(CEnemy* enemy)
 		if (m_pBullet->GetDeath())
 		{
 			m_pBullet = nullptr;
+			SetNextAction(new CEnemyAction_Standby(enemy));
 		}
 	}
 }
