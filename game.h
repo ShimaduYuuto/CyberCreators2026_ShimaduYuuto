@@ -17,6 +17,7 @@
 #include "gimmickmanager.h"
 #include "explosionmanager.h"
 #include "enemybulletmanager.h"
+#include "barriermanager.h"
 #include "lockon.h"
 
 class CPlayer;
@@ -43,6 +44,7 @@ public:
 	CGimmickManager* GetGimmickManager() { if (m_pGimmickManager == nullptr) { return nullptr; } return m_pGimmickManager; }	//ギミックマネージャーの取得
 	CExplosionManager* GetExplosionManager() { if (m_pExplosionManager == nullptr) { return nullptr; } return m_pExplosionManager; }	//爆発マネージャーの取得
 	CEnemyBulletManager* GetEnemyBulletManager() { if (m_pEnemyBulletManager == nullptr)  { return nullptr; } return m_pEnemyBulletManager;}	//エネミー弾の取得
+	CBarrierManager* GetBarrierManager() { if (m_pBarrierManager == nullptr) { return nullptr; } return m_pBarrierManager; }			//結界マネージャー
 	CLockon* GetLockon() { if (m_pLockon == nullptr) { return nullptr; } return m_pLockon; }									//ロックオンの取得
 	void SetLockon(bool lockon);																								//ロックオンの設定
 
@@ -50,6 +52,9 @@ public:
 	void SetClear(bool crear) { m_bClear = crear; }	//設定
 
 private:
+
+	void ModelLoad();	//モデルの読み込み
+
 	CPlayer* m_pPlayer;					//プレイヤー
 	CField* m_pField;					//フィールド
 	CTime* m_pTime;						//タイムクラス
@@ -58,9 +63,11 @@ private:
 	CExplosionManager* m_pExplosionManager;	//爆発マネージャー
 	CLockon* m_pLockon;						//ロックオン
 	CEnemyBulletManager* m_pEnemyBulletManager;	//エネミー弾マネージャー
+	CBarrierManager* m_pBarrierManager;		//結界マネージャー
 
-	//クリア判定
-	bool m_bClear;;
+	
+	bool m_bClear;			//クリア判定
+	bool m_bDirectioning;	//演出中か
 };
 
 #endif

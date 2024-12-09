@@ -7,6 +7,7 @@
 
 //ヘッダーのインクルード
 #include "spawn_enemy.h"
+#include "battleareamanager.h"
 
 //============================
 //コンストラクタ
@@ -16,7 +17,11 @@ CSpawn_Enemy::CSpawn_Enemy(int nPriority) : CObject(nPriority),
 	m_pPaticleManager(nullptr),
 	m_EnemyType()
 {
-
+	//敵の数を減らす
+	if (CBattleAreaManager::GetInstance()->GetCurrentBattleArea() != nullptr)
+	{
+		CBattleAreaManager::GetInstance()->GetCurrentBattleArea()->AddEnemyNum();
+	}
 }
 
 //============================

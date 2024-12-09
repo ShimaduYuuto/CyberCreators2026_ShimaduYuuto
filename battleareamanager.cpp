@@ -7,6 +7,10 @@
 
 //ヘッダーのインクルード
 #include "battleareamanager.h"
+#include "battlearea000.h"
+#include "battlearea001.h"
+#include "battlearea002.h"
+#include "battlearea003.h"
 #include "game.h"
 #include "manager.h"
 
@@ -92,7 +96,10 @@ void CBattleAreaManager::Load()
 	m_BattleAreaList.clear();
 
 	//エリアの生成
-	Regist(CBattleArea::Create({ 0.0f, 0.0f, 350.0f }));
+	Regist(CBattleArea::Create({ 0.0f, 0.0f, 500.0f }, new CBattleArea000));
+	Regist(CBattleArea::Create({ 0.0f, 0.0f, 1500.0f }, new CBattleArea001));
+	Regist(CBattleArea::Create({ 0.0f, 0.0f, 2500.0f }, new CBattleArea002));
+	Regist(CBattleArea::Create({ 0.0f, 0.0f, 3500.0f }, new CBattleArea003));
 }
 
 //============================

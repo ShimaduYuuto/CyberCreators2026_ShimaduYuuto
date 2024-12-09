@@ -29,9 +29,10 @@ public:
 	void Uninit() override;						//終了
 	void Update() override;						//更新
 	void Draw() override;						//描画
-	bool MeshCollision(D3DXVECTOR3& pos);				//メッシュの当たり判定
-	D3DXVECTOR3 ConvertMeshPos(D3DXVECTOR3 pos);		//メッシュの位置に変換
-	D3DXVECTOR3 WidthCollision(D3DXVECTOR3 pos);		//メッシュの横の当たり判定
+	bool MeshCollision(D3DXVECTOR3& pos, D3DXVECTOR3& rot);	//メッシュに沿った当たり判定
+	bool MeshCollision(D3DXVECTOR3& pos);					//メッシュの当たり判定
+	D3DXVECTOR3 ConvertMeshPos(D3DXVECTOR3 pos);			//メッシュの位置に変換
+	D3DXVECTOR3 WidthCollision(D3DXVECTOR3 pos);			//メッシュの横の当たり判定
 
 	static CField* Create(D3DXVECTOR3 pos);		//フィールドの生成
 
@@ -39,6 +40,7 @@ private:
 
 	//メンバ関数
 	float MeshIPCluculation(D3DXVECTOR3 vec1, D3DXVECTOR3 vec2);
+	void Load();	//読み込み
 
 	//メンバ変数
 	std::vector<D3DXVECTOR3> m_SurfaceNorVec;	//面法線ベクトル

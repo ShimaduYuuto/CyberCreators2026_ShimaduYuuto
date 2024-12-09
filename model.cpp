@@ -8,9 +8,10 @@
 //ヘッダーのインクルード
 #include "model.h"
 #include "tree.h"
+#include "fence.h"
 
 //============================
-//モデルパーツのクリエイト
+//モデルのクリエイト
 //============================
 CModel* CModel::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, MODEL_TYPE type)
 {
@@ -22,6 +23,10 @@ CModel* CModel::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, MODEL_TYPE type)
 	{
 	case MODEL_TYPE::MODEL_TYPE_TREE:
 		pModel = new CTree;
+		break;
+
+	case MODEL_TYPE::MODEL_TYPE_FENCE:
+		pModel = new CFence;
 		break;
 
 	default:

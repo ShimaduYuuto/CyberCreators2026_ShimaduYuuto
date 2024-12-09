@@ -20,7 +20,7 @@ CBattleArea::CBattleArea() :
 	m_EnemyList(),
 	m_fRadius(500.0f),
 	m_pWall(nullptr),
-	m_StagePos(),
+	m_Pos(),
 	m_nEnemyNum(0),
 	m_bEnd(false),
 	m_bEnteredArea(false)
@@ -39,6 +39,10 @@ CBattleArea::~CBattleArea()
 		m_pWall->SetEnd(true);
 		m_pWall =  nullptr;
 	}
+
+	//結界を消す
+	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+	pGame->GetBarrierManager()->Erase();
 }
 
 //============================
@@ -81,7 +85,7 @@ void CBattleArea::Update()
 		//プレイヤーがエリアに入っているかを確認
 		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
 		D3DXVECTOR3 PlayerPos = pGame->GetGamePlayer()->GetPos();	//プレイヤー位置
-		float fLength = sqrtf((PlayerPos.x - m_StagePos.x) * (PlayerPos.x - m_StagePos.x) + (PlayerPos.z - m_StagePos.z) * (PlayerPos.z - m_StagePos.z));	//xz平面の距離を算出
+		float fLength = sqrtf((PlayerPos.x - m_Pos.x) * (PlayerPos.x - m_Pos.x) + (PlayerPos.z - m_Pos.z) * (PlayerPos.z - m_Pos.z));	//xz平面の距離を算出
 
 		//感知範囲内ならエリアを生成
 		if (fLength < RADIUS_ENTEREDAREA)
@@ -89,21 +93,18 @@ void CBattleArea::Update()
 			//壁の生成
 			if (m_pWall == nullptr)
 			{
-				m_pWall = CCollision_Wall::Create(m_StagePos, m_fRadius);
+				m_pWall = CCollision_Wall::Create(m_Pos, m_fRadius);
 			}
 
 			//バトルエリアに入った
 			m_bEnteredArea = true;
 			CBattleAreaManager::GetInstance()->SetCurrentBattleArea(this);	//現在のエリアとして登録
 
-			//仮の敵生成
-			CSpawn_Enemy::Create(m_StagePos, CEnemy::ENEMYTYPE_ENEMY002);
-			//CSpawn_Enemy::Create(m_StagePos + D3DXVECTOR3(150.0f, 0.0f, 150.0f), CEnemy::ENEMYTYPE_ENEMY003);
-			//CSpawn_Enemy::Create(m_StagePos + D3DXVECTOR3(-150.0f, 0.0f, -150.0f), CEnemy::ENEMYTYPE_ENEMY003);
-			m_nEnemyNum += 1;	//生成した敵の数だけ加算する
+			//エネミーの生成
+			SpawnEnemy();
 
-			CExplodingBarrel::Create(m_StagePos, { 0.0f, 0.0f, 0.0f });
-			CExplodingBarrel::Create(m_StagePos + D3DXVECTOR3(150.0f, 0.0f, 150.0f), { 0.0f, 0.0f, 0.0f });
+			//ギミックの生成
+			SpawnGimmick();
 
 			//BGMスタート
 			CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_BATTLE);
@@ -112,16 +113,37 @@ void CBattleArea::Update()
 }
 
 //============================
+//敵の生成
+//============================
+void CBattleArea::SpawnEnemy()
+{
+	//仮の敵生成
+	CSpawn_Enemy::Create(m_Pos, CEnemy::ENEMYTYPE_ENEMY000);
+	CSpawn_Enemy::Create(m_Pos + D3DXVECTOR3(150.0f, 0.0f, 150.0f), CEnemy::ENEMYTYPE_ENEMY000);
+	CSpawn_Enemy::Create(m_Pos + D3DXVECTOR3(-150.0f, 0.0f, -150.0f), CEnemy::ENEMYTYPE_ENEMY000);
+}
+
+//============================
+//ギミックの生成
+//============================
+void CBattleArea::SpawnGimmick()
+{
+	//ギミック生成
+	CExplodingBarrel::Create(m_Pos, { 0.0f, 0.0f, 0.0f });
+	CExplodingBarrel::Create(m_Pos + D3DXVECTOR3(150.0f, 0.0f, 150.0f), { 0.0f, 0.0f, 0.0f });
+}
+
+//============================
 //生成処理
 //============================
-CBattleArea* CBattleArea::Create(D3DXVECTOR3 pos)
+CBattleArea* CBattleArea::Create(D3DXVECTOR3 pos, CBattleArea* area)
 {
 	//ポインタ用の変数
 	CBattleArea* pArea = nullptr;
-	pArea = new CBattleArea;
+	pArea = area;
 
 	//パラメータの代入
-	pArea->m_StagePos = pos;
+	pArea->m_Pos = pos;
 
 	//初期化
 	pArea->Init();

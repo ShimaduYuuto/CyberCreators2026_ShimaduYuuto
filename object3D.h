@@ -53,6 +53,8 @@ public:
 	float& GetRate() { return m_polygon.fRate; }				//サイズ倍率の取得
 	void SetMove(D3DXVECTOR3 move) { m_polygon.move = move; }	//移動量の設定
 	D3DXVECTOR3& GetMove() { return m_polygon.move; }			//移動量の取得
+	void SetMtx(D3DXMATRIX mtx) { m_mtxWorld = mtx; }			//マトリックスの設定
+	D3DXMATRIX& GetMtx() { return m_mtxWorld; }					//マトリックスの取得
 	void SetColor(D3DXCOLOR color);								//頂点の色を設定
 	void SetTextureUV(float u1, float u2, float v1, float v2);	//テクスチャの座標設定
 

@@ -30,6 +30,9 @@ public:
 	//状態ごとの更新
 	void Update(CEnemy* enemy);
 
+	//エネミー同士の当たり判定
+	void EnemyCollision(CEnemy* enemy);
+
 	//ダメージの設定
 	virtual void SetDamage(CEnemy* enemy, int damage) {}
 

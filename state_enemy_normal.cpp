@@ -27,6 +27,9 @@ void CState_Enemy_Normal::UpdateState(CEnemy* enemy)
 	//ゲームシーンの取得
 	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
 
+	//他の敵との当たり判定
+	EnemyCollision(enemy);
+
 	//各ギミックとの当たり判定
 	for (auto& iter : pGame->GetGimmickManager()->GetList())
 	{

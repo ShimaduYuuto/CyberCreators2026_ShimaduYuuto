@@ -291,34 +291,44 @@ void CObject3D::SetSize(D3DXVECTOR3 size, TYPE type)
 	float fLength = 0.0f;	//対角線の長さを算出する
 	float fAngle = 0.0f;	//対角線の角度を算出
 
+	VERTEX_3D* pVtx; //追加情報のポインタ
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
 	//計算の変更
 	switch (type)
 	{
 	case TYPE_FLOOR:
 		fLength = sqrtf(m_polygon.size.x * m_polygon.size.x + m_polygon.size.z * m_polygon.size.z) * 0.5f * m_polygon.fRate; //対角線の長さを算出する
 		fAngle = atan2f(m_polygon.size.x, m_polygon.size.z);	//対角線の角度を算出
+
+		//ポリゴンのサイズ
+		pVtx[0].pos.x = sinf(m_polygon.rot.y + (D3DX_PI - fAngle)) * fLength;
+		pVtx[0].pos.z = cosf(m_polygon.rot.y + (D3DX_PI - fAngle)) * fLength;
+		pVtx[1].pos.x = sinf(m_polygon.rot.y + -(D3DX_PI - fAngle)) * fLength;
+		pVtx[1].pos.z = cosf(m_polygon.rot.y + -(D3DX_PI - fAngle)) * fLength;
+		pVtx[2].pos.x = sinf(m_polygon.rot.y + fAngle) * fLength;
+		pVtx[2].pos.z = cosf(m_polygon.rot.y + fAngle) * fLength;
+		pVtx[3].pos.x = sinf(m_polygon.rot.y + -fAngle) * fLength;
+		pVtx[3].pos.z = cosf(m_polygon.rot.y + -fAngle) * fLength;
 	break;
 
 	case TYPE_WALL:
 		fLength = sqrtf(m_polygon.size.x * m_polygon.size.x + m_polygon.size.y * m_polygon.size.y) * 0.5f * m_polygon.fRate; //対角線の長さを算出する
 		fAngle = atan2f(m_polygon.size.x, m_polygon.size.y);	//対角線の角度を算出
+
+		//ポリゴンのサイズ
+		pVtx[0].pos.x = sinf(m_polygon.rot.z + -(D3DX_PI - fAngle)) * fLength;
+		pVtx[0].pos.y = cosf(m_polygon.rot.z + -(D3DX_PI - fAngle)) * -fLength;
+		pVtx[1].pos.x = sinf(m_polygon.rot.z + (D3DX_PI - fAngle)) * fLength;
+		pVtx[1].pos.y = cosf(m_polygon.rot.z + (D3DX_PI - fAngle)) * -fLength;
+		pVtx[2].pos.x = sinf(m_polygon.rot.z + -fAngle) * fLength;
+		pVtx[2].pos.y = cosf(m_polygon.rot.z + -fAngle) * -fLength;
+		pVtx[3].pos.x = sinf(m_polygon.rot.z + fAngle) * fLength;
+		pVtx[3].pos.y = cosf(m_polygon.rot.z + fAngle) * -fLength;
 	break;
 	}
-
-	VERTEX_3D* pVtx; //追加情報のポインタ
-
-	//頂点バッファをロックし、頂点情報へのポインタを取得
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-
-	//ポリゴンのサイズ
-	pVtx[0].pos.x = sinf(m_polygon.rot.z + -(D3DX_PI - fAngle)) * fLength;
-	pVtx[0].pos.y = cosf(m_polygon.rot.z + -(D3DX_PI - fAngle)) * fLength;
-	pVtx[1].pos.x = sinf(m_polygon.rot.z + (D3DX_PI - fAngle)) * fLength;
-	pVtx[1].pos.y = cosf(m_polygon.rot.z + (D3DX_PI - fAngle)) * fLength;
-	pVtx[2].pos.x = sinf(m_polygon.rot.z + -fAngle) * fLength;
-	pVtx[2].pos.y = cosf(m_polygon.rot.z + -fAngle) * fLength;
-	pVtx[3].pos.x = sinf(m_polygon.rot.z + fAngle) * fLength;
-	pVtx[3].pos.y = cosf(m_polygon.rot.z + fAngle) * fLength;
 
 	//頂点バッファをアンロックする
 	m_pVtxBuff->Unlock();

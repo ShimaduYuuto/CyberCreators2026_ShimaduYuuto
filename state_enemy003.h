@@ -99,12 +99,12 @@ public:
 	//メンバ関数
 	CState_Enemy003_Stick()
 	{
-		SetEndTime(60);
+		SetEndTime(180);
 	};	//コンストラクタ
 
 	CState_Enemy003_Stick(CEnemy* enemy) : CState_Enemy_Stick(enemy)
 	{
-		SetEndTime(120);
+		SetEndTime(180);
 	};	//コンストラクタ
 
 	//状態の更新
@@ -125,13 +125,13 @@ public:
 	CState_Enemy003_Stan()
 	{
 		SetAction(new CEnemyAction());
-		SetEndTime(60);
+		SetEndTime(300);
 	};	//コンストラクタ
 
 	CState_Enemy003_Stan(CEnemy* enemy)
 	{
 		SetAction(new CEnemyAction());
-		SetEndTime(180);
+		SetEndTime(300);
 	};	//コンストラクタ
 
 	//状態の更新

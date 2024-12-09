@@ -506,9 +506,12 @@ void CPlayerBehavior_Attack::Damage(CPlayer* player, CEnemy* enemy, int damage)
 	if (enemy->SetDamage(damage, player->GetRot().y))
 	{
 		//ƒqƒbƒgŽž‚Ìˆ—
-		enemy->DamageEffect(player);
 		CEffect_HitAttack::Create(enemy->GetCollision()->GetPos());
 		CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_ATTACK);
+	}
+	else
+	{
+		enemy->DamageEffect(player);
 	}
 }
 

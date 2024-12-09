@@ -156,7 +156,13 @@
     <ClInclude Include="arial001.h" />
     <ClInclude Include="arial002.h" />
     <ClInclude Include="attack_player.h" />
+    <ClInclude Include="barrier.h" />
+    <ClInclude Include="barriermanager.h" />
     <ClInclude Include="battlearea.h" />
+    <ClInclude Include="battlearea000.h" />
+    <ClInclude Include="battlearea001.h" />
+    <ClInclude Include="battlearea002.h" />
+    <ClInclude Include="battlearea003.h" />
     <ClInclude Include="battleareamanager.h" />
     <ClInclude Include="battlemanager.h" />
     <ClInclude Include="behavior_character.h" />
@@ -186,6 +192,7 @@
     <ClInclude Include="explosion.h" />
     <ClInclude Include="explosionmanager.h" />
     <ClInclude Include="fade.h" />
+    <ClInclude Include="fence.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="game_character.h" />
@@ -226,6 +233,7 @@
     <ClInclude Include="result.h" />
     <ClInclude Include="result_bg.h" />
     <ClInclude Include="scene.h" />
+    <ClInclude Include="shadow.h" />
     <ClInclude Include="shield.h" />
     <ClInclude Include="sky.h" />
     <ClInclude Include="smash.h" />
@@ -265,7 +273,13 @@
     <ClCompile Include="arial000.cpp" />
     <ClCompile Include="arial001.cpp" />
     <ClCompile Include="arial002.cpp" />
+    <ClCompile Include="barrier.cpp" />
+    <ClCompile Include="barriermanager.cpp" />
     <ClCompile Include="battlearea.cpp" />
+    <ClCompile Include="battlearea000.cpp" />
+    <ClCompile Include="battlearea001.cpp" />
+    <ClCompile Include="battlearea002.cpp" />
+    <ClCompile Include="battlearea003.cpp" />
     <ClCompile Include="battleareamanager.cpp" />
     <ClCompile Include="behavior_character.cpp" />
     <ClCompile Include="behavior_enemy.cpp" />
@@ -294,6 +308,7 @@
     <ClCompile Include="explosion.cpp" />
     <ClCompile Include="explosionmanager.cpp" />
     <ClCompile Include="fade.cpp" />
+    <ClCompile Include="fence.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="game_character.cpp" />
@@ -334,6 +349,7 @@
     <ClCompile Include="result.cpp" />
     <ClCompile Include="result_bg.cpp" />
     <ClCompile Include="scene.cpp" />
+    <ClCompile Include="shadow.cpp" />
     <ClCompile Include="shield.cpp" />
     <ClCompile Include="sky.cpp" />
     <ClCompile Include="smash.cpp" />

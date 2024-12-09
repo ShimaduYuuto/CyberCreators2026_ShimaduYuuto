@@ -71,10 +71,21 @@ public:
 
 	//ダメージ判定
 	void SetDamageJudge(bool judge) { 
-		if (judge && m_pShield == nullptr) { return; }
+		if (m_bDamageJudge && m_pShield == nullptr) { return; }
 		m_bDamageJudge = judge; 
 	}	//設定
 	bool GetDamageJudge() { return m_bDamageJudge; }			//取得
+
+	//盾を落とす
+	void DropShield()
+	{
+		//盾を持っていたら
+		if (m_pShield != nullptr)
+		{
+			m_pShield->Uninit();
+			m_pShield = nullptr;
+		}
+	}
 
 	//スタン状態に変更
 	void ChangeStanState() override

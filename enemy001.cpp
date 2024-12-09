@@ -43,7 +43,7 @@ HRESULT CEnemy001::Init()
 	CEnemy::Init();
 
 	//パラメータの初期化
-	CCharacter::SetLife(20);	//体力
+	CCharacter::SetLife(10);	//体力
 
 	//モーションの読み込み
 	SetMotionInfo("data\\enemy011motion.txt");
@@ -127,19 +127,15 @@ bool CEnemy001::SetDamage(int damage, float rotY)
 		if (fRot > fMin && fRot < fMax)
 		{
 			m_bDamageJudge = true;
-
-			//盾を持っているなら
-			if (m_pShield != nullptr)
-			{
-				m_pShield->Uninit();
-				m_pShield = nullptr;
-			}
 		}
 		else
 		{
 			return false;
 		}
 	}
+
+	//盾を落とす
+	DropShield();
 
 	//張り付いていないならダメージ状態に
 	if (!GetEnteredStick())

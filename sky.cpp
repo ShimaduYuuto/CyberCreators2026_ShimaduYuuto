@@ -11,7 +11,7 @@
 #include "manager.h"
 
 //定数
-const std::string CSky::FILEPATH = "data\\TEXTURE\\sky002.png";
+const std::string CSky::FILEPATH = "data\\TEXTURE\\sky001.jpg";
 
 //============================
 //コンストラクタ

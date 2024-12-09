@@ -21,27 +21,36 @@ public:
 
 	//メンバ関数
 	CBattleArea();		//コンストラクタ
-	~CBattleArea();		//デストラクタ
-	HRESULT Init();		//初期化
-	void Uninit();		//終了
-	void Update();		//更新
+	virtual ~CBattleArea();		//デストラクタ
+	virtual HRESULT Init();		//初期化
+	virtual void Uninit();		//終了
+	virtual void Update();		//更新
 
 	//生成
-	static CBattleArea* Create(D3DXVECTOR3 pos);
+	static CBattleArea* Create(D3DXVECTOR3 pos, CBattleArea* area);
 
 	//ステージの壁
 	CCollision_Wall* GetWall() { return m_pWall; }	//取得
 
-	//敵の数を減らす
-	void DecrementEnemyNum() { if (m_nEnemyNum > 0) { m_nEnemyNum--; } }
-
 	//終了判定
 	bool GetEnd() { return m_bEnd; }	//取得
+
+	//発生させる処理
+	virtual void SpawnEnemy();	//エネミー
+	virtual void SpawnGimmick();//ギミック
+
+	//位置
+	void SetPos(D3DXVECTOR3 pos) { m_Pos = pos; }	//設定
+	D3DXVECTOR3& GetPos() { return m_Pos; }			//取得
+
+	//敵の数
+	void AddEnemyNum() { m_nEnemyNum++; }//敵の数を増やす
+	void DecrementEnemyNum() { if (m_nEnemyNum > 0) { m_nEnemyNum--; } }//敵の数を減らす
 
 private:
 
 	//メンバ変数
-	D3DXVECTOR3 m_StagePos;			//ステージ位置
+	D3DXVECTOR3 m_Pos;				//位置
 	float m_fRadius;				//ステージの半径
 	CCollision_Wall* m_pWall;		//ステージの壁
 	std::list<CEnemy*> m_EnemyList;	//敵のリスト

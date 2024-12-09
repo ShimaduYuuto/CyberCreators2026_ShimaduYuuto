@@ -33,6 +33,9 @@ void CState_Enemy_Damage::UpdateState(CEnemy* enemy)
 	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();	//ゲームシーンの取得
 	fCount += pGame->GetTime()->GetValue<float>(1.0f);			//時間に応じてカウントアップ
 
+	//他の敵との当たり判定
+	EnemyCollision(enemy);
+
 	//各ギミックとの当たり判定
 	for (auto& iter : pGame->GetGimmickManager()->GetList())
 	{

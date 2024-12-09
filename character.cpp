@@ -36,6 +36,7 @@ CCharacter::CCharacter(int nPriority) : CObject(nPriority)
 	m_fRadiusSize = SIZE_RADIUS;			//ƒTƒCƒY‚Ì”¼Œa
 	m_bEnableGravity = true;				//d—Í‚ðŽó‚¯‚é
 	m_BlowValue = { 0.0f, 0.0f, 0.0f };		//‚«”ò‚Ô—Í
+	m_pShadow = nullptr;					//‰e‚Ìƒ|ƒCƒ“ƒ^
 }
 
 //============================
@@ -48,6 +49,13 @@ CCharacter::~CCharacter()
 	m_Motion.clear();		//ƒ‚[ƒVƒ‡ƒ“î•ñ‚Ìíœ
 	m_PartsInfo.clear();	//ƒp[ƒcî•ñ‚Ìíœ
 	m_InterpolationInfo.clear();
+
+	//‰e‚Ì”jŠü
+	if (m_pShadow != nullptr)
+	{
+		m_pShadow->Uninit();
+		m_pShadow = nullptr;
+	}
 }
 
 //============================
@@ -62,6 +70,9 @@ HRESULT CCharacter::Init()
 	m_bChangeMotion = true;
 	m_fFrameCount = 0.0f;
 	m_nMotionCount = 0;
+
+	//‰e‚Ì¶¬
+	m_pShadow = CShadow::Create(&GetPos(), m_fRadiusSize);
 
 	return S_OK;
 }
@@ -361,6 +372,13 @@ void CCharacter::Uninit()
 	for (auto& iter : m_apModel)
 	{
 		iter->Uninit();
+	}
+
+	//‰e‚Ì”jŠü
+	if (m_pShadow != nullptr)
+	{
+		m_pShadow->Uninit();
+		m_pShadow = nullptr;
 	}
 }
 

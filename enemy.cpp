@@ -87,10 +87,6 @@ HRESULT CEnemy::Init()
 	//‰Šú‰»
 	CCharacter::Init();
 
-	//ƒpƒ‰ƒ[ƒ^‚Ì‰Šú‰»
-	CCharacter::SetRot({ 0.0f, 0.0f, 0.0f });
-	//CCharacter::SetPos({ 1.0f, 50.0f, 0.0f });
-
 	return S_OK;
 }
 

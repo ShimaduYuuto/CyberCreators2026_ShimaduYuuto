@@ -37,7 +37,7 @@ HRESULT CEnemy003::Init()
 	CEnemy::Init();
 
 	//パラメータの初期化
-	CCharacter::SetLife(20);	//体力
+	CCharacter::SetLife(10);	//体力
 
 	//モーションの読み込み
 	SetMotionInfo("data\\enemy013motion.txt");

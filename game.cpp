@@ -29,7 +29,8 @@ CGame::CGame() :
 	m_pLockon(nullptr),
 	m_pGimmickManager(nullptr),
 	m_pExplosionManager(nullptr),
-	m_bClear(false)
+	m_bClear(false),
+	m_bDirectioning(false)
 {
 	
 }
@@ -39,7 +40,10 @@ CGame::CGame() :
 //============================
 CGame::~CGame()
 {
-
+	//フォグの設定
+	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
+	pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
+	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 }
 
 //============================
@@ -89,12 +93,28 @@ HRESULT CGame::Init()
 		m_pEnemyBulletManager = new CEnemyBulletManager;
 	}
 
+	//結界マネージャーの生成
+	if (m_pBarrierManager == nullptr)
+	{
+		m_pBarrierManager = new CBarrierManager;
+		m_pBarrierManager->Init();
+	}
+
 	//バトルエリアの初期化
 	CBattleAreaManager::GetInstance()->Init();
 
 	//CExplodingBarrel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f });
 	CSky::Create();
-	CModel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, CModel::MODEL_TYPE_TREE);
+	ModelLoad();
+
+	//フォグの設定
+	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
+	pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
+	pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);					//有効
+	pDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_EXP);		//フォグモードの設定
+	pDevice->SetRenderState(D3DRS_FOGCOLOR, D3DXCOLOR(0.7f, 0.7f, 0.7f, 0.1f));	//色の設定
+	float m_fFogDensity = 0.0005f;
+	pDevice->SetRenderState(D3DRS_FOGDENSITY, *(DWORD*)(&m_fFogDensity));
 	
 	return S_OK;
 }
@@ -147,6 +167,13 @@ void CGame::Uninit()
 	{
 		delete m_pEnemyBulletManager;
 		m_pEnemyBulletManager = nullptr;
+	}
+
+	//メモリの破棄
+	if (m_pBarrierManager != nullptr)
+	{
+		delete m_pBarrierManager;
+		m_pBarrierManager = nullptr;
 	}
 
 	//メモリの破棄
@@ -255,5 +282,47 @@ void CGame::SetLockon(bool lockon)
 		//生成
 		m_pLockon->Uninit();
 		m_pLockon = nullptr;
+	}
+}
+
+//============================
+//モデルの読み込み
+//============================
+void CGame::ModelLoad()
+{
+	//ローカル変数宣言
+	FILE* pFile;
+
+	//ファイルを開く
+	pFile = fopen("data\\FILE\\model.bin", "rb");
+
+	//ファイルに情報を書き出す
+	if (pFile != NULL)
+	{
+		//読み込み用の変数
+		int nModelNum = 0;
+
+		//モデルの数
+		fread(&nModelNum, sizeof(int), 1, pFile);
+
+		//配置したモデルの数だけ情報を書き出す
+		for (int i = 0; i < nModelNum; i++)
+		{
+			//読み込み用変数
+			D3DXVECTOR3 Pos;
+			D3DXVECTOR3 Rot;
+			CModel::MODEL_TYPE Type;
+
+			//モデルの情報
+			fread(&Pos, sizeof(D3DXVECTOR3), 1, pFile);			//位置
+			fread(&Rot, sizeof(D3DXVECTOR3), 1, pFile);			//向き
+			fread(&Type, sizeof(CModel::MODEL_TYPE), 1, pFile);	//種類
+
+			//生成
+			CModel::Create(Pos, Rot, Type);
+		}
+
+		//ファイルを閉じる
+		fclose(pFile);
 	}
 }

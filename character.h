@@ -12,6 +12,7 @@
 #include "main.h"
 #include "object.h"
 #include "modelparts.h"
+#include "shadow.h"
 
 //キャラクタークラス
 class CCharacter : public CObject
@@ -167,7 +168,8 @@ private:
 	float m_fRadiusSize;					//サイズの半径
 	bool m_bEnableGravity;					//重力を受けるか
 	D3DXVECTOR3 m_BlowValue;				//吹き飛びの量
-	bool m_bEnteredStick;					//一度でも
+	bool m_bEnteredStick;					//一度でも張り付いたか
+	CShadow* m_pShadow;						//影のポインタ
 
 	//モーションの変数
 	int m_MotionState;						//現在のモーションの状態

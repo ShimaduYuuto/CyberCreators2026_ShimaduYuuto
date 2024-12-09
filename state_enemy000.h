@@ -55,6 +55,7 @@ public:
 	{
 		SetAction(new CEnemyAction());
 		SetEndTime(60);
+		enemy->SetMotion(5);
 	};	//コンストラクタ
 
 	//状態の更新
@@ -97,10 +98,7 @@ public:
 		SetEndTime(60);
 	};	//コンストラクタ
 
-	CState_Enemy000_Stick(CEnemy* enemy);
-	//{
-	//	SetEndTime(60);
-	//};	//コンストラクタ
+	CState_Enemy000_Stick(CEnemy* enemy);//コンストラクタ
 
 	//状態の更新
 	void UpdateState(CEnemy* enemy) override

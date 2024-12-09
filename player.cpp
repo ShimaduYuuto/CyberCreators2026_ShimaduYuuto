@@ -15,6 +15,7 @@
 #include "state_player_damage.h"
 #include "state_player_knockback.h"
 #include "battleareamanager.h"
+#include "barriermanager.h"
 
 //Ã“Iƒƒ“ƒo‚Ì‰Šú‰»
 const float CPlayer::DAMAGE_IMPULSE = 10.0f;
@@ -127,6 +128,17 @@ void CPlayer::Update()
 
 			//‘ã“ü
 			m_pState = pNext;
+		}
+	}
+
+	//Œ‹ŠE‚Æ‚Ì“–‚½‚è”»’è
+	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+	for (auto itr : pGame->GetBarrierManager()->GetList())
+	{
+		//‰¼‚Ì“–‚½‚è”»’è
+		if (GetPos().z + 30.0f >= itr->GetPos().z)
+		{
+			GetPos().z = itr->GetPos().z - 30.0f;
 		}
 	}
 
