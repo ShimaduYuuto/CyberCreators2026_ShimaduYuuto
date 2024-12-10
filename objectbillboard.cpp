@@ -27,8 +27,12 @@ CObjectBillboard::CObjectBillboard(int nPriority) : CObject(nPriority)
 //============================
 CObjectBillboard::~CObjectBillboard()
 {
-	//ポインタの初期化
-	m_pVtxBuff = nullptr;
+	//頂点バッファの破棄
+	if (m_pVtxBuff != nullptr)
+	{
+		m_pVtxBuff->Release();
+		m_pVtxBuff = nullptr;
+	}
 }
 
 //============================
@@ -94,13 +98,6 @@ HRESULT CObjectBillboard::Init()
 //============================
 void CObjectBillboard::Uninit()
 {
-	//頂点バッファの破棄
-	if (m_pVtxBuff != NULL)
-	{
-		m_pVtxBuff->Release();
-		m_pVtxBuff = NULL;
-	}
-
 	//自分の開放
 	if (this != nullptr)
 	{

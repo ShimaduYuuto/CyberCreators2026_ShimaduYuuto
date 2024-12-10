@@ -11,6 +11,7 @@
 #include "game.h"
 #include "manager.h"
 #include "battleareamanager.h"
+#include "effect_brow.h"
 
 //====================================
 //コンストラクタ
@@ -19,6 +20,18 @@ CState_Enemy_Blow::CState_Enemy_Blow()
 {
 	//初期アクション
 	SetAction(new CEnemyAction());
+}
+
+//====================================
+//コンストラクタ
+//====================================
+CState_Enemy_Blow::CState_Enemy_Blow(CEnemy* enemy)
+{
+	//初期アクション
+	SetAction(new CEnemyAction());
+
+	//吹き飛ぶエフェクト
+	CEffect_Brow::Create(enemy->GetCollision()->GetPos(), enemy->GetRot());
 }
 
 //====================================

@@ -73,6 +73,7 @@ void CEnemyAction_ChargeShot::Action(CEnemy* enemy)
 			if (m_pBullet == nullptr)
 			{
 				m_pBullet = CEnemyBullet::Create(enemy->GetCollision()->GetPos(), { 0.0f, 0.0f, 0.0f });
+				m_pEffect = CEffect_ChargeShot::Create(enemy->GetCollision()->GetPos());
 			}
 		}
 
@@ -89,6 +90,13 @@ void CEnemyAction_ChargeShot::Action(CEnemy* enemy)
 				//向いている方向に撃つ
 				m_pBullet->SetMove({ sinf(fAngle) * 3.0f, 0.0f, cosf(fAngle) * 3.0f });
 				m_pBullet->SetShooting(true);
+
+				//エフェクトの破棄
+				if (m_pEffect != nullptr)
+				{
+					m_pEffect->Uninit();
+					m_pEffect = nullptr;
+				}	
 			}
 		}
 	}
@@ -107,5 +115,32 @@ void CEnemyAction_ChargeShot::Action(CEnemy* enemy)
 			m_pBullet = nullptr;
 			SetNextAction(new CEnemyAction_Standby(enemy));
 		}
+	}
+}
+
+//======================================================================
+//登場演出
+//======================================================================
+
+//====================================
+//コンストラクタ
+//====================================
+CEnemyAction_Direction::CEnemyAction_Direction(CEnemy* enemy) :
+	m_nCount(0)
+{
+	enemy->SetMotion(6);
+}
+
+//====================================
+//アクション(演出)
+//====================================
+void CEnemyAction_Direction::Action(CEnemy* enemy)
+{
+	//演出の時間が終わったら行動開始
+	m_nCount++;
+
+	if (m_nCount > DIRECTION_TIME)
+	{
+		NextAction(enemy);
 	}
 }

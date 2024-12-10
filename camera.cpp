@@ -82,9 +82,16 @@ void CCamera::Update()
 	case CScene::MODE_GAME:		//ゲーム
 
 		{
+
 			//ゲームシーンのプレイヤーの位置を取得
 			CGame* pGame = nullptr;
 			pGame = (CGame*)CManager::GetInstance()->GetScene();	//ゲームシーンの取得
+
+			//演出
+			if (pGame->GetDirectioning())
+			{
+				return;
+			}
 
 			//プレイヤーの位置を注視点に代入
 			m_posR = pGame->GetGamePlayer()->GetPos();				//プレイヤーの位置を注視点に代入

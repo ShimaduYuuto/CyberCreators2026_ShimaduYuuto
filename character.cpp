@@ -328,7 +328,7 @@ void CCharacter::SetMotionInfo(const char* motionfilename)
 		m_apModel.push_back(CModelparts::Create(&aModelFileName[nInfoCount][0], Pos[nInfoCount], Rot[nInfoCount]));
 
 		//パーツの情報を保存
-		PartsInfo aPartsInfo/* = { Pos[nInfoCount], Rot[nInfoCount] }*/;
+		PartsInfo aPartsInfo;
 		aPartsInfo.pos = Pos[nInfoCount];
 		aPartsInfo.rot = Rot[nInfoCount];
 		m_PartsInfo.push_back(aPartsInfo);
@@ -621,14 +621,14 @@ void CCharacter::SetMotion(int motion)
 //===================================
 void CCharacter::UpdateMotion()
 {
-	//ローカル変数
-	int nCount = 0;	//周期数のカウント
-
 	//ループしないモーションなら関数を抜ける
 	if (!m_Motion[m_MotionState].bLoop && m_nMotionCount == m_Motion[m_MotionState].nNumKey - 1)
 	{
 		return;
 	}
+
+	//ローカル変数
+	int nCount = 0;	//周期数のカウント
 
 	//自身のパーツの位置と向きを設定3
 	for (auto& iter : m_apModel)

@@ -156,25 +156,25 @@ CEnemy* CEnemy::Create(D3DXVECTOR3 pos, ENEMYTYPE type)
 	case ENEMYTYPE_ENEMY000:	//’Êí‚Ì“G
 
 		//“G‚Ìƒƒ‚ƒŠŠm•Û
-		pEnemy = new CEnemy000;
+		pEnemy = new CEnemy000();
 		break;
 
 	case ENEMYTYPE_ENEMY001:	//‚‚¿‚Ì“G
 
 	//“G‚Ìƒƒ‚ƒŠŠm•Û
-		pEnemy = new CEnemy001;
+		pEnemy = new CEnemy001();
 		break;
 
 	case ENEMYTYPE_ENEMY002:	//ƒ{ƒX‚Ì“G
 
 	//“G‚Ìƒƒ‚ƒŠŠm•Û
-		pEnemy = new CEnemy002;
+		pEnemy = new CEnemy002();
 		break;
 
 	case ENEMYTYPE_ENEMY003:	//“Ëi‚Ì“G
 
 	//“G‚Ìƒƒ‚ƒŠŠm•Û
-		pEnemy = new CEnemy003;
+		pEnemy = new CEnemy003();
 		break;
 	}
 

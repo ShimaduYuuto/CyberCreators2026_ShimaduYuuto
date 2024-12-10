@@ -177,7 +177,7 @@ private:
 	float m_fFrameCount;					//モーションフレームのカウント
 	bool m_bChangeMotion;					//モーションを切り替えるかの変数
 	float m_fInterpolationCount;			//線形補間のカウント
-	float m_bInterpolationEnd;				//線形保管が終わっているか
+	bool m_bInterpolationEnd;				//線形保管が終わっているか
 	std::vector<PartsInfo> m_InterpolationInfo;		//パーツの情報
 	std::vector<Motion> m_Motion;			//モーション情報
 	std::vector<CModelparts*> m_apModel;	//プレイヤーのパーツ[パーツ数]

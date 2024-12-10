@@ -35,6 +35,7 @@ public:
 	bool GetViewObject(D3DXVECTOR3 pos);		//カメラに映っているか
 	void SetShake(float frame, float magnitude);//カメラの揺れの設定
 	void SetPosR(D3DXVECTOR3 pos) { m_posR = pos; }	//注視点の設定
+	void SetPosV(D3DXVECTOR3 pos) { m_posV = pos; }	//視点の設定
 	
 private:
 

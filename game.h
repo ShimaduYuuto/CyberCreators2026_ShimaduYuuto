@@ -19,6 +19,7 @@
 #include "enemybulletmanager.h"
 #include "barriermanager.h"
 #include "lockon.h"
+#include "direction.h"
 
 class CPlayer;
 
@@ -51,6 +52,10 @@ public:
 	//クリア判定
 	void SetClear(bool crear) { m_bClear = crear; }	//設定
 
+	//演出
+	void SetDirection(CDirection::DIRECTIONTYPE type);	//演出の種類を設定
+	bool GetDirectioning() { return m_bDirectioning; }	//取得
+
 private:
 
 	void ModelLoad();	//モデルの読み込み
@@ -65,9 +70,14 @@ private:
 	CEnemyBulletManager* m_pEnemyBulletManager;	//エネミー弾マネージャー
 	CBarrierManager* m_pBarrierManager;		//結界マネージャー
 
-	
+	//判定
 	bool m_bClear;			//クリア判定
-	bool m_bDirectioning;	//演出中か
+
+	//演出
+	bool m_bDirectioning;		//演出中か
+	CDirection* m_pDirection;	//演出のポインタ
+	//int m_nEndDirectionTime;	//演出の時間
+	//int m_nDirectionCount;	//演出時間のカウント
 };
 
 #endif

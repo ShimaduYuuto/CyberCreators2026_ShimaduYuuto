@@ -8,15 +8,19 @@
 //ヘッダーのインクルード
 #include "enemy002.h"
 #include "manager.h"
+#include "game.h"
 #include "state_enemy002.h"
 
 //============================
 //エネミーのコンストラクタ
 //============================
-CEnemy002::CEnemy002()
+CEnemy002::CEnemy002() : 
+	m_bMaterialized(false)
 {
-	//ポインタに行動を設定
-	ChangeState(new CState_Enemy002_Normal(this));
+	//ゲームシーンのプレイヤーの位置を取得
+	CGame* pGame = nullptr;
+	pGame = (CGame*)CManager::GetInstance()->GetScene();	//ゲームシーンの取得
+	pGame->SetDirection(CDirection::DIRECTIONTYPE_BOSS);	//演出の設定
 }
 
 //============================
@@ -41,6 +45,9 @@ HRESULT CEnemy002::Init()
 	//モーションの読み込み
 	SetMotionInfo("data\\enemy012motion.txt");
 
+	//ポインタに行動を設定
+	ChangeState(new CState_Enemy002_Direction(this));
+	
 	return S_OK;
 }
 

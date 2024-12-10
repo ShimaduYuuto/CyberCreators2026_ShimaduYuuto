@@ -37,7 +37,7 @@ public:
 	virtual void SetDamage(CEnemy* enemy, int damage) {}
 
 	//アクションのインスタンス
-	void SetAction(CEnemyAction* action) { m_pAction = action; }	//設定
+	void SetAction(CEnemyAction* action) { if (m_pAction != nullptr) { return; }m_pAction = action; }	//設定
 	CEnemyAction* GetAction() { return m_pAction; }					//取得
 
 	//次の状態

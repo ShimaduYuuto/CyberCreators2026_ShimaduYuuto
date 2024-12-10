@@ -73,7 +73,7 @@ void CParticle::Update()
 	Move.z += (0.0f - Move.z) * m_fAttenuationValue;
 	SetMove(Move);
 
-	GetPos().y += 0.4f;
+	//GetPos().y += 0.4f;
 
 	//ビルボードの更新処理
 	CObjectBillboard::Update();

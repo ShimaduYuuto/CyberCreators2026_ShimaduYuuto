@@ -11,6 +11,7 @@
 //ヘッダーのインクルード
 #include "behavior_enemy.h"
 #include "enemybullet.h"
+#include "effect_chargeshot.h"
 
 //==========================
 //追いかける
@@ -83,7 +84,7 @@ public:
 
 	//コンストラクタ
 	CEnemyAction_ChargeShot() {};
-	CEnemyAction_ChargeShot(CEnemy* enemy) : m_nChargeCount(0), m_pBullet(nullptr)
+	CEnemyAction_ChargeShot(CEnemy* enemy) : m_nChargeCount(0), m_pBullet(nullptr), m_pEffect(nullptr)
 	{
 		//設定
 		enemy->SetMotion(4);
@@ -107,8 +108,34 @@ public:
 	}
 
 private:
-	int m_nChargeCount;		//チャージのカウント
-	CEnemyBullet* m_pBullet;//弾のポインタ
+	int m_nChargeCount;				//チャージのカウント
+	CEnemyBullet* m_pBullet;		//弾のポインタ
+	CEffect_ChargeShot* m_pEffect;	//エフェクトのポインタ
+};
+
+//==========================
+//エネミー002の演出
+//==========================
+class CEnemyAction_Direction : public CEnemyAction
+{
+public:
+
+	static constexpr int DIRECTION_TIME{ 300 };	//演出の時間
+
+	//コンストラクタ
+	CEnemyAction_Direction() {};
+	CEnemyAction_Direction(CEnemy* enemy);
+
+	void Action(CEnemy* enemy) override;	//演出
+
+	//追いかけるアクションを設定
+	void NextAction(CEnemy* enemy) override
+	{
+		SetNextAction(new CEnemyAction_Standby(enemy));
+	}
+
+private:
+	int m_nCount;	//カウント用
 };
 
 #endif

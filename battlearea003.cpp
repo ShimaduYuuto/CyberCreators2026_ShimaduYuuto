@@ -9,13 +9,16 @@
 #include "battlearea003.h"
 #include "spawn_enemy.h"
 #include "explodingbarrel.h"
+#include "manager.h"
+#include "game.h"
+#include "direction.h"
 
 //============================
 //コンストラクタ
 //============================
 CBattleArea003::CBattleArea003()
 {
-
+	
 }
 
 //============================
@@ -41,6 +44,6 @@ void CBattleArea003::SpawnEnemy()
 void CBattleArea003::SpawnGimmick()
 {
 	//ギミック生成
-	CExplodingBarrel::Create(GetPos(), { 0.0f, 0.0f, 0.0f });
-	CExplodingBarrel::Create(GetPos() + D3DXVECTOR3(150.0f, 0.0f, 150.0f), { 0.0f, 0.0f, 0.0f });
+	//CExplodingBarrel::Create(GetPos(), { 0.0f, 0.0f, 0.0f });
+	//CExplodingBarrel::Create(GetPos() + D3DXVECTOR3(150.0f, 0.0f, 150.0f), { 0.0f, 0.0f, 0.0f });
 }

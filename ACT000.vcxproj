@@ -179,7 +179,12 @@
     <ClInclude Include="collision_view.h" />
     <ClInclude Include="collision_wall.h" />
     <ClInclude Include="debugproc.h" />
+    <ClInclude Include="direction.h" />
+    <ClInclude Include="direction_boss.h" />
+    <ClInclude Include="effect_brow.h" />
+    <ClInclude Include="effect_chargeshot.h" />
     <ClInclude Include="effect_hitattack.h" />
+    <ClInclude Include="effect_runsmoke.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemy000.h" />
     <ClInclude Include="enemy001.h" />
@@ -295,7 +300,12 @@
     <ClCompile Include="collision_view.cpp" />
     <ClCompile Include="collision_wall.cpp" />
     <ClCompile Include="debugproc.cpp" />
+    <ClCompile Include="direction.cpp" />
+    <ClCompile Include="direction_boss.cpp" />
+    <ClCompile Include="effect_brow.cpp" />
+    <ClCompile Include="effect_chargeshot.cpp" />
     <ClCompile Include="effect_hitattack.cpp" />
+    <ClCompile Include="effect_runsmoke.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemy000.cpp" />
     <ClCompile Include="enemy001.cpp" />
@@ -359,6 +369,7 @@
     <ClCompile Include="state.cpp" />
     <ClCompile Include="state_enemy.cpp" />
     <ClCompile Include="state_enemy000.cpp" />
+    <ClCompile Include="state_enemy002.cpp" />
     <ClCompile Include="state_enemy_blow.cpp" />
     <ClCompile Include="state_enemy_damage.cpp" />
     <ClCompile Include="state_enemy_normal.cpp" />

@@ -137,4 +137,32 @@ public:
 	}
 };
 
+//========================
+//演出状態
+//========================
+class CState_Enemy002_Direction : public CState_Enemy
+{
+public:
+
+	//メンバ関数
+	CState_Enemy002_Direction() : m_nCount(0)
+	{
+		SetAction(new CEnemyAction());
+		SetEndTime(60);
+	};	//コンストラクタ
+
+	CState_Enemy002_Direction(CEnemy* enemy) : m_nCount(0)
+	{
+		SetAction(new CEnemyAction_Direction(enemy));
+		enemy->SetMotion(6);
+		SetEndTime(300);
+	};	//コンストラクタ
+
+	//状態の更新
+	void UpdateState(CEnemy* enemy) override;
+
+private:
+	int m_nCount;	//カウント用
+};
+
 #endif

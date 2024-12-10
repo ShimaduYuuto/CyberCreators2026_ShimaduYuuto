@@ -30,7 +30,9 @@ CGame::CGame() :
 	m_pGimmickManager(nullptr),
 	m_pExplosionManager(nullptr),
 	m_bClear(false),
-	m_bDirectioning(false)
+	m_bDirectioning(false),
+	m_pBarrierManager(nullptr),
+	m_pEnemyBulletManager(nullptr)
 {
 	
 }
@@ -103,7 +105,7 @@ HRESULT CGame::Init()
 	//バトルエリアの初期化
 	CBattleAreaManager::GetInstance()->Init();
 
-	//CExplodingBarrel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f });
+	//ステージに配置するオブジェクト
 	CSky::Create();
 	ModelLoad();
 
@@ -204,6 +206,21 @@ void CGame::Update()
 	if (m_pLockon != nullptr)
 	{
 		m_pLockon->Update();
+	}
+
+	//演出中の処理
+	if (m_bDirectioning)
+	{
+		if (m_pDirection != nullptr)
+		{
+			//更新が終わったら破棄
+			if (m_pDirection->TimeUpdate())
+			{
+				delete m_pDirection;
+				m_pDirection = nullptr;
+				m_bDirectioning = false;
+			}
+		}
 	}
 
 	//敵の生成
@@ -325,4 +342,26 @@ void CGame::ModelLoad()
 		//ファイルを閉じる
 		fclose(pFile);
 	}
+}
+
+//============================
+//演出の設定
+//============================
+void CGame::SetDirection(CDirection::DIRECTIONTYPE type)
+{
+	//範囲外の種類なら弾く
+	if (type < 0 && type >= CDirection::DIRECTIONTYPE_MAX)
+	{
+		return;
+	}
+
+	//演出があるなら弾く
+	if (m_pDirection != nullptr)
+	{
+		return;
+	}
+
+	//演出の生成
+	m_pDirection = CDirection::Create(type);
+	m_bDirectioning = true;
 }

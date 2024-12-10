@@ -32,11 +32,11 @@ CBattleArea000::~CBattleArea000()
 void CBattleArea000::SpawnEnemy()
 {
 	//ìGê∂ê¨
-	CSpawn_Enemy::Create(GetPos(), CEnemy::ENEMYTYPE_ENEMY001);
-	//CSpawn_Enemy::Create(GetPos() + D3DXVECTOR3(150.0f, 0.0f, 150.0f), CEnemy::ENEMYTYPE_ENEMY000);
-	//CSpawn_Enemy::Create(GetPos() + D3DXVECTOR3(-150.0f, 0.0f, -150.0f), CEnemy::ENEMYTYPE_ENEMY000);
-	//CSpawn_Enemy::Create(GetPos() + D3DXVECTOR3(-0.0f, 0.0f, -150.0f), CEnemy::ENEMYTYPE_ENEMY000);
-	//CSpawn_Enemy::Create(GetPos() + D3DXVECTOR3(-150.0f, 0.0f, -300.0f), CEnemy::ENEMYTYPE_ENEMY000);
+	CSpawn_Enemy::Create(GetPos(), CEnemy::ENEMYTYPE_ENEMY000);
+	CSpawn_Enemy::Create(GetPos() + D3DXVECTOR3(350.0f, 0.0f, 350.0f), CEnemy::ENEMYTYPE_ENEMY000);
+	CSpawn_Enemy::Create(GetPos() + D3DXVECTOR3(-350.0f, 0.0f, 350.0f), CEnemy::ENEMYTYPE_ENEMY000);
+	CSpawn_Enemy::Create(GetPos() + D3DXVECTOR3(-0.0f, 0.0f, -350.0f), CEnemy::ENEMYTYPE_ENEMY000);
+	CSpawn_Enemy::Create(GetPos() + D3DXVECTOR3(-350.0f, 0.0f, -300.0f), CEnemy::ENEMYTYPE_ENEMY000);
 }
 
 //============================
@@ -44,7 +44,5 @@ void CBattleArea000::SpawnEnemy()
 //============================
 void CBattleArea000::SpawnGimmick()
 {
-	//ÉMÉ~ÉbÉNê∂ê¨
-	CExplodingBarrel::Create(GetPos(), { 0.0f, 0.0f, 0.0f });
-	CExplodingBarrel::Create(GetPos() + D3DXVECTOR3(150.0f, 0.0f, 150.0f), { 0.0f, 0.0f, 0.0f });
+	//ñ≥Çµ
 }

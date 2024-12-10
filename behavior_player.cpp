@@ -11,6 +11,7 @@
 #include "game.h"
 #include "gauge_slow.h"
 #include "effect_hitattack.h"
+#include "effect_runsmoke.h"
 
 //’è”
 const D3DXVECTOR3 CPlayerBehavior_Attack::POS_OFFSET{ 0.0f, 20.0f, 30.0f };
@@ -309,6 +310,9 @@ void CPlayerBehavior_Dash::Behavior(CPlayer* player)
 
 					//ƒƒbƒNƒIƒ“‚Ì•û‚ÉŒü‚¯‚é
 					player->SetGoalRot({ 0.0f, fAngle + D3DX_PI, 0.0f });
+
+					//effect
+					CEffect_RunSmoke::Create(player->GetPos());
 
 					D3DXVECTOR3 Length = TagPos - player->GetPos();
 					float fLength = sqrtf((Length.x * Length.x) + (Length.z * Length.z));

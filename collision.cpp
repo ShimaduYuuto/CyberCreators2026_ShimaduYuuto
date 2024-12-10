@@ -14,7 +14,8 @@
 CCollision::CCollision() : 
 	m_CollisionPos(),
 	m_fRadius(),
-	m_Pos()
+	m_Pos(),
+	m_pCollisionView(nullptr)
 {
 
 }

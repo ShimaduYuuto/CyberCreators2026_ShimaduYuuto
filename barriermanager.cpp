@@ -111,16 +111,6 @@ void CBarrierManager::Erase()
 	//“o˜^Ï‚İ‚©
 	bool bRegisted = false;
 
-	//“¯‚¶‚à‚Ì‚ª–³‚¢‚©‚ğŠm”F
-	/*for (auto itr : m_BarrierList)
-	{
-		if (itr == area)
-		{
-			bRegisted = true;
-			break;
-		}
-	}*/
-
 	//“o˜^‚³‚ê‚Ä‚¢‚È‚¢‚È‚ç”²‚¯‚é
 	if (!bRegisted)
 	{
