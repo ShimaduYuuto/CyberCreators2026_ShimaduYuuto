@@ -10,7 +10,6 @@
 
 //ヘッダーのインクルード
 #include "enemy.h"
-#include "state_enemy002.h"
 
 //エネミークラス
 class CEnemy002 : public CEnemy
@@ -18,10 +17,10 @@ class CEnemy002 : public CEnemy
 public:
 
 	//定数
-	static const std::string FILEPATH;		//読み込むファイル
-	//static const float MOVE_VALUE;			//移動量
-	//static const float STARTATTACK_RANGE;	//攻撃を始める範囲
-
+	static const std::string FILEPATH;						//読み込むファイル
+	static constexpr float VALUE_INVISIBLE_ALPHA{ 0.3f };	//透明状態のα値
+	static constexpr int LIFE{ 100 };						//体力
+	
 	//敵のモーション
 	typedef enum
 	{
@@ -44,35 +43,22 @@ public:
 	void Draw() override;				//描画
 
 	//ダメージの設定
-	bool SetDamage(int damage) override;							//ダメージの設定
-	bool SetDamage(int damage, float rotY) override;				//ダメージの設定
-	bool SetBlowDamage(int damage, float rotY) override;			//吹き飛ばしてダメージを与える
-	bool SetBlowDamage(int damage, float rotY, float value) override;//吹き飛ばしてダメージを与える
+	bool SetDamage(int damage) override;								//ダメージの設定
+	bool SetDamage(int damage, float rotY) override;					//ダメージの設定
+	bool SetBlowDamage(int damage, float rotY) override;				//吹き飛ばしてダメージを与える
+	bool SetBlowDamage(int damage, float rotY, float value) override;	//吹き飛ばしてダメージを与える
 
 	//状態のリセット
-	void StateReset() override
-	{
-		//通常の状態に戻す
-		ChangeState(new CState_Enemy002_Normal(this));
-		SetEnableGravity(true);
-		m_bMaterialized = false;
-	}
+	void StateReset() override;
 
 	//貼り付け状態に変更
-	void ChangeStickState() override
-	{
-		ChangeState(new CState_Enemy002_Stick(this));
-	}
+	void ChangeStickState() override;
 
 	//スタン状態に変更
-	void ChangeStanState() override
-	{
-		ChangeState(new CState_Enemy002_Stan(this));
-		m_bMaterialized = true;
-	}
+	void ChangeStanState() override;
 
 	//実体化しているか
-	void SetMaterialized(bool materialized) { m_bMaterialized = materialized; }	//設定
+	void SetMaterialized(bool materialized);									//設定
 	bool GetMaterialized() { return m_bMaterialized; }							//取得
 
 private:

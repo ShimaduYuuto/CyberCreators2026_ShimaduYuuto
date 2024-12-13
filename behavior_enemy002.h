@@ -12,6 +12,10 @@
 #include "behavior_enemy.h"
 #include "enemybullet.h"
 #include "effect_chargeshot.h"
+#include "enemy002_alterego.h"
+
+//前方宣言
+class CEnemy002_AlterEgo;
 
 //==========================
 //追いかける
@@ -21,7 +25,6 @@ class CEnemyAction_Standby : public CEnemyAction
 public:
 
 	//コンストラクタ
-	CEnemyAction_Standby() {};
 	CEnemyAction_Standby(CEnemy* enemy) : m_nCoolTime(0)
 	{
 		enemy->SetMotion(0);
@@ -47,7 +50,6 @@ class CEnemyAction_Attack002 : public CEnemyAction_Attack
 public:
 
 	//コンストラクタ
-	CEnemyAction_Attack002() {};
 	CEnemyAction_Attack002(CEnemy* enemy)
 	{
 		//設定
@@ -83,7 +85,6 @@ public:
 	static constexpr float ADD_SCALE_VALUE{ 0.03f };//スケールの加算量
 
 	//コンストラクタ
-	CEnemyAction_ChargeShot() {};
 	CEnemyAction_ChargeShot(CEnemy* enemy) : m_nChargeCount(0), m_pBullet(nullptr), m_pEffect(nullptr)
 	{
 		//設定
@@ -91,13 +92,7 @@ public:
 	};
 
 	//デストラクタ
-	~CEnemyAction_ChargeShot()
-	{
-		if (m_pBullet != nullptr)
-		{
-			m_pBullet = nullptr;
-		}
-	}
+	~CEnemyAction_ChargeShot();
 
 	void Action(CEnemy* enemy) override;	//攻撃
 
@@ -114,7 +109,7 @@ private:
 };
 
 //==========================
-//エネミー002の演出
+//演出
 //==========================
 class CEnemyAction_Direction : public CEnemyAction
 {
@@ -123,7 +118,6 @@ public:
 	static constexpr int DIRECTION_TIME{ 300 };	//演出の時間
 
 	//コンストラクタ
-	CEnemyAction_Direction() {};
 	CEnemyAction_Direction(CEnemy* enemy);
 
 	void Action(CEnemy* enemy) override;	//演出
@@ -136,6 +130,39 @@ public:
 
 private:
 	int m_nCount;	//カウント用
+};
+
+//==========================
+//分身攻撃
+//==========================
+class CEnemyAction_AlterEgoAttack : public CEnemyAction
+{
+public:
+
+	//分身
+	static constexpr float TIME_INTERPOLATION_ALPHA{ 10 };	//アルファ値を変化させる時間
+	static constexpr int TIME_START_APPEAR{ 60 };			//出現を始める時間
+	static constexpr int TIME_END_ACTION{ 90 };				//アクションの終わる時間
+	static constexpr int NUM_ALTEREGO{ 3 };					//分身の数
+	
+	//コンストラクタ
+	CEnemyAction_AlterEgoAttack(CEnemy* enemy);
+	~CEnemyAction_AlterEgoAttack();
+
+	void Action(CEnemy* enemy) override;	//分身後に射撃
+
+	//追いかけるアクションを設定
+	void NextAction(CEnemy* enemy) override
+	{
+		SetNextAction(new CEnemyAction_Standby(enemy));
+	}
+
+private:
+
+	int m_nCount;									//カウント
+	bool m_bCreateAlterEgo;							//分身を生成したか
+	CEnemyAction_ChargeShot* m_pShotAction;			//ショットのポインタ
+	CEnemy002_AlterEgo* m_pAlterEgo[NUM_ALTEREGO];	//分身のポインタ
 };
 
 #endif

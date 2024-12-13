@@ -26,8 +26,17 @@ void CEnemyAction_Standby::Action(CEnemy* enemy)
 
 	if (m_nCoolTime < 0)
 	{
-		//攻撃する
-		SetNextAction(new CEnemyAction_ChargeShot(enemy));
+		//残り体力に応じて行動を変化
+		if (enemy->GetLife() > 90)
+		{
+			//攻撃する
+			SetNextAction(new CEnemyAction_ChargeShot(enemy));
+		}
+		else
+		{
+			//攻撃する
+			SetNextAction(new CEnemyAction_AlterEgoAttack(enemy));
+		}
 	}
 }
 
@@ -43,6 +52,25 @@ void CEnemyAction_Standby::NextAction(CEnemy* enemy)
 //======================================================================
 //チャージショット
 //======================================================================
+
+//====================================
+//デストラクタ
+//====================================
+CEnemyAction_ChargeShot::~CEnemyAction_ChargeShot()
+{
+	if (m_pBullet != nullptr)
+	{
+		m_pBullet->Uninit();
+		m_pBullet = nullptr;
+
+		//エフェクトの破棄
+		if (m_pEffect != nullptr)
+		{
+			m_pEffect->Uninit();
+			m_pEffect = nullptr;
+		}
+	}
+}
 
 //====================================
 //アクション(チャージショット)
@@ -101,10 +129,10 @@ void CEnemyAction_ChargeShot::Action(CEnemy* enemy)
 		}
 	}
 
-	//終了の時間になったら待機アクション
+	//終了の時間になったら次のアクション
 	if (m_nChargeCount > END_TIME)
 	{
-		SetNextAction(new CEnemyAction_Standby(enemy));
+		NextAction(enemy);
 	}
 
 	//当たっていたら消す
@@ -113,7 +141,7 @@ void CEnemyAction_ChargeShot::Action(CEnemy* enemy)
 		if (m_pBullet->GetDeath())
 		{
 			m_pBullet = nullptr;
-			SetNextAction(new CEnemyAction_Standby(enemy));
+			NextAction(enemy);
 		}
 	}
 }
@@ -129,6 +157,14 @@ CEnemyAction_Direction::CEnemyAction_Direction(CEnemy* enemy) :
 	m_nCount(0)
 {
 	enemy->SetMotion(6);
+
+	//ゲームシーンに演出を設定
+	CGame* pGame = nullptr;
+	pGame = (CGame*)CManager::GetInstance()->GetScene();	//ゲームシーンの取得
+	pGame->SetDirection(CDirection::DIRECTIONTYPE_BOSS);	//演出の設定
+
+	CEnemy002* pEnemy002 = (CEnemy002*)enemy;
+	pEnemy002->SetMaterialized(true);
 }
 
 //====================================
@@ -140,6 +176,135 @@ void CEnemyAction_Direction::Action(CEnemy* enemy)
 	m_nCount++;
 
 	if (m_nCount > DIRECTION_TIME)
+	{
+		NextAction(enemy);
+	}
+}
+
+//======================================================================
+//分身攻撃
+//======================================================================
+
+//====================================
+//コンストラクタ
+//====================================
+CEnemyAction_AlterEgoAttack::CEnemyAction_AlterEgoAttack(CEnemy* enemy) :
+	m_nCount(0),
+	m_pShotAction(nullptr),
+	m_bCreateAlterEgo(false),
+	m_pAlterEgo()
+{
+	enemy->SetMotion(0);
+
+	//分身のポインタを初期化
+	for (int i = 0; i < NUM_ALTEREGO; i++)
+	{
+		m_pAlterEgo[i] = nullptr;
+	}
+}
+
+//====================================
+//デストラクタ
+//====================================
+CEnemyAction_AlterEgoAttack::~CEnemyAction_AlterEgoAttack()
+{
+	//分身を破棄
+	for (int i = 0; i < NUM_ALTEREGO; i++)
+	{
+		if (m_pAlterEgo[i] != nullptr)
+		{
+			m_pAlterEgo[i]->Uninit();
+			m_pAlterEgo[i] = nullptr;
+		}
+	}
+}
+
+//====================================
+//アクション(分身)
+//====================================
+void CEnemyAction_AlterEgoAttack::Action(CEnemy* enemy)
+{
+	//ローカル変数
+	int nNumAlterEgo = 0;		//現在の分身の数
+
+	m_nCount++;	//カウントアップ
+
+	//徐々に消える
+	if (m_nCount <= TIME_INTERPOLATION_ALPHA)
+	{
+		//パーツ数だけ周回
+		for (auto itr : enemy->GetModelPartsVector())
+		{
+			//アルファ値を減算して設定
+			float fAlpha = itr->GetAlpha();
+			fAlpha -= CEnemy002::VALUE_INVISIBLE_ALPHA / TIME_INTERPOLATION_ALPHA;
+			
+			//補正
+			if (fAlpha < 0.0f)
+			{
+				fAlpha = 0.0f;
+			}
+
+			itr->SetAlpha(fAlpha);
+		}
+	}
+
+	//徐々に姿を表す
+	else if (m_nCount > TIME_START_APPEAR && m_nCount <= TIME_START_APPEAR + TIME_INTERPOLATION_ALPHA)
+	{
+		//最初の一回目に分身を生成
+		if (!m_bCreateAlterEgo)
+		{
+			enemy->SetPos(enemy->GetStartPos());
+			m_bCreateAlterEgo = true;
+
+			//分身を生成
+			for (int i = 0; i < NUM_ALTEREGO; i++)
+			{
+				m_pAlterEgo[i] = CEnemy002_AlterEgo::Create(D3DXVECTOR3(sinf(((D3DX_PI * 2.0f) / NUM_ALTEREGO) * i) * 200.0f, 0.0f, cosf(((D3DX_PI * 2.0f) / NUM_ALTEREGO) * i) * 200.0f) + enemy->GetStartPos());
+			}
+		}
+
+		//パーツ数だけ周回
+		for (auto itr : enemy->GetModelPartsVector())
+		{
+			//アルファ値を加算して設定
+			float fAlpha = itr->GetAlpha();
+			fAlpha += CEnemy002::VALUE_INVISIBLE_ALPHA / TIME_INTERPOLATION_ALPHA;
+
+			//補正
+			if (fAlpha > CEnemy002::VALUE_INVISIBLE_ALPHA)
+			{
+				fAlpha = CEnemy002::VALUE_INVISIBLE_ALPHA;
+			}
+
+			itr->SetAlpha(fAlpha);
+		}
+	}
+
+	//分身が生成されていないなら抜ける
+	if (!m_bCreateAlterEgo)
+	{
+		return;
+	}
+
+	//分身を更新
+	for (int i = 0; i < NUM_ALTEREGO; i++)
+	{
+		//存在しない、または死亡しているなら更新しない
+		if (m_pAlterEgo[i] == nullptr || m_pAlterEgo[i]->GetDeath())
+		{
+			m_pAlterEgo[i] = nullptr;
+			continue;
+		}
+
+		//更新
+		m_pAlterEgo[i]->Update();
+		nNumAlterEgo++;
+	}
+
+	//分身がいないなら移行
+	if (nNumAlterEgo == 0)
 	{
 		NextAction(enemy);
 	}

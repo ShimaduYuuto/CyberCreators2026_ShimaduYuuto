@@ -77,6 +77,13 @@ CEnemy::~CEnemy()
 		m_Collision->Uninit();
 		m_Collision = nullptr;
 	}
+
+	//状態の破棄
+	if (m_pState != nullptr)
+	{
+		delete m_pState;
+		m_pState = nullptr;
+	}
 }
 
 //============================
@@ -86,6 +93,12 @@ HRESULT CEnemy::Init()
 {
 	//初期化
 	CCharacter::Init();
+
+	//スタート地点を保存
+	m_StartPos = GetPos();
+
+	//当たり判定の位置の更新
+	m_Collision->Update(GetPos());
 
 	return S_OK;
 }
@@ -178,11 +191,11 @@ CEnemy* CEnemy::Create(D3DXVECTOR3 pos, ENEMYTYPE type)
 		break;
 	}
 
-	//初期化
-	pEnemy->Init();
-
 	//位置の設定
 	pEnemy->SetPos(pos);
+
+	//初期化
+	pEnemy->Init();
 
 	//設定した情報を返す
 	return pEnemy;
@@ -193,9 +206,6 @@ CEnemy* CEnemy::Create(D3DXVECTOR3 pos, ENEMYTYPE type)
 //============================
 bool CEnemy::SetDamage(int damage)
 {
-	//攻撃を止める
-	//SetMotion(0);
-
 	//ダメージの設定
 	CCharacter::SetDamage(damage);
 

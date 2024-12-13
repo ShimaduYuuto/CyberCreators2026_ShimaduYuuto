@@ -21,7 +21,7 @@ public:
 	static const float HEIGHT;			//高さ
 
 	//メンバ関数
-	CObjectCylinder(int nPriority = 3);	//コンストラクタ
+	CObjectCylinder(int nPriority = 4);	//コンストラクタ
 	~CObjectCylinder() override;		//デストラクタ
 	HRESULT Init() override;			//初期化
 	void Uninit() override;				//終了
@@ -40,12 +40,17 @@ public:
 	void SetRadius(float radius) { m_fRadius = radius; }//半径の設定
 	float& GetRadius() { return m_fRadius; }			//半径の取得
 
-	//頂点に関する処理
+	//シリンダーの高さ
+	void SetHeight(float height) { m_fHeight = height; }//設定
+	float GetHeight() { return m_fHeight; }				//取得
+
 	//頂点カラー
 	void SetColor(D3DXCOLOR color);						//設定
 	D3DXCOLOR GetColor() { return m_Color; }			//取得
 
 private:
+
+	virtual void MtxCalculation();		//マトリックスの計算
 
 	//メンバ変数
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff = NULL;	//頂点バッファへのポインタ
@@ -58,6 +63,7 @@ private:
 	int m_nVertex;								//頂点の数
 	int m_nPolygon;								//ポリゴンの数(縮退を含む)
 	float m_fRate;								//サイズ倍率
+	float m_fHeight;							//シリンダーの高さ
 };
 
 #endif

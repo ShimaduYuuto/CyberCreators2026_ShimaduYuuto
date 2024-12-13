@@ -9,7 +9,6 @@
 #define _STATE_ENEMY001_H_ //２重インクルード防止のマクロ定義
 
 //ヘッダーのインクルード
-//#include "enemy001.h"
 #include "behavior_enemy001.h"
 #include "state_enemy_normal.h"
 #include "state_enemy_damage.h"

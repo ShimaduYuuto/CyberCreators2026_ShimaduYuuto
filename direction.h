@@ -10,6 +10,7 @@
 
 //ヘッダーのインクルード
 #include "main.h"
+#include "letterbox.h"
 
 //演出クラス
 class CDirection
@@ -35,8 +36,8 @@ public:
 	static CDirection* Create(DIRECTIONTYPE type);
 
 	//終了時間
-	void SetEndTime(int time) { m_nEndTime = time; }	//設定
-	int GetEndTime() { return m_nEndTime; }				//取得
+	void SetEndTime(int time);					//設定
+	int GetEndTime() { return m_nEndTime; }		//取得
 
 	//カウント
 	int GetCount() { return m_nCount; }	//取得
@@ -44,9 +45,9 @@ public:
 private:
 
 	//メンバ変数
-	int m_nEndTime;	//終了時間
-	int m_nCount;	//カウント
-
+	int m_nEndTime;				//終了時間
+	int m_nCount;				//カウント
+	CLetterBox* m_pLetterBox;	//レターボックス
 };
 
 #endif

@@ -11,7 +11,7 @@
 #include "game.h"
 
 //オブジェクトメッシュクラスの定数の初期化
-const int CObjectCylinder::NUM_CORNER = 20;			//角の数
+const int CObjectCylinder::NUM_CORNER = 10;			//角の数
 const float CObjectCylinder::HEIGHT = 50.0f;		//高さ
 
 //============================
@@ -27,7 +27,8 @@ m_nPolygon(),
 m_nVertex(),
 m_pIdxBuff(),
 m_pVtxBuff(),
-m_rot()
+m_rot(),
+m_fHeight(0.0f)
 {
 	//パラメータの初期化
 	m_rot = { 0.0f, 0.0f, 0.0f };	//向き
@@ -36,6 +37,7 @@ m_rot()
 	m_nPolygon = 0;					//ポリゴンの数
 	m_nVertex = 0;					//頂点の数
 	m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);	//色の設定
+	m_fHeight = HEIGHT;				//高さ
 }
 
 //============================
@@ -110,8 +112,8 @@ HRESULT CObjectCylinder::Init()
 			float fAngle = (D3DX_PI * 2) * (float)(i / (float)NUM_CORNER);
 
 			//各変数に値を代入
-			pVtx[i + NUM_CORNER * j].pos = D3DXVECTOR3(sinf(fAngle) * m_fRadius, HEIGHT - (HEIGHT * j), cosf(fAngle) * m_fRadius);	//位置
-			pVtx[i + NUM_CORNER * j].tex = D3DXVECTOR2(1.0f * (i / NUM_CORNER), j);	//UV座標
+			pVtx[i + NUM_CORNER * j].pos = D3DXVECTOR3(sinf(fAngle) * m_fRadius, m_fHeight - (m_fHeight * j), cosf(fAngle) * m_fRadius);	//位置
+			pVtx[i + NUM_CORNER * j].tex = D3DXVECTOR2(1.0f * (i / (float)NUM_CORNER), j);	//UV座標
 			pVtx[i + NUM_CORNER * j].nor = D3DXVECTOR3(sinf(fAngle + D3DX_PI) / D3DX_PI,
 				0.0f,
 				cosf(fAngle + D3DX_PI) / D3DX_PI);	//法線ベクトル
@@ -244,7 +246,7 @@ void CObjectCylinder::Update()
 			float fAngle = (D3DX_PI * 2) * (float)(i / (float)NUM_CORNER);
 
 			//各変数に値を代入
-			pVtx[i + NUM_CORNER * j].pos = D3DXVECTOR3(sinf(fAngle) * m_fRadius * m_fRate, HEIGHT - (HEIGHT * j), cosf(fAngle) * m_fRadius * m_fRate);	//位置
+			pVtx[i + NUM_CORNER * j].pos = D3DXVECTOR3(sinf(fAngle) * m_fRadius * m_fRate, m_fHeight - (m_fHeight * j), cosf(fAngle) * m_fRadius * m_fRate);	//位置
 		}
 	}
 
@@ -259,21 +261,10 @@ void CObjectCylinder::Draw()
 {
 	//ローカル変数宣言
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
-	D3DXMATRIX mtxRot, mtxTrans;														//計算用マトリックス
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();							//テクスチャの読み込み
 
-	//ワールドの初期化
-	D3DXMatrixIdentity(&m_mtxWorld);
-
-	//向きを反映
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
-
-	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
-
-	//位置を反映
-	D3DXMatrixTranslation(&mtxTrans, GetPos().x, GetPos().y, GetPos().z);
-
-	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
+	//マトリックスの計算
+	MtxCalculation();
 
 	//ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
@@ -301,8 +292,34 @@ void CObjectCylinder::Draw(const char* path)
 {
 	//ローカル変数宣言
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
-	D3DXMATRIX mtxRot, mtxTrans;														//計算用マトリックス
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();							//テクスチャの読み込み
+
+	//マトリックスの計算
+	MtxCalculation();
+
+	//頂点バッファをデータストリームに設定
+	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_3D));
+
+	//インデックスバッファをデータストリームに設定
+	pDevice->SetIndices(m_pIdxBuff);
+
+	//頂点フォーマットの設定
+	pDevice->SetFVF(FVF_VERTEX_3D);
+
+	//テクスチャの設定
+	pDevice->SetTexture(0, pTexture->GetAddress(pTexture->Regist(path)));
+
+	//ポリゴンの描画
+	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, m_nVertex, 0, m_nPolygon);
+}
+
+//============================
+//マトリックスの計算
+//============================
+void CObjectCylinder::MtxCalculation()
+{
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
+	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
 
 	//ワールドの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
@@ -319,21 +336,6 @@ void CObjectCylinder::Draw(const char* path)
 
 	//ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
-
-	//頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_3D));
-
-	//インデックスバッファをデータストリームに設定
-	pDevice->SetIndices(m_pIdxBuff);
-
-	//頂点フォーマットの設定
-	pDevice->SetFVF(FVF_VERTEX_3D);
-
-	//テクスチャの設定
-	pDevice->SetTexture(0, pTexture->GetAddress(pTexture->Regist(path)));
-
-	//ポリゴンの描画
-	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, m_nVertex, 0, m_nPolygon);
 }
 
 //================================

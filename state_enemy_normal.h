@@ -24,7 +24,7 @@ public:
 	//メンバ関数
 	CState_Enemy_Normal() {};				//コンストラクタ
 	CState_Enemy_Normal(CEnemy* enemy);		//コンストラクタ
-	~CState_Enemy_Normal() {};				//デストラクタ
+	~CState_Enemy_Normal() override  {};	//デストラクタ
 
 	//状態ごとの更新
 	void UpdateState(CEnemy* enemy) override;	//状態の更新

@@ -170,6 +170,7 @@
     <ClInclude Include="behavior_enemy000.h" />
     <ClInclude Include="behavior_enemy001.h" />
     <ClInclude Include="behavior_enemy002.h" />
+    <ClInclude Include="behavior_enemy002_alterego.h" />
     <ClInclude Include="behavior_enemy003.h" />
     <ClInclude Include="behavior_player.h" />
     <ClInclude Include="billboardeffect.h" />
@@ -184,11 +185,15 @@
     <ClInclude Include="effect_brow.h" />
     <ClInclude Include="effect_chargeshot.h" />
     <ClInclude Include="effect_hitattack.h" />
+    <ClInclude Include="effect_repel.h" />
     <ClInclude Include="effect_runsmoke.h" />
+    <ClInclude Include="effect_stan.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemy000.h" />
     <ClInclude Include="enemy001.h" />
     <ClInclude Include="enemy002.h" />
+    <ClInclude Include="enemy002_alterego.h" />
+    <ClInclude Include="enemy002_fake .h" />
     <ClInclude Include="enemy003.h" />
     <ClInclude Include="enemybullet.h" />
     <ClInclude Include="enemybulletmanager.h" />
@@ -209,6 +214,7 @@
     <ClInclude Include="impactmesh.h" />
     <ClInclude Include="impactrange.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="letterbox.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="lockon.h" />
     <ClInclude Include="lockonmark.h" />
@@ -250,6 +256,7 @@
     <ClInclude Include="state_enemy000.h" />
     <ClInclude Include="state_enemy001.h" />
     <ClInclude Include="state_enemy002.h" />
+    <ClInclude Include="state_enemy002_alterego.h" />
     <ClInclude Include="state_enemy003.h" />
     <ClInclude Include="state_enemy_blow.h" />
     <ClInclude Include="state_enemy_damage.h" />
@@ -305,11 +312,14 @@
     <ClCompile Include="effect_brow.cpp" />
     <ClCompile Include="effect_chargeshot.cpp" />
     <ClCompile Include="effect_hitattack.cpp" />
+    <ClCompile Include="effect_repel.cpp" />
     <ClCompile Include="effect_runsmoke.cpp" />
+    <ClCompile Include="effect_stan.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemy000.cpp" />
     <ClCompile Include="enemy001.cpp" />
     <ClCompile Include="enemy002.cpp" />
+    <ClCompile Include="enemy002_alterego.cpp" />
     <ClCompile Include="enemy003.cpp" />
     <ClCompile Include="enemybullet.cpp" />
     <ClCompile Include="enemybulletmanager.cpp" />
@@ -330,6 +340,7 @@
     <ClCompile Include="impactmesh.cpp" />
     <ClCompile Include="impactrange.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="letterbox.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="lockon.cpp" />
     <ClCompile Include="lockonmark.cpp" />
@@ -370,6 +381,7 @@
     <ClCompile Include="state_enemy.cpp" />
     <ClCompile Include="state_enemy000.cpp" />
     <ClCompile Include="state_enemy002.cpp" />
+    <ClCompile Include="state_enemy002_alterego.cpp" />
     <ClCompile Include="state_enemy_blow.cpp" />
     <ClCompile Include="state_enemy_damage.cpp" />
     <ClCompile Include="state_enemy_normal.cpp" />

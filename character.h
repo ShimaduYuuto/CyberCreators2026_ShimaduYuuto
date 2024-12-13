@@ -143,6 +143,7 @@ public:
 	int GetMotionState() { return m_MotionState; }								//モーション状態の取得
 	void UpdateMotion();														//モーションの更新をする関数
 	CModelparts* GetModelParts(int index) { return m_apModel[index]; }			//モデルパーツの取得
+	std::vector<CModelparts*> GetModelPartsVector() { return m_apModel; }		//モデルパーツのベクターを取得
 
 	//位置の設定
 	void SetPos(D3DXVECTOR3 pos) override

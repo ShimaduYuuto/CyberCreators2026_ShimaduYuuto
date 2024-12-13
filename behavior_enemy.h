@@ -24,7 +24,7 @@ public:
 
 	//‰Šú‰»
 	CEnemyAction() : m_pNextAction(nullptr) {}
-	~CEnemyAction() {}
+	virtual ~CEnemyAction() {}
 
 	//ƒAƒNƒVƒ‡ƒ“‚ÌŠî’ê
 	virtual void Action(CEnemy* enemy) {};	

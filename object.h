@@ -52,11 +52,13 @@ public:
 	static CObject* GetTopObject(int priority);//オブジェクトの先頭を取得
 
 	//パラメーターの設定と取得
-	virtual void SetPos(D3DXVECTOR3 Pos) { m_Pos = Pos; }	//位置の設定
-	D3DXVECTOR3& GetPos() { return m_Pos; }					//位置の取得
-	void SetType(TYPE type) {m_Type = type;}				//種類の設定
-	TYPE GetType() { return m_Type; }						//種類の取得
-	CObject* GetNext() { return m_pNext; }					//次のポインタの取得
+	virtual void SetPos(D3DXVECTOR3 Pos) { m_Pos = Pos; }		//位置の設定
+	D3DXVECTOR3& GetPos() { return m_Pos; }						//位置の取得
+	void SetType(TYPE type) {m_Type = type;}					//種類の設定
+	TYPE GetType() { return m_Type; }							//種類の取得
+	CObject* GetNext() { return m_pNext; }						//次のポインタの取得
+	void SetUpdateJudge(bool judge) { m_bUpdateJudge = judge; }	//更新するかを設定
+	bool GetUpdateJudge() { return m_bUpdateJudge; }			//更新するかを取得
 
 protected:
 	void Release();							//自分自身の開放
@@ -71,6 +73,7 @@ private:
 	int m_nPriority;						//描画優先度
 	D3DXVECTOR3 m_Pos;						//オブジェクトの位置
 	TYPE m_Type;							//オブジェクトの種類
+	bool m_bUpdateJudge;					//オブジェクトを更新するか
 };
 
 #endif

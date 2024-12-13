@@ -31,11 +31,15 @@ public:
 	//ワールド座標の位置を取得
 	D3DXVECTOR3 GetWorldPos();
 
+	void SetAlpha(float alpha) { m_fAlpha = alpha; }	//設定
+	float GetAlpha() { return m_fAlpha; }				//アルファ値
+
 private:
 
 	//メンバ変数
 	CModelparts* m_pParent = nullptr;		//親モデルパーツへのポインタ
 	std::string m_ModelPartsName;			//モデルのファイル名
+	float m_fAlpha;							//透明度
 };
 
 #endif

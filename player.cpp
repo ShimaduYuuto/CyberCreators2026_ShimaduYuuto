@@ -272,35 +272,7 @@ void CPlayer::UpdatePos()
 //============================
 void CPlayer::SetOrbit(bool set)
 {
-	//if (set) //trueなら
-	//{
-	//	//軌跡がないなら
-	//	if (m_pOrbit == nullptr)
-	//	{
-	//		m_pOrbit = COrbit::Create();
-	//	}
-	//	
-	//	//モデルパーツの取得
-	//	CModelparts* pModelParts = GetModelParts(15);
-
-	//	//オフセット位置の設定
-	//	D3DXVECTOR3 OffsetPos = { 0.0f, 70.0f, 0.0f };
-	//	D3DXVec3TransformCoord(&OffsetPos, &OffsetPos, &pModelParts->GetMtx());
-
-	//	//軌跡の設定
-	//	m_pOrbit->SetOrbit(pModelParts->GetWorldPos(), OffsetPos);
-	//	m_pOrbit->SetOrbit(OffsetPos, pModelParts->GetWorldPos());
-	//}
-	//else //falseなら
-	//{
-	//	//軌跡がないなら
-	//	if (m_pOrbit != nullptr)
-	//	{
-	//		//終了処理
-	//		m_pOrbit->Uninit();
-	//		m_pOrbit = nullptr;
-	//	}
-	//}
+	
 }
 
 //============================
@@ -322,7 +294,7 @@ void CPlayer::SetKnockBack(int time)
 }
 
 //============================
-//ステートの設定
+//状態の設定
 //============================
 void CPlayer::SetState(CState_Player* state)
 {
@@ -335,26 +307,6 @@ void CPlayer::SetState(CState_Player* state)
 }
 
 //============================
-//アクションの切り替え
-//============================
-//CAction_Player* CPlayer::ChangeAction(CAction_Player* action)
-//{
-//	//nullチェック
-//	if (m_pAction != nullptr)
-//	{
-//		delete m_pAction;
-//		m_pAction = nullptr;
-//	}
-//
-//	//アクションの設定
-//	m_pAction = action;
-//	m_pAction->SetCharacter(this);
-//	m_pAction->Init();
-//
-//	return m_pAction;
-//}
-
-//============================
 //状態の変更
 //============================
 void CPlayer::ChangeState(CState_Player* state)
@@ -363,6 +315,7 @@ void CPlayer::ChangeState(CState_Player* state)
 	if (m_pState == nullptr)
 	{
 		delete m_pState;
+		m_pState = nullptr;
 	}
 
 	m_pState = state;

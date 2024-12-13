@@ -17,10 +17,7 @@
 CEnemy002::CEnemy002() : 
 	m_bMaterialized(false)
 {
-	//ゲームシーンのプレイヤーの位置を取得
-	CGame* pGame = nullptr;
-	pGame = (CGame*)CManager::GetInstance()->GetScene();	//ゲームシーンの取得
-	pGame->SetDirection(CDirection::DIRECTIONTYPE_BOSS);	//演出の設定
+	SetMaterialized(false);
 }
 
 //============================
@@ -40,7 +37,7 @@ HRESULT CEnemy002::Init()
 	CEnemy::Init();
 
 	//パラメータの初期化
-	CCharacter::SetLife(20);	//体力
+	CCharacter::SetLife(LIFE);	//体力
 
 	//モーションの読み込み
 	SetMotionInfo("data\\enemy012motion.txt");
@@ -160,4 +157,65 @@ bool CEnemy002::SetBlowDamage(int damage, float rotY, float value)
 	CEnemy::SetBlowDamage(damage, rotY, value);
 
 	return true;
+}
+
+//============================
+//実体化の設定
+//============================
+void CEnemy002::SetMaterialized(bool materialized)
+{
+	//同じなら抜ける
+	if (m_bMaterialized == materialized)
+	{
+		return;
+	}
+
+	//実体化するならパーツを透明にする
+	if (materialized)
+	{
+		//パーツ数だけ周回
+		for (auto itr : GetModelPartsVector())
+		{
+			itr->SetAlpha(1.0f);
+		}
+	}
+	else
+	{
+		//パーツ数だけ周回
+		for (auto itr : GetModelPartsVector())
+		{
+			itr->SetAlpha(VALUE_INVISIBLE_ALPHA);
+		}
+	}
+
+	//設定
+	m_bMaterialized = materialized;
+}
+
+//============================
+//状態のリセット
+//============================
+void CEnemy002::StateReset()
+{
+	//通常の状態に戻す
+	ChangeState(new CState_Enemy002_Normal(this));
+	SetEnableGravity(true);
+	SetMaterialized(false);
+}
+
+//============================
+//貼り付け状態に変更
+//============================
+void CEnemy002::ChangeStickState()
+{
+	ChangeState(new CState_Enemy002_Stick(this));
+}
+
+//============================
+//スタン状態に変更
+//============================
+void CEnemy002::ChangeStanState()
+{
+	ChangeState(new CState_Enemy002_Stan(this));
+	SetMaterialized(true);
 }

@@ -25,7 +25,7 @@ public:
 	//メンバ関数
 	CState_Enemy() : m_pAction(nullptr), m_pNextState(nullptr){};				//コンストラクタ
 	CState_Enemy(CEnemy* enemy) : m_pAction(nullptr), m_pNextState(nullptr) {};	//コンストラクタ
-	~CState_Enemy();															//デストラクタ
+	~CState_Enemy() override;													//デストラクタ
 
 	//状態ごとの更新
 	void Update(CEnemy* enemy);
@@ -47,8 +47,8 @@ public:
 private:
 
 	//状態とアクションの更新
-	virtual void UpdateState(CEnemy* enemy);				//状態の更新
-	void UpdateAction(CEnemy*& enemy);						//アクションの処理
+	virtual void UpdateState(CEnemy* enemy);	//状態の更新
+	void UpdateAction(CEnemy*& enemy);			//アクションの処理
 
 	//インスタンス
 	CEnemyAction* m_pAction;	//アクション

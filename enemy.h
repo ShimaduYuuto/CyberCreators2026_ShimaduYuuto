@@ -63,6 +63,9 @@ public:
 	void ChangeState(CState_Enemy* state);
 	CState_Enemy* GetState() { if (m_pState != nullptr) { return m_pState; } return nullptr; }
 
+	//最初の位置
+	D3DXVECTOR3 GetStartPos() { return m_StartPos; }	//取得
+
 	//ダメージを与えた際に与える影響
 	virtual void DamageEffect(CPlayer* player) {}
 
@@ -90,6 +93,7 @@ private:
 	ENEMYTYPE m_EnemyType;
 	CCollision* m_Collision;
 	CState_Enemy* m_pState;
+	D3DXVECTOR3 m_StartPos;	//最初の位置
 };
 
 #endif

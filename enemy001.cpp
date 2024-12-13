@@ -9,7 +9,7 @@
 #include "enemy001.h"
 #include "manager.h"
 #include "game.h"
-//#include "state_enemy001.h"
+#include "effect_repel.h"
 
 //定数の宣言
 const float CEnemy001::MOVE_VALUE = 2.0f;
@@ -196,6 +196,12 @@ void CEnemy001::DamageEffect(CPlayer* player)
 {
 	if (!m_bDamageJudge)
 	{
+		if (m_pShield != nullptr)
+		{
+			//エフェクトの生成
+			CEffect_Repel::Create(m_pShield->GetWorldPos());
+		}
+		
 		player->SetKnockBack(30);
 	}
 }

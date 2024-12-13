@@ -22,7 +22,7 @@ public:
 	//メンバ関数
 	CState_Enemy_Blow();					//コンストラクタ
 	CState_Enemy_Blow(CEnemy* enemy);		//コンストラクタ
-	~CState_Enemy_Blow() {};				//デストラクタ
+	~CState_Enemy_Blow() override {};		//デストラクタ
 
 	//状態ごとの更新
 	void UpdateState(CEnemy* enemy) override;	//状態の更新

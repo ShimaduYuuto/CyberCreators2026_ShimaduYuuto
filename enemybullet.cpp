@@ -10,6 +10,7 @@
 #include "manager.h"
 #include "game.h"
 #include "character.h"
+#include "battleareamanager.h"
 
 const std::string CEnemyBullet::FILEPATH = "data\\MODEL\\enemybullet.x";
 
@@ -171,6 +172,13 @@ void CEnemyBullet::Update()
 				break;
 			}
 		}
+	}
+
+	//壁と当たったら消える
+	if (CBattleAreaManager::GetInstance()->GetCurrentBattleArea()->GetWall()->GetHit(m_Collision->GetPos(), m_Collision->GetRadius()))
+	{
+		Uninit();
+		return;
 	}
 
 	//ゲームオブジェクトの共通処理更新

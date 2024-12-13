@@ -19,7 +19,7 @@ public:
 	//メンバ関数
 	CState_Enemy_Stan();					//コンストラクタ
 	CState_Enemy_Stan(CEnemy* enemy) {};	//コンストラクタ
-	~CState_Enemy_Stan() {};				//デストラクタ
+	~CState_Enemy_Stan() override {};		//デストラクタ
 
 	//状態ごとの更新
 	void UpdateState(CEnemy* enemy) override;	//状態の更新

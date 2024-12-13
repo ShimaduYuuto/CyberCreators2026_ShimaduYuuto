@@ -14,7 +14,8 @@
 //============================
 CDirection::CDirection() :
 	m_nCount(0),
-	m_nEndTime(0)
+	m_nEndTime(0),
+	m_pLetterBox(nullptr)
 {
 	
 }
@@ -73,6 +74,24 @@ CDirection* CDirection::Create(DIRECTIONTYPE type)
 
 	}
 
+	//初期化
+	pDirction->Init();
+
 	//設定した情報を返す
 	return pDirction;
+}
+
+//============================
+//終了時間の設定
+//============================
+void CDirection::SetEndTime(int time)
+{
+	//時間の設定
+	m_nEndTime = time;
+
+	//レターボックスの生成
+	if (m_pLetterBox == nullptr)
+	{
+		m_pLetterBox = CLetterBox::Create(time);
+	}
 }

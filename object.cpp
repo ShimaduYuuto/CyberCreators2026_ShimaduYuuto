@@ -17,7 +17,13 @@ CObject* CObject::m_pTop[NUM_PRIORITY] = { nullptr };			//最初のポインタの初期化
 //============================
 //オブジェクトのコンストラクタ
 //============================
-CObject::CObject(int nPriority)
+CObject::CObject(int nPriority) :
+	m_bDeath(false),
+	m_bUpdateJudge(true),
+	m_Pos(),
+	m_Type(),
+	m_pNext(nullptr),
+	m_pPrev(nullptr)
 {
 	//描画優先度設定
 	m_nPriority = nPriority;
@@ -173,7 +179,12 @@ void CObject::UpdateAll()
 		while (pObj != nullptr)
 		{
 			CObject* pNext = pObj->m_pNext;	//次のポインタを取得
-			pObj->Update();					//更新処理
+
+			if (pObj->m_bUpdateJudge)
+			{
+				pObj->Update();				//更新処理
+			}
+			
 			pObj = pNext;					//ポインタを進める
 		}
 	}

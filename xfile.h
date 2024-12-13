@@ -37,9 +37,9 @@ public:
 	//メンバ関数
 	CXfile();								//コンストラクタ
 	~CXfile();								//デストラクタ
-	void Unload();							//3Dオブジェクト破棄
-	int Regist(const char* pXfileName);		//3Dオブジェクト登録
-	XFileInfo GetAddress(int nIdx);			//3Dオブジェクト取得
+	void Unload();							//Xファイルオブジェクト破棄
+	int Regist(const char* pXfileName);		//Xファイルオブジェクト登録
+	XFileInfo GetAddress(int nIdx);			//Xファイルオブジェクト取得
 
 private:
 

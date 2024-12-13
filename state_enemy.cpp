@@ -19,6 +19,14 @@ CState_Enemy::~CState_Enemy()
 	//アクションの破棄
 	if (m_pAction != nullptr)
 	{
+		//次のアクションも破棄
+		if (m_pAction->GetNextAction() != nullptr)
+		{
+			CEnemyAction* pNext = m_pAction->GetNextAction();
+			delete pNext;
+			pNext = nullptr;
+		}
+		
 		delete m_pAction;
 		m_pAction = nullptr;
 	}

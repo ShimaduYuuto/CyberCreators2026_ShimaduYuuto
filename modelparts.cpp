@@ -14,9 +14,12 @@
 //============================
 //モデルパーツのコンストラクタ
 //============================
-CModelparts::CModelparts(int nPriority) : CObjectX(nPriority)
+CModelparts::CModelparts(int nPriority) : CObjectX(nPriority),
+	m_pParent(nullptr),
+	m_fAlpha(0.0f),
+	m_ModelPartsName()
 {
-	
+	m_fAlpha = 1.0f;
 }
 
 //============================
@@ -79,71 +82,7 @@ void CModelparts::Update()
 //============================
 void CModelparts::Draw()
 {
-	////ローカル変数宣言
-	//LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
-	//D3DXMATRIX mtxRot, mtxTrans;										//計算用マトリックス
-	//D3DMATERIAL9 matDef;												//現在のマテリアル保存用
-	//D3DXMATERIAL* pMat;													//マテリアルデータへのポインタ
-	//D3DXVECTOR3 Pos = GetPos();											//位置の取得
-
-	////Xファイルの読み込み
-	//CXfile* pCXfile = CManager::GetInstance()->GetXfile();
-
-	////ワールドの初期化
-	//D3DXMatrixIdentity(&m_mtxWorld);
-
-	////向きを反映
-	//D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
-
-	//D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
-
-	////位置を反映
-	//D3DXMatrixTranslation(&mtxTrans, Pos.x, Pos.y, Pos.z);
-
-	//D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
-
-	////ワールドマトリックスの設定
-	//pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
-
-	////現在のマテリアルを取得
-	//pDevice->GetMaterial(&matDef);
-
-	////マテリアルデータへのポインタを取得
-	//pMat = (D3DXMATERIAL*)pCXfile->GetAddress(pCXfile->Regist(CObjectX::FILEPATH.c_str())).pBuffmat->GetBufferPointer();
-
-	////テクスチャの数をカウント
-	//int nTextureCount = 0;
-
-	////マテリアルの数だけ周回
-	//for (int nCntMat = 0; nCntMat < (int)pCXfile->GetAddress(pCXfile->Regist(CObjectX::FILEPATH.c_str())).dwNumMat; nCntMat++)
-	//{
-	//	//マテリアルの設定
-	//	pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
-
-	//	//テクスチャがあったら
-	//	if (pMat[nCntMat].pTextureFilename != NULL)
-	//	{
-	//		//テクスチャの設定
-	//		pDevice->SetTexture(0, pCXfile->GetAddress(pCXfile->Regist(CObjectX::FILEPATH.c_str())).pTexture[nTextureCount]);
-
-	//		//テクスチャ用のカウントを進める
-	//		nTextureCount++;
-	//	}
-	//	else
-	//	{
-	//		//テクスチャを設定しない
-	//		pDevice->SetTexture(0, NULL);
-	//	}
-
-	//	//オブジェクトX(パーツ)の描画
-	//	pCXfile->GetAddress(pCXfile->Regist(CObjectX::FILEPATH.c_str())).pMesh->DrawSubset(nCntMat);
-	//}
-
-	////保存していたマテリアルを戻す
-	//pDevice->SetMaterial(&matDef);
-
-	////位置の設定
-	//SetPos(Pos);
+	
 }
 
 //============================
@@ -209,6 +148,9 @@ void CModelparts::Draw(int damagestate, int damagecount)
 	//マテリアルの数だけ周回
 	for (int nCntMat = 0; nCntMat < (int)pCXfile->GetAddress(pCXfile->Regist(m_ModelPartsName.c_str())).dwNumMat; nCntMat++)
 	{
+		//透明度を反映
+		pMat[nCntMat].MatD3D.Diffuse.a = m_fAlpha;
+
 		//マテリアルの設定
 		pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 

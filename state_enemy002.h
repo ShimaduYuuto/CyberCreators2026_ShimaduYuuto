@@ -16,6 +16,7 @@
 #include "state_enemy_blow.h"
 #include "state_enemy_stick.h"
 #include "state_enemy_stan.h"
+#include "effect_stan.h"
 
 //========================
 //通常状態
@@ -25,10 +26,7 @@ class CState_Enemy002_Normal : public CState_Enemy_Normal
 public:
 
 	//メンバ関数
-	CState_Enemy002_Normal(CEnemy* enemy)
-	{
-		SetAction(new CEnemyAction_Standby(enemy));
-	};	//コンストラクタ
+	CState_Enemy002_Normal(CEnemy* enemy);	//コンストラクタ
 
 	//状態の更新
 	void UpdateState(CEnemy* enemy) override
@@ -44,17 +42,20 @@ class CState_Enemy002_Damage : public CState_Enemy_Damage
 {
 public:
 
+	//定数
+	static constexpr int TIME_END{ 120 };	//終了時間
+
 	//メンバ関数
 	CState_Enemy002_Damage()
 	{
 		SetAction(new CEnemyAction());
-		SetEndTime(60);
+		SetEndTime(TIME_END);
 	};	//コンストラクタ
 
 	CState_Enemy002_Damage(CEnemy* enemy)
 	{
 		SetAction(new CEnemyAction());
-		SetEndTime(60);
+		SetEndTime(TIME_END);
 	};	//コンストラクタ
 
 	//状態の更新
@@ -91,15 +92,18 @@ class CState_Enemy002_Stick : public CState_Enemy_Stick
 {
 public:
 
+	//定数
+	static constexpr int TIME_END{ 300 };	//終了時間
+
 	//メンバ関数
 	CState_Enemy002_Stick()
 	{
-		SetEndTime(60);
+		SetEndTime(TIME_END);
 	};	//コンストラクタ
 
 	CState_Enemy002_Stick(CEnemy* enemy) : CState_Enemy_Stick(enemy)
 	{
-		SetEndTime(60);
+		SetEndTime(TIME_END);
 	};	//コンストラクタ
 
 	//状態の更新
@@ -123,18 +127,17 @@ public:
 		SetEndTime(60);
 	};	//コンストラクタ
 
-	CState_Enemy002_Stan(CEnemy* enemy)
-	{
-		SetAction(new CEnemyAction());
-		enemy->SetMotion(5);
-		SetEndTime(180);
-	};	//コンストラクタ
+	CState_Enemy002_Stan(CEnemy* enemy);	//コンストラクタ
+	~CState_Enemy002_Stan() override;		//デストラクタ
 
 	//状態の更新
 	void UpdateState(CEnemy* enemy) override
 	{
 		CState_Enemy_Stan::UpdateState(enemy);
 	}
+
+private:
+	CEffect_Stan* m_pStanEffect;
 };
 
 //========================
@@ -144,19 +147,17 @@ class CState_Enemy002_Direction : public CState_Enemy
 {
 public:
 
+	//定数
+	static constexpr int TIME_END{ 300 };	//終了時間
+
 	//メンバ関数
 	CState_Enemy002_Direction() : m_nCount(0)
 	{
 		SetAction(new CEnemyAction());
-		SetEndTime(60);
+		SetEndTime(TIME_END);
 	};	//コンストラクタ
 
-	CState_Enemy002_Direction(CEnemy* enemy) : m_nCount(0)
-	{
-		SetAction(new CEnemyAction_Direction(enemy));
-		enemy->SetMotion(6);
-		SetEndTime(300);
-	};	//コンストラクタ
+	CState_Enemy002_Direction(CEnemy* enemy);	///コンストラクタ
 
 	//状態の更新
 	void UpdateState(CEnemy* enemy) override;

@@ -19,7 +19,7 @@ public:
 
 	//メンバ関数
 	CState() : m_fEndTime(0.0f), m_fStateCount(0.0f) {};	//コンストラクタ
-	~CState() {};					//デストラクタ
+	virtual ~CState() {};					//デストラクタ
 
 	//状態ごとの更新
 	virtual void Motion(CCharacter* character);		//モーション
