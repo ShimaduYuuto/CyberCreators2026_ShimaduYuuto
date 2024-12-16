@@ -49,15 +49,15 @@ HRESULT CRenderer::Init(HWND hWnd, BOOL bWindow)
 	}
 
 	//デバイスのプレゼンテーションパラメータの設定
-	ZeroMemory(&d3dpp, sizeof(d3dpp));	  //パラメータのゼロクリア
-	d3dpp.BackBufferWidth = SCREEN_WIDTH; //ゲーム画面サイズ（幅）
-	d3dpp.BackBufferHeight = SCREEN_HEIGHT;	//ゲーム画面のサイズ（高さ）
-	d3dpp.BackBufferFormat = d3ddm.Format;	//バックバッファの形式
-	d3dpp.BackBufferCount = 1;	///バックバッファの数
+	ZeroMemory(&d3dpp, sizeof(d3dpp));			//パラメータのゼロクリア
+	d3dpp.BackBufferWidth = SCREEN_WIDTH;		//ゲーム画面サイズ（幅）
+	d3dpp.BackBufferHeight = SCREEN_HEIGHT;		//ゲーム画面のサイズ（高さ）
+	d3dpp.BackBufferFormat = d3ddm.Format;		//バックバッファの形式
+	d3dpp.BackBufferCount = 1;					//バックバッファの数
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;	//ダブルバッファの切り替え
-	d3dpp.EnableAutoDepthStencil = TRUE;	//デプスバッファとステンシルバッファを作成
+	d3dpp.EnableAutoDepthStencil = TRUE;		//デプスバッファとステンシルバッファを作成
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;	//デプスのバッファとして16bitを使う
-	d3dpp.Windowed = bWindow;	//ウィンドウモード
+	d3dpp.Windowed = bWindow;					//ウィンドウモード
 	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;	//リフレッシュレート
 	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;	//インターバル
 
@@ -116,17 +116,17 @@ HRESULT CRenderer::Init(HWND hWnd, BOOL bWindow)
 void CRenderer::Uninit()
 {
 	//Direct3Dデバイスの破棄
-	if (m_pD3DDevice != NULL)
+	if (m_pD3DDevice != nullptr)
 	{
 		m_pD3DDevice->Release();
-		m_pD3DDevice = NULL;
+		m_pD3DDevice = nullptr;
 	}
 
 	//Direct3Dオブジェクトの破棄
-	if (m_pD3D != NULL)
+	if (m_pD3D != nullptr)
 	{
 		m_pD3D->Release();
-		m_pD3D = NULL;
+		m_pD3D = nullptr;
 	}
 }
 
@@ -150,7 +150,7 @@ void CRenderer::Draw()
 	//画面クリア(バックバッファ&Zバッファのクリア)
 	m_pD3DDevice->Clear(0, NULL,
 		(D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER),
-		D3DCOLOR_RGBA(255, 255, 255, 100), 1.0f, 0);
+		D3DCOLOR_RGBA(100, 100, 100, 100), 1.0f, 0);
 
 	//描画開始
 	if (SUCCEEDED(m_pD3DDevice->BeginScene()))

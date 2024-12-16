@@ -62,7 +62,6 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	//ジョイパッドの生成
 	m_pJoypad = new CInputJoypad();
-	//ジョイパッドの初期化処理
 	if (FAILED(m_pJoypad->Init()))
 	{
 		return E_FAIL;

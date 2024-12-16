@@ -223,5 +223,5 @@ void CDebugProc::SetManual(void)
 	//int nFPS = CManager::GetInstance()->GetFPS();
 	//デバッグ変更とFPS
 	//Print("【デバッグ表示】【F1】【FPS】 %d\n", nFPS);
-	Print("【現在の画面】[%s]\n", m_apMode[CScene::GetMode()]);
+	//Print("【現在の画面】[%s]\n", m_apMode[CScene::GetMode()]);
 }

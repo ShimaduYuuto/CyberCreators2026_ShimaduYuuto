@@ -402,6 +402,9 @@
     <ClInclude Include="state_enemy002_alterego.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="title_player.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -765,6 +768,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="state_enemy002_alterego.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="title_player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

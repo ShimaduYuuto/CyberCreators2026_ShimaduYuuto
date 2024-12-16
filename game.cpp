@@ -32,7 +32,8 @@ CGame::CGame() :
 	m_bClear(false),
 	m_bDirectioning(false),
 	m_pBarrierManager(nullptr),
-	m_pEnemyBulletManager(nullptr)
+	m_pEnemyBulletManager(nullptr),
+	m_pDirection(nullptr)
 {
 	
 }

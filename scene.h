@@ -33,7 +33,7 @@ public:
 	virtual void Update();					//更新
 	virtual void Draw();					//描画
 	static CScene* Create(MODE mode);		//生成
-	static MODE GetMode() { return m_Mode; }//モードの取得
+	MODE GetMode() { return m_Mode; }		//モードの取得
 
 	//各シーンのモデルとテクスチャの読み込み
 	virtual void Load();	//読み込み

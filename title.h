@@ -23,9 +23,6 @@ public:
 	void Uninit() override;			//I—¹
 	void Update() override;			//XV
 	void Draw() override;			//•`‰æ
-
-private:
-
 };
 
 #endif

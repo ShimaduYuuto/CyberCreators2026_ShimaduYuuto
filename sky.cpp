@@ -7,7 +7,6 @@
 
 //ヘッダーのインクルード
 #include "sky.h"
-#include "game.h"
 #include "manager.h"
 
 //定数

@@ -272,6 +272,7 @@
     <ClInclude Include="time.h" />
     <ClInclude Include="title.h" />
     <ClInclude Include="title_logo.h" />
+    <ClInclude Include="title_player.h" />
     <ClInclude Include="tree.h" />
     <ClInclude Include="xfile.h" />
   </ItemGroup>
@@ -395,6 +396,7 @@
     <ClCompile Include="time.cpp" />
     <ClCompile Include="title.cpp" />
     <ClCompile Include="title_logo.cpp" />
+    <ClCompile Include="title_player.cpp" />
     <ClCompile Include="tree.cpp" />
     <ClCompile Include="xfile.cpp" />
   </ItemGroup>

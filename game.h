@@ -76,8 +76,6 @@ private:
 	//演出
 	bool m_bDirectioning;		//演出中か
 	CDirection* m_pDirection;	//演出のポインタ
-	//int m_nEndDirectionTime;	//演出の時間
-	//int m_nDirectionCount;	//演出時間のカウント
 };
 
 #endif

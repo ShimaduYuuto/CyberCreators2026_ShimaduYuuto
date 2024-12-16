@@ -38,7 +38,7 @@ CCamera::~CCamera()
 HRESULT CCamera::Init()
 {
 	//メンバ変数の初期設定
-	m_posV = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//視点の初期化
+	m_posV = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//視点の初期化
 	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//注視点の初期化
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);			//上ベクトルの初期化
 	m_mtxProjection = {};							//プロジェクションマトリックスの初期化
@@ -77,6 +77,8 @@ void CCamera::Update()
 	switch (Mode)
 	{
 	case CScene::MODE_TITLE:	//タイトル
+		m_posV = D3DXVECTOR3(-30.0f, 10.0f, -100.0f);	//視点の初期化
+		m_posR = D3DXVECTOR3(-30.0f, 0.0f, 0.0f);			//注視点の初期化
 		break;
 
 	case CScene::MODE_GAME:		//ゲーム

@@ -78,6 +78,7 @@ CTitle_Logo* CTitle_Logo::Create(D3DXVECTOR3 pos)
 	pTitle_Logo->Init();
 	pTitle_Logo->SetPos(pos);	//位置
 	pTitle_Logo->SetSize({WIDTH, HEIGHT, 0.0f});	//サイズ
+	pTitle_Logo->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
 
 	return pTitle_Logo;
 }

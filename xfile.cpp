@@ -17,7 +17,7 @@ std::map<std::string, CXfile::XFileInfo> CXfile::m_pXfilemap = {};	//Xƒtƒ@ƒCƒ‹‚Ì
 //============================
 CXfile::CXfile()
 {
-	
+	m_pXfilemap.clear();
 }
 
 //============================
@@ -25,7 +25,7 @@ CXfile::CXfile()
 //============================
 CXfile::~CXfile()
 {
-
+	m_pXfilemap.clear();
 }
 
 //============================

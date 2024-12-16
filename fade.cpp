@@ -17,7 +17,8 @@ CFade::FADE CFade::m_FadeState = CFade::FADE_NONE;	//フェードの状態を初期化
 //============================
 //フェードのコンストラクタ
 //============================
-CFade::CFade()
+CFade::CFade() :
+	m_fAlpha(1.0f)
 {
 	//メンバ変数の初期化
 	m_pVtxBuff = nullptr;			//頂点ポインタの初期化
@@ -91,7 +92,7 @@ HRESULT CFade::Init()
 	m_pVtxBuff->Unlock();
 
 	//最初のシーンの設定
-	SetFade(CScene::MODE_TITLE);
+	SetFade(m_Mode);
 
 	return S_OK;
 }

@@ -11,7 +11,7 @@
 //ヘッダーのインクルード
 #include "object2D.h"
 
-//ゲージクラス
+//titlelogoクラス
 class CTitle_Logo : public CObject2D
 {
 public:

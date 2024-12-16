@@ -8,7 +8,6 @@
 //ヘッダーのインクルード
 #include "objectdome.h"
 #include "manager.h"
-#include "game.h"
 
 //オブジェクトメッシュクラスの定数の初期化
 const int CObjectDome::NUM_CORNER = 8;			//角の数
