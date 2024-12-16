@@ -10,7 +10,7 @@
 #include "manager.h"
 
 //マクロ定義
-#define WINDOW_NAME "タイトル未定" //ウィンドウの名前（キャプションに表示）
+#define WINDOW_NAME "SlashAssault" //ウィンドウの名前（キャプションに表示）
 #define FPS (1000) //FPSの基準
 #define FPS_NUMBER (60) //FPSの基準
 

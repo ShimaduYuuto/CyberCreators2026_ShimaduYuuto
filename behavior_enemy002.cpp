@@ -368,7 +368,6 @@ void CEnemyAction_AlterEgoAttack::Action(CEnemy* enemy)
 		if (m_pBullet->GetDeath())
 		{
 			m_pBullet = nullptr;
-			NextAction(enemy);
 		}
 	}
 
@@ -394,7 +393,7 @@ void CEnemyAction_AlterEgoAttack::Action(CEnemy* enemy)
 	}
 
 	//•ªg‚ª‚¢‚È‚¢‚È‚çˆÚs
-	if (nNumAlterEgo == 0)
+	if (nNumAlterEgo == 0 && m_pBullet == nullptr)
 	{
 		NextAction(enemy);
 	}

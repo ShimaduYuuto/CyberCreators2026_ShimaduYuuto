@@ -45,7 +45,7 @@ HRESULT CEnemy002_AlterEgo::Init()
 	SetLife(LIFE);	//体力
 
 	//モーションの読み込み
-	SetMotionInfo("data\\enemy012motion.txt");
+	SetMotionInfo("data\\enemy012AlterEgomotion.txt");
 
 	//ポインタに行動を設定
 	ChangeState(new CState_Enemy002_AlterEgo_Normal(this));
