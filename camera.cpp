@@ -77,8 +77,8 @@ void CCamera::Update()
 	switch (Mode)
 	{
 	case CScene::MODE_TITLE:	//タイトル
-		m_posV = D3DXVECTOR3(-30.0f, 10.0f, -100.0f);	//視点の初期化
-		m_posR = D3DXVECTOR3(-30.0f, 0.0f, 0.0f);			//注視点の初期化
+		m_posV = D3DXVECTOR3(-30.0f, 30.0f, -100.0f);		//視点
+		m_posR = D3DXVECTOR3(-30.0f, 20.0f, 0.0f);			//注視点
 		break;
 
 	case CScene::MODE_GAME:		//ゲーム
