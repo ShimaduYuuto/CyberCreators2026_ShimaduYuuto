@@ -26,6 +26,12 @@ CGame_Character::CGame_Character(int nPriority) : CCharacter(nPriority)
 	m_fRadiusSize = SIZE_RADIUS;			//サイズの半径
 	m_bEnableGravity = true;				//重力を受ける
 	m_BlowValue = { 0.0f, 0.0f, 0.0f };		//吹き飛ぶ力
+
+	//当たり判定の生成
+	if (m_pCollision == nullptr)
+	{
+		m_pCollision = CCollision::Create(GetSizeRadius(), D3DXVECTOR3(0.0f, 30.0f, 0.0f));
+	}
 }
 
 //============================
@@ -33,7 +39,12 @@ CGame_Character::CGame_Character(int nPriority) : CCharacter(nPriority)
 //============================
 CGame_Character::~CGame_Character()
 {
-	
+	//当たり判定の消去
+	if (m_pCollision != nullptr)
+	{
+		m_pCollision->Uninit();
+		m_pCollision = nullptr;
+	}
 }
 
 //============================
@@ -43,6 +54,9 @@ HRESULT CGame_Character::Init()
 {
 	//初期化
 	CCharacter::Init();
+
+	//当たり判定の位置の更新
+	m_pCollision->Update(GetPos());
 
 	return S_OK;
 }
@@ -69,6 +83,9 @@ void CGame_Character::Update()
 
 	//モーションの更新
 	UpdateMotion();
+
+	//当たり判定の位置の更新
+	m_pCollision->Update(GetPos());
 
 	//体力が0以下になったら
 	if (m_nLife <= 0)

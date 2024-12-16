@@ -49,7 +49,7 @@ CPlayer::~CPlayer()
 HRESULT CPlayer::Init()
 {
 	//初期化
-	CCharacter::Init();
+	CGame_Character::Init();
 
 	//パラメータの初期化
 	CCharacter::SetRot({ 0.0f, 0.0f, 0.0f });
@@ -77,7 +77,7 @@ HRESULT CPlayer::Init()
 void CPlayer::Uninit()
 {
 	//初期化
-	CCharacter::Uninit();
+	CGame_Character::Uninit();
 
 	//ゲージの消去
 	if (m_pLifeGauge != nullptr)

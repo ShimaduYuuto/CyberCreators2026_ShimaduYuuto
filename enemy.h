@@ -47,7 +47,7 @@ public:
 	ENEMYTYPE& GetType() { return m_EnemyType; }					//エネミーの種類を返す
 
 	//パラメータの設定と取得
-	CCollision* GetCollision() { return m_Collision; }				//当たり判定の取得
+	//CCollision* GetCollision() { return m_Collision; }				//当たり判定の取得
 
 	//状態処理の関数
 	virtual bool SetBlowOff();
@@ -90,7 +90,7 @@ private:
 
 	//メンバ変数
 	ENEMYTYPE m_EnemyType;
-	CCollision* m_Collision;
+	//CCollision* m_Collision;
 	CState_Enemy* m_pState;
 	D3DXVECTOR3 m_StartPos;	//最初の位置
 };

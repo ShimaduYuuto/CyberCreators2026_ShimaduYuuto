@@ -20,7 +20,7 @@
 //エネミーのコンストラクタ
 //============================
 CEnemy::CEnemy(int nPriority) : 
-	CGame_Character(nPriority), m_Collision(),
+	CGame_Character(nPriority),/* m_Collision(),*/
 	m_EnemyType(),
 	m_pState(nullptr)
 {
@@ -36,12 +36,6 @@ CEnemy::CEnemy(int nPriority) :
 
 		//マネージャーに登録
 		pGame->GetEnemyManager()->Regist(this);
-
-		//当たり判定の生成
-		if (m_Collision == nullptr)
-		{
-			m_Collision = CCollision::Create(GetSizeRadius(), D3DXVECTOR3(0.0f, 30.0f, 0.0f));
-		}
 	}
 }
 
@@ -71,13 +65,6 @@ CEnemy::~CEnemy()
 		CBattleAreaManager::GetInstance()->GetCurrentBattleArea()->DecrementEnemyNum();
 	}
 
-	//当たり判定の消去
-	if (m_Collision != nullptr)
-	{
-		m_Collision->Uninit();
-		m_Collision = nullptr;
-	}
-
 	//状態の破棄
 	if (m_pState != nullptr)
 	{
@@ -92,13 +79,10 @@ CEnemy::~CEnemy()
 HRESULT CEnemy::Init()
 {
 	//初期化
-	CCharacter::Init();
+	CGame_Character::Init();
 
 	//スタート地点を保存
 	m_StartPos = GetPos();
-
-	//当たり判定の位置の更新
-	m_Collision->Update(GetPos());
 
 	return S_OK;
 }
@@ -143,9 +127,6 @@ void CEnemy::Update()
 
 	//共通処理の更新
 	CGame_Character::Update();
-
-	//当たり判定の位置の更新
-	m_Collision->Update(GetPos());
 }
 
 //============================

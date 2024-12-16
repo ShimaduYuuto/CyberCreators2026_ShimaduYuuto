@@ -10,6 +10,7 @@
 
 //ヘッダーのインクルード
 #include "character.h"
+#include "collision.h"
 
 //キャラクタークラス
 class CGame_Character : public CCharacter
@@ -57,6 +58,9 @@ public:
 	void SetEnteredStick(bool enter) { m_bEnteredStick = enter; }	//設定
 	bool GetEnteredStick() { return m_bEnteredStick; }				//取得
 
+	//当たり判定の情報
+	CCollision* GetCollision() { return m_pCollision; }				//当たり判定の取得
+
 private:
 
 	//メンバ変数
@@ -66,6 +70,7 @@ private:
 	bool m_bEnableGravity;					//重力を受けるか
 	D3DXVECTOR3 m_BlowValue;				//吹き飛びの量
 	bool m_bEnteredStick;					//一度でも
+	CCollision* m_pCollision;				//コリジョンの情報
 };
 
 #endif
