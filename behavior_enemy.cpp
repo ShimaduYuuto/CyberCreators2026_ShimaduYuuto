@@ -15,6 +15,18 @@ const float CEnemyMove_Chase::VALUE_MOVE = 1.0f;
 //====================================
 //追いかけ処理
 //====================================
+
+//==============================
+//コンストラクタ
+//==============================
+CEnemyAction_Chase::CEnemyAction_Chase(CEnemy* enemy)
+{
+	enemy->SetMotion(1);
+}
+
+//==============================
+//アクション
+//==============================
 void CEnemyAction_Chase::Action(CEnemy* enemy)
 {
 	//ゲームシーンのプレイヤーの位置を取得
@@ -45,13 +57,12 @@ void CEnemyAction_Chase::Action(CEnemy* enemy)
 		else
 		{
 			enemy->CCharacter::AddMove({ sinf(fAngle) * VALUE_MOVE, 0.0f, cosf(fAngle) * VALUE_MOVE });
-			enemy->SetMotion(1);
 		}
 	}
 	else
 	{
 		enemy->CCharacter::SetMove({ 0.0f, enemy->CCharacter::GetMove().y, 0.0f });
-		enemy->SetMotion(3);
+		
 	}
 }
 

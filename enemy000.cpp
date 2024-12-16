@@ -19,8 +19,7 @@ const float CEnemy000::STARTATTACK_RANGE = 50.0f;
 //============================
 CEnemy000::CEnemy000()
 {
-	//ポインタに行動を設定
-	ChangeState(new CState_Enemy000_Normal(this));
+	
 }
 
 //============================
@@ -44,6 +43,9 @@ HRESULT CEnemy000::Init()
 
 	//モーションの読み込み
 	SetMotionInfo("data\\enemy010motion.txt");
+
+	//ポインタに行動を設定
+	ChangeState(new CState_Enemy000_Normal(this));
 
 	return S_OK;
 }

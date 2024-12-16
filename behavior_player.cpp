@@ -50,7 +50,7 @@ void CPlayerBehavior_Move::Behavior(CPlayer* player)
 	}
 
 	//空中にいるならモーションを変える
-	if(!player->GetOnStand())
+	if(!player->GetOnStand() && player->GetMotionState() != CPlayer::PLAYERMOTION_JUMP)
 	{
 		//ジャンプのモーション
 		player->SetMotion(CPlayer::PLAYERMOTION_JUMP);
@@ -152,13 +152,19 @@ D3DXVECTOR3 CPlayerBehavior_Move::UpdateMove(CPlayer* player, D3DXVECTOR3& Rotgo
 	//動いたかの判定
 	if (bMove && player->GetOnStand())
 	{
-		//モーションの設定
-		player->SetMotion(CPlayer::PLAYERMOTION_WALK);
+		if (player->GetMotionState() != CPlayer::PLAYERMOTION_WALK)
+		{
+			//モーションの設定
+			player->SetMotion(CPlayer::PLAYERMOTION_WALK);
+		}
 	}
 	else if (player->GetOnStand())	//地面に着いているなら
 	{
-		//モーションの設定
-		player->SetMotion(CPlayer::PLAYERMOTION_NORMAL);
+		if (player->GetMotionState() != CPlayer::PLAYERMOTION_NORMAL)
+		{
+			//モーションの設定
+			player->SetMotion(CPlayer::PLAYERMOTION_NORMAL);
+		}
 	}
 
 	//移動量を返す
@@ -187,25 +193,11 @@ void CPlayerBehavior_Move::Action(CPlayer* player)
 				{
 					if (pGame->GetLockon()->GetTarget() != nullptr)
 					{
-						////ターゲットにダッシュ
-						//D3DXVECTOR3 TagPos = pGame->GetLockon()->GetTarget()->GetPos();
-						//D3DXVECTOR3 Length = TagPos - player->GetPos();
-						//float fLength = sqrtf((Length.x * Length.x) + (Length.z * Length.z));
-
-						////ダッシュが止まる範囲の外ならダッシュ
-						//if (fLength > CPlayerBehavior_Dash::STOP_LENGYH)
-						//{
-						//	//ダッシュを生成
-						//	SetNextBehavior(new CPlayerBehavior_Dash(player));
-						//}
-
 						//ダッシュを生成
 						SetNextBehavior(new CPlayerBehavior_Dash(player));
 					}
 				}
 			}
-			//ダッシュを生成
-			//SetNextBehavior(new CPlayerBehavior_Dash(player));
 		}
 	}
 

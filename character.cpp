@@ -580,7 +580,7 @@ bool CCharacter::SetDamage(int damage)
 //===================================
 void CCharacter::SetMotion(int motion)
 {
-	if (m_MotionState != motion) //現在のモーションと違ったら
+	//if (m_MotionState != motion) //現在のモーションと違ったら
 	{
 		//切り替えられないモーションの途中なら関数を抜ける
 		if (!m_bChangeMotion)

@@ -16,8 +16,7 @@
 CEnemy003::CEnemy003() :
 	m_bAttacking(false)
 {
-	//ポインタに行動を設定
-	ChangeState(new CState_Enemy003_Normal(this));
+	
 }
 
 //============================
@@ -41,6 +40,9 @@ HRESULT CEnemy003::Init()
 
 	//モーションの読み込み
 	SetMotionInfo("data\\enemy013motion.txt");
+
+	//ポインタに行動を設定
+	ChangeState(new CState_Enemy003_Normal(this));
 
 	return S_OK;
 }

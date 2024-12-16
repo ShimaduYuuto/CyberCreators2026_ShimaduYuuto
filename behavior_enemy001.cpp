@@ -16,7 +16,7 @@
 //====================================
 //コンストラクタ
 //====================================
-CEnemyAction_Chase001::CEnemyAction_Chase001(CEnemy* enemy)
+CEnemyAction_Chase001::CEnemyAction_Chase001(CEnemy* enemy) : CEnemyAction_Chase(enemy)
 {
 	//モーションの設定
 	enemy->SetMotion(1);

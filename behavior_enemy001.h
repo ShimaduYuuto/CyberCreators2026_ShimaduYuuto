@@ -19,7 +19,7 @@ class CEnemyAction_Chase001 : public CEnemyAction_Chase
 public:
 
 	//コンストラクタ
-	CEnemyAction_Chase001() {};
+	//CEnemyAction_Chase001() {};
 	CEnemyAction_Chase001(CEnemy* enemy);
 
 	//定数

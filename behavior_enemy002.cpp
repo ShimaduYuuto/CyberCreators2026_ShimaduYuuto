@@ -58,6 +58,7 @@ void CEnemyAction_Standby::NextAction(CEnemy* enemy)
 //====================================
 CEnemyAction_ChargeShot::~CEnemyAction_ChargeShot()
 {
+	//弾の破棄
 	if (m_pBullet != nullptr)
 	{
 		m_pBullet->Uninit();
@@ -192,7 +193,10 @@ CEnemyAction_AlterEgoAttack::CEnemyAction_AlterEgoAttack(CEnemy* enemy) :
 	m_nCount(0),
 	m_pShotAction(nullptr),
 	m_bCreateAlterEgo(false),
-	m_pAlterEgo()
+	m_pAlterEgo(),
+	m_pBullet(nullptr),
+	m_pEffect(nullptr),
+	m_nChargeCount(0)
 {
 	enemy->SetMotion(0);
 
@@ -215,6 +219,20 @@ CEnemyAction_AlterEgoAttack::~CEnemyAction_AlterEgoAttack()
 		{
 			m_pAlterEgo[i]->Uninit();
 			m_pAlterEgo[i] = nullptr;
+		}
+	}
+
+	//弾の破棄
+	if (m_pBullet != nullptr)
+	{
+		m_pBullet->Uninit();
+		m_pBullet = nullptr;
+
+		//エフェクトの破棄
+		if (m_pEffect != nullptr)
+		{
+			m_pEffect->Uninit();
+			m_pEffect = nullptr;
 		}
 	}
 }
@@ -255,13 +273,17 @@ void CEnemyAction_AlterEgoAttack::Action(CEnemy* enemy)
 		//最初の一回目に分身を生成
 		if (!m_bCreateAlterEgo)
 		{
-			enemy->SetPos(enemy->GetStartPos());
+			//位置を設定
 			m_bCreateAlterEgo = true;
+			std::random_device Random;
+			float fRandom = (Random() % 628) * 0.01f;
+			enemy->SetPos(D3DXVECTOR3(sinf(fRandom) * 200.0f, 0.0f, cosf(fRandom) * 200.0f) + enemy->GetStartPos());
+			enemy->SetMotion(4);
 
 			//分身を生成
 			for (int i = 0; i < NUM_ALTEREGO; i++)
 			{
-				m_pAlterEgo[i] = CEnemy002_AlterEgo::Create(D3DXVECTOR3(sinf(((D3DX_PI * 2.0f) / NUM_ALTEREGO) * i) * 200.0f, 0.0f, cosf(((D3DX_PI * 2.0f) / NUM_ALTEREGO) * i) * 200.0f) + enemy->GetStartPos());
+				m_pAlterEgo[i] = CEnemy002_AlterEgo::Create(D3DXVECTOR3(sinf(((D3DX_PI * 2.0f) / 4) * (i + 1) + fRandom) * 200.0f, 0.0f, cosf(((D3DX_PI * 2.0f) / 4) * (i + 1) + fRandom) * 200.0f) + enemy->GetStartPos());
 			}
 		}
 
@@ -288,6 +310,68 @@ void CEnemyAction_AlterEgoAttack::Action(CEnemy* enemy)
 		return;
 	}
 
+	//カウントが回り切っていないなら更新
+	if (m_nChargeCount <= CHARGE_TIME)
+	{
+		CGame* pGame = nullptr;
+		pGame = (CGame*)CManager::GetInstance()->GetScene();		//ゲームシーンの取得
+		D3DXVECTOR3 PlayerPos = pGame->GetGamePlayer()->GetPos();	//プレイヤーの位置を取得
+		D3DXVECTOR3 Pos = enemy->GetPos();							//自分の位置を取得
+
+		//プレイヤーとの角度を算出
+		float fAngle = atan2f(PlayerPos.x - Pos.x, PlayerPos.z - Pos.z);//対角線の角度を算出
+
+		//角度を設定
+		enemy->SetGoalRot({ enemy->GetRot().x, fAngle + D3DX_PI, enemy->GetRot().z });
+
+		//カウントの更新
+		m_nChargeCount++;
+
+		//弾の生成時間になったら生成
+		if (m_nChargeCount > CREATE_BULLET_TIME)
+		{
+			//弾の生成
+			if (m_pBullet == nullptr)
+			{
+				m_pBullet = CEnemyBullet::Create(enemy->GetCollision()->GetPos(), { 0.0f, 0.0f, 0.0f });
+				m_pEffect = CEffect_ChargeShot::Create(enemy->GetCollision()->GetPos());
+			}
+		}
+
+		//弾が生成済みなら
+		if (m_pBullet != nullptr)
+		{
+			//スケールを大きくする
+			m_pBullet->AddSizeRate(ADD_SCALE_VALUE);
+			m_pBullet->SetPos({ enemy->GetCollision()->GetPos().x + sinf(fAngle) * 20.0f * m_pBullet->GetSizeRate() , enemy->GetCollision()->GetPos().y, enemy->GetCollision()->GetPos().z + cosf(fAngle) * 20.0f * m_pBullet->GetSizeRate() });
+
+			//チャージ時間を終えたら発射
+			if (m_nChargeCount > CHARGE_TIME)
+			{
+				//向いている方向に撃つ
+				m_pBullet->SetMove({ sinf(fAngle) * 3.0f, 0.0f, cosf(fAngle) * 3.0f });
+				m_pBullet->SetShooting(true);
+
+				//エフェクトの破棄
+				if (m_pEffect != nullptr)
+				{
+					m_pEffect->Uninit();
+					m_pEffect = nullptr;
+				}
+			}
+		}
+	}
+
+	//当たっていたら消す
+	if (m_pBullet != nullptr)
+	{
+		if (m_pBullet->GetDeath())
+		{
+			m_pBullet = nullptr;
+			NextAction(enemy);
+		}
+	}
+
 	//分身を更新
 	for (int i = 0; i < NUM_ALTEREGO; i++)
 	{
@@ -301,6 +385,12 @@ void CEnemyAction_AlterEgoAttack::Action(CEnemy* enemy)
 		//更新
 		m_pAlterEgo[i]->Update();
 		nNumAlterEgo++;
+
+		//死亡フラグが立っていたらnullptrにする
+		if (m_pAlterEgo[i]->GetDeath())
+		{
+			m_pAlterEgo[i] = nullptr;
+		}
 	}
 
 	//分身がいないなら移行

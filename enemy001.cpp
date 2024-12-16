@@ -22,8 +22,7 @@ CEnemy001::CEnemy001() :
 	m_pShield(nullptr),
 	m_bDamageJudge(false)
 {
-	//ポインタに行動を設定
-	ChangeState(new CState_Enemy001_Normal(this));
+	
 }
 
 //============================
@@ -47,6 +46,9 @@ HRESULT CEnemy001::Init()
 
 	//モーションの読み込み
 	SetMotionInfo("data\\enemy011motion.txt");
+
+	//ポインタに行動を設定
+	ChangeState(new CState_Enemy001_Normal(this));
 
 	//盾の生成
 	if (m_pShield == nullptr)

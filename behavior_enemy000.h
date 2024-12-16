@@ -19,8 +19,8 @@ class CEnemyAction_Chase000 : public CEnemyAction_Chase
 public:
 
 	//コンストラクタ
-	CEnemyAction_Chase000() {};
-	CEnemyAction_Chase000(CEnemy* enemy)
+	//CEnemyAction_Chase000() {};
+	CEnemyAction_Chase000(CEnemy* enemy) : CEnemyAction_Chase(enemy)
 	{
 		enemy->SetMotion(1);
 	};

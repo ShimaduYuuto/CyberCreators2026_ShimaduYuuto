@@ -31,6 +31,7 @@ public:
 	void NextAction(CEnemy* enemy) override
 	{
 		SetNextAction(new CEnemyActionAlterEgo_ChargeShot(enemy));
+		enemy->Uninit();
 	}
 
 };

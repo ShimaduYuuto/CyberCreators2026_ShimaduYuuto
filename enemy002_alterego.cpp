@@ -50,6 +50,9 @@ HRESULT CEnemy002_AlterEgo::Init()
 	//ポインタに行動を設定
 	ChangeState(new CState_Enemy002_AlterEgo_Normal(this));
 
+	SetMaterialized(true);
+	SetMaterialized(false);
+
 	return S_OK;
 }
 

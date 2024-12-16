@@ -15,7 +15,7 @@
 //エネミーのコンストラクタ
 //============================
 CEnemy002::CEnemy002() : 
-	m_bMaterialized(false)
+	m_bMaterialized(true)
 {
 	SetMaterialized(false);
 }

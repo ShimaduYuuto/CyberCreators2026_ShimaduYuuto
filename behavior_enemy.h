@@ -27,7 +27,7 @@ public:
 	virtual ~CEnemyAction() {}
 
 	//アクションの基底
-	virtual void Action(CEnemy* enemy) {};	
+	virtual void Action(CEnemy* enemy) {}
 
 	//次のアクション
 	void SetNextAction(CEnemyAction* action) { m_pNextAction = action; }
@@ -48,6 +48,8 @@ class CEnemyAction_Chase : public CEnemyAction
 public:
 	//定数
 	static constexpr float VALUE_MOVE = 1.0f;	//移動量
+
+	CEnemyAction_Chase(CEnemy* enemy);	//コンストラクタ
 
 	void Action(CEnemy* enemy) override;	//アクション
 
