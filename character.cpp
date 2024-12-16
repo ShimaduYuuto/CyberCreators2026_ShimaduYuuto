@@ -21,7 +21,7 @@ const float CCharacter::GRAVITY = 0.6f;			//重力の強さ
 CCharacter::CCharacter(int nPriority) : CObject(nPriority)
 {
 	//各パラメータの初期化
-	m_nLife = 10;							//体力
+	//m_nLife = 10;							//体力
 	m_OldPos = {0.0f, 0.0, 0.0f};			//前回の位置
 	m_Move = { 0.0f, 0.0, 0.0f };			//移動量
 	m_GoalRot = { 0.0f, 0.0, 0.0f };		//目的の向き
@@ -31,11 +31,11 @@ CCharacter::CCharacter(int nPriority) : CObject(nPriority)
 	m_fInterpolationCount = 0.0f;			//線形補間のカウント
 	m_bInterpolationEnd = true;				//線形補間が終わっているか
 	m_Rot = { 0.0f, 0.0, 0.0f };			//向き
-	m_bOnStand = false;						//立ち状態
-	m_CharacterType = CHARACTER_TYPE_NONE;	//種類の初期化
-	m_fRadiusSize = SIZE_RADIUS;			//サイズの半径
-	m_bEnableGravity = true;				//重力を受ける
-	m_BlowValue = { 0.0f, 0.0f, 0.0f };		//吹き飛ぶ力
+	//m_bOnStand = false;						//立ち状態
+	////m_CharacterType = CHARACTER_TYPE_NONE;	//種類の初期化
+	//m_fRadiusSize = SIZE_RADIUS;			//サイズの半径
+	//m_bEnableGravity = true;				//重力を受ける
+	//m_BlowValue = { 0.0f, 0.0f, 0.0f };		//吹き飛ぶ力
 	m_pShadow = nullptr;					//影のポインタ
 }
 
@@ -72,7 +72,7 @@ HRESULT CCharacter::Init()
 	m_nMotionCount = 0;
 
 	//影の生成
-	m_pShadow = CShadow::Create(&GetPos(), m_fRadiusSize);
+	m_pShadow = CShadow::Create(&GetPos(), 30.0f);
 
 	return S_OK;
 }
@@ -395,14 +395,6 @@ void CCharacter::Update()
 
 	//モーションの更新
 	UpdateMotion();
-
-	//体力が0以下になったら
-	if (m_nLife <= 0)
-	{
-		//終了処理
-		CCharacter::Uninit();
-		return;
-	}
 }
 
 //============================
@@ -416,59 +408,9 @@ void CCharacter::UpdatePos()
 	//前回の位置を保存
 	m_OldPos = pos;
 
-	//ゲームシーンの取得
-	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
-
-	//重力の処理
-	if (m_bEnableGravity)
-	{
-		m_Move = GravityMove(m_Move);
-	}
-	
-	//ゲームシーンなら判定
-	if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
-	{
-		//位置に移動量を加算
-		pos += pGame->GetTime()->GetValue<D3DXVECTOR3>(m_Move);
-
-		//エリアの確認
-		if (CBattleAreaManager::GetInstance()->GetCurrentBattleArea() != nullptr)
-		{
-			//壁との当たり判定
-			CBattleAreaManager::GetInstance()->GetCurrentBattleArea()->GetWall()->GetHit(pos, m_fRadiusSize);
-		}
-
-		//立っていないなら
-		if (!m_bOnStand)
-		{
-			//地面に接していたら
-			if (pGame->GetGameField()->MeshCollision(pos))
-			{
-				//立っている判定
-				m_bOnStand = true;
-			}
-		}
-		else
-		{
-			//位置を補正
-			pos = pGame->GetGameField()->ConvertMeshPos(pos);
-		}
-	}
-
-	//吹き飛び量を加算
-	pos += m_BlowValue;
-
-	//吹き飛び量を減衰
-	m_BlowValue.x += (0.0f - m_BlowValue.x) * 0.1f;
-	m_BlowValue.z += (0.0f - m_BlowValue.z) * 0.1f;
-	//m_BlowValue = GravityMove(m_BlowValue);
-
 	//移動量を減衰
 	m_Move.x += (0.0f - m_Move.x) * 0.5f;
 	m_Move.z += (0.0f - m_Move.z) * 0.5f;
-
-	//横の当たり判定
-	pos = pGame->GetGameField()->WidthCollision(pos);
 
 	//パラメータの設定
 	CObject::SetPos(pos);	//位置
@@ -531,48 +473,7 @@ float CCharacter::AddRot(float addrot)
 //============================
 D3DXVECTOR3 CCharacter::GravityMove(D3DXVECTOR3 move)
 {
-	//空中にいるなら重力を加算
-	if (!m_bOnStand)
-	{
-		//ゲームシーンなら判定
-		if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
-		{
-			//ゲームシーンの取得
-			CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
-
-			move.y -= pGame->GetTime()->GetValue<float>(GRAVITY);
-		}
-	}
-	else
-	{
-		//着地していて落ちていたら補正
-		if (move.y < 0.0f)
-		{
-			move.y = 0.0f;
-		}
-	}
-
-	return move;
-}
-
-//============================
-//キャラクターのダメージを設定
-//============================
-bool CCharacter::SetDamage(int damage)
-{
-	//ダメージを受ける
-	m_nLife -= damage;
-
-	//0未満なら0にする
-	if (m_nLife <= 0)
-	{
-		m_nLife = 0;
-		//終了処理
-
-		Uninit();
-	}
-
-	return true;
+	return { 0.0f, 0.0f, 0.0f };
 }
 
 //===================================
@@ -685,21 +586,6 @@ void CCharacter::UpdateMotion()
 		Movepos /= (float)m_Motion[m_MotionState].KeySet[m_nMotionCount].nFrame;
 		Moverot /= (float)m_Motion[m_MotionState].KeySet[m_nMotionCount].nFrame;
 
-		//ゲームシーンなら判定
-		if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
-		{
-			//ゲームシーンの取得
-			CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
-
-			//プレイヤー以外なら
-			if (m_CharacterType != CCharacter::CHARACTER_TYPE_PLAYER)
-			{
-				//時間の状態に応じて移動量を変化
-				Movepos = pGame->GetTime()->GetValue<D3DXVECTOR3>(Movepos);
-				Moverot = pGame->GetTime()->GetValue<D3DXVECTOR3>(Moverot);
-			}
-		}
-
 		//差分の分だけ加算
 		pos += Movepos;
 		rot += Moverot;
@@ -707,25 +593,8 @@ void CCharacter::UpdateMotion()
 		//補間が終わっていないなら
 		if (!m_bInterpolationEnd)
 		{
-			//ゲームシーンなら判定
-			if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
-			{
-				//ゲームシーンの取得
-				CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
-
-				//プレイヤー以外なら
-				if (m_CharacterType != CCharacter::CHARACTER_TYPE_PLAYER)
-				{
-					pos += pGame->GetTime()->GetValue<D3DXVECTOR3>(m_InterpolationInfo[nCount].pos);
-					rot += pGame->GetTime()->GetValue<D3DXVECTOR3>(m_InterpolationInfo[nCount].rot);
-				}
-				else
-				{
-					pos += m_InterpolationInfo[nCount].pos;
-					rot += m_InterpolationInfo[nCount].rot;
-				}
-			}
-			
+			pos += m_InterpolationInfo[nCount].pos;
+			rot += m_InterpolationInfo[nCount].rot;
 		}
 
 		//位置と向きの設定
@@ -739,23 +608,8 @@ void CCharacter::UpdateMotion()
 	//線形補間が終わっていないならカウントを進める
 	if (!m_bInterpolationEnd)
 	{
-		if (m_CharacterType != CCharacter::CHARACTER_TYPE_PLAYER)
-		{
-			//ゲームシーンなら判定
-			if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
-			{
-				//ゲームシーンの取得
-				CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
-
-				//フレームの加算
-				m_fInterpolationCount += pGame->GetTime()->GetValue<float>(1.0f);
-			}
-		}
-		else
-		{
-			//フレームの加算
-			m_fInterpolationCount++;
-		}
+		//フレームの加算
+		m_fInterpolationCount++;
 
 		//カウントが指定値になったら
 		if (m_fInterpolationCount >= INTERPOLATION_FRAME)
@@ -765,24 +619,8 @@ void CCharacter::UpdateMotion()
 		}
 	}
 
-	//プレイヤー以外の処理
-	if (m_CharacterType != CCharacter::CHARACTER_TYPE_PLAYER)
-	{
-		//ゲームシーンなら判定
-		if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
-		{
-			//ゲームシーンの取得
-			CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
-
-			//フレームの加算
-			m_fFrameCount += pGame->GetTime()->GetValue<float>(1.0f);
-		}
-	}
-	else
-	{
-		//フレームの加算
-		m_fFrameCount++;
-	}
+	//フレームの加算
+	m_fFrameCount++;
 
 	//フレームのカウントが超えたら修正
 	if (m_fFrameCount > m_Motion[m_MotionState].KeySet[m_nMotionCount].nFrame)

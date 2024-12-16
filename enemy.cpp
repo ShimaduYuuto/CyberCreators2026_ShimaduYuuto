@@ -20,7 +20,7 @@
 //エネミーのコンストラクタ
 //============================
 CEnemy::CEnemy(int nPriority) : 
-	CCharacter(nPriority), m_Collision(),
+	CGame_Character(nPriority), m_Collision(),
 	m_EnemyType(),
 	m_pState(nullptr)
 {
@@ -142,7 +142,7 @@ void CEnemy::Update()
 	}
 
 	//共通処理の更新
-	CCharacter::Update();
+	CGame_Character::Update();
 
 	//当たり判定の位置の更新
 	m_Collision->Update(GetPos());
@@ -207,7 +207,7 @@ CEnemy* CEnemy::Create(D3DXVECTOR3 pos, ENEMYTYPE type)
 bool CEnemy::SetDamage(int damage)
 {
 	//ダメージの設定
-	CCharacter::SetDamage(damage);
+	CGame_Character::SetDamage(damage);
 
 	return true;
 }

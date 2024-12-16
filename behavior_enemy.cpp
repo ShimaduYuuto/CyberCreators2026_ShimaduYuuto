@@ -42,7 +42,7 @@ void CEnemyAction_Chase::Action(CEnemy* enemy)
 	enemy->SetGoalRot({ enemy->GetRot().x, fAngle + D3DX_PI, enemy->GetRot().z });
 
 	//—§‚Á‚Ä‚¢‚½‚ç
-	if (enemy->CCharacter::GetOnStand())
+	if (enemy->GetOnStand())
 	{
 		//‹——£‚ÌŒvŽZ
 		D3DXVECTOR3 fLengthPos = PlayerPos - Pos;
@@ -178,7 +178,7 @@ void CEnemyMove_Chase::Move(CEnemy* enemy)
 	enemy->SetGoalRot({ enemy->GetRot().x, fAngle + D3DX_PI, enemy->GetRot().z });
 
 	//—§‚Á‚Ä‚¢‚½‚ç
-	if (enemy->CCharacter::GetOnStand())
+	if (enemy->GetOnStand())
 	{
 		enemy->CCharacter::AddMove({ sinf(fAngle) * VALUE_MOVE, 0.0f, cosf(fAngle) * VALUE_MOVE });
 		enemy->SetMotion(1);

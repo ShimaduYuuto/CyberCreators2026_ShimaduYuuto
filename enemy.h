@@ -9,17 +9,16 @@
 #define _ENEMY_H_ //２重インクルード防止のマクロ定義
 
 //ヘッダーのインクルード
-#include "character.h"
+#include "game_character.h"
 #include "collision.h"
 #include "state_enemy.h"
-//#include "player.h"
 
 //前方宣言
 class CState_Enemy;
 class CPlayer;
 
 //エネミークラス
-class CEnemy : public CCharacter
+class CEnemy : public CGame_Character
 {
 public:
 

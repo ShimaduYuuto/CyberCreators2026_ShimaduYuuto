@@ -24,7 +24,7 @@ const std::string CPlayer::FILEPATH = "data\\MODEL\\player001.x";
 //============================
 //プレイヤーのコンストラクタ
 //============================
-CPlayer::CPlayer(int nPriority) : CCharacter(nPriority),
+CPlayer::CPlayer(int nPriority) : CGame_Character(nPriority),
 	//m_pAction(),
 	//m_pOrbit(nullptr),
 	m_pLifeGauge(nullptr),
@@ -32,7 +32,7 @@ CPlayer::CPlayer(int nPriority) : CCharacter(nPriority),
 {
 	m_pState = new CState_Player_Normal(this);
 	SetType(TYPE_PLAYER);	//種類の設定
-	SetCharacterType(CHARACTER_TYPE_PLAYER);
+	//SetCharacterType(CHARACTER_TYPE_PLAYER);
 }
 
 //============================
@@ -143,7 +143,7 @@ void CPlayer::Update()
 	}
 
 	//共通処理の更新
-	CCharacter::Update();
+	CGame_Character::Update();
 }
 
 //============================

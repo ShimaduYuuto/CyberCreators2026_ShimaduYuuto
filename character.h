@@ -95,8 +95,6 @@ public:
 	//パラメータ関連の関数
 	void SetRot(D3DXVECTOR3 rot) { m_Rot = rot; }								//向きの設定
 	D3DXVECTOR3& GetRot() {return m_Rot;}										//向きの取得
-	void SetLife(int life) {m_nLife = life;}									//体力の設定
-	int& GetLife() { return m_nLife; }											//体力を取得
 
 	//移動量
 	void SetMove(D3DXVECTOR3 move) { m_Move = move; }							//設定
@@ -110,32 +108,6 @@ public:
 	//前回の位置
 	void SetOldPos(D3DXVECTOR3 oldpos) { m_OldPos = oldpos; }					//設定
 	D3DXVECTOR3& GetOldPos() { return m_OldPos; }								//取得
-
-	//立ち状態
-	void SetOnStand(bool onstand) { m_bOnStand = onstand; }						//設定
-	bool GetOnStand() { return m_bOnStand; }									//取得
-
-	//種類
-	void SetCharacterType(CHARACTER_TYPE type) { m_CharacterType = type; }		//設定
-
-	//サイズの半径
-	void SetSizeRadius(float radius) { m_fRadiusSize = radius; }				//設定
-	float GetSizeRadius() { return m_fRadiusSize; }								//取得
-
-	//ダメージ処理
-	virtual bool SetDamage(int damage);											//設定
-
-	//重力を受けるか
-	void SetEnableGravity(bool enable) { m_bEnableGravity = enable; }			//設定
-	bool GetEnableGravity() { return m_bEnableGravity; }						//取得
-
-	//吹き飛び量
-	void SetBlowValue(D3DXVECTOR3 value) { m_BlowValue = value; }				//設定
-	D3DXVECTOR3 GetBlowValue() { return m_BlowValue; }							//取得
-
-	//すでに張り付いたか
-	void SetEnteredStick(bool enter) { m_bEnteredStick = enter; }	//設定
-	bool GetEnteredStick() { return m_bEnteredStick; }				//取得
 
 	//モーション
 	void SetMotionInfo(const char* motionfilename);								//モーション情報の設定
@@ -158,18 +130,11 @@ private:
 	float AddRot(float addrot);		//向きの加算をする関数
 
 	//メンバ変数
-	CHARACTER_TYPE m_CharacterType;			//種類
-	int m_nLife;							//体力
 	D3DXVECTOR3 m_OldPos;					//前回の位置
 	D3DXVECTOR3 m_Move;						//移動量
 	D3DXVECTOR3 m_Rot;						//向き
 	D3DXVECTOR3 m_GoalRot;					//目的の向き
 	D3DXMATRIX m_mtxWorld;					//マトリックス
-	bool m_bOnStand;						//立っているか
-	float m_fRadiusSize;					//サイズの半径
-	bool m_bEnableGravity;					//重力を受けるか
-	D3DXVECTOR3 m_BlowValue;				//吹き飛びの量
-	bool m_bEnteredStick;					//一度でも張り付いたか
 	CShadow* m_pShadow;						//影のポインタ
 
 	//モーションの変数

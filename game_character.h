@@ -29,8 +29,10 @@ public:
 	void Draw() override;								//描画
 
 	void UpdatePos() override;							//位置の更新
-	//void UpdateRot();									//向きの更新
 	virtual D3DXVECTOR3 GravityMove(D3DXVECTOR3 move);	//重力の処理
+
+	void SetLife(int life) {m_nLife = life;}									//体力の設定
+	int& GetLife() { return m_nLife; }											//体力を取得
 
 	//立ち状態
 	void SetOnStand(bool onstand) { m_bOnStand = onstand; }						//設定

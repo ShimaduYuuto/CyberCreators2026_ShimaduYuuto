@@ -42,7 +42,7 @@ HRESULT CEnemy002_AlterEgo::Init()
 	CEnemy::Init();
 
 	//パラメータの初期化
-	CCharacter::SetLife(LIFE);	//体力
+	SetLife(LIFE);	//体力
 
 	//モーションの読み込み
 	SetMotionInfo("data\\enemy012motion.txt");

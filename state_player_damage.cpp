@@ -50,7 +50,7 @@ void CState_Player_Damage::SetDamage(CPlayer* player, int damage)
 	}
 
 	//ダメージを受ける
-	player->CCharacter::SetDamage(damage);
+	player->CGame_Character::SetDamage(damage);
 	player->SetMotion(8);											//モーションの設定
 
 	//ノックバックの移動量を設定

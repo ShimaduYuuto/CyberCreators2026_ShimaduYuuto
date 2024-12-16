@@ -8,7 +8,7 @@
 #ifndef _PLAYER_H_ //このマクロ定義がされていなかったら
 #define _PLAYER_H_ //２重インクルード防止のマクロ定義
 
-#include "character.h"
+#include "game_character.h"
 #include "gauge_playerlife.h"
 #include "orbit.h"
 #include "state_player.h"
@@ -17,7 +17,7 @@
 class CState_Player;
 
 //プレイヤークラス
-class CPlayer : public CCharacter
+class CPlayer : public CGame_Character
 {
 public:
 	//定数

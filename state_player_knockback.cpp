@@ -49,7 +49,7 @@ void CState_Player_Knockback::SetDamage(CPlayer* player, int damage)
 	}
 
 	//ダメージを受ける
-	player->CCharacter::SetDamage(damage);
+	player->CGame_Character::SetDamage(damage);
 	player->SetMotion(8);											//モーションの設定
 	SetNextState(new CState_Player_Damage(player));					//ステートの設定
 
