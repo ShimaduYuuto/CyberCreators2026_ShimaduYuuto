@@ -18,9 +18,9 @@ class CState_Player_Guard : public CState_Player
 public:
 
 	//定数
-	static constexpr int TIME_STIFFNESS{ 30 };			//ガード時硬直の時間
+	static constexpr int TIME_STIFFNESS{ 40 };			//ガード時硬直の時間
 	static constexpr float VALUE_ATTENUATION{ 0.1f };	//ノックバックの減衰率
-	static constexpr float VALUE_KNOCKBACK{ 10.0f };	//ノックバックの値
+	static constexpr float VALUE_KNOCKBACK{ 12.0f };	//ノックバックの値
 
 	//メンバ関数
 	CState_Player_Guard(CPlayer* player);	//コンストラクタ

@@ -117,3 +117,11 @@ void CEnemy002_AlterEgo::StateReset()
 	SetEnableGravity(true);
 	SetMaterialized(false);
 }
+
+//============================
+//€–S‚Ìˆ—
+//============================
+void CEnemy002_AlterEgo::SetCharacterDeath()
+{
+	CEnemy::SetCharacterDeath();
+}

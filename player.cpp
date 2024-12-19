@@ -98,6 +98,15 @@ void CPlayer::Uninit()
 //============================
 void CPlayer::Update()
 {
+	//ゲームシーンの取得
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+
+	//演出中なら更新しない
+	if (pGame->GetDirectioning())
+	{
+		return;
+	}
+
 	//次の状態があるなら変更
 	if (m_pState->GetNextState() != nullptr)
 	{
@@ -129,7 +138,6 @@ void CPlayer::Update()
 	}
 
 	//結界との当たり判定
-	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
 	for (auto itr : pGame->GetBarrierManager()->GetList())
 	{
 		//仮の当たり判定
@@ -157,6 +165,14 @@ bool CPlayer::SetDamage(int damage)
 //============================
 void CPlayer::Draw()
 {
+	//ゲームシーンの取得
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+
+	//演出中なら更新しない
+	if (pGame->GetDirectioning())
+	{
+		return;
+	}
 	//キャラクタークラスの描画
 	CCharacter::Draw();
 }

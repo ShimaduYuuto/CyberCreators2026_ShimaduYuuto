@@ -159,4 +159,19 @@ private:
 	int m_nCount;	//カウント用
 };
 
+//========================
+//演出状態
+//========================
+class CState_Enemy002_Direction_Destroy : public CState_Enemy
+{
+public:
+
+	CState_Enemy002_Direction_Destroy(CEnemy* enemy);	///コンストラクタ
+
+private:
+	
+	//状態の更新
+	void UpdateState(CEnemy* enemy) override {}
+};
+
 #endif

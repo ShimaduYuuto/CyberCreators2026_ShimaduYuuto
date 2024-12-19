@@ -38,6 +38,21 @@ D3DXVECTOR2 CAnimation::UpdateAnim()
 	//返す用の変数
 	D3DXVECTOR2 UV = { 0.0f, 0.0f };
 
+	UpdateCnt();
+
+	//計算用の変数
+	float fHorizontal = 1.0f / m_TextureInfo.nHorizontal;
+	float fVertical = 1.0f / m_TextureInfo.nVertical;
+	UV = D3DXVECTOR2(fHorizontal, fVertical);
+
+	return UV;
+}
+
+//============================
+//カウントの更新
+//============================
+void CAnimation::UpdateCnt()
+{
 	//フレームの更新
 	m_TextureCount.nFrameCount++;
 
@@ -48,14 +63,14 @@ D3DXVECTOR2 CAnimation::UpdateAnim()
 		m_TextureCount.nFrameCount = 0;			//フレームカウントの初期化
 		m_TextureCount.nHorizontalAnimCount++;	//アニメーションカウントのカウントアップ
 
-		//横のアニメカウントが最大まで進んだら
+												//横のアニメカウントが最大まで進んだら
 		if (m_TextureCount.nHorizontalAnimCount >= m_TextureInfo.nHorizontal)
 		{
 			//カウントの更新
 			m_TextureCount.nHorizontalAnimCount = 0;	//横のカウントを初期化
 			m_TextureCount.nVerticalAnimCount++;		//縦のカウントアップ
 
-			//縦のカウントが最大まで進んだら
+														//縦のカウントが最大まで進んだら
 			if (m_TextureCount.nVerticalAnimCount >= m_TextureInfo.nVertical)
 			{
 				//ループが無いなら
@@ -67,11 +82,4 @@ D3DXVECTOR2 CAnimation::UpdateAnim()
 			}
 		}
 	}
-
-	//計算用の変数
-	float fHorizontal = 1.0f / m_TextureInfo.nHorizontal;
-	float fVertical = 1.0f / m_TextureInfo.nVertical;
-	UV = D3DXVECTOR2(fHorizontal, fVertical);
-
-	return UV;
 }

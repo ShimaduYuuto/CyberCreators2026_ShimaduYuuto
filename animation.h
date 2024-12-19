@@ -51,6 +51,9 @@ public:
 	bool GetEnd() { return m_bEnd; }		//終了
 
 private:
+
+	void UpdateCnt();	//カウントの更新
+
 	TextureInfo m_TextureInfo;	//テクスチャの情報
 	TextureCount m_TextureCount;//テクスチャのカウント
 	bool m_bEnd;				//終了判定

@@ -134,6 +134,25 @@ private:
 };
 
 //==========================
+//演出
+//==========================
+class CEnemyAction_Direction_Destroy : public CEnemyAction
+{
+public:
+
+	static constexpr int DIRECTION_TIME{ 300 };	//演出の時間
+
+	//コンストラクタ
+	CEnemyAction_Direction_Destroy(CEnemy* enemy);
+
+	void Action(CEnemy* enemy) override;	//演出
+
+private:
+	int m_nCount;	//カウント用
+};
+
+
+//==========================
 //分身攻撃
 //==========================
 class CEnemyAction_AlterEgoAttack : public CEnemyAction

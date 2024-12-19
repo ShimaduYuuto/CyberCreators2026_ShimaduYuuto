@@ -87,13 +87,13 @@ void CGame_Character::Update()
 	//当たり判定の位置の更新
 	m_pCollision->Update(GetPos());
 
-	//体力が0以下になったら
-	if (m_nLife <= 0)
-	{
-		//終了処理
-		CGame_Character::Uninit();
-		return;
-	}
+	////体力が0以下になったら
+	//if (m_nLife <= 0)
+	//{
+	//	//終了処理
+	//	CGame_Character::Uninit();
+	//	return;
+	//}
 }
 
 //============================

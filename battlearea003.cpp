@@ -43,7 +43,5 @@ void CBattleArea003::SpawnEnemy()
 //============================
 void CBattleArea003::SpawnGimmick()
 {
-	//ÉMÉ~ÉbÉNê∂ê¨
-	//CExplodingBarrel::Create(GetPos(), { 0.0f, 0.0f, 0.0f });
-	//CExplodingBarrel::Create(GetPos() + D3DXVECTOR3(150.0f, 0.0f, 150.0f), { 0.0f, 0.0f, 0.0f });
+	
 }

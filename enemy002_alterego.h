@@ -35,6 +35,9 @@ public:
 	//ó‘Ô‚ÌƒŠƒZƒbƒg
 	void StateReset() override;
 
+	//€–S‚Ìˆ—
+	void SetCharacterDeath() override;
+
 
 private:
 

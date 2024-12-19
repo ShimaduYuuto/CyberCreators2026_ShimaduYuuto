@@ -24,14 +24,15 @@ public:
 	//敵のモーション
 	typedef enum
 	{
-		ENEMY002MOTION_NORMAL = 0,	//ニュートラル
-		ENEMY002MOTION_WALK,		//移動
-		ENEMY002MOTION_TAKEOUT,		//取り出し
-		ENEMY002MOTION_THROW,		//投げる
-		ENEMY002MOTION_CHARGESHOT,	//チャージショット
-		ENEMY002MOTION_STAN,		//スタン
-		ENEMY002MOTION_DIRECTION,	//演出用
-		ENEMY002MOTION_MAX			//最大
+		ENEMY002MOTION_NORMAL = 0,		//ニュートラル
+		ENEMY002MOTION_WALK,			//移動
+		ENEMY002MOTION_TAKEOUT,			//取り出し
+		ENEMY002MOTION_THROW,			//投げる
+		ENEMY002MOTION_CHARGESHOT,		//チャージショット
+		ENEMY002MOTION_STAN,			//スタン
+		ENEMY002MOTION_DIRECTION,		//演出用
+		ENEMY002MOTION_DEATHDIRECTION,	//死亡演出用
+		ENEMY002MOTION_MAX				//最大
 	}ENEMY002MOTION;
 
 	//メンバ関数
@@ -60,6 +61,9 @@ public:
 	//実体化しているか
 	void SetMaterialized(bool materialized);									//設定
 	bool GetMaterialized() { return m_bMaterialized; }							//取得
+
+	//死亡時の処理
+	void SetCharacterDeath() override;
 
 private:
 	bool m_bMaterialized;	//実体化しているか

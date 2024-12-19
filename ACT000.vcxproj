@@ -182,10 +182,12 @@
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="direction.h" />
     <ClInclude Include="direction_boss.h" />
+    <ClInclude Include="direction_boss_destroy.h" />
     <ClInclude Include="effect_brow.h" />
     <ClInclude Include="effect_chargeshot.h" />
     <ClInclude Include="effect_dash.h" />
     <ClInclude Include="effect_death.h" />
+    <ClInclude Include="effect_death_boss.h" />
     <ClInclude Include="effect_guard.h" />
     <ClInclude Include="effect_hitattack.h" />
     <ClInclude Include="effect_repel.h" />
@@ -315,9 +317,11 @@
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="direction.cpp" />
     <ClCompile Include="direction_boss.cpp" />
+    <ClCompile Include="direction_boss_destroy.cpp" />
     <ClCompile Include="effect_brow.cpp" />
     <ClCompile Include="effect_chargeshot.cpp" />
     <ClCompile Include="effect_death.cpp" />
+    <ClCompile Include="effect_death_boss.cpp" />
     <ClCompile Include="effect_guard.cpp" />
     <ClCompile Include="effect_hitattack.cpp" />
     <ClCompile Include="effect_repel.cpp" />

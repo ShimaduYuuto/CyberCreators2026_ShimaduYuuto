@@ -11,6 +11,7 @@
 #include "enemybullet.h"
 #include "game.h"
 #include "manager.h"
+#include "effect_death_boss.h"
 
 //======================================================================
 //待機
@@ -396,5 +397,49 @@ void CEnemyAction_AlterEgoAttack::Action(CEnemy* enemy)
 	if (nNumAlterEgo == 0 && m_pBullet == nullptr)
 	{
 		NextAction(enemy);
+	}
+}
+
+//======================================================================
+//撃破演出
+//======================================================================
+
+//====================================
+//コンストラクタ
+//====================================
+CEnemyAction_Direction_Destroy::CEnemyAction_Direction_Destroy(CEnemy* enemy) :
+	m_nCount(0)
+{
+	enemy->SetMotion(7);
+
+	//ゲームシーンに演出を設定
+	CGame* pGame = nullptr;
+	pGame = (CGame*)CManager::GetInstance()->GetScene();		//ゲームシーンの取得
+	pGame->SetDirection(CDirection::DIRECTIONTYPE_BOSS_DESTROY);	//演出の設定
+
+	CEnemy002* pEnemy002 = (CEnemy002*)enemy;
+	pEnemy002->SetMaterialized(true);
+	pEnemy002->SetEnableGravity(false);
+	pEnemy002->SetOnStand(false);
+	pEnemy002->SetPos(pEnemy002->GetPos() + D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+
+	//エフェクトの生成
+	CEffect_Death_Boss::Create(&pEnemy002->GetCollision()->GetPos());
+}
+
+//====================================
+//アクション(演出)
+//====================================
+void CEnemyAction_Direction_Destroy::Action(CEnemy* enemy)
+{
+	//演出の時間が終わったら行動開始
+	m_nCount++;
+
+	CManager::GetInstance()->GetCamera()->SetPosR(enemy->GetCollision()->GetPos());
+	CManager::GetInstance()->GetCamera()->SetPosV(enemy->GetCollision()->GetPos() + D3DXVECTOR3(0.0f, 0.0f, -200.0f));
+
+	if (m_nCount > DIRECTION_TIME)
+	{
+		enemy->Uninit();
 	}
 }

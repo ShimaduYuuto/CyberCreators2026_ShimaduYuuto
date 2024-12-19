@@ -8,6 +8,7 @@
 //ヘッダーのインクルード
 #include "direction.h"
 #include "direction_boss.h"
+#include "direction_boss_destroy.h"
 
 //============================
 //演出のコンストラクタ
@@ -62,10 +63,16 @@ CDirection* CDirection::Create(DIRECTIONTYPE type)
 
 	switch (type)
 	{
-	case DIRECTIONTYPE_BOSS:	//通常の敵
+	case DIRECTIONTYPE_BOSS:	//ボスの登場時の演出
 
 		//敵のメモリ確保
 		pDirction = new CDirection_Boss();
+		break;
+
+	case DIRECTIONTYPE_BOSS_DESTROY:	//ボスの撃破時の演出
+
+		//敵のメモリ確保
+		pDirction = new CDirection_Boss_Destroy();
 		break;
 
 	default:

@@ -219,3 +219,11 @@ void CEnemy002::ChangeStanState()
 	ChangeState(new CState_Enemy002_Stan(this));
 	SetMaterialized(true);
 }
+
+//============================
+//€–S‚Ìˆ—
+//============================
+void CEnemy002::SetCharacterDeath()
+{
+	ChangeState(new CState_Enemy002_Direction_Destroy(this));
+}

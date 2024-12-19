@@ -57,7 +57,6 @@ CState_Enemy002_Stan::~CState_Enemy002_Stan()
 CState_Enemy002_Direction::CState_Enemy002_Direction(CEnemy* enemy) : m_nCount(0)
 {
 	SetAction(new CEnemyAction_Direction(enemy));
-	enemy->SetMotion(6);
 	SetEndTime(TIME_END);
 };
 
@@ -76,3 +75,15 @@ void CState_Enemy002_Direction::UpdateState(CEnemy* enemy)
 		enemy->StateReset();
 	}
 }
+
+//===============================================
+//撃破演出状態
+//===============================================
+
+//====================================
+//コンストラクタ
+//====================================
+CState_Enemy002_Direction_Destroy::CState_Enemy002_Direction_Destroy(CEnemy* enemy)
+{
+	SetAction(new CEnemyAction_Direction_Destroy(enemy));
+};
