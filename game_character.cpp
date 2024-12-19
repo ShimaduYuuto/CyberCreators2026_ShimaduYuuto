@@ -206,12 +206,20 @@ bool CGame_Character::SetDamage(int damage)
 	if (m_nLife <= 0)
 	{
 		m_nLife = 0;
-		//I—¹ˆ—
-
-		Uninit();
+		
+		//Ž€–SŽž‚Ìˆ—
+		SetCharacterDeath();
 	}
 
 	return true;
+}
+
+//============================
+//Ž€–SŽž‚Ìˆ—
+//============================
+void CGame_Character::SetCharacterDeath()
+{
+	Uninit();
 }
 
 //============================

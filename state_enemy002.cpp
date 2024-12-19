@@ -15,7 +15,7 @@
 //====================================
 //コンストラクタ
 //====================================
-CState_Enemy002_Normal::CState_Enemy002_Normal(CEnemy* enemy)
+CState_Enemy002_Normal::CState_Enemy002_Normal(CEnemy* enemy) : CState_Enemy_Normal(enemy)
 {
 	SetAction(new CEnemyAction_Standby(enemy));
 };	

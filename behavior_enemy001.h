@@ -19,7 +19,6 @@ class CEnemyAction_Chase001 : public CEnemyAction_Chase
 public:
 
 	//コンストラクタ
-	//CEnemyAction_Chase001() {};
 	CEnemyAction_Chase001(CEnemy* enemy);
 
 	//定数
@@ -42,7 +41,6 @@ class CEnemyAction_Attack001 : public CEnemyAction_Attack
 public:
 
 	//コンストラクタ
-	CEnemyAction_Attack001() {};
 	CEnemyAction_Attack001(CEnemy* enemy);
 
 	void Action(CEnemy* enemy) override

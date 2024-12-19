@@ -36,7 +36,6 @@ class CState_Enemy002_AlterEgo_Damage : public CState_Enemy002_Damage
 public:
 
 	//メンバ関数
-	CState_Enemy002_AlterEgo_Damage(){}													//コンストラクタ
 	CState_Enemy002_AlterEgo_Damage(CEnemy* enemy) : CState_Enemy002_Damage(enemy){}	//コンストラクタ
 
 	//状態の更新

@@ -83,13 +83,20 @@ public:
 
 	}
 
+	//コリジョン処理
+	void SetCollisionProcess(bool process) { m_bCollisionProcess = process; }	//設定
+	bool GetCollisionProcess() { return m_bCollisionProcess; }					//取得
+
+	//死亡時の処理
+	void SetCharacterDeath() override;
+
 private:
 
 	//メンバ変数
 	ENEMYTYPE m_EnemyType;
-	//CCollision* m_Collision;
 	CState_Enemy* m_pState;
-	D3DXVECTOR3 m_StartPos;	//最初の位置
+	D3DXVECTOR3 m_StartPos;		//最初の位置
+	bool m_bCollisionProcess;	//コリジョン処理をするか
 };
 
 #endif

@@ -16,7 +16,8 @@ const std::string CExplodingBarrel::FILEPATH = "data\\MODEL\\ExplodingBarrel000.
 //============================
 //コンストラクタ
 //============================
-CExplodingBarrel::CExplodingBarrel(int nPriority) : CGimmick(nPriority)
+CExplodingBarrel::CExplodingBarrel(int nPriority) : CGimmick(nPriority),
+	m_bDetonation(false)
 {
 
 }
@@ -47,12 +48,6 @@ HRESULT CExplodingBarrel::Init()
 //============================
 void CExplodingBarrel::Uninit()
 {
-	//カメラを揺らす
-	CManager::GetInstance()->GetCamera()->SetShake(30, 20);	//ヒット時カメラを揺らす
-
-	//爆発の生成
-	CExplosion::Create(GetPos());
-
 	//終了処理
 	CGimmick::Uninit();
 }
@@ -101,4 +96,36 @@ CExplodingBarrel* CExplodingBarrel::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 
 	//設定した情報を返す
 	return pExplodingBarrel;
+}
+
+//============================
+//ギミック作動処理
+//============================
+void CExplodingBarrel::GimmickActivation()
+{
+	//起爆
+	SetDetonation();
+}
+
+//============================
+//起爆設定
+//============================
+void CExplodingBarrel::SetDetonation()
+{
+	if (m_bDetonation)
+	{
+		return;
+	}
+
+	//フラグを立てる
+	m_bDetonation = true;
+
+	//カメラを揺らす
+	CManager::GetInstance()->GetCamera()->SetShake(30, 20);	//ヒット時カメラを揺らす
+
+	//爆発の生成
+	CExplosion::Create(GetPos());
+
+	//終了処理
+	Uninit();
 }

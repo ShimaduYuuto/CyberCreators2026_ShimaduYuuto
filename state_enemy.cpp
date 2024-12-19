@@ -95,7 +95,7 @@ void CState_Enemy::UpdateState(CEnemy* enemy)
 		//次の状態を設定
 		if (m_pNextState == nullptr)
 		{
-			m_pNextState = new CState_Enemy_Normal();
+			m_pNextState = new CState_Enemy_Normal(enemy);
 		}
 	}
 }
@@ -117,29 +117,49 @@ void CState_Enemy::EnemyCollision(CEnemy* enemy)
 			continue;
 		}
 
-		//敵の位置を取得
-		D3DXVECTOR3 EnemyLength = itr->GetCollision()->GetPos() - enemy->GetCollision()->GetPos();
+		////敵の位置を取得
+		//D3DXVECTOR3 EnemyLength = itr->GetCollision()->GetPos() - enemy->GetCollision()->GetPos();
 
-		//他の敵との距離を算出
-		float fXZ = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.z * EnemyLength.z);	//XZ距離を算出する
-		float fXY = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.y * EnemyLength.y);	//XY距離を算出する
-		float fLength = sqrtf(fXZ * fXZ + fXY * fXY);										//距離を算出
+		////他の敵との距離を算出
+		//float fXZ = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.z * EnemyLength.z);	//XZ距離を算出する
+		//float fXY = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.y * EnemyLength.y);	//XY距離を算出する
+		//float fLength = sqrtf(fXZ * fXZ + fXY * fXY);										//距離を算出
 
-		//当たっていたら自分の位置を範囲外にする
-		if (fLength < itr->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius())
+		////当たっていたら自分の位置を範囲外にする
+		//if (fLength < itr->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius())
+		//{
+		//	//計算用の変数
+		//	D3DXVECTOR3 Pos = enemy->GetPos();
+
+		//	//角度を算出して補正
+		//	float fAngle = atan2f(EnemyLength.x, EnemyLength.z);
+
+		//	//円の内側に補正
+		//	Pos.x = sinf(fAngle + D3DX_PI) * (itr->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius()) + itr->GetPos().x;
+		//	Pos.z = cosf(fAngle + D3DX_PI) * (itr->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius()) + itr->GetPos().z;
+
+		//	//補正後の位置を設定
+		//	enemy->SetPos(Pos);
+		//}
+
+		//位置の取得
+		D3DXVECTOR3 Pos = itr->GetCollision()->GetPos();
+		D3DXVECTOR3 EnemyPos = enemy->GetCollision()->GetPos();
+
+		//距離を計算
+		float fLength = sqrtf((EnemyPos.x - Pos.x) * (EnemyPos.x - Pos.x) + (EnemyPos.z - Pos.z) * (EnemyPos.z - Pos.z));
+		float fTotalRadius = itr->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius();
+
+		//範囲内の確認
+		if (fLength < fTotalRadius)
 		{
-			//計算用の変数
-			D3DXVECTOR3 Pos = enemy->GetPos();
-
-			//角度を算出して補正
-			float fAngle = atan2f(EnemyLength.x, EnemyLength.z);
+			//敵の当たらない位置に補正
+			float fAngle = atan2f(Pos.x - EnemyPos.x, Pos.z - EnemyPos.z);//対角線の角度を算出
 
 			//円の内側に補正
-			Pos.x = sinf(fAngle + D3DX_PI) * (itr->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius()) + itr->GetPos().x;
-			Pos.z = cosf(fAngle + D3DX_PI) * (itr->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius()) + itr->GetPos().z;
-
-			//補正後の位置を設定
-			enemy->SetPos(Pos);
+			enemy->SetPos(D3DXVECTOR3(sinf(fAngle + D3DX_PI) * fTotalRadius + Pos.x,
+				enemy->GetPos().y,
+				cosf(fAngle + D3DX_PI) * fTotalRadius + Pos.z));
 		}
 	}
 }

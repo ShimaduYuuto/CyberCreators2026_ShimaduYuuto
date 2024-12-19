@@ -20,6 +20,7 @@ CObjectBillboard::CObjectBillboard(int nPriority) : CObject(nPriority)
 	//パラメータの初期化
 	m_polygon.move = { 0.0f, 0.0f, 0.0f };
 	m_polygon.size = { 0.0f, 0.0f, 0.0f };
+	m_polygon.ratio = 1.0f;
 }
 
 //============================
@@ -202,9 +203,6 @@ void CObjectBillboard::Draw(const char* texturepath)
 	//デバイスの取得
 	pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-	//Zの比較方法変更
-	//pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
-
 	//Zバッファに書き込まない
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
@@ -239,9 +237,6 @@ void CObjectBillboard::Draw(const char* texturepath)
 
 	//ポリゴンの描画
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
-
-	//Zの比較方法変更
-	//pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
 
 	//Zバッファに書き込む
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
@@ -320,14 +315,48 @@ void CObjectBillboard::SetSize(D3DXVECTOR3 size)
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
-	pVtx[0].pos.x = -m_polygon.size.x * 0.5f;
-	pVtx[0].pos.y = m_polygon.size.y * 0.5f;
-	pVtx[1].pos.x = m_polygon.size.x * 0.5f;
-	pVtx[1].pos.y = m_polygon.size.y * 0.5f;
-	pVtx[2].pos.x = -m_polygon.size.x * 0.5f;
-	pVtx[2].pos.y = -m_polygon.size.y * 0.5f;
-	pVtx[3].pos.x = m_polygon.size.x * 0.5f;
-	pVtx[3].pos.y = -m_polygon.size.y * 0.5f;
+	float fLength = sqrtf(m_polygon.size.x * m_polygon.size.x + m_polygon.size.y * m_polygon.size.y) * 0.5f * m_polygon.ratio; //対角線の長さを算出する
+	float fAngle = atan2f(m_polygon.size.x, m_polygon.size.y);	//対角線の角度を算出
+
+	//ポリゴンのサイズ
+	pVtx[0].pos.x = sinf(-(D3DX_PI - fAngle)) * fLength;
+	pVtx[0].pos.y = cosf(-(D3DX_PI - fAngle)) * -fLength;
+	pVtx[1].pos.x = sinf((D3DX_PI - fAngle)) * fLength;
+	pVtx[1].pos.y = cosf((D3DX_PI - fAngle)) * -fLength;
+	pVtx[2].pos.x = sinf(-fAngle) * fLength;
+	pVtx[2].pos.y = cosf(-fAngle) * -fLength;
+	pVtx[3].pos.x = sinf(fAngle) * fLength;
+	pVtx[3].pos.y = cosf(fAngle) * -fLength;
+
+	//頂点バッファをアンロックする
+	m_pVtxBuff->Unlock();
+}
+
+//============================
+//倍率の設定
+//============================
+void CObjectBillboard::SetRatio(float ratio)
+{
+	//サイズの設定
+	m_polygon.ratio = ratio;
+
+	VERTEX_3D* pVtx; //追加情報のポインタ
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	float fLength = sqrtf(m_polygon.size.x * m_polygon.size.x + m_polygon.size.y * m_polygon.size.y) * 0.5f * m_polygon.ratio; //対角線の長さを算出する
+	float fAngle = atan2f(m_polygon.size.x, m_polygon.size.y);	//対角線の角度を算出
+
+	//ポリゴンのサイズ
+	pVtx[0].pos.x = sinf(-(D3DX_PI - fAngle)) * fLength;
+	pVtx[0].pos.y = cosf(-(D3DX_PI - fAngle)) * -fLength;
+	pVtx[1].pos.x = sinf((D3DX_PI - fAngle)) * fLength;
+	pVtx[1].pos.y = cosf((D3DX_PI - fAngle)) * -fLength;
+	pVtx[2].pos.x = sinf(-fAngle) * fLength;
+	pVtx[2].pos.y = cosf(-fAngle) * -fLength;
+	pVtx[3].pos.x = sinf(fAngle) * fLength;
+	pVtx[3].pos.y = cosf(fAngle) * -fLength;
 
 	//頂点バッファをアンロックする
 	m_pVtxBuff->Unlock();

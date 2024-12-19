@@ -14,10 +14,11 @@
 //====================================
 //コンストラクタ
 //====================================
-CState_Enemy_Damage::CState_Enemy_Damage()
+CState_Enemy_Damage::CState_Enemy_Damage(CEnemy* enemy)
 {
 	//初期アクション
 	SetAction(new CEnemyAction);
+	enemy->SetCollisionProcess(true);
 }
 
 //====================================

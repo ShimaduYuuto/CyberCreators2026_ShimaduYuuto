@@ -97,14 +97,15 @@ void CEnemyAction_ChargeAttack::Action(CEnemy* enemy)
 		if (fLength < pGame->GetGamePlayer()->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius())
 		{
 			//プレイヤーにダメージを与える
-			pGame->GetGamePlayer()->SetDamage(1);
+			if (pGame->GetGamePlayer()->SetDamage(1))
+			{
+				//攻撃判定の終了
+				CEnemy003* pEnemy003 = (CEnemy003*)enemy;
+				pEnemy003->SetAttacking(false);
 
-			//攻撃判定の終了
-			CEnemy003* pEnemy003 = (CEnemy003*)enemy;
-			pEnemy003->SetAttacking(false);
-
-			//待機状態になる
-			SetNextAction(new CEnemyAction_Standby003(enemy));
+				//待機状態になる
+				SetNextAction(new CEnemyAction_Standby003(enemy));
+			}
 		}
 
 		//終了の時間になったら待機

@@ -45,8 +45,8 @@ class CEnemyAction_Attack000 : public CEnemyAction_Attack
 public:
 
 	//コンストラクタ
-	CEnemyAction_Attack000() {};
-	CEnemyAction_Attack000(CEnemy* enemy)
+	//CEnemyAction_Attack000() {};
+	CEnemyAction_Attack000(CEnemy* enemy) : CEnemyAction_Attack(enemy)
 	{
 		//設定
 		GetAttackInstanse()->SetCollisionTime(65);
@@ -67,31 +67,4 @@ public:
 		SetNextAction(new CEnemyAction_Chase000(enemy));
 	}
 };
-
-//=======================================
-//以下はバックアップ
-//=======================================
-
-//==========================
-//エネミー000のアタックストラテジー
-//==========================
-class CEnemy000Attack : public CEnemyAttack
-{
-public:
-
-	//コンストラクタ
-	CEnemy000Attack();
-	CEnemy000Attack(CEnemy* enemy);
-
-	//パラメータの設定
-	void SetParam() override
-	{
-		//設定
-		SetCollisionTime(65);
-		SetEndTime(100.0f);
-		SetDamageValue(1);
-		SetAttackLength(30.0f);
-	}
-};
-
 #endif

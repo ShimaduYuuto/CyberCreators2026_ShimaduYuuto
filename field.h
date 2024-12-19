@@ -23,7 +23,7 @@ public:
 	static constexpr float COLLISION_WIDTH{ 1000.0f };	//当たり判定をする幅
 
 	//メンバ関数
-	CField(int nPriority = 3);					//コンストラクタ
+	CField(int nPriority = 0);					//コンストラクタ
 	~CField() override;							//デストラクタ
 	HRESULT Init() override;					//初期化
 	void Uninit() override;						//終了

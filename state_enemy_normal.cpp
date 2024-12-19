@@ -17,6 +17,7 @@ CState_Enemy_Normal::CState_Enemy_Normal(CEnemy* enemy)
 {
 	//‰ŠúƒAƒNƒVƒ‡ƒ“
 	enemy->SetEnableGravity(true);
+	enemy->SetCollisionProcess(true);
 }
 
 //====================================
@@ -28,7 +29,10 @@ void CState_Enemy_Normal::UpdateState(CEnemy* enemy)
 	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
 
 	//‘¼‚Ì“G‚Æ‚Ì“–‚½‚è”»’è
-	EnemyCollision(enemy);
+	if (enemy->GetCollisionProcess())
+	{
+		EnemyCollision(enemy);
+	}
 
 	//ŠeƒMƒ~ƒbƒN‚Æ‚Ì“–‚½‚è”»’è
 	for (auto& iter : pGame->GetGimmickManager()->GetList())
@@ -47,7 +51,7 @@ void CState_Enemy_Normal::UpdateState(CEnemy* enemy)
 			//’M‚Ì“–‚½‚ç‚È‚¢ˆÊ’u‚É•â³
 			float fAngle = atan2f(Pos.x - EnemyPos.x, Pos.z - EnemyPos.z);//‘ÎŠpü‚ÌŠp“x‚ðŽZo
 
-			//‰~‚Ì“à‘¤‚É•â³
+			//ˆÊ’u‚ÌÝ’è
 			enemy->SetPos(D3DXVECTOR3(sinf(fAngle + D3DX_PI) * fTotalRadius + Pos.x,
 				enemy->GetPos().y,
 				cosf(fAngle + D3DX_PI) * fTotalRadius + Pos.z));

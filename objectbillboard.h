@@ -20,6 +20,7 @@ public:
 	{
 		D3DXVECTOR3 move;	//移動量
 		D3DXVECTOR3 size;	//サイズ
+		float ratio;		//倍率
 	}Polygon;
 
 	//メンバ関数
@@ -37,6 +38,8 @@ public:
 	D3DXVECTOR3& GetSize() { return m_polygon.size; }			//サイズの取得
 	void SetMove(D3DXVECTOR3 move) { m_polygon.move = move; }	//移動量の設定
 	D3DXVECTOR3& GetMove() { return m_polygon.move; }			//移動量の取得
+	void SetRatio(float ratio);									//倍率の設定
+	float& GetRatio() { return m_polygon.ratio; }				//倍率の取得
 	void SetColor(D3DXCOLOR color);								//頂点の色を設定
 	void SetTextureUV(float u1, float u2, float v1, float v2);	//テクスチャの座標設定
 

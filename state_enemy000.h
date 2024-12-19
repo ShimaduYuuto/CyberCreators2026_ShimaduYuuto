@@ -25,7 +25,7 @@ class CState_Enemy000_Normal : public CState_Enemy_Normal
 public:
 
 	//メンバ関数
-	CState_Enemy000_Normal(CEnemy* enemy)
+	CState_Enemy000_Normal(CEnemy* enemy) : CState_Enemy_Normal(enemy)
 	{
 		SetAction(new CEnemyAction_Chase000(enemy));
 	};	//コンストラクタ
@@ -44,14 +44,7 @@ class CState_Enemy000_Damage : public CState_Enemy_Damage
 {
 public:
 
-	//メンバ関数
-	CState_Enemy000_Damage()
-	{
-		SetAction(new CEnemyAction());
-		SetEndTime(60);
-	};	//コンストラクタ
-
-	CState_Enemy000_Damage(CEnemy* enemy)
+	CState_Enemy000_Damage(CEnemy* enemy) : CState_Enemy_Damage(enemy)
 	{
 		SetAction(new CEnemyAction());
 		SetEndTime(60);

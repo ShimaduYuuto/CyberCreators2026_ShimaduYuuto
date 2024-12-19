@@ -30,8 +30,7 @@ CState_Enemy_Blow::CState_Enemy_Blow(CEnemy* enemy)
 	//初期アクション
 	SetAction(new CEnemyAction());
 
-	//吹き飛ぶエフェクト
-	CEffect_Brow::Create(enemy->GetCollision()->GetPos(), enemy->GetRot());
+	enemy->SetCollisionProcess(true);
 }
 
 //====================================
@@ -81,7 +80,7 @@ void CState_Enemy_Blow::UpdateState(CEnemy* enemy)
 		//範囲内の確認
 		if (fLength < iter->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius())
 		{
-			iter->Uninit();
+			iter->GimmickActivation();
 		}
 	}
 

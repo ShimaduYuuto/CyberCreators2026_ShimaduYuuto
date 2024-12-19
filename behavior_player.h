@@ -43,6 +43,9 @@ public:
 	void SetNextBehavior(CPlayerBehavior* behavior) { m_pNextBehavior = behavior; }
 	CPlayerBehavior* GetNextBehavior() { return m_pNextBehavior; }
 
+	//予め決めた次の行動
+	virtual void NextBehavior(CPlayer* player) {}
+
 	//次のアクションを確定する
 	virtual void NextAction(CPlayer* player) {}	//基底の関数
 
@@ -134,6 +137,9 @@ public:
 	//カウント
 	void SetCount(int count) { m_nEndCount = count; }	//設定
 	int GetCount() { return m_nEndCount; }				//取得
+
+	//次の行動
+	void NextBehavior(CPlayer* player) override;
 
 private:
 
@@ -432,5 +438,54 @@ public:
 	void Cancel(CPlayer* player) override;
 };
 
+//==========================
+//カウンター攻撃
+//==========================
+class CPlayerBehavior_CounterAttack : public CPlayerBehavior_Attack
+{
+public:
+
+	//定数
+	static constexpr int END_TIME{ 20 };			//終了までの時間
+	static constexpr int START_COLLISION{ 4 };		//コリジョンの判定を始めるカウント
+	static constexpr int START_CANCELTIME{ 10 };	//キャンセルが始める時間
+	static constexpr float ATTACK_LENGTH{ 100.0f };	//攻撃の距離
+
+	CPlayerBehavior_CounterAttack() {}
+	CPlayerBehavior_CounterAttack(CPlayer* player);
+	~CPlayerBehavior_CounterAttack() override {}			//デストラクタ
+
+	//行動
+	void Behavior(CPlayer* player) override;
+
+	//次の行動
+	void NextBehavior(CPlayer* player) override;
+
+private:
+
+	//ダメージを与える
+	void Damage(CPlayer* player, CEnemy* enemy, int damage) override;
+};
+
+//==========================
+//ガード
+//==========================
+class CPlayerBehavior_Guard : public CPlayerBehavior
+{
+public:
+
+	//定数
+	static constexpr float DASH_SPEED{ 14.0f };		//ダッシュの速度
+	static constexpr float STOP_LENGYH{ 50.0f };	//止まる距離
+
+	//メンバ関数
+	CPlayerBehavior_Guard(CPlayer* player);			//コンストラクタ
+
+	//行動
+	void Behavior(CPlayer* player) override;
+
+private:
+	int m_nStiffnessCount;
+};
 
 #endif

@@ -12,6 +12,7 @@
 #include "gauge_playerlife.h"
 #include "orbit.h"
 #include "state_player.h"
+#include "enemy.h"
 
 //‘O•ûéŒ¾
 class CState_Player;
@@ -42,6 +43,8 @@ public:
 		PLAYERMOTION_CHARGEATTACK,
 		PLAYERMOTION_DASHATTACK000,
 		PLAYERMOTION_DASHATTACK001,
+		PLAYERMOTION_COUNTER,
+		PLAYERMOTION_GUARD,
 		PLAYERMOTION_MAX
 	}PLAYERMOTION;
 
@@ -66,6 +69,9 @@ public:
 	//ó‘Ô•ÏX
 	void ChangeState(CState_Player* state);
 	CState_Player* GetState() { if (m_pState != nullptr) { return m_pState; } return nullptr; }
+
+	//€–S‚Ìˆ—
+	void SetCharacterDeath() override;
 
 	//Ã“IŠÖ”
 	static CPlayer* Create();	//Player‚Ì¶¬

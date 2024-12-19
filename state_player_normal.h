@@ -10,7 +10,6 @@
 
 //ヘッダーのインクルード
 #include "state_player.h"
-//class CPlayerBehavior_Move;
 
 //ノーマルステートクラス
 class CState_Player_Normal : public CState_Player
@@ -26,7 +25,7 @@ public:
 	~CState_Player_Normal() {};					//デストラクタ
 
 	void UpdateState(CPlayer* player) override {};	//状態の更新
-	void SetDamage(CPlayer* player, int damage) override;	//ダメージの設定
+	bool SetDamage(CPlayer* player, int damage) override;	//ダメージの設定
 };
 
 #endif

@@ -20,7 +20,7 @@ public:
 	static const std::string FILEPATH;			//読み込むファイル
 	static const D3DXVECTOR3 BLOCK;				//ブロック数
 	static const D3DXVECTOR3 SIZE;				//サイズ
-	static const int NUM_ORBIT = 6;			//軌跡の数
+	static const int NUM_ORBIT = 6;				//軌跡の数
 	static const int NUM_VTX = NUM_ORBIT * 2;	//頂点の数
 
 	//メンバ関数

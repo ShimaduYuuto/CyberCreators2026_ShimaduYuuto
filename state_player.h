@@ -29,7 +29,7 @@ public:
 
 	//状態ごとの更新
 	virtual void Update(CPlayer* player);					//更新
-	virtual void SetDamage(CPlayer* player, int damage) {}		//ダメージの設定
+	virtual bool SetDamage(CPlayer* player, int damage) { return true; }		//ダメージの設定
 
 	//アクションのインスタンス
 	void SetBehavior(CPlayerBehavior* behavior) { m_pBehavior = behavior; }	//設定
@@ -39,11 +39,13 @@ public:
 	void SetNextState(CState_Player* state) { if (m_pNextState == nullptr) { m_pNextState = state; } };	//設定
 	CState_Player* GetNextState() { return m_pNextState; }												//取得
 
+	//行動の更新
+	virtual void UpdateBehavior(CPlayer* player);	
+
 private:
 
 	//状態とアクションの更新
 	virtual void UpdateState(CPlayer* player);		//状態の更新
-	void UpdateBehavior(CPlayer* player);			//行動の更新
 
 	//インスタンス
 	CPlayerBehavior* m_pBehavior;	//行動

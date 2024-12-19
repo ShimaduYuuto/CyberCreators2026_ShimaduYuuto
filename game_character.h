@@ -61,6 +61,9 @@ public:
 	//“–‚½‚è”»’è‚Ìî•ñ
 	CCollision* GetCollision() { return m_pCollision; }				//“–‚½‚è”»’è‚Ìæ“¾
 
+	//€–S‚Ìˆ—
+	virtual void SetCharacterDeath();
+
 private:
 
 	//ƒƒ“ƒo•Ï”

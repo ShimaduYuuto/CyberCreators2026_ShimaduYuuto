@@ -28,6 +28,15 @@ public:
 	void Draw() override;					//描画
 	static CExplodingBarrel* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);		//爆発樽の生成
 
+	//ギミック作動の処理
+	void GimmickActivation() override;
+
+private:
+
+	void SetDetonation();	//起爆設定
+
+	bool m_bDetonation;	//起爆したか
+
 };
 
 #endif

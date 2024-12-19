@@ -22,7 +22,6 @@ public:
 	static const float JUMP_SPEED;		//ジャンプの速度
 
 	//メンバ関数
-	CState_Enemy_Normal() {};				//コンストラクタ
 	CState_Enemy_Normal(CEnemy* enemy);		//コンストラクタ
 	~CState_Enemy_Normal() override  {};	//デストラクタ
 

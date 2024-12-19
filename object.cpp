@@ -140,12 +140,26 @@ void CObject::Release()
 //============================
 void CObject::ReleaseAll()
 {
+	//保険として先に終了処理を実行
+	for (int i = 0; i < NUM_PRIORITY; i++)
+	{
+		CObject* pObj = m_pTop[i];	//先頭取得
+
+		//最大数が不明なのでwhileを使用
+		while (pObj != nullptr)
+		{
+			CObject* pNext = pObj->m_pNext;	//次のポインタを取得
+			pObj->Uninit();					//終了処理
+			pObj = pNext;					//ポインタを進める
+		}
+	}
+
 	//プライオリティの数だけ周回
 	for (int i = 0; i < NUM_PRIORITY; i++)
 	{
 		CObject* pObj = m_pTop[i];	//先頭取得
 
-	//最大数が不明なのでwhileを使用
+		//最大数が不明なのでwhileを使用
 		while (pObj != nullptr)
 		{
 			CObject* pNext = pObj->m_pNext;	//次のポインタを取得

@@ -86,21 +86,11 @@ void CEffect_Brow::Draw()
 	//カリング方法を変更
 	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	//αブレンディングを加算
-	//pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
-	//pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	//pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
-
 	//αテストを有効
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 
 	//テクスチャ描画
 	CObject3D::Draw(TEXTURE_PATH.c_str());
-
-	//α値を元に戻す
-	//pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
-	//pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	//pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	//ライティングオン
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);

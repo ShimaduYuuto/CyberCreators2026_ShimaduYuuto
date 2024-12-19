@@ -40,7 +40,7 @@ void CEnemyAction_Chase001::NextAction(CEnemy* enemy)
 //====================================
 //コンストラクタ
 //====================================
-CEnemyAction_Attack001::CEnemyAction_Attack001(CEnemy* enemy)
+CEnemyAction_Attack001::CEnemyAction_Attack001(CEnemy* enemy) : CEnemyAction_Attack(enemy)
 {
 	//設定
 	GetAttackInstanse()->SetCollisionTime(45);

@@ -31,6 +31,9 @@ public:
 	void SetCollision(CCollision* colision) { m_Collision = colision; }
 	CCollision* GetCollision() { return m_Collision; }
 
+	//ƒqƒbƒg‚Ìˆ—
+	virtual void GimmickActivation() {}
+
 private:
 
 	//ƒƒ“ƒo•Ï”

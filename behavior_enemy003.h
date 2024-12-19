@@ -19,15 +19,15 @@ class CEnemyAction_Standby003 : public CEnemyAction
 public:
 
 	//コンストラクタ
-	CEnemyAction_Standby003() {};
 	CEnemyAction_Standby003(CEnemy* enemy) : m_nCoolTime(0)
 	{
 		enemy->SetMotion(0);
 		m_nCoolTime = COOL_TIME;
+		enemy->SetCollisionProcess(true);
 	};
 
 	//定数
-	static constexpr int COOL_TIME{ 90 };		//クールタイムの時間
+	static constexpr int COOL_TIME{ 90 };	//クールタイムの時間
 	void Action(CEnemy* enemy) override;	//アクション
 
 	//攻撃アクションを設定
@@ -45,8 +45,7 @@ class CEnemyAction_Attack003 : public CEnemyAction_Attack
 public:
 
 	//コンストラクタ
-	CEnemyAction_Attack003() {};
-	CEnemyAction_Attack003(CEnemy* enemy)
+	CEnemyAction_Attack003(CEnemy* enemy) : CEnemyAction_Attack(enemy)
 	{
 		//設定
 		GetAttackInstanse()->SetCollisionTime(65);
@@ -54,6 +53,7 @@ public:
 		GetAttackInstanse()->SetDamageValue(1);
 		SetAttackLength(30.0f);
 		enemy->SetMotion(2);
+		enemy->SetCollisionProcess(false);
 	};
 
 	void Action(CEnemy* enemy) override
@@ -80,11 +80,11 @@ public:
 	static constexpr float SPEED_MOVE{ 3.0f };		//攻撃の移動速度
 
 	//コンストラクタ
-	CEnemyAction_ChargeAttack() {};
-	CEnemyAction_ChargeAttack(CEnemy* enemy) : m_nChargeCount(0)
+	CEnemyAction_ChargeAttack(CEnemy* enemy) : m_nChargeCount(0), m_fAttackAngle(0.0f)
 	{
 		//設定
 		enemy->SetMotion(2);
+		enemy->SetCollisionProcess(false);
 	};
 
 	//デストラクタ

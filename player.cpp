@@ -149,9 +149,7 @@ void CPlayer::Update()
 bool CPlayer::SetDamage(int damage)
 {
 	//ダメージの設定
-	m_pState->SetDamage(this, damage);
-
-	return true;
+	return m_pState->SetDamage(this, damage);;
 }
 
 //============================
@@ -301,6 +299,14 @@ void CPlayer::SetState(CState_Player* state)
 	//状態の変更
 	delete m_pState;
 	m_pState = state;
+}
+
+//============================
+//死亡時の処理
+//============================
+void CPlayer::SetCharacterDeath()
+{
+	Uninit();
 }
 
 //============================

@@ -111,7 +111,7 @@ void CShadow::Draw()
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 
 	//Zの比較方法変更
-	//pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
 
 	//Zバッファに書き込まない
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
@@ -128,7 +128,7 @@ void CShadow::Draw()
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	//Zの比較方法変更
-	//pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
 
 	//Zバッファに書き込む
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);

@@ -29,6 +29,7 @@ public:
 	{
 		enemy->SetMotion(0);
 		m_nCoolTime = COOL_TIME;
+		enemy->SetCollisionProcess(true);
 	};
 
 	//定数
@@ -50,7 +51,7 @@ class CEnemyAction_Attack002 : public CEnemyAction_Attack
 public:
 
 	//コンストラクタ
-	CEnemyAction_Attack002(CEnemy* enemy)
+	CEnemyAction_Attack002(CEnemy* enemy) : CEnemyAction_Attack(enemy)
 	{
 		//設定
 		GetAttackInstanse()->SetCollisionTime(65);

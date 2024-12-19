@@ -17,8 +17,7 @@ class CState_Enemy_Damage : public CState_Enemy
 public:
 
 	//メンバ関数
-	CState_Enemy_Damage();					//コンストラクタ
-	CState_Enemy_Damage(CEnemy* enemy) {};	//コンストラクタ
+	CState_Enemy_Damage(CEnemy* enemy);	//コンストラクタ
 	~CState_Enemy_Damage() override {};		//デストラクタ
 
 	//状態ごとの更新

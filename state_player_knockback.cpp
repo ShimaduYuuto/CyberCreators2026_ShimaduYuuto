@@ -40,12 +40,12 @@ void CState_Player_Knockback::UpdateState(CPlayer* player)
 //========================
 //ダメージの設定
 //========================
-void CState_Player_Knockback::SetDamage(CPlayer* player, int damage)
+bool CState_Player_Knockback::SetDamage(CPlayer* player, int damage)
 {
 	//死亡フラグが立っていたら抜ける
 	if (player->GetDeath())
 	{
-		return;
+		return true;
 	}
 
 	//ダメージを受ける
@@ -73,4 +73,6 @@ void CState_Player_Knockback::SetDamage(CPlayer* player, int damage)
 	}
 
 	player->SetLifeGauge(pGauge);
+
+	return true;
 }

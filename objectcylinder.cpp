@@ -68,7 +68,7 @@ HRESULT CObjectCylinder::Init()
 	//ローカル変数
 	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
 	m_nIndex = ((NUM_CORNER + 1) * 2);	//インデックス数
-	m_nVertex = (NUM_CORNER * 2);		//頂点数
+	m_nVertex = ((NUM_CORNER + 1) * 2);		//頂点数
 	m_nPolygon = (NUM_CORNER * 2);		//ポリゴン数
 
 	//デバイスを取得
@@ -106,15 +106,15 @@ HRESULT CObjectCylinder::Init()
 	for (int j = 0; j < 2; j++)
 	{
 		//角の数だけ周回
-		for (int i = 0; i < NUM_CORNER; i++)
+		for (int i = 0; i < NUM_CORNER + 1; i++)
 		{
 			//角度を算出
 			float fAngle = (D3DX_PI * 2) * (float)(i / (float)NUM_CORNER);
 
 			//各変数に値を代入
-			pVtx[i + NUM_CORNER * j].pos = D3DXVECTOR3(sinf(fAngle) * m_fRadius, m_fHeight - (m_fHeight * j), cosf(fAngle) * m_fRadius);	//位置
-			pVtx[i + NUM_CORNER * j].tex = D3DXVECTOR2(1.0f * (i / (float)NUM_CORNER), j);	//UV座標
-			pVtx[i + NUM_CORNER * j].nor = D3DXVECTOR3(sinf(fAngle + D3DX_PI) / D3DX_PI,
+			pVtx[i + (NUM_CORNER + 1) * j].pos = D3DXVECTOR3(sinf(fAngle) * m_fRadius, m_fHeight - (m_fHeight * j), cosf(fAngle) * m_fRadius);	//位置
+			pVtx[i + (NUM_CORNER + 1) * j].tex = D3DXVECTOR2(1.0f * (i / (float)NUM_CORNER), j);	//UV座標
+			pVtx[i + (NUM_CORNER + 1) * j].nor = D3DXVECTOR3(sinf(fAngle + D3DX_PI) / D3DX_PI,
 				0.0f,
 				cosf(fAngle + D3DX_PI) / D3DX_PI);	//法線ベクトル
 			pVtx[i + NUM_CORNER * j].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);				//色
@@ -132,7 +132,7 @@ HRESULT CObjectCylinder::Init()
 		//偶数の場合
 		if ((i & 1) == 0)
 		{
-			pIdx[i] = (WORD)(NUM_CORNER + nAngleCount);
+			pIdx[i] = (WORD)((NUM_CORNER + 1) + nAngleCount);
 		}
 		else//奇数の場合
 		{
@@ -143,7 +143,7 @@ HRESULT CObjectCylinder::Init()
 		//1週する時にカウントの初期化
 		if (nAngleCount == NUM_CORNER)
 		{
-			nAngleCount = 0;
+			//nAngleCount = 0;
 		}
 	}
 
@@ -240,13 +240,13 @@ void CObjectCylinder::Update()
 	for (int j = 0; j < 2; j++)
 	{
 		//角の数だけ周回
-		for (int i = 0; i < NUM_CORNER; i++)
+		for (int i = 0; i < (NUM_CORNER + 1); i++)
 		{
 			//角度を算出
 			float fAngle = (D3DX_PI * 2) * (float)(i / (float)NUM_CORNER);
 
 			//各変数に値を代入
-			pVtx[i + NUM_CORNER * j].pos = D3DXVECTOR3(sinf(fAngle) * m_fRadius * m_fRate, m_fHeight - (m_fHeight * j), cosf(fAngle) * m_fRadius * m_fRate);	//位置
+			pVtx[i + (NUM_CORNER + 1) * j].pos = D3DXVECTOR3(sinf(fAngle) * m_fRadius * m_fRate, m_fHeight - (m_fHeight * j), cosf(fAngle) * m_fRadius * m_fRate);	//位置
 		}
 	}
 
@@ -373,9 +373,9 @@ void CObjectCylinder::SetColor(D3DXCOLOR color)
 	for (int j = 0; j < 2; j++)
 	{
 		//角の数だけ周回
-		for (int i = 0; i < NUM_CORNER; i++)
+		for (int i = 0; i < (NUM_CORNER + 1); i++)
 		{
-			pVtx[i + NUM_CORNER * j].col = color;	//色
+			pVtx[i + (NUM_CORNER + 1) * j].col = color;	//色
 		}
 	}
 

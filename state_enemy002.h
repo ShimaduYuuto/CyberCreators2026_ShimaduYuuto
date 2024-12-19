@@ -45,14 +45,7 @@ public:
 	//定数
 	static constexpr int TIME_END{ 120 };	//終了時間
 
-	//メンバ関数
-	CState_Enemy002_Damage()
-	{
-		SetAction(new CEnemyAction());
-		SetEndTime(TIME_END);
-	};	//コンストラクタ
-
-	CState_Enemy002_Damage(CEnemy* enemy)
+	CState_Enemy002_Damage(CEnemy* enemy) : CState_Enemy_Damage(enemy)
 	{
 		SetAction(new CEnemyAction());
 		SetEndTime(TIME_END);

@@ -30,7 +30,7 @@ public:
 
 	//状態の更新
 	void UpdateState(CPlayer* player) override;	
-	void SetDamage(CPlayer* player, int damage) override;	//ダメージの設定
+	bool SetDamage(CPlayer* player, int damage) override;	//ダメージの設定
 private:
 	int m_nKnockbackCount;
 };

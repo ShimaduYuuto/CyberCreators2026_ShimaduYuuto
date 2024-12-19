@@ -12,6 +12,9 @@
 #include "gauge_slow.h"
 #include "effect_hitattack.h"
 #include "effect_runsmoke.h"
+#include "state_player_normal.h"
+#include "state_player_counter.h"
+#include "state_player_guard.h"
 
 //定数
 const D3DXVECTOR3 CPlayerBehavior_Attack::POS_OFFSET{ 0.0f, 20.0f, 30.0f };
@@ -211,7 +214,9 @@ void CPlayerBehavior_Move::Action(CPlayer* player)
 			if (GetNextBehavior() == nullptr)
 			{
 				//スマッシュアクションを生成
-				SetNextBehavior(new CPlayerBehavior_Smash(player));
+				//SetNextBehavior(new CPlayerBehavior_Smash(player));
+				player->GetState()->SetNextState(new CState_Player_Guard(player));
+				return;
 			}
 
 		}
@@ -485,7 +490,7 @@ void CPlayerBehavior_Attack::Behavior(CPlayer* player)
 		if (GetNextBehavior() == nullptr)
 		{
 			//次の行動を設定
-			SetNextBehavior(new CPlayerBehavior_Move(player));
+			NextBehavior(player);
 		}
 	}
 
@@ -509,6 +514,14 @@ void CPlayerBehavior_Attack::Damage(CPlayer* player, CEnemy* enemy, int damage)
 	{
 		enemy->DamageEffect(player);
 	}
+}
+
+//============================
+//次の行動(移動)
+//============================
+void CPlayerBehavior_Attack::NextBehavior(CPlayer* player)
+{
+	SetNextBehavior(new CPlayerBehavior_Move(player));
 }
 
 //============================
@@ -586,7 +599,7 @@ void CPlayerBehavior_NormalAttack001::Cancel(CPlayer* player)
 	else if (CManager::GetInstance()->GetMouse()->GetTrigger(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_RIGHT))
 	{
 		//次の攻撃の生成
-		SetNextBehavior(new CPlayerBehavior_Smash(player));
+		//SetNextBehavior(new CPlayerBehavior_Smash(player));
 	}
 }
 
@@ -974,4 +987,75 @@ void CPlayerBehavior_DashAttack001::Cancel(CPlayer* player)
 void CPlayerBehavior_DashAttack001::Behavior(CPlayer* player)
 {
 	CPlayerBehavior_Attack::Behavior(player);
+}
+
+//=================================================
+//カウンター攻撃
+//=================================================
+
+//============================
+//行動処理(攻撃)
+//============================
+CPlayerBehavior_CounterAttack::CPlayerBehavior_CounterAttack(CPlayer* player)
+{
+	//パラメータの設定
+	SetCancelTime(START_CANCELTIME);	//キャンセル
+	SetEndTime(END_TIME);				//終了時間
+	SetCollisionTime(START_COLLISION);	//当たり判定
+	SetAttackLength(ATTACK_LENGTH);		//攻撃の距離
+	SetOffsetPos({ 0.0f, 30.0f, 0.0f });//オフセットは無し
+	player->SetMotion(CPlayer::PLAYERMOTION_ACTION002);
+}
+
+//============================
+//行動処理(攻撃)
+//============================
+void CPlayerBehavior_CounterAttack::Behavior(CPlayer* player)
+{
+	CPlayerBehavior_Attack::Behavior(player);
+}
+
+//============================
+//行動処理(通常状態に変更)
+//============================
+void CPlayerBehavior_CounterAttack::NextBehavior(CPlayer* player)
+{
+	player->GetState()->SetNextState(new CState_Player_Normal(player));
+}
+
+//============================
+//攻撃ヒット時の処理
+//============================
+void CPlayerBehavior_CounterAttack::Damage(CPlayer* player, CEnemy* enemy, int damage)
+{
+	D3DXVECTOR3 Vector = enemy->GetCollision()->GetPos() - player->GetCollision()->GetPos();
+	float fAngle = atan2f(Vector.x, Vector.z);
+
+	//ダメージ
+	enemy->SetBlowDamage(damage, fAngle + D3DX_PI, 10.0f);
+}
+
+//=================================================
+//ガード
+//=================================================
+
+//============================
+//コンストラクタ
+//============================
+CPlayerBehavior_Guard::CPlayerBehavior_Guard(CPlayer* player) : m_nStiffnessCount(0)
+{
+	player->SetMotion(CPlayer::PLAYERMOTION_GUARD);
+}
+
+//============================
+//行動処理(ガード)
+//============================
+void CPlayerBehavior_Guard::Behavior(CPlayer* player)
+{
+	//左クリックを離したら
+	if (!CManager::GetInstance()->GetMouse()->GetPress(CInputMouse::MOUSEBUTTON_RIGHT))
+	{
+		//通常状態に変更
+		player->GetState()->SetNextState(new CState_Player_Normal(player));
+	}
 }

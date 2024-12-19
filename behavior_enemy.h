@@ -54,7 +54,7 @@ public:
 	void Action(CEnemy* enemy) override;	//アクション
 
 	//次の行動を確定
-	virtual void NextAction(CEnemy* enemy) {};
+	void NextAction(CEnemy* enemy) override {}
 };
 
 //==========================
@@ -65,7 +65,7 @@ class CEnemyAction_Attack : public CEnemyAction
 public:
 
 	//コンストラクタとデストラクタ
-	CEnemyAction_Attack();
+	CEnemyAction_Attack(CEnemy* enemy);
 	~CEnemyAction_Attack();
 
 	//攻撃処理
@@ -85,56 +85,4 @@ private:
 	CAttack* m_pAttack;		//攻撃のインスタンス
 	float m_fAttackLength;	//攻撃の距離
 };
-
-
-
-
-
-
-//====================================================================
-// 以下はバックアップ
-//====================================================================
-
-//==========================
-//移動ストラテジー
-//==========================
-class CEnemyMove
-{
-public:
-	virtual void Move(CEnemy* enemy) {};
-};
-
-//==========================
-//追いかける
-//==========================
-class CEnemyMove_Chase : public CEnemyMove
-{
-public:
-	//定数
-	static const float VALUE_MOVE;
-
-	void Move(CEnemy* enemy) override;
-};
-
-//==========================
-//エネミーのアタックストラテジー
-//==========================
-class CEnemyAttack : public CAttack
-{
-public:
-
-	//コンストラクタ
-	CEnemyAttack() : m_fAttackLength(0.0f) {}
-
-	//攻撃の基底
-	virtual void Attack(CEnemy* enemy);
-
-	//攻撃の距離
-	void SetAttackLength(float length) { m_fAttackLength = length; }	//設定
-	float GetAttackLength() { return m_fAttackLength; }
-
-private:
-	float m_fAttackLength;	//攻撃の距離
-};
-
 #endif

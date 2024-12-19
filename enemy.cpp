@@ -15,14 +15,17 @@
 #include "enemy003.h"
 #include "state_enemy_damage.h"
 #include "battleareamanager.h"
+#include "effect_brow.h"
+#include "effect_death.h"
 
 //============================
 //エネミーのコンストラクタ
 //============================
 CEnemy::CEnemy(int nPriority) : 
-	CGame_Character(nPriority),/* m_Collision(),*/
+	CGame_Character(nPriority),
 	m_EnemyType(),
-	m_pState(nullptr)
+	m_pState(nullptr),
+	m_bCollisionProcess(true)
 {
 	//敵の種類を設定
 	m_EnemyType = ENEMYTYPE_ENEMY000;
@@ -225,6 +228,9 @@ bool CEnemy::SetBlowDamage(int damage, float rotY)
 	//吹き飛び状態に変更
 	ChangeState(new CState_Enemy_Blow(this));
 
+	//吹き飛ぶエフェクト
+	CEffect_Brow::Create(GetCollision()->GetPos(), {0.0f, rotY, 0.0f});
+
 	return true;
 }
 
@@ -243,6 +249,9 @@ bool CEnemy::SetBlowDamage(int damage, float rotY, float value)
 	//吹き飛び状態に変更
 	ChangeState(new CState_Enemy_Blow(this));
 
+	//吹き飛ぶエフェクト
+	CEffect_Brow::Create(GetCollision()->GetPos(), { 0.0f, rotY, 0.0f });
+
 	return true;
 }
 
@@ -257,6 +266,17 @@ bool CEnemy::SetBlowOff()
 	SetEnableGravity(true);											//重力を受ける
 
 	return true;
+}
+
+//============================
+//死亡時の処理
+//============================
+void CEnemy::SetCharacterDeath()
+{
+	//エフェクトを生成して破棄
+	CEffect_Death::Create(GetCollision()->GetPos());
+
+	Uninit();
 }
 
 //============================

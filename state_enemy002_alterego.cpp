@@ -15,7 +15,7 @@
 //====================================
 //コンストラクタ
 //====================================
-CState_Enemy002_AlterEgo_Normal::CState_Enemy002_AlterEgo_Normal(CEnemy* enemy)
+CState_Enemy002_AlterEgo_Normal::CState_Enemy002_AlterEgo_Normal(CEnemy* enemy) : CState_Enemy_Normal(enemy)
 {
 	SetAction(new CEnemyActionAlterEgo_ChargeShot(enemy));
 };

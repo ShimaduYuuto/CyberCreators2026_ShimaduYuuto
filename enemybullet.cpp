@@ -129,11 +129,13 @@ void CEnemyBullet::Update()
 		if (fLength < m_Collision->GetRadius() + 20.0f)
 		{
 			//プレイヤーにダメージを与える
-			pGame->GetGamePlayer()->SetDamage(1);
-			Uninit();
+			if (pGame->GetGamePlayer()->SetDamage(1))
+			{
+				Uninit();
 
-			//カメラを揺らす
-			CManager::GetInstance()->GetCamera()->SetShake(20, 30);	//ヒット時カメラを揺らす
+				//カメラを揺らす
+				CManager::GetInstance()->GetCamera()->SetShake(20, 30);	//ヒット時カメラを揺らす
+			}
 		}
 	}
 	else

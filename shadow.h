@@ -21,7 +21,7 @@ public:
 	static const D3DXCOLOR COLOR;		//色
 
 	//メンバ関数
-	CShadow(int nPriority = 5);								//コンストラクタ
+	CShadow(int nPriority = 1);								//コンストラクタ
 	~CShadow() override;									//デストラクタ
 	HRESULT Init() override;								//初期化
 	void Uninit() override;									//終了
