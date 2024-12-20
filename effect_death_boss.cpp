@@ -10,7 +10,7 @@
 #include "manager.h"
 
 //定数
-const std::string CEffect_Death_Boss::TEXTURE_PATH = "data\\TEXTURE\\death_boss000.png";
+const std::string CEffect_Death_Boss::TEXTURE_PATH = "data\\TEXTURE\\death_boss001.png";
 
 //============================
 //コンストラクタ

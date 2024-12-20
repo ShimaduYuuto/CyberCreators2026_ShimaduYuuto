@@ -188,6 +188,7 @@
     <ClInclude Include="effect_dash.h" />
     <ClInclude Include="effect_death.h" />
     <ClInclude Include="effect_death_boss.h" />
+    <ClInclude Include="effect_explosion.h" />
     <ClInclude Include="effect_guard.h" />
     <ClInclude Include="effect_hitattack.h" />
     <ClInclude Include="effect_repel.h" />
@@ -322,6 +323,7 @@
     <ClCompile Include="effect_chargeshot.cpp" />
     <ClCompile Include="effect_death.cpp" />
     <ClCompile Include="effect_death_boss.cpp" />
+    <ClCompile Include="effect_explosion.cpp" />
     <ClCompile Include="effect_guard.cpp" />
     <ClCompile Include="effect_hitattack.cpp" />
     <ClCompile Include="effect_repel.cpp" />

@@ -24,7 +24,7 @@ public:
 	//テクスチャ情報
 	static constexpr int HORIZONTAL{ 10 };	//横の分割数(U座標)
 	static constexpr int VERTICAL{ 7 };		//縦の分割数(V座標)
-	static constexpr int SPEED_UPDATE{ 4 };	//更新速度
+	static constexpr int SPEED_UPDATE{ 3 };	//更新速度
 	static constexpr bool LOOP{ false };	//ループ
 
 	//メンバ関数

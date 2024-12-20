@@ -134,13 +134,13 @@ private:
 };
 
 //==========================
-//演出
+//撃破演出
 //==========================
 class CEnemyAction_Direction_Destroy : public CEnemyAction
 {
 public:
 
-	static constexpr int DIRECTION_TIME{ 300 };	//演出の時間
+	static constexpr int DIRECTION_TIME{ 500 };	//演出の時間
 
 	//コンストラクタ
 	CEnemyAction_Direction_Destroy(CEnemy* enemy);

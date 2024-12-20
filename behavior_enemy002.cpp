@@ -12,6 +12,8 @@
 #include "game.h"
 #include "manager.h"
 #include "effect_death_boss.h"
+#include "effect_explosion.h"
+#include "direction_boss_destroy.h"
 
 //======================================================================
 //‘Ò‹@
@@ -437,6 +439,11 @@ void CEnemyAction_Direction_Destroy::Action(CEnemy* enemy)
 
 	CManager::GetInstance()->GetCamera()->SetPosR(enemy->GetCollision()->GetPos());
 	CManager::GetInstance()->GetCamera()->SetPosV(enemy->GetCollision()->GetPos() + D3DXVECTOR3(0.0f, 0.0f, -200.0f));
+	
+	if (m_nCount == CDirection_Boss_Destroy::START_SHAKE_FRAME)
+	{
+		CEffect_Explosion::Create(enemy->GetPos());
+	}
 
 	if (m_nCount > DIRECTION_TIME)
 	{

@@ -1,6 +1,6 @@
 //======================================
 //
-//	シリンダーオブジェクトの処理[objectdome.cpp]
+//	ドームオブジェクトの処理[objectdome.cpp]
 //	Author : Yuuto Shimadu
 //
 //======================================
@@ -10,7 +10,7 @@
 #include "manager.h"
 
 //オブジェクトメッシュクラスの定数の初期化
-const int CObjectDome::NUM_CORNER = 8;			//角の数
+const int CObjectDome::NUM_CORNER = 4;			//角の数
 const float CObjectDome::HEIGHT = 50.0f;		//高さ
 
 //============================
@@ -184,91 +184,6 @@ HRESULT CObjectDome::Init()
 		pIdx[NUM_CORNER * 2 + nAddCount] = pIdx[0 + nAddCount];
 		pIdx[NUM_CORNER * 2 + 1 + nAddCount] = pIdx[1 + nAddCount];
 	}
-
-	for (int i = 0; i < m_nIndex; i++)
-	{
-		int A = (int)pIdx[i];
-		A = (int)pIdx[i];
-	}
-
-	//インデックスの計算
-	//for (int i = 0; i < m_nIndex; i++)
-	//{
-
-
-	//	//偶数の場合
-	//	if ((i & 1) == 0)
-	//	{
-	//		pIdx[i] = (WORD)(NUM_CORNER + nAngleCount);
-	//	}
-	//	else//奇数の場合
-	//	{
-	//		pIdx[i] = (WORD)nAngleCount;
-	//		nAngleCount++;
-	//	}
-
-	//	//1週する時にカウントの初期化
-	//	if (nAngleCount == NUM_CORNER)
-	//	{
-	//		nAngleCount = 0;
-	//	}
-	//}
-
-	//ポリゴンの数だけ回す
-	//for (int i = 0; i < m_nPolygon; i++)
-	//{
-	//	//縮退ならコンティニュー
-	//	if ((pIdx[i] == pIdx[i + 1]) || (pIdx[i + 1] == pIdx[i + 2]))
-	//	{
-	//		continue;
-	//	}
-
-	//	//法線ベクトルを格納する変数
-	//	D3DXVECTOR3 SurfaceNorVec; //面法線のベクトル
-	//	D3DXVECTOR3 vecNormal; //正規化したベクトル
-	//	D3DXVECTOR3 vector1; //１つ目のベクトルの保管用
-	//	D3DXVECTOR3 vector2; //２つ目のベクトルの保管用
-
-	//	//インデックスを格納する変数
-	//	WORD index0 = pIdx[i + 0];
-	//	WORD index1 = pIdx[i + 1];
-	//	WORD index2 = pIdx[i + 2];
-
-	//	//頂点を格納する変数
-	//	VERTEX_3D* vtx0 = pVtx + index0;
-	//	VERTEX_3D* vtx1 = pVtx + index1;
-	//	VERTEX_3D* vtx2 = pVtx + index2;
-
-	//	//法線ベクトルの算出
-	//	if ((i & 1) == 0) //偶数
-	//	{
-	//		vector1 = vtx1->pos - vtx0->pos;
-	//		vector2 = vtx2->pos - vtx0->pos;
-	//	}
-	//	else //奇数
-	//	{
-	//		vector1 = vtx2->pos - vtx0->pos;
-	//		vector2 = vtx1->pos - vtx0->pos;
-	//	}
-
-	//	//ベクトルの計算
-	//	D3DXVec3Cross(&SurfaceNorVec, &vector1, &vector2);
-
-	//	//ベクトルの正規化
-	//	D3DXVec3Normalize(&vecNormal, &SurfaceNorVec);
-
-	//	//ベクトルを加算
-	//	vtx0->nor += vecNormal;
-	//	vtx1->nor += vecNormal;
-	//	vtx2->nor += vecNormal;
-	//}
-
-	//加算したベクトルを正規化
-	//for (int nCount = 0; nCount < m_nVertex; nCount++)
-	//{
-	//	//ベクトルの正規化
-	//	D3DXVec3Normalize(&pVtx[nCount].nor, &pVtx[nCount].nor);
-	//}
 
 	//頂点バッファをアンロックする
 	m_pVtxBuff->Unlock();

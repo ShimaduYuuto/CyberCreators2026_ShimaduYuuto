@@ -208,13 +208,12 @@ void CPlayerBehavior_Move::Action(CPlayer* player)
 	if (player->GetOnStand())
 	{
 		//右クリックをしたら
-		if (CManager::GetInstance()->GetMouse()->GetTrigger(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_RIGHT))
+		if (CManager::GetInstance()->GetMouse()->GetPress(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_RIGHT))
 		{
 			//アクションをしていないなら
 			if (GetNextBehavior() == nullptr)
 			{
-				//スマッシュアクションを生成
-				//SetNextBehavior(new CPlayerBehavior_Smash(player));
+				//ガードを生成
 				player->GetState()->SetNextState(new CState_Player_Guard(player));
 				return;
 			}
@@ -595,11 +594,6 @@ void CPlayerBehavior_NormalAttack001::Cancel(CPlayer* player)
 	{
 		//次の攻撃の生成
 		SetNextBehavior(new CPlayerBehavior_NormalAttack002(player));
-	}
-	else if (CManager::GetInstance()->GetMouse()->GetTrigger(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_RIGHT))
-	{
-		//次の攻撃の生成
-		//SetNextBehavior(new CPlayerBehavior_Smash(player));
 	}
 }
 

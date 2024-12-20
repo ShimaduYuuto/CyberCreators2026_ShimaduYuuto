@@ -29,7 +29,8 @@ public:
 	void Uninit();			//終了
 	void Update();			//更新
 	void SetCamera();		//カメラの設定
-	D3DXVECTOR3& GetPos() { return m_posV; }	//カメラの位置
+	D3DXVECTOR3& GetPos() { return m_posV; }	//カメラの位置(視点)
+	D3DXVECTOR3& GetPosR() { return m_posR; }	//カメラの位置(注視点)
 	D3DXVECTOR3& GetRot() { return m_rot; }		//カメラの向き
 	bool GetViewObject(D3DXMATRIX mtx);			//カメラに映っているか
 	bool GetViewObject(D3DXVECTOR3 pos);		//カメラに映っているか

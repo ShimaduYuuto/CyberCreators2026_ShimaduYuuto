@@ -15,7 +15,7 @@
 CParticle::CParticle(int nPriority) : CObjectBillboard(nPriority),
 	m_nLife(MAX_LIFE),
 	m_fNormalSize(0.0f),
-	m_nMaxLife(0),
+	m_nMaxLife(MAX_LIFE),
 	m_fAttenuationValue(0.1f)
 {
 
@@ -72,8 +72,6 @@ void CParticle::Update()
 	Move.x += (0.0f - Move.x) * m_fAttenuationValue;
 	Move.z += (0.0f - Move.z) * m_fAttenuationValue;
 	SetMove(Move);
-
-	//GetPos().y += 0.4f;
 
 	//ビルボードの更新処理
 	CObjectBillboard::Update();

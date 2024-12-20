@@ -80,12 +80,12 @@ void CBattleAreaManager::Update()
 	}
 
 	//残りのエリアが無くなったらクリア判定にする(一旦)
-	if (m_BattleAreaList.size() == 0)
-	{
-		//ゲームシーンの取得
-		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
-		pGame->SetClear(true);
-	}
+	//if (m_BattleAreaList.size() == 0)
+	//{
+	//	//ゲームシーンの取得
+	//	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+	//	pGame->SetClear(true);
+	//}
 }
 
 //============================
