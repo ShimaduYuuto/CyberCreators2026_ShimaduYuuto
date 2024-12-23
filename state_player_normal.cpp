@@ -14,6 +14,12 @@
 //========================
 bool CState_Player_Normal::SetDamage(CPlayer* player, int damage)
 {
+	//体力がないなら更新しない
+	if (player->GetLife() <= 0)
+	{
+		return false;
+	}
+
 	//死亡フラグが立っていたら抜ける
 	if (player->GetDeath())
 	{

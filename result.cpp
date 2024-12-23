@@ -9,11 +9,20 @@
 #include "result.h"
 #include "manager.h"
 #include "result_bg.h"
+#include "sky.h"
+#include "model.h"
+#include "cleartime.h"
+#include "oldpaper.h"
+#include "rank.h"
+
+//定数
+const D3DXVECTOR3 CResult::TIME_POS = { SCREEN_WIDTH * 0.4f, 355.0f, 0.0f };
 
 //============================
 //リザルトのコンストラクタ
 //============================
-CResult::CResult()
+CResult::CResult() :
+	m_pField(nullptr)
 {
 	
 }
@@ -23,7 +32,10 @@ CResult::CResult()
 //============================
 CResult::~CResult()
 {
-
+	//フォグの設定
+	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
+	pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
+	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 }
 
 //============================
@@ -31,8 +43,31 @@ CResult::~CResult()
 //============================
 HRESULT CResult::Init()
 {
-	CResult_Bg::Create();
+	//フィールドの生成
+	if (m_pField == nullptr)
+	{
+		m_pField = CField::Create({ 0.0f, 0.0f, 0.0f });
+	}
 
+	//クリアタイムの初期化
+	CClearTime::GetInstance()->SetPos(TIME_POS);
+	CClearTime::GetInstance()->Init();
+
+	//その他のオブジェクト
+	CSky::Create();
+	CModel::Create({ 0.0f, 0.0f, 3.0f }, { 0.0f, D3DX_PI * 0.5f, 0.0f }, CModel::MODEL_TYPE_FENCE);
+	COldPaper::Create();
+	CRank::Create();
+
+	//フォグの設定
+	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
+	pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
+	pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);					//有効
+	pDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_EXP);		//フォグモードの設定
+	pDevice->SetRenderState(D3DRS_FOGCOLOR, D3DXCOLOR(0.7f, 0.7f, 0.7f, 0.1f));	//色の設定
+	float m_fFogDensity = 0.0005f;
+	pDevice->SetRenderState(D3DRS_FOGDENSITY, *(DWORD*)(&m_fFogDensity));
+	
 	return S_OK;
 }
 
@@ -41,7 +76,13 @@ HRESULT CResult::Init()
 //============================
 void CResult::Uninit()
 {
-	//全オブジェクトの開放
+	//フィールドの破棄
+	if (m_pField != nullptr)
+	{
+		m_pField = nullptr;
+	}
+
+	//終了処理
 	CScene::Uninit();
 }
 

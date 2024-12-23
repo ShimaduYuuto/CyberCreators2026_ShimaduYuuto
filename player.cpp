@@ -16,6 +16,7 @@
 #include "state_player_knockback.h"
 #include "battleareamanager.h"
 #include "barriermanager.h"
+#include "state_player_death.h"
 
 //静的メンバの初期化
 const float CPlayer::DAMAGE_IMPULSE = 10.0f;
@@ -147,6 +148,34 @@ void CPlayer::Update()
 		}
 	}
 
+	//各ギミックとの当たり判定
+	for (auto& iter : pGame->GetGimmickManager()->GetList())
+	{
+		//位置の取得
+		D3DXVECTOR3 GimmickPos = iter->GetCollision()->GetPos();
+		D3DXVECTOR3 CharacterPos = GetCollision()->GetPos();
+
+		//距離を計算
+		float fLength = sqrtf((CharacterPos.x - GimmickPos.x) * (CharacterPos.x - GimmickPos.x) + (CharacterPos.z - GimmickPos.z) * (CharacterPos.z - GimmickPos.z));
+		float fTotalRadius = iter->GetCollision()->GetRadius() + GetCollision()->GetRadius();
+		float fHeightLength = CharacterPos.y - GimmickPos.y;
+
+		//高さの距離を絶対値に変更
+		if (fHeightLength < 0.0f) { fHeightLength *= -1.0f; }
+
+		//範囲内の確認
+		if (fLength < fTotalRadius && fHeightLength < fTotalRadius)
+		{
+			//樽の当たらない位置に補正
+			float fAngle = atan2f(GimmickPos.x - CharacterPos.x, GimmickPos.z - CharacterPos.z);//対角線の角度を算出
+
+			//位置の設定
+			SetPos(D3DXVECTOR3(sinf(fAngle + D3DX_PI) * fTotalRadius + GimmickPos.x,
+				GetPos().y,
+				cosf(fAngle + D3DX_PI) * fTotalRadius + GimmickPos.z));
+		}
+	}
+
 	//共通処理の更新
 	CGame_Character::Update();
 }
@@ -222,6 +251,12 @@ D3DXVECTOR3 CPlayer::GravityMove(D3DXVECTOR3 move)
 //============================
 void CPlayer::UpdatePos()
 {
+	//体力がないなら更新しない
+	if (GetLife() <= 0)
+	{
+		return;
+	}
+
 	//パラメータの取得
 	D3DXVECTOR3 pos = CObject::GetPos();	//位置
 
@@ -322,7 +357,7 @@ void CPlayer::SetState(CState_Player* state)
 //============================
 void CPlayer::SetCharacterDeath()
 {
-	Uninit();
+	ChangeState(new CState_Player_Death(this));
 }
 
 //============================

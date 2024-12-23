@@ -110,12 +110,12 @@ void CExplosion::Update()
 					float fAngleXY = atan2f(EnemyLength.x, EnemyLength.y);
 
 					//‚«”ò‚Ñˆ—
-					iter->SetBlowValue(D3DXVECTOR3(
+					/*iter->SetBlowValue(D3DXVECTOR3(
 						sinf(fAngleXZ) * cosf(fAngleXY) * 40.0f,
 						10.0f,
 						cosf(fAngleXZ) * cosf(fAngleXY) * 40.0f));
-					iter->AddMove({ 0.0f, 0.0f,  0.0f });
-					iter->SetDamage(3);
+					iter->SetDamage(3);*/
+					iter->SetBlowDamage(3, fAngleXZ, 100.0f);
 
 				}
 			}

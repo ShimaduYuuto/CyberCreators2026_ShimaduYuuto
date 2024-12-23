@@ -270,10 +270,15 @@ void CPlayerBehavior_Move::Action(CPlayer* player)
 //============================
 //コンストラクタ
 //============================
-CPlayerBehavior_Dash::CPlayerBehavior_Dash(CPlayer* player)
+CPlayerBehavior_Dash::CPlayerBehavior_Dash(CPlayer* player) :
+	m_bFirst(true),
+	m_DashSpeed()
 {
 	//モーションの設定をする予定
 	player->SetMotion(CPlayer::PLAYERMOTION_JUMP);
+	player->SetOnStand(false);		//立っていない状態
+	player->SetEnableGravity(false);//重力を受けない
+	player->GetPos().y += 0.01f;
 }
 
 //============================
@@ -298,21 +303,36 @@ void CPlayerBehavior_Dash::Behavior(CPlayer* player)
 			{
 				if (pGame->GetLockon()->GetTarget() != nullptr)
 				{
-					//ターゲットにダッシュ
+					//ターゲットとの距離を算出
 					D3DXVECTOR3 TagPos = pGame->GetLockon()->GetTarget()->GetPos();
+					D3DXVECTOR3 Length = TagPos - player->GetPos();
+					float fLength = sqrtf((Length.x * Length.x) + (Length.z * Length.z));
+					fLength = D3DXVec3Length(&Length);	//距離を算出
 					float fAngle = atan2f(TagPos.x - player->GetPos().x, TagPos.z - player->GetPos().z);
-					move.x = sinf(fAngle) * DASH_SPEED;
-					move.z = cosf(fAngle) * DASH_SPEED;
 
 					//ロックオンの方に向ける
 					player->SetGoalRot({ 0.0f, fAngle + D3DX_PI, 0.0f });
 
-					//effect
-					CEffect_RunSmoke::Create(player->GetPos());
+					//敵から離れているならダッシュ
+					if (fLength > STOP_LENGYH)
+					{
+						//初めて通るなら速度を算出
+						if (m_bFirst)
+						{
+							//線形補間の値を算出
+							m_DashSpeed = Length * RATIO_LINEAR_INTERPOLATION;
+							m_bFirst = false;
+						}
+						//ターゲットにダッシュ
+						move.x = m_DashSpeed.x;
+						move.y = m_DashSpeed.y;
+						move.z = m_DashSpeed.z;
 
-					D3DXVECTOR3 Length = TagPos - player->GetPos();
-					float fLength = sqrtf((Length.x * Length.x) + (Length.z * Length.z));
-
+						//effect
+						CEffect_RunSmoke::Create(player->GetPos());
+					}
+					
+					//止まる距離になったら攻撃
 					if (fLength < STOP_LENGYH)
 					{
 						//移動状態にする
@@ -322,15 +342,9 @@ void CPlayerBehavior_Dash::Behavior(CPlayer* player)
 				
 			}
 		}
-		else
-		{
-			//現在の向きに合わせてダッシュ
-			move.x = sinf(player->GetRot().y + D3DX_PI) * DASH_SPEED;
-			move.z = cosf(player->GetRot().y + D3DX_PI) * DASH_SPEED;
-		}
 
 		//移動量の設定
-		player->SetMove({ move.x , player->GetMove().y, move.z });
+		player->SetMove({ move.x , move.y, move.z });
 	}
 	else if(CManager::GetInstance()->GetKeyboard()->GetRerease(DIK_LSHIFT)) //離したらダッシュを終了
 	{
@@ -604,7 +618,12 @@ void CPlayerBehavior_NormalAttack001::Cancel(CPlayer* player)
 //============================
 //コンストラクタ
 //============================
-CPlayerBehavior_NormalAttack002::CPlayerBehavior_NormalAttack002(CPlayer* player) : m_bChargeEnd(false),m_fChargeRate(0.5f), m_fChargeAcceleration(0.0f)
+CPlayerBehavior_NormalAttack002::CPlayerBehavior_NormalAttack002(CPlayer* player) : 
+	m_bChargeEnd(false),
+	m_fChargeRate(0.5f), 
+	m_fChargeAcceleration(0.0f),
+	m_nCancelCount(0),
+	m_pEffect(nullptr)
 {
 	player->SetMotion(player->PLAYERMOTION_ATTACKCHARGE);
 
@@ -614,6 +633,19 @@ CPlayerBehavior_NormalAttack002::CPlayerBehavior_NormalAttack002(CPlayer* player
 	SetCancelTime(25);
 	SetAttackLength(ATTACK_LENGTH);
 	SetOffsetPos(POS_OFFSET);
+}
+
+//============================
+//デストラクタ
+//============================
+CPlayerBehavior_NormalAttack002::~CPlayerBehavior_NormalAttack002()
+{
+	//エフェクトの破棄
+	if (m_pEffect != nullptr)
+	{
+		m_pEffect->Uninit();
+		m_pEffect = nullptr;
+	}
 }
 
 //============================
@@ -627,6 +659,12 @@ void CPlayerBehavior_NormalAttack002::Behavior(CPlayer* player)
 		if (m_nCancelCount < ACCEPT_CANCELTIME)
 		{
 			m_nCancelCount++;
+
+			//チャージ攻撃に遷移する時間まで溜めたらエフェクトを生成
+			if (m_nCancelCount >= ACCEPT_CANCELTIME)
+			{
+				m_pEffect = CEffect_Charge::Create(player->GetCollision()->GetPos());
+			}
 		}
 
 		//マックスまでチャージ
@@ -637,7 +675,7 @@ void CPlayerBehavior_NormalAttack002::Behavior(CPlayer* player)
 		}
 
 		//攻撃ボタンを離したら攻撃
-		if (CManager::GetInstance()->GetMouse()->GetRerease(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_LEFT))
+		if (CManager::GetInstance()->GetMouse()->GetRerease(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_LEFT) || m_fChargeRate >= MAX_RATE)
 		{
 			//キャンセル時間後に離したらチャージ
 			if (m_nCancelCount >= ACCEPT_CANCELTIME)
@@ -656,6 +694,13 @@ void CPlayerBehavior_NormalAttack002::Behavior(CPlayer* player)
 			{
 				//攻撃モーション
 				player->SetMotion(10);
+			}
+
+			//エフェクトの破棄
+			if (m_pEffect != nullptr)
+			{
+				m_pEffect->Uninit();
+				m_pEffect = nullptr;
 			}
 
 			//チャージが終わったか
@@ -925,8 +970,22 @@ void CPlayerBehavior_DashAttack000::Cancel(CPlayer* player)
 		{
 			if (pGame->GetLockon()->GetTarget() != nullptr)
 			{
-				//次の攻撃の生成
-				SetNextBehavior(new CPlayerBehavior_DashAttack001(player));
+				//ターゲットにダッシュ
+				D3DXVECTOR3 TagPos = pGame->GetLockon()->GetTarget()->GetPos();
+				D3DXVECTOR3 Length = TagPos - player->GetPos();
+				float fLength = sqrtf((Length.x * Length.x) + (Length.z * Length.z));
+				fLength = D3DXVec3Length(&Length);	//距離を算出
+
+				//攻撃の範囲外ならダッシュする
+				if (fLength > CPlayerBehavior_Dash::STOP_LENGYH)
+				{
+					SetNextBehavior(new CPlayerBehavior_Dash(player));
+				}
+				else
+				{
+					//次の攻撃の生成
+					SetNextBehavior(new CPlayerBehavior_DashAttack001(player));
+				}
 			}
 		}
 	}
@@ -968,8 +1027,22 @@ void CPlayerBehavior_DashAttack001::Cancel(CPlayer* player)
 		{
 			if (pGame->GetLockon()->GetTarget() != nullptr)
 			{
-				//次の攻撃の生成
-				SetNextBehavior(new CPlayerBehavior_DashAttack000(player));
+				//ターゲットにダッシュ
+				D3DXVECTOR3 TagPos = pGame->GetLockon()->GetTarget()->GetPos();
+				D3DXVECTOR3 Length = TagPos - player->GetPos();
+				float fLength = sqrtf((Length.x * Length.x) + (Length.z * Length.z));
+				fLength = D3DXVec3Length(&Length);	//距離を算出
+
+				//攻撃の範囲外ならダッシュする
+				if (fLength > CPlayerBehavior_Dash::STOP_LENGYH)
+				{
+					SetNextBehavior(new CPlayerBehavior_Dash(player));
+				}
+				else
+				{
+					//次の攻撃の生成
+					SetNextBehavior(new CPlayerBehavior_DashAttack000(player));
+				}
 			}
 		}
 	}

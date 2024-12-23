@@ -17,6 +17,10 @@
 #include "sky.h"
 #include "battleareamanager.h"
 #include "model.h"
+#include "cleartime.h"
+
+//定数
+const D3DXVECTOR3 CGame::TIME_POS = { SCREEN_WIDTH * 0.4f, 50.0f, 0.0f };
 
 //============================
 //ゲームのコンストラクタ
@@ -33,7 +37,9 @@ CGame::CGame() :
 	m_bDirectioning(false),
 	m_pBarrierManager(nullptr),
 	m_pEnemyBulletManager(nullptr),
-	m_pDirection(nullptr)
+	m_pDirection(nullptr),
+	m_bBattle(false),
+	m_bGameOver(false)
 {
 	
 }
@@ -109,6 +115,11 @@ HRESULT CGame::Init()
 	//ステージに配置するオブジェクト
 	CSky::Create();
 	ModelLoad();
+
+	//クリアタイムの初期化
+	CClearTime::GetInstance()->ResetTime();
+	CClearTime::GetInstance()->SetPos(TIME_POS);
+	CClearTime::GetInstance()->Init(); 
 
 	//フォグの設定
 	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
@@ -200,6 +211,12 @@ void CGame::Update()
 	//時間の更新
 	m_pTime->Update();
 
+	//戦闘中はクリア時間を加算
+	if (m_bBattle && !m_bDirectioning)
+	{
+		CClearTime::GetInstance()->AddTime(1.0f / 60.0f);
+	}
+
 	//エリアマネージャー更新
 	CBattleAreaManager::GetInstance()->Update();
 
@@ -247,10 +264,19 @@ void CGame::Update()
 	if (CManager::GetInstance()->GetFade()->GetEnd())
 	{
 		//エンターで画面遷移
-		if (pManager->GetKeyboard()->GetTrigger(DIK_RETURN) || pManager->GetJoypad()->GetPress(CInputJoypad::JOYKEY_A) || pManager->GetJoypad()->GetPress(CInputJoypad::JOYKEY_START) || m_bClear)
+		if (pManager->GetKeyboard()->GetTrigger(DIK_RETURN) || pManager->GetJoypad()->GetPress(CInputJoypad::JOYKEY_A) || pManager->GetJoypad()->GetPress(CInputJoypad::JOYKEY_START) || m_bClear || m_bGameOver)
 		{
-			//ゲームに画面遷移
-			pManager->GetFade()->SetFade(CScene::MODE_RESULT);
+			//死んでいたらタイトルに遷移
+			if (m_bGameOver)
+			{
+				pManager->GetFade()->SetFade(CScene::MODE_TITLE);
+			}
+			else
+			{
+				//リザルトに画面遷移
+				pManager->GetFade()->SetFade(CScene::MODE_RESULT);
+			}
+			
 		}
 	}
 	

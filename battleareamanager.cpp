@@ -78,14 +78,6 @@ void CBattleAreaManager::Update()
 			Erase(m_pCurrentBattleArea);
 		}
 	}
-
-	//残りのエリアが無くなったらクリア判定にする(一旦)
-	//if (m_BattleAreaList.size() == 0)
-	//{
-	//	//ゲームシーンの取得
-	//	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
-	//	pGame->SetClear(true);
-	//}
 }
 
 //============================
@@ -165,6 +157,10 @@ void CBattleAreaManager::Erase(CBattleArea* area)
 	{
 		delete m_pCurrentBattleArea;
 		m_pCurrentBattleArea = nullptr;
+
+		//ゲームの戦闘判定をfalseに変更
+		CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+		pGame->SetBattle(false);
 	}
 
 	//エリアの情報を削除

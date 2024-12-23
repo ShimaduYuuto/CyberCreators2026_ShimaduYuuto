@@ -43,6 +43,9 @@ public:
 	void Update() override;				//更新
 	void Draw() override;				//描画
 
+	//位置の更新
+	void UpdatePos() override;
+
 	//ダメージの設定
 	bool SetDamage(int damage) override;								//ダメージの設定
 	bool SetDamage(int damage, float rotY) override;					//ダメージの設定

@@ -176,6 +176,7 @@
     <ClInclude Include="billboardeffect.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="character.h" />
+    <ClInclude Include="cleartime.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="collision_view.h" />
     <ClInclude Include="collision_wall.h" />
@@ -184,6 +185,7 @@
     <ClInclude Include="direction_boss.h" />
     <ClInclude Include="direction_boss_destroy.h" />
     <ClInclude Include="effect_brow.h" />
+    <ClInclude Include="effect_charge.h" />
     <ClInclude Include="effect_chargeshot.h" />
     <ClInclude Include="effect_dash.h" />
     <ClInclude Include="effect_death.h" />
@@ -191,6 +193,7 @@
     <ClInclude Include="effect_explosion.h" />
     <ClInclude Include="effect_guard.h" />
     <ClInclude Include="effect_hitattack.h" />
+    <ClInclude Include="effect_justguard.h" />
     <ClInclude Include="effect_repel.h" />
     <ClInclude Include="effect_runsmoke.h" />
     <ClInclude Include="effect_stan.h" />
@@ -234,6 +237,7 @@
     <ClInclude Include="normalattack002.h" />
     <ClInclude Include="normalattack_enemy000.h" />
     <ClInclude Include="normalattack_enemy001.h" />
+    <ClInclude Include="number.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="object2D.h" />
     <ClInclude Include="object3D.h" />
@@ -242,10 +246,13 @@
     <ClInclude Include="objectdome.h" />
     <ClInclude Include="objectmesh.h" />
     <ClInclude Include="objectX.h" />
+    <ClInclude Include="oldpaper.h" />
     <ClInclude Include="orbit.h" />
     <ClInclude Include="particle.h" />
+    <ClInclude Include="particle_charge.h" />
     <ClInclude Include="particle_spawn.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="rank.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="result_bg.h" />
@@ -272,6 +279,7 @@
     <ClInclude Include="state_player.h" />
     <ClInclude Include="state_player_counter.h" />
     <ClInclude Include="state_player_damage.h" />
+    <ClInclude Include="state_player_death.h" />
     <ClInclude Include="state_player_guard.h" />
     <ClInclude Include="state_player_invincible.h" />
     <ClInclude Include="state_player_knockback.h" />
@@ -312,6 +320,7 @@
     <ClCompile Include="billboardeffect.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="character.cpp" />
+    <ClCompile Include="cleartime.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="collision_view.cpp" />
     <ClCompile Include="collision_wall.cpp" />
@@ -320,12 +329,14 @@
     <ClCompile Include="direction_boss.cpp" />
     <ClCompile Include="direction_boss_destroy.cpp" />
     <ClCompile Include="effect_brow.cpp" />
+    <ClCompile Include="effect_charge.cpp" />
     <ClCompile Include="effect_chargeshot.cpp" />
     <ClCompile Include="effect_death.cpp" />
     <ClCompile Include="effect_death_boss.cpp" />
     <ClCompile Include="effect_explosion.cpp" />
     <ClCompile Include="effect_guard.cpp" />
     <ClCompile Include="effect_hitattack.cpp" />
+    <ClCompile Include="effect_justguard.cpp" />
     <ClCompile Include="effect_repel.cpp" />
     <ClCompile Include="effect_runsmoke.cpp" />
     <ClCompile Include="effect_stan.cpp" />
@@ -368,6 +379,7 @@
     <ClCompile Include="normalattack002.cpp" />
     <ClCompile Include="normalattack_enemy.cpp" />
     <ClCompile Include="normalattack_enemy001.cpp" />
+    <ClCompile Include="number.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="object2D.cpp" />
     <ClCompile Include="object3D.cpp" />
@@ -376,10 +388,12 @@
     <ClCompile Include="objectdome.cpp" />
     <ClCompile Include="objectmesh.cpp" />
     <ClCompile Include="objectX.cpp" />
+    <ClCompile Include="oldpaper.cpp" />
     <ClCompile Include="orbit.cpp" />
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="particle_spawn.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="rank.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="result_bg.cpp" />
@@ -396,6 +410,7 @@
     <ClCompile Include="state_enemy000.cpp" />
     <ClCompile Include="state_enemy002.cpp" />
     <ClCompile Include="state_enemy002_alterego.cpp" />
+    <ClCompile Include="state_enemy003.cpp" />
     <ClCompile Include="state_enemy_blow.cpp" />
     <ClCompile Include="state_enemy_damage.cpp" />
     <ClCompile Include="state_enemy_normal.cpp" />
@@ -404,6 +419,7 @@
     <ClCompile Include="state_player.cpp" />
     <ClCompile Include="state_player_counter.cpp" />
     <ClCompile Include="state_player_damage.cpp" />
+    <ClCompile Include="state_player_death.cpp" />
     <ClCompile Include="state_player_guard.cpp" />
     <ClCompile Include="state_player_knockback.cpp" />
     <ClCompile Include="state_player_normal.cpp" />

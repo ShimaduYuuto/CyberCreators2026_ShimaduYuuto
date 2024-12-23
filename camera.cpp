@@ -51,7 +51,7 @@ HRESULT CCamera::Init()
 	m_Viewport.MinZ = 0.0f;
 	m_fShakeFrameCount = 0.0f;
 	m_rot.y = atan2f(m_posR.x - m_posV.x, m_posR.z - m_posV.z);
-	m_rot.x = 0.0f;
+	m_rot.x = D3DX_PI * -0.1f;
 	m_fLength = LENGTH_NORMAL;
 
 	return S_OK;
@@ -107,7 +107,7 @@ void CCamera::Update()
 
 				//カメラに反映
 				m_rot.y += MouseMove.x / 100.0f;
-				m_rot.x -= MouseMove.y / 500.0f;
+				//m_rot.x -= MouseMove.y / 500.0f;
 			}
 
 			//向きの補正
@@ -191,6 +191,8 @@ void CCamera::Update()
 		break;
 
 	case CScene::MODE_RESULT:	//リザルト
+		m_posV = D3DXVECTOR3(0.0f, 100.0f, -300.0f);		//視点
+		m_posR = D3DXVECTOR3(0.0f, 20.0f, 0.0f);			//注視点
 		break;
 	};
 }

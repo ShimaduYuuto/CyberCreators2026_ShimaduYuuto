@@ -113,85 +113,97 @@ void CDebugProc::Draw()
 //==========================================================
 void CDebugProc::Print(const char *fmt, ...)
 {
-	//ローカル変数宣言
+	////ローカル変数宣言
+	//va_list args;
+	//std::string aString;
+	//std::string aSaveString;
+	//int nLength = 0;
+	//int nStopLength = 0;
+
+	////文字列の代入
+	//aString = fmt;
+
+	//va_start(args, fmt);
+
+	//for (char *p = &aString[0]; *p != '\0'; p++)
+	//{
+	//	if (*p == '%')
+	//	{//確認文字がある場合
+	//		p++;	//確認文字まで進める
+
+	//		switch (*p)
+	//		{
+	//		case 'd':	//数字
+	//			sprintf(&aSaveString[0], "%d", va_arg(args, int));
+
+	//			//文字列の長さを取得
+	//			nLength = (int)strlen(&aSaveString[0]);
+	//			break;
+	//		case 'f':	//小数
+	//			sprintf(&aSaveString[0], "%f", va_arg(args, double));
+
+	//			//文字列の長さを取得
+	//			nLength = (int)strlen(&aSaveString[0]);
+
+	//			//小数点以下の文字目まで確認
+	//			for (int nCntlength = 0; aSaveString[nCntlength] != '\0'; nCntlength++)
+	//			{
+	//				if (aSaveString[nCntlength] == '.')
+	//				{//小数点があった場合
+
+	//				 //小数点以下の桁数を求める
+	//					int nMin = (int)strlen(&aSaveString[nCntlength + 1]);
+
+	//					//小数点より先の文字数と指定した値までの差分を求める
+	//					nMin -= MAX_FLOATNUM;
+
+	//					//文字列の長さを小数点以下第二位までに補正
+	//					nLength -= nMin;
+	//				}
+	//			}
+
+	//			break;
+	//		case 'c':	//文字
+	//			sprintf(&aSaveString[0], "%c", va_arg(args, char));
+
+	//			//文字列の長さを取得
+	//			nLength = (int)strlen(&aSaveString[0]);
+	//			break;
+	//		case 's':	//文字列
+	//			sprintf(&aSaveString[0], "%s", va_arg(args, const char*));
+	//			
+	//			//文字列の長さを取得
+	//			nLength = (int)strlen(&aSaveString[0]);
+	//			break;
+	//		}
+
+	//		nStopLength = (int)strlen(p) + 1;
+	//		//メモリ内の確認文字より後ろの文字列をずらす
+	//		memmove(p + nLength - 2, p, nStopLength);
+
+	//		p--;	//ポインタを%まで戻す
+
+	//				//可変引数を指定された場所に挿入
+	//		memcpy(p, &aSaveString[0], nLength);
+	//	}
+	//}
+
+	//va_end(args);
+
+	////文字列を連結する
+	//m_aStrDebug += aString;
+
+	// ローカル変数宣言
 	va_list args;
-	std::string aString;
-	std::string aSaveString;
-	int nLength = 0;
-	int nStopLength = 0;
-
-	//文字列の代入
-	aString = fmt;
-
 	va_start(args, fmt);
 
-	for (char *p = &aString[0]; *p != '\0'; p++)
-	{
-		if (*p == '%')
-		{//確認文字がある場合
-			p++;	//確認文字まで進める
-
-			switch (*p)
-			{
-			case 'd':	//数字
-				sprintf(&aSaveString[0], "%d", va_arg(args, int));
-
-				//文字列の長さを取得
-				nLength = (int)strlen(&aSaveString[0]);
-				break;
-			case 'f':	//小数
-				sprintf(&aSaveString[0], "%f", va_arg(args, double));
-
-				//文字列の長さを取得
-				nLength = (int)strlen(&aSaveString[0]);
-
-				//小数点以下の文字目まで確認
-				for (int nCntlength = 0; aSaveString[nCntlength] != '\0'; nCntlength++)
-				{
-					if (aSaveString[nCntlength] == '.')
-					{//小数点があった場合
-
-					 //小数点以下の桁数を求める
-						int nMin = (int)strlen(&aSaveString[nCntlength + 1]);
-
-						//小数点より先の文字数と指定した値までの差分を求める
-						nMin -= MAX_FLOATNUM;
-
-						//文字列の長さを小数点以下第二位までに補正
-						nLength -= nMin;
-					}
-				}
-
-				break;
-			case 'c':	//文字
-				sprintf(&aSaveString[0], "%c", va_arg(args, char));
-
-				//文字列の長さを取得
-				nLength = (int)strlen(&aSaveString[0]);
-				break;
-			case 's':	//文字列
-				sprintf(&aSaveString[0], "%s", va_arg(args, const char*));
-				
-				//文字列の長さを取得
-				nLength = (int)strlen(&aSaveString[0]);
-				break;
-			}
-
-			nStopLength = (int)strlen(p) + 1;
-			//メモリ内の確認文字より後ろの文字列をずらす
-			memmove(p + nLength - 2, p, nStopLength);
-
-			p--;	//ポインタを%まで戻す
-
-					//可変引数を指定された場所に挿入
-			memcpy(p, &aSaveString[0], nLength);
-		}
-	}
-
+	// 出力用バッファを確保
+	char buffer[1024];
+	vsnprintf(buffer, sizeof(buffer), fmt, args);
 	va_end(args);
 
-	//文字列を連結する
-	m_aStrDebug += aString;
+	// デバッグ文字列に追加
+	m_aStrDebug += buffer;
 }
 
 //==========================================================
@@ -199,7 +211,7 @@ void CDebugProc::Print(const char *fmt, ...)
 //==========================================================
 const TCHAR* CDebugProc::String(const TCHAR* format, ...)
 {
-	static TCHAR strBuffer_g[1024];
+	/*static TCHAR strBuffer_g[1024];
 	va_list args;
 	va_start(args, format);
 
@@ -212,7 +224,23 @@ const TCHAR* CDebugProc::String(const TCHAR* format, ...)
 	_vstprintf(strBuffer_g, format, args);
 	return strBuffer_g;
 
-	return nullptr;
+	return nullptr;*/
+
+	static TCHAR strBuffer_g[1024];
+	va_list args;
+	va_start(args, format);
+
+#if _DEBUG
+	int len = _vsctprintf(format, args);
+	if (len >= static_cast<int>(std::size(strBuffer_g))) {
+		_ASSERT(0); // サイズオーバーチェック
+	}
+#endif
+
+	_vstprintf(strBuffer_g, format, args);
+	va_end(args);
+
+	return strBuffer_g;
 }
 
 //==========================================================

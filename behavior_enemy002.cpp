@@ -421,8 +421,6 @@ CEnemyAction_Direction_Destroy::CEnemyAction_Direction_Destroy(CEnemy* enemy) :
 
 	CEnemy002* pEnemy002 = (CEnemy002*)enemy;
 	pEnemy002->SetMaterialized(true);
-	pEnemy002->SetEnableGravity(false);
-	pEnemy002->SetOnStand(false);
 	pEnemy002->SetPos(pEnemy002->GetPos() + D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 
 	//エフェクトの生成

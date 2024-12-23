@@ -8,6 +8,7 @@
 //ヘッダーのインクルード
 #include "lockonmark.h"
 #include "manager.h"
+#include "game.h"
 
 //============================
 //コンストラクタ
@@ -60,6 +61,16 @@ void CLockonMark::Update()
 //============================
 void CLockonMark::Draw()
 {
+	//ゲームシーンの取得
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+
+	//演出中なら描画しない
+	if (pGame->GetDirectioning())
+	{
+		return;
+	}
+	
+
 	//描画用のローカル変数宣言
 	LPDIRECT3DDEVICE9 pDevice;		//デバイスの取得用
 	

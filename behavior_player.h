@@ -12,6 +12,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "impactrange.h"
+#include "effect_charge.h"
 
 //プレイヤーの前方宣言
 class CPlayer;
@@ -91,6 +92,7 @@ public:
 	//定数
 	static constexpr float DASH_SPEED{ 14.0f };		//ダッシュの速度
 	static constexpr float STOP_LENGYH{ 50.0f };	//止まる距離
+	static constexpr float RATIO_LINEAR_INTERPOLATION{ 0.08f };	//線形補間の割合
 
 	//メンバ関数
 	CPlayerBehavior_Dash() {}						//コンストラクタ
@@ -98,6 +100,10 @@ public:
 
 	//行動
 	void Behavior(CPlayer* player) override;
+
+private:
+	D3DXVECTOR3 m_DashSpeed;	//ダッシュの速度
+	bool m_bFirst;				//初めて通ったか
 };
 
 //==========================
@@ -229,15 +235,14 @@ class CPlayerBehavior_NormalAttack002 : public CPlayerBehavior_NormalAttack
 public:
 
 	//定数
-	static constexpr float MAX_RATE{ 200.0f };			//最大倍率
+	static constexpr float MAX_RATE{ 100.0f };			//最大倍率
 	static constexpr int ACCEPT_CANCELTIME{ 10 };		//キャンセルを受け付ける時間
-	static constexpr float ACCELERATION_VALUE{ 0.03f };	//1フレームに加速度に加算する値
+	static constexpr float ACCELERATION_VALUE{ 0.1f };	//1フレームに加速度に加算する値
 
 	//メンバ関数
-	CPlayerBehavior_NormalAttack002() {};						//コンストラクタ
 	CPlayerBehavior_NormalAttack002(CPlayer* player);			//コンストラクタ
 
-	~CPlayerBehavior_NormalAttack002() override {}				//デストラクタ
+	~CPlayerBehavior_NormalAttack002() override;				//デストラクタ
 
 	//行動
 	void Behavior(CPlayer* player) override;
@@ -252,6 +257,7 @@ private:
 	float m_fChargeRate;			//チャージの倍率
 	int m_nCancelCount;				//キャンセルのカウント
 	float m_fChargeAcceleration;	//チャージの加速度
+	CEffect_Charge* m_pEffect;		//チャージエフェクトのポインタ
 };
 
 //==========================
@@ -274,7 +280,7 @@ public:
 		SetEndTime(END_TIME);				//終了時間
 		SetCollisionTime(START_COLLISION);	//当たり判定
 	}
-	~CPlayerBehavior_Arial() override {}			//デストラクタ
+	~CPlayerBehavior_Arial() override {}	//デストラクタ
 
 	//行動
 	void Behavior(CPlayer* player) override {};

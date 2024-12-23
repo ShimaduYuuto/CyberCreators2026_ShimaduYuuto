@@ -83,7 +83,7 @@ void CBattleArea::Update()
 	if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
 	{
 		//プレイヤーがエリアに入っているかを確認
-		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+		CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 		D3DXVECTOR3 PlayerPos = pGame->GetGamePlayer()->GetPos();	//プレイヤー位置
 		float fLength = sqrtf((PlayerPos.x - m_Pos.x) * (PlayerPos.x - m_Pos.x) + (PlayerPos.z - m_Pos.z) * (PlayerPos.z - m_Pos.z));	//xz平面の距離を算出
 
@@ -99,6 +99,9 @@ void CBattleArea::Update()
 			//バトルエリアに入った
 			m_bEnteredArea = true;
 			CBattleAreaManager::GetInstance()->SetCurrentBattleArea(this);	//現在のエリアとして登録
+
+			//ゲームの戦闘判定をfalseに変更
+			pGame->SetBattle(true);
 
 			//エネミーの生成
 			SpawnEnemy();

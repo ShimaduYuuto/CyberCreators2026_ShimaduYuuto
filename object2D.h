@@ -35,9 +35,10 @@ public:
 	static CObject2D* Create();				//Object2Dの生成
 
 	//パラメータ関連
-	void SetRot(D3DXVECTOR3 rot) { m_polygon.rot = rot; }		//向きを設定
+	void SetPos(D3DXVECTOR3 pos) override;						//位置の設定
+	void SetRot(D3DXVECTOR3 rot);								//向きを設定
 	D3DXVECTOR3& GetRot() { return m_polygon.rot; }				//向きを取得
-	void SetSize(D3DXVECTOR3 size) { m_polygon.size = size; }	//サイズの設定
+	void SetSize(D3DXVECTOR3 size);								//サイズの設定
 	D3DXVECTOR3& GetSize() { return m_polygon.size; }			//サイズの取得
 	void SetMove(D3DXVECTOR3 move) { m_polygon.move = move; }	//移動量の設定
 	D3DXVECTOR3& GetMove() { return m_polygon.move; }			//移動量の取得
@@ -45,6 +46,9 @@ public:
 	void SetTextureUV(float u1, float u2, float v1, float v2);	//テクスチャの座標設定
 
 private:
+
+	void UpdateVertex();	//頂点情報に反映する
+
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;			//頂点バッファ
 	Polygon m_polygon;							//ポリゴンの情報の構造体
 };

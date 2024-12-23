@@ -115,3 +115,30 @@ bool CEnemy003::SetDamage(int damage, float rotY)
 
 	return true;
 }
+
+//============================
+//状態のリセット
+//============================
+void CEnemy003::StateReset()
+{
+	//通常の状態に戻す
+	ChangeState(new CState_Enemy003_Normal(this));
+	SetEnableGravity(true);
+	m_bAttacking = false;
+}
+
+//============================
+//貼り付け状態に変更
+//============================
+void CEnemy003::ChangeStickState()
+{
+	ChangeState(new CState_Enemy003_Stick(this));
+}
+
+//============================
+//スタン状態に変更
+//============================
+void CEnemy003::ChangeStanState()
+{
+	ChangeState(new CState_Enemy003_Stan(this));
+}

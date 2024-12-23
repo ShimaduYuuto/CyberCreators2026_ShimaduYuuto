@@ -11,15 +11,18 @@
 #include "state_player_normal.h"
 #include "behavior_player.h"
 #include "effect_guard.h"
+#include "effect_justguard.h"
 
 //====================================
 //コンストラクタ
 //====================================
 CState_Player_Guard::CState_Player_Guard(CPlayer* player) :
 	KnockBackMove(), 
-	m_bStiffening(false), 
+	m_bStiffening(true), 
 	m_nStiffnessCount(0),
-	m_pEffect(nullptr)
+	m_pEffect(nullptr),
+	m_bJustGuard(false),
+	m_nFirstStiffnessCount(0)
 {
 	SetBehavior(new CPlayerBehavior_Guard(player));							//行動の設定
 	m_pEffect = CEffect_Guard::Create(&player->GetCollision()->GetPos());	//エフェクトの取得
@@ -58,8 +61,31 @@ void CState_Player_Guard::UpdateBehavior(CPlayer* player)
 //====================================
 void CState_Player_Guard::UpdateState(CPlayer* player)
 {
+	//発動硬直の更新
+	UpdateFirstStiffness();
+
 	//硬直時の更新
 	UpdateStiffness(player);
+}
+
+//====================================
+//発動硬直時の更新
+//====================================
+void CState_Player_Guard::UpdateFirstStiffness()
+{
+	//硬直時間を過ぎていたら抜ける
+	if (m_nFirstStiffnessCount > TIME_FIRST_STIFFNESS)
+	{
+		return;
+	}
+
+	m_nFirstStiffnessCount++;
+
+	//発動硬直時間を過ぎたら硬直をやめる
+	if (m_nFirstStiffnessCount > TIME_FIRST_STIFFNESS)
+	{
+		m_bStiffening = false;
+	}
 }
 
 //====================================
@@ -97,9 +123,25 @@ void CState_Player_Guard::UpdateStiffness(CPlayer* player)
 //========================
 bool CState_Player_Guard::SetDamage(CPlayer* player, int damage)
 {
+	//体力がないなら更新しない
+	if (player->GetLife() <= 0)
+	{
+		return false;
+	}
+
 	//死亡フラグが立っていたら抜ける
 	if (player->GetDeath())
 	{
+		return true;
+	}
+
+	//ジャストガードのフレーム内でガードしたら発動硬直をなくす
+	if (m_nFirstStiffnessCount <= TIME_JUSTGUARD)
+	{
+		//フラグを立てて硬直をなくす
+		m_bJustGuard = true;
+		m_bStiffening = false;
+		CEffect_JustGuard::Create(player->GetCollision()->GetPos());
 		return true;
 	}
 

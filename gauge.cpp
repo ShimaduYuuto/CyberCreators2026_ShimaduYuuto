@@ -36,7 +36,7 @@ HRESULT CGauge::Init()
 
 	//ÉQÅ[ÉWÇÃê›íË
 	m_fMaxGauge = 100.0f;
-	m_fNowGauge = 100.0f;
+	m_fNowGauge = 90.0f;
 	return S_OK;
 }
 

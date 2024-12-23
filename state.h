@@ -10,7 +10,7 @@
 
 //ヘッダーのインクルード
 #include "main.h"
-#include "character.h"
+#include "game_character.h"
 
 //ステートクラス(ステートパターン)
 class CState
@@ -22,8 +22,8 @@ public:
 	virtual ~CState() {};					//デストラクタ
 
 	//状態ごとの更新
-	virtual void Motion(CCharacter* character);		//モーション
-	virtual void UpdateState() {};					//状態の更新
+	virtual void Motion(CGame_Character* character);		//モーション
+	virtual void UpdateState() {};							//状態の更新
 
 	//終了時間
 	void SetEndTime(float time) { m_fEndTime = time; }	//設定
@@ -33,7 +33,11 @@ public:
 	void SetStateCount(float count) { m_fStateCount = count; }	//設定
 	float GetStateCount() { return m_fStateCount; }				//取得
 
+	//ギミックの当たり判定の更新
+	virtual void UpdateGimmickCollison(CGame_Character* character);
+
 private:
+
 	float m_fStateCount;	//状態カウント
 	float m_fEndTime;		//終了時間
 };

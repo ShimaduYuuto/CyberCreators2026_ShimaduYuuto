@@ -118,30 +118,11 @@ void CObject2D::Update()
 	//移動量の加算
 	Pos += m_polygon.move;
 
-	VERTEX_2D* pVtx; //追加情報のポインタ
-
-	//頂点バッファをロックし、頂点情報へのポインタを取得
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-
-	//ローカル変数で長さを計算
-	float fLength = sqrtf(m_polygon.size.x * m_polygon.size.x + m_polygon.size.y * m_polygon.size.y) * 0.5f; //対角線の長さを算出する
-	float fAngle = atan2f(m_polygon.size.x, m_polygon.size.y);//対角線の角度を算出
-
-	//頂点情報の更新
-	pVtx[0].pos.x = Pos.x + sinf(m_polygon.rot.z + -(D3DX_PI - fAngle)) * fLength;
-	pVtx[0].pos.y = Pos.y + cosf(m_polygon.rot.z + -(D3DX_PI - fAngle)) * fLength;
-	pVtx[1].pos.x = Pos.x + sinf(m_polygon.rot.z + (D3DX_PI - fAngle)) * fLength;
-	pVtx[1].pos.y = Pos.y + cosf(m_polygon.rot.z + (D3DX_PI - fAngle)) * fLength;
-	pVtx[2].pos.x = Pos.x + sinf(m_polygon.rot.z + -fAngle) * fLength;
-	pVtx[2].pos.y = Pos.y + cosf(m_polygon.rot.z + -fAngle) * fLength;
-	pVtx[3].pos.x = Pos.x + sinf(m_polygon.rot.z + fAngle) * fLength;
-	pVtx[3].pos.y = Pos.y + cosf(m_polygon.rot.z + fAngle) * fLength;
-
-	//頂点バッファをアンロックする
-	m_pVtxBuff->Unlock();
-
 	//位置の設定
 	SetPos(Pos);
+
+	//頂点情報の更新
+	UpdateVertex();
 }
 
 //============================
@@ -177,7 +158,7 @@ void CObject2D::Update(float max, float value)
 	m_pVtxBuff->Unlock();
 
 	//位置の設定
-	SetPos(Pos);
+	CObject::SetPos(Pos);
 }
 
 //============================
@@ -297,6 +278,12 @@ void CObject2D::SetColor(D3DXCOLOR color)
 //============================
 void CObject2D::SetTextureUV(float u1, float u2, float v1, float v2)
 {
+	//中身がないなら抜ける
+	if (m_pVtxBuff == nullptr)
+	{
+		return;
+	}
+
 	VERTEX_2D* pVtx; //追加情報のポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
@@ -310,4 +297,80 @@ void CObject2D::SetTextureUV(float u1, float u2, float v1, float v2)
 
 	//頂点バッファをアンロックする
 	m_pVtxBuff->Unlock();
+}
+
+//============================
+//頂点情報の更新
+//============================
+void CObject2D::UpdateVertex()
+{
+	//位置の取得
+	D3DXVECTOR3 Pos = GetPos();
+
+	VERTEX_2D* pVtx; //追加情報のポインタ
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	//ローカル変数で長さを計算
+	float fLength = sqrtf(m_polygon.size.x * m_polygon.size.x + m_polygon.size.y * m_polygon.size.y) * 0.5f; //対角線の長さを算出する
+	float fAngle = atan2f(m_polygon.size.x, m_polygon.size.y);//対角線の角度を算出
+
+	//頂点情報の更新
+	pVtx[0].pos.x = Pos.x + sinf(m_polygon.rot.z + -(D3DX_PI - fAngle)) * fLength;
+	pVtx[0].pos.y = Pos.y + cosf(m_polygon.rot.z + -(D3DX_PI - fAngle)) * fLength;
+	pVtx[1].pos.x = Pos.x + sinf(m_polygon.rot.z + (D3DX_PI - fAngle)) * fLength;
+	pVtx[1].pos.y = Pos.y + cosf(m_polygon.rot.z + (D3DX_PI - fAngle)) * fLength;
+	pVtx[2].pos.x = Pos.x + sinf(m_polygon.rot.z + -fAngle) * fLength;
+	pVtx[2].pos.y = Pos.y + cosf(m_polygon.rot.z + -fAngle) * fLength;
+	pVtx[3].pos.x = Pos.x + sinf(m_polygon.rot.z + fAngle) * fLength;
+	pVtx[3].pos.y = Pos.y + cosf(m_polygon.rot.z + fAngle) * fLength;
+
+	//頂点バッファをアンロックする
+	m_pVtxBuff->Unlock();
+}
+
+//============================
+//向きの設定
+//============================
+void CObject2D::SetRot(D3DXVECTOR3 rot) 
+{ 
+	//向きを設定
+	m_polygon.rot = rot; 
+
+	//頂点の更新
+	if (m_pVtxBuff != nullptr)
+	{
+		UpdateVertex();
+	}
+}		
+
+//============================
+//向きの設定
+//============================
+void CObject2D::SetSize(D3DXVECTOR3 size) 
+{ 
+	//サイズの設定
+	m_polygon.size = size; 
+
+	//頂点の更新
+	if (m_pVtxBuff != nullptr)
+	{
+		UpdateVertex();
+	}
+}
+
+//============================
+//位置の設定
+//============================
+void CObject2D::SetPos(D3DXVECTOR3 pos)
+{
+	//位置の設定
+	CObject::SetPos(pos);
+
+	//頂点の更新
+	if (m_pVtxBuff != nullptr)
+	{
+		UpdateVertex();
+	}
 }

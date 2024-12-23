@@ -28,6 +28,9 @@ class CGame : public CScene
 {
 public:
 
+	//定数
+	static const D3DXVECTOR3 TIME_POS;	//時間の位置
+
 	//メンバ関数
 	CGame();						//コンストラクタ
 	~CGame() override;				//デストラクタ
@@ -50,7 +53,13 @@ public:
 	void SetLockon(bool lockon);																								//ロックオンの設定
 
 	//クリア判定
-	void SetClear(bool crear) { m_bClear = crear; }	//設定
+	void SetClear(bool clear) { m_bClear = clear; }	//設定
+
+	//戦闘判定
+	void SetBattle(bool battle) { m_bBattle = battle; }	//設定
+
+	//ゲームオーバー判定
+	void SetGameOver(bool gameover) { m_bGameOver = gameover; }	//設定
 
 	//演出
 	void SetDirection(CDirection::DIRECTIONTYPE type);	//演出の種類を設定
@@ -72,6 +81,8 @@ private:
 
 	//判定
 	bool m_bClear;			//クリア判定
+	bool m_bBattle;			//戦闘中か
+	bool m_bGameOver;		//ゲームオーバー判定
 
 	//演出
 	bool m_bDirectioning;		//演出中か

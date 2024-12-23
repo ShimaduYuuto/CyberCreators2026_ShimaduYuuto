@@ -54,7 +54,10 @@ CEnemy::~CEnemy()
 		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
 
 		//マネージャーから削除
-		pGame->GetEnemyManager()->Erase(this);
+		if (pGame->GetEnemyManager() != nullptr)
+		{
+			pGame->GetEnemyManager()->Erase(this);
+		}
 
 		if (pGame->GetLockon() != nullptr)
 		{
@@ -225,6 +228,12 @@ bool CEnemy::SetBlowDamage(int damage, float rotY)
 	SetOnStand(false);
 	CEnemy::SetDamage(damage, rotY);
 
+	//体力がなかったら関数を抜ける
+	if (GetLife() <= 0)
+	{
+		return true;
+	}
+
 	//吹き飛び状態に変更
 	ChangeState(new CState_Enemy_Blow(this));
 
@@ -240,11 +249,17 @@ bool CEnemy::SetBlowDamage(int damage, float rotY)
 bool CEnemy::SetBlowDamage(int damage, float rotY, float value)
 {
 	//浮かせながら吹き飛ばす
-	AddMove(D3DXVECTOR3(0.0f, 7.0f, 0.0f));
+	AddMove(D3DXVECTOR3(0.0f, 5.0f, 0.0f));
 	D3DXVECTOR3 Blow = { sinf(rotY + D3DX_PI) * value, 0.0f, cosf(rotY + D3DX_PI) * value };
 	SetBlowValue(Blow);
 	SetOnStand(false);
 	SetDamage(damage, rotY);
+
+	//体力がなかったら関数を抜ける
+	if (GetLife() <= 0)
+	{
+		return true;
+	}
 
 	//吹き飛び状態に変更
 	ChangeState(new CState_Enemy_Blow(this));

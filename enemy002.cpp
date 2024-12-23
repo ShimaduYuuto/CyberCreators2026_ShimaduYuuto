@@ -82,6 +82,20 @@ void CEnemy002::Draw()
 }
 
 //============================
+//位置の更新
+//============================
+void CEnemy002::UpdatePos()
+{
+	//体力が残っているなら位置を更新
+	if (GetLife() <= 0)
+	{
+		return;
+	}
+
+	CGame_Character::UpdatePos();
+}
+
+//============================
 //ダメージの設定
 //============================
 bool CEnemy002::SetDamage(int damage)

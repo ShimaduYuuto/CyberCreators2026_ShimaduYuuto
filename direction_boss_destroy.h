@@ -28,7 +28,7 @@ public:
 	static constexpr float SHAKE_MAGNITUDE{ 40.0f };	//揺らす値
 
 	//ゲームを終了
-	static constexpr int TIME_ENDGAME_FRAME{ 600 };		//ゲームを終える時間
+	static constexpr int TIME_ENDGAME_FRAME{ 660 };		//ゲームを終える時間
 
 	//演出フェード
 	static constexpr int TIME_ENDFADE_FRAME{ START_SHAKE_FRAME + 200 };		//フェードアウトを終える時間

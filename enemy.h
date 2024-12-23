@@ -24,7 +24,7 @@ public:
 
 	//定数
 	static constexpr float VALUE_KNOCKBACK = 10.0f;	//ノックバック値
-	static constexpr float VALUE_BLOWOFF = 15.0f;	//吹き飛ぶ量
+	static constexpr float VALUE_BLOWOFF = 5.0f;	//吹き飛ぶ量
 
 	//エネミーの種類の列挙型
 	typedef enum

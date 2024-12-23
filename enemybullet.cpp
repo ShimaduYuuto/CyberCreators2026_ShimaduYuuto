@@ -160,18 +160,19 @@ void CEnemyBullet::Update()
 
 			float fXZ = sqrtf(Length.x * Length.x + Length.z * Length.z); //XZ‹——£‚ğZo‚·‚é
 			float fXY = sqrtf(Length.x * Length.x + Length.y * Length.y); //XY‹——£‚ğZo‚·‚é
-			float fLength = sqrtf(fXZ * fXZ + fXY * fXY);	//‹——£‚ğZo
+			float fLength = sqrtf(fXZ * fXZ + fXY * fXY);				//‹——£‚ğZo
+			float fAngle = atan2f(Length.x, Length.z);					//’e‚Æ“G‚ÌŠp“x‚ğZo
 
 			//“G‚Ì”»’è“à‚È‚ç
 			if (fLength < iter->GetCollision()->GetRadius() + m_Collision->GetRadius())
 			{
 				//ƒ_ƒ[ƒWˆ—
 				iter->ChangeStanState();
-				iter->SetDamage(3);
+				iter->SetBlowDamage(3, fAngle + D3DX_PI, 80.0f);
 				Uninit();
 
 				CManager::GetInstance()->GetCamera()->SetShake(20, 30);	//ƒqƒbƒgƒJƒƒ‰‚ğ—h‚ç‚·
-				break;
+				return;
 			}
 		}
 	}
@@ -179,6 +180,7 @@ void CEnemyBullet::Update()
 	//•Ç‚Æ“–‚½‚Á‚½‚çÁ‚¦‚é
 	if (CBattleAreaManager::GetInstance()->GetCurrentBattleArea()->GetWall()->GetHit(m_Collision->GetPos(), m_Collision->GetRadius()))
 	{
+		CManager::GetInstance()->GetCamera()->SetShake(20, 30);	//ƒqƒbƒgƒJƒƒ‰‚ğ—h‚ç‚·
 		Uninit();
 		return;
 	}

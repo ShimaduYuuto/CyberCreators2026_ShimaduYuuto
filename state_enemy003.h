@@ -9,7 +9,7 @@
 #define _STATE_ENEMY003_H_ //２重インクルード防止のマクロ定義
 
 //ヘッダーのインクルード
-#include "enemy.h"
+#include "enemy003.h"
 #include "behavior_enemy003.h"
 #include "state_enemy_normal.h"
 #include "state_enemy_damage.h"
@@ -35,6 +35,11 @@ public:
 	{
 		CState_Enemy_Normal::UpdateState(enemy);
 	}
+
+private:
+
+	//ギミックとの当たり判定
+	void UpdateGimmickCollison(CGame_Character* character) override;
 };
 
 //========================

@@ -43,25 +43,13 @@ public:
 	bool SetDamage(int damage, float rotY) override;	//ダメージの設定
 
 	//状態のリセット
-	void StateReset() override
-	{
-		//通常の状態に戻す
-		ChangeState(new CState_Enemy003_Normal(this));
-		SetEnableGravity(true);
-		m_bAttacking = false;
-	}
+	void StateReset() override;
 
 	//貼り付け状態に変更
-	void ChangeStickState() override
-	{
-		ChangeState(new CState_Enemy003_Stick(this));
-	}
+	void ChangeStickState() override;
 
 	//スタン状態に変更
-	void ChangeStanState() override
-	{
-		ChangeState(new CState_Enemy003_Stan(this));
-	}
+	void ChangeStanState() override;
 
 	//攻撃中か
 	void SetAttacking(bool attacking) { m_bAttacking = attacking; }	//設定

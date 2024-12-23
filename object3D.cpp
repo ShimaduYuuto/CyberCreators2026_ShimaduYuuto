@@ -113,35 +113,7 @@ void CObject3D::Uninit()
 //============================
 void CObject3D::Update()
 {
-	//位置の取得
-	//D3DXVECTOR3 Pos = GetPos();
-
-	////移動量の加算
-	//Pos += m_polygon.move;
-
-	//VERTEX_3D* pVtx; //追加情報のポインタ
-
-	////頂点バッファをロックし、頂点情報へのポインタを取得
-	//m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-
-	////ローカル変数で長さを計算
-	//float fLength = sqrtf(m_polygon.size.x * m_polygon.size.x + m_polygon.size.z * m_polygon.size.z) * 0.5f * m_polygon.fRate; //対角線の長さを算出する
-	//float fAngle = atan2f(m_polygon.size.x, m_polygon.size.z);//対角線の角度を算出
-
-	//pVtx[0].pos.x = sinf(m_polygon.rot.z + -(D3DX_PI - fAngle)) * fLength;
-	//pVtx[0].pos.z = cosf(m_polygon.rot.z + -fAngle) * fLength;
-	//pVtx[1].pos.x = sinf(m_polygon.rot.z + (D3DX_PI - fAngle)) * fLength;
-	//pVtx[1].pos.z = cosf(m_polygon.rot.z + fAngle) * fLength;
-	//pVtx[2].pos.x = sinf(m_polygon.rot.z + -fAngle) * fLength;
-	//pVtx[2].pos.z = cosf(m_polygon.rot.z + -(D3DX_PI - fAngle)) * fLength;
-	//pVtx[3].pos.x = sinf(m_polygon.rot.z + fAngle) * fLength;
-	//pVtx[3].pos.z = cosf(m_polygon.rot.z + (D3DX_PI - fAngle)) * fLength;
-
-	////頂点バッファをアンロックする
-	//m_pVtxBuff->Unlock();
-
-	////位置の設定
-	//SetPos(Pos);
+	
 }
 
 //============================
