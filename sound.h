@@ -18,11 +18,21 @@ public:
 	//サウンドの列挙型
 	typedef enum
 	{
-		SOUND_LABEL_BGM = 0,	//BGM
-		SOUND_LABEL_BATTLE,		//バトル
-		SOUND_LABEL_ATTACK,		//攻撃
-		SOUND_LABEL_STICK,		//張り付き
-		SOUND_LABEL_MAX,		//最大値
+		SOUND_LABEL_BGM = 0,		//BGM
+		SOUND_LABEL_BATTLE,			//バトル
+		SOUND_LABEL_ATTACK,			//攻撃
+		SOUND_LABEL_STICK,			//張り付き
+		SOUND_LABEL_DAMAGE,			//ダメージ
+		SOUND_LABEL_REPEL,			//弾く
+		SOUND_LABEL_EXPLOSION,		//爆発
+		SOUND_LABEL_CHARGEATTACK,	//チャージ攻撃
+		SOUND_LABEL_CHARGE000,		//チャージ
+		SOUND_LABEL_SWING,			//素振り
+		SOUND_LABEL_CHARGE001,		//弾のチャージ音
+		SOUND_LABEL_SHOT,			//発射音
+		SOUND_LABEL_BULLETHIT,		//弾のヒット音
+		SOUND_LABEL_RUMBLING,		//地響き音
+		SOUND_LABEL_MAX,			//最大値
 	}SOUND_LABEL;
 
 	//*****************************************************************************

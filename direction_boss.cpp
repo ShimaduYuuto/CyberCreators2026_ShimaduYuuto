@@ -9,8 +9,8 @@
 #include "direction_boss.h"
 #include "manager.h"
 
-const D3DXVECTOR3 CDirection_Boss::CAMERA_POSR = { 0.0f, 100.0f, 3500.0f };
-const D3DXVECTOR3 CDirection_Boss::CAMERA_POSV = { 0.0f, 100.0f, 3300.0f };
+const D3DXVECTOR3 CDirection_Boss::CAMERA_POSR = { 0.0f, 50.0f, 3500.0f };
+const D3DXVECTOR3 CDirection_Boss::CAMERA_POSV = { 0.0f, 50.0f, 3300.0f };
 
 //============================
 //演出のコンストラクタ
@@ -31,7 +31,7 @@ CDirection_Boss::CDirection_Boss()
 //============================
 CDirection_Boss::~CDirection_Boss()
 {
-
+	CManager::GetInstance()->GetSound()->Stop(CSound::SOUND_LABEL_RUMBLING);
 }
 
 //============================
@@ -53,6 +53,7 @@ bool CDirection_Boss::TimeUpdate()
 		//カメラを揺らす
 		CCamera* pCamera = CManager::GetInstance()->GetCamera();
 		pCamera->SetShake(SHAKE_FRAME, SHAKE_MAGNITUDE);
+		CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_RUMBLING);
 	}
 
 	//演出の更新

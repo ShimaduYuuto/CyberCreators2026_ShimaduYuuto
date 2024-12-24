@@ -57,6 +57,15 @@ void CEnemyAction_Standby::NextAction(CEnemy* enemy)
 //======================================================================
 
 //====================================
+//コンストラクタ
+//====================================
+CEnemyAction_ChargeShot::CEnemyAction_ChargeShot(CEnemy* enemy) : m_nChargeCount(0), m_pBullet(nullptr), m_pEffect(nullptr)
+{
+	//設定
+	enemy->SetMotion(4);
+};
+
+//====================================
 //デストラクタ
 //====================================
 CEnemyAction_ChargeShot::~CEnemyAction_ChargeShot()
@@ -106,6 +115,9 @@ void CEnemyAction_ChargeShot::Action(CEnemy* enemy)
 			{
 				m_pBullet = CEnemyBullet::Create(enemy->GetCollision()->GetPos(), { 0.0f, 0.0f, 0.0f });
 				m_pEffect = CEffect_ChargeShot::Create(enemy->GetCollision()->GetPos());
+
+				//SEの設定
+				CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_CHARGE001);
 			}
 		}
 
@@ -122,6 +134,10 @@ void CEnemyAction_ChargeShot::Action(CEnemy* enemy)
 				//向いている方向に撃つ
 				m_pBullet->SetMove({ sinf(fAngle) * 3.0f, 0.0f, cosf(fAngle) * 3.0f });
 				m_pBullet->SetShooting(true);
+
+				//SEの設定
+				CManager::GetInstance()->GetSound()->Stop(CSound::SOUND_LABEL_CHARGE001);
+				CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_SHOT);
 
 				//エフェクトの破棄
 				if (m_pEffect != nullptr)

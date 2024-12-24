@@ -17,9 +17,12 @@ class CRank : public CObject2D
 public:
 
 	//定数
-	static const std::string TEXTUREPATH;	//読み込むパス
-	static const D3DXVECTOR3 POS;			//位置
-	static const D3DXVECTOR3 SIZE;			//サイズ
+	static const std::string TEXTUREPATH;			//読み込むパス
+	static const D3DXVECTOR3 POS;					//位置
+	static const D3DXVECTOR3 SIZE;					//サイズ
+	static constexpr float TIME_RANKS{ 130.0f };	//Sランクの時間
+	static constexpr float TIME_CARRYUP{ 20.0f };	//ランクが繰り上がる時間
+	static constexpr int NUM_RANK{ 6 };				//ランクの数
 
 	//メンバ関数
 	CRank(int nPriority = 3);	//コンストラクタ

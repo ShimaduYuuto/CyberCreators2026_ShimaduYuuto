@@ -17,8 +17,9 @@ class CGauge_PlayerLife : public CObject2D
 public:
 
 	//定数
-	static const D3DXVECTOR3 POS;	//位置
-	static const D3DXVECTOR3 SIZE;	//サイズ
+	static const std::string TEXTURE_PATH;		//テクスチャパス
+	static const D3DXVECTOR3 POS;				//位置
+	static const D3DXVECTOR3 SIZE;				//サイズ
 
 	//メンバ関数
 	CGauge_PlayerLife(int nPriority = 3);	//コンストラクタ

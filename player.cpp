@@ -178,6 +178,11 @@ void CPlayer::Update()
 
 	//‹¤’Êˆ—‚ÌXV
 	CGame_Character::Update();
+
+	if (GetPos().z < 0.0f)
+	{
+		GetPos().z = 0.0f;
+	}
 }
 
 //============================

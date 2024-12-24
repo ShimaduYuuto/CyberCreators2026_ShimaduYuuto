@@ -19,6 +19,16 @@ const CSound::SOUNDINFO CSound::SOUND_INFO[CSound::SOUND_LABEL_MAX] =
 	{"data\\BGM\\battle000.wav", -1, 0.2f},			//戦いのBGM
 	{"data\\SE\\attack000.wav", 0, 0.5f},			//攻撃のSE
 	{"data\\SE\\stick000.wav", 0, 0.75f},			//貼り付けのSE
+	{"data\\SE\\damage000.wav", 0, 0.75f},			//ダメージのSE
+	{"data\\SE\\repel000.wav", 0, 0.75f},			//弾き音のSE
+	{"data\\SE\\explosion000.wav", 0, 0.75f},		//爆発のSE
+	{"data\\SE\\chargeattack000.wav", 0, 0.75f},	//チャージ攻撃のSE
+	{"data\\SE\\charge000.wav", -1, 0.75f},			//チャージのSE
+	{"data\\SE\\attack001.wav", 0, 0.75f},			//素振りのSE
+	{"data\\SE\\charge001.wav", 0, 0.75f},			//チャージのSE
+	{"data\\SE\\shot000.wav", 0, 0.75f},			//発射のSE
+	{"data\\SE\\bullethit000.wav", 0, 0.75f},		//弾ヒットのSE
+	{"data\\SE\\rumbling000.wav", 0, 1.0f},			//地響きのSE
 };
 
 //=============================================================================

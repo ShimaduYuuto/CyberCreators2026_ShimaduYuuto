@@ -12,6 +12,7 @@
 #include "main.h"
 #include "lockonmark.h"
 #include "enemy.h"
+#include "ui_rushchance.h"
 
 //ロックオンクラス
 class CLockon
@@ -36,6 +37,7 @@ public:
 
 private:
 	CLockonMark* m_pMark;				//印
+	CUi_RushChance* m_pRushUi;			//ラッシュのUI
 	CEnemy* m_pTarget;					//ターゲットのポインタ
 	std::list<CEnemy*> m_LockonList;	//ロックオンリスト
 };

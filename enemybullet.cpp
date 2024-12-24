@@ -133,6 +133,9 @@ void CEnemyBullet::Update()
 			{
 				Uninit();
 
+				//SEの設定
+				CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_BULLETHIT);
+
 				//カメラを揺らす
 				CManager::GetInstance()->GetCamera()->SetShake(20, 30);	//ヒット時カメラを揺らす
 			}
@@ -169,6 +172,10 @@ void CEnemyBullet::Update()
 				//ダメージ処理
 				iter->ChangeStanState();
 				iter->SetBlowDamage(3, fAngle + D3DX_PI, 80.0f);
+
+				//SEの設定
+				CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_BULLETHIT);
+
 				Uninit();
 
 				CManager::GetInstance()->GetCamera()->SetShake(20, 30);	//ヒット時カメラを揺らす
@@ -181,6 +188,7 @@ void CEnemyBullet::Update()
 	if (CBattleAreaManager::GetInstance()->GetCurrentBattleArea()->GetWall()->GetHit(m_Collision->GetPos(), m_Collision->GetRadius()))
 	{
 		CManager::GetInstance()->GetCamera()->SetShake(20, 30);	//ヒット時カメラを揺らす
+
 		Uninit();
 		return;
 	}

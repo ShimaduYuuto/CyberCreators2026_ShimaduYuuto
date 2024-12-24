@@ -17,7 +17,8 @@
 CLockon::CLockon() : 
 	m_pTarget(nullptr),
 	m_pMark(nullptr),
-	m_LockonList()
+	m_LockonList(),
+	m_pRushUi(nullptr)
 {
 	m_LockonList.clear();
 }
@@ -69,6 +70,7 @@ void CLockon::Update()
 			m_pMark->Uninit();
 			m_pMark = nullptr;
 			m_pTarget = nullptr;
+			
 		}
 		else
 		{
@@ -76,48 +78,9 @@ void CLockon::Update()
 		}
 	}
 
+	//印がないなら
 	if (m_pMark == nullptr)
 	{
-		//ゲームシーンなら判定
-		//if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
-		//{
-		//	//ゲームシーンの取得
-		//	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
-
-		//	//プレイヤーの位置を取得
-		//	D3DXVECTOR3 PlayerPos = pGame->GetGamePlayer()->GetPos();
-
-		//	//敵の周回
-		//	for (auto& iter : pGame->GetEnemyManager()->GetList())
-		//	{
-		//		//敵の位置を取得
-		//		D3DXVECTOR3 EnemyLength = iter->GetCollision()->GetPos() - PlayerPos;
-
-		//		float fXZ = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.z * EnemyLength.z); //距離を算出する
-		//		float fXY = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.y * EnemyLength.y); //距離を算出する
-		//		float fLength = sqrtf(fXZ * fXZ + fXY * fXY);	//距離を算出
-
-		//		//敵の判定内なら
-		//		if (fLength < 300.0f)
-		//		{
-		//			bool bLock = false;
-
-		//			//カメラに入っているかを確認
-		//			bLock = CManager::GetInstance()->GetCamera()->GetViewObject(iter->GetCollision()->GetPos());
-
-		//			//ロックオンできたら
-		//			if (bLock)
-		//			{
-		//				//マークを生成
-		//				m_pMark = CLockonMark::Create(30.0f, &iter->GetCollision()->GetPos());
-		//				m_pTarget = iter;	//ターゲットのポインタ
-		//				break;
-		//			}
-		//		}
-		//	}
-
-		//}
-
 		//リストにいないなら抜ける
 		if (m_LockonList.size() == 0)
 		{
@@ -128,6 +91,9 @@ void CLockon::Update()
 		auto iter = m_LockonList.begin();
 		m_pTarget = *iter;
 		m_pMark = CLockonMark::Create(30.0f, &m_pTarget->GetCollision()->GetPos());
+
+		//CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+		//m_pRushUi = CUi_RushChance::Create(&pGame->GetGamePlayer()->GetPos());
 	}
 }
 
@@ -191,6 +157,12 @@ void CLockon::Erase(CEnemy* enemy)
 				m_pTarget = nullptr;
 				m_pMark->Uninit();
 				m_pMark = nullptr;
+
+			/*	if (m_pRushUi != nullptr)
+				{
+					m_pRushUi->Uninit();
+					m_pRushUi = nullptr;
+				}*/
 			}
 			m_LockonList.remove(iter);
 			break;

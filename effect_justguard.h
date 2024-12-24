@@ -19,7 +19,7 @@ public:
 
 	//定数
 	static const std::string TEXTURE_PATH;	//テクスチャパス
-	static constexpr float RADIUS = 70.0f;	//サイズ半径
+	static constexpr float RADIUS = 100.0f;	//サイズ半径
 
 	//テクスチャ情報
 	static constexpr int HORIZONTAL{ 10 };	//横の分割数(U座標)

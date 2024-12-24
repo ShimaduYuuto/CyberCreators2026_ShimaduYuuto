@@ -7,9 +7,10 @@
 
 //ヘッダーのインクルード
 #include "rank.h"
+#include "cleartime.h"
 
 const std::string CRank::TEXTUREPATH = "data\\TEXTURE\\rank001.png";
-const D3DXVECTOR3 CRank::POS = { 880.0f, 510.0f, 0.0f };
+const D3DXVECTOR3 CRank::POS = { 870.0f, 510.0f, 0.0f };
 const D3DXVECTOR3 CRank::SIZE = { 200.0f, 200.0f, 0.0f };
 
 //============================
@@ -39,7 +40,16 @@ HRESULT CRank::Init()
 	//パラメータの設定
 	SetPos(POS);	//位置
 	SetSize(SIZE);	//サイズ
-	SetTextureUV(0.0f, 1.0f / 5.0f, 0.0f, 1.0f);	//UV座標
+
+	//時間からランクを設定
+	int nRank = CClearTime::GetInstance()->GetTime() - TIME_RANKS;
+	if (nRank < 0) { nRank = 0; }	//自然数に補正
+
+	nRank = nRank / TIME_CARRYUP;
+	if (nRank > NUM_RANK - 1) { nRank = NUM_RANK - 1; }
+	float fTextureU = 1.0f / NUM_RANK;
+
+	SetTextureUV(fTextureU * nRank, fTextureU * (nRank + 1), 0.0f, 1.0f);	//UV座標
 
 	return S_OK;
 }

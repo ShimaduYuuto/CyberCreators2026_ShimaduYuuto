@@ -106,7 +106,7 @@ void CCamera::Update()
 				D3DXVECTOR3 MouseMove = CManager::GetInstance()->GetMouse()->GetMove();
 
 				//ƒJƒƒ‰‚É”½‰f
-				m_rot.y += MouseMove.x / 100.0f;
+				m_rot.y += MouseMove.x * 0.005f;
 				//m_rot.x -= MouseMove.y / 500.0f;
 			}
 

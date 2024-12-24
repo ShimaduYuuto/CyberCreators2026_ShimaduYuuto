@@ -19,7 +19,7 @@ public:
 	//定数
 	static const std::string FILEPATH;						//読み込むファイル
 	static constexpr float VALUE_INVISIBLE_ALPHA{ 0.3f };	//透明状態のα値
-	static constexpr int LIFE{ 10 };						//体力
+	static constexpr int LIFE{ 100 };						//体力
 	
 	//敵のモーション
 	typedef enum

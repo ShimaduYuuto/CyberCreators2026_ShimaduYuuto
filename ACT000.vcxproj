@@ -94,6 +94,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>precompile.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>precompile.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -108,6 +111,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>precompile.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>precompile.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -184,6 +190,7 @@
     <ClInclude Include="direction.h" />
     <ClInclude Include="direction_boss.h" />
     <ClInclude Include="direction_boss_destroy.h" />
+    <ClInclude Include="dot.h" />
     <ClInclude Include="effect_brow.h" />
     <ClInclude Include="effect_charge.h" />
     <ClInclude Include="effect_chargeshot.h" />
@@ -202,7 +209,6 @@
     <ClInclude Include="enemy001.h" />
     <ClInclude Include="enemy002.h" />
     <ClInclude Include="enemy002_alterego.h" />
-    <ClInclude Include="enemy002_fake .h" />
     <ClInclude Include="enemy003.h" />
     <ClInclude Include="enemybullet.h" />
     <ClInclude Include="enemybulletmanager.h" />
@@ -252,10 +258,12 @@
     <ClInclude Include="particle_charge.h" />
     <ClInclude Include="particle_spawn.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="precompile.h" />
     <ClInclude Include="rank.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="result_bg.h" />
+    <ClInclude Include="result_txtui.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="shadow.h" />
     <ClInclude Include="shield.h" />
@@ -290,6 +298,7 @@
     <ClInclude Include="title_logo.h" />
     <ClInclude Include="title_player.h" />
     <ClInclude Include="tree.h" />
+    <ClInclude Include="ui_rushchance.h" />
     <ClInclude Include="xfile.h" />
   </ItemGroup>
   <ItemGroup>
@@ -328,6 +337,7 @@
     <ClCompile Include="direction.cpp" />
     <ClCompile Include="direction_boss.cpp" />
     <ClCompile Include="direction_boss_destroy.cpp" />
+    <ClCompile Include="dot.cpp" />
     <ClCompile Include="effect_brow.cpp" />
     <ClCompile Include="effect_charge.cpp" />
     <ClCompile Include="effect_chargeshot.cpp" />
@@ -393,10 +403,15 @@
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="particle_spawn.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="precompile.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="rank.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="result_bg.cpp" />
+    <ClCompile Include="result_txtui.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="shadow.cpp" />
     <ClCompile Include="shield.cpp" />
@@ -429,6 +444,7 @@
     <ClCompile Include="title_logo.cpp" />
     <ClCompile Include="title_player.cpp" />
     <ClCompile Include="tree.cpp" />
+    <ClCompile Include="ui_rushchance.cpp" />
     <ClCompile Include="xfile.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

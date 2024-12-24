@@ -339,6 +339,11 @@ void CPlayerBehavior_Dash::Behavior(CPlayer* player)
 						SetNextBehavior(new CPlayerBehavior_DashAttack000(player));
 					}
 				}
+				else
+				{
+					//移動状態にする
+					SetNextBehavior(new CPlayerBehavior_Move(player));
+				}
 				
 			}
 		}
@@ -394,6 +399,9 @@ CPlayerBehavior_Attack::CPlayerBehavior_Attack(CPlayer* player) :
 	SetCancelTime(START_CANCEL);
 	SetAttackLength(ATTACK_LENGTH);
 	SetOffsetPos(POS_OFFSET);
+
+	//SEを鳴らす
+	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_SWING);
 }
 
 //============================
@@ -484,7 +492,9 @@ void CPlayerBehavior_Attack::Behavior(CPlayer* player)
 				//敵の判定内なら
 				if (fLength < m_fAttackLength + iter->GetCollision()->GetRadius())
 				{
+					//弾を反射
 					iter->Reflection();
+					CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_REPEL);	//SE
 				}
 			}
 
@@ -568,7 +578,7 @@ void CPlayerBehavior_NormalAttack::Behavior(CPlayer* player)
 //============================
 //コンストラクタ
 //============================
-CPlayerBehavior_NormalAttack000::CPlayerBehavior_NormalAttack000(CPlayer* player)
+CPlayerBehavior_NormalAttack000::CPlayerBehavior_NormalAttack000(CPlayer* player) : CPlayerBehavior_NormalAttack(player)
 {
 	player->SetMotion(2);
 }
@@ -593,7 +603,7 @@ void CPlayerBehavior_NormalAttack000::Cancel(CPlayer* player)
 //============================
 //コンストラクタ
 //============================
-CPlayerBehavior_NormalAttack001::CPlayerBehavior_NormalAttack001(CPlayer* player)
+CPlayerBehavior_NormalAttack001::CPlayerBehavior_NormalAttack001(CPlayer* player) : CPlayerBehavior_NormalAttack(player)
 {
 	player->SetMotion(9);
 }
@@ -618,7 +628,7 @@ void CPlayerBehavior_NormalAttack001::Cancel(CPlayer* player)
 //============================
 //コンストラクタ
 //============================
-CPlayerBehavior_NormalAttack002::CPlayerBehavior_NormalAttack002(CPlayer* player) : 
+CPlayerBehavior_NormalAttack002::CPlayerBehavior_NormalAttack002(CPlayer* player) : CPlayerBehavior_NormalAttack(player),
 	m_bChargeEnd(false),
 	m_fChargeRate(0.5f), 
 	m_fChargeAcceleration(0.0f),
@@ -633,6 +643,9 @@ CPlayerBehavior_NormalAttack002::CPlayerBehavior_NormalAttack002(CPlayer* player
 	SetCancelTime(25);
 	SetAttackLength(ATTACK_LENGTH);
 	SetOffsetPos(POS_OFFSET);
+
+	//SEを止める
+	CManager::GetInstance()->GetSound()->Stop(CSound::SOUND_LABEL_SWING);
 }
 
 //============================
@@ -646,6 +659,8 @@ CPlayerBehavior_NormalAttack002::~CPlayerBehavior_NormalAttack002()
 		m_pEffect->Uninit();
 		m_pEffect = nullptr;
 	}
+
+	CManager::GetInstance()->GetSound()->Stop(CSound::SOUND_LABEL_CHARGE000);
 }
 
 //============================
@@ -664,6 +679,9 @@ void CPlayerBehavior_NormalAttack002::Behavior(CPlayer* player)
 			if (m_nCancelCount >= ACCEPT_CANCELTIME)
 			{
 				m_pEffect = CEffect_Charge::Create(player->GetCollision()->GetPos());
+
+				//SEの生成
+				CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_CHARGE000);
 			}
 		}
 
@@ -705,6 +723,8 @@ void CPlayerBehavior_NormalAttack002::Behavior(CPlayer* player)
 
 			//チャージが終わったか
 			m_bChargeEnd = true;
+			CManager::GetInstance()->GetSound()->Stop(CSound::SOUND_LABEL_CHARGE000);
+			CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_SWING);
 		}
 	}
 	//チャージが終わっていたら攻撃
@@ -732,6 +752,7 @@ void CPlayerBehavior_NormalAttack002::Damage(CPlayer* player, CEnemy* enemy, int
 	{
 		//ダメージ
 		bHit = enemy->SetBlowDamage(damage * 3, player->GetRot().y, m_fChargeRate * 0.5f);
+		CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_CHARGEATTACK);
 	}
 
 	//ヒット時の処理

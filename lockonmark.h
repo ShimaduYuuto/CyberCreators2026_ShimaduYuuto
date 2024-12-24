@@ -12,7 +12,7 @@
 #include "main.h"
 #include "objectbillboard.h"
 
-//コリジョンビュークラス
+//ロックオンマーククラス
 class CLockonMark : public CObjectBillboard
 {
 public:

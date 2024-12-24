@@ -14,6 +14,7 @@
 #include "cleartime.h"
 #include "oldpaper.h"
 #include "rank.h"
+#include "result_txtui.h"
 
 //定数
 const D3DXVECTOR3 CResult::TIME_POS = { SCREEN_WIDTH * 0.4f, 355.0f, 0.0f };
@@ -58,6 +59,7 @@ HRESULT CResult::Init()
 	CModel::Create({ 0.0f, 0.0f, 3.0f }, { 0.0f, D3DX_PI * 0.5f, 0.0f }, CModel::MODEL_TYPE_FENCE);
 	COldPaper::Create();
 	CRank::Create();
+	CResult_Txtui::Create();
 
 	//フォグの設定
 	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ

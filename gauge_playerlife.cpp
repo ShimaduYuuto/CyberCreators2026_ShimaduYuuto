@@ -11,6 +11,7 @@
 #include "game.h"
 
 //定数の宣言
+const std::string CGauge_PlayerLife::TEXTURE_PATH = "data\\TEXTURE\\gauge001.png";
 const D3DXVECTOR3 CGauge_PlayerLife::POS = { 150.0f, 50.0f, 0.0f };	//位置
 const D3DXVECTOR3 CGauge_PlayerLife::SIZE = { 200.0f, 20.0f, 0.0f };//サイズ
 
@@ -73,7 +74,7 @@ void CGauge_PlayerLife::Update()
 void CGauge_PlayerLife::Draw()
 {
 	//描画処理
-	CObject2D::Draw();
+	CObject2D::Draw(TEXTURE_PATH.c_str());
 }
 
 //============================
@@ -105,7 +106,7 @@ void CGauge_PlayerLife::SetGauge(float max)
 	if (m_pGauge == nullptr)
 	{
 		//ゲージの生成
-		m_pGauge = CGauge::Create(POS, SIZE, max);
+		m_pGauge = CGauge::Create(POS, SIZE + D3DXVECTOR3(-30.0f, 0.0f, 0.0f), max);
 		m_pGauge->SetColor(D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
 	}
 	else //すでにゲージがあるならパラメータを設定

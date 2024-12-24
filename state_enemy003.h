@@ -53,6 +53,7 @@ public:
 	{
 		SetAction(new CEnemyAction());
 		SetEndTime(60);
+		enemy->SetMotion(3);
 	};	//コンストラクタ
 
 	//状態の更新

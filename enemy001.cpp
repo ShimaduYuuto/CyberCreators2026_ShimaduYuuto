@@ -202,6 +202,9 @@ void CEnemy001::DamageEffect(CPlayer* player)
 		{
 			//エフェクトの生成
 			CEffect_Repel::Create(m_pShield->GetWorldPos());
+
+			//SEの設定
+			CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_REPEL);
 		}
 		
 		player->SetKnockBack(30);

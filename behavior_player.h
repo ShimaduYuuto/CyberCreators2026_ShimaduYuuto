@@ -173,7 +173,7 @@ public:
 	static constexpr float VALUE_MOVE{ 0.8f };	//移動量
 
 	CPlayerBehavior_NormalAttack() {}	
-	CPlayerBehavior_NormalAttack(CPlayer* player) 
+	CPlayerBehavior_NormalAttack(CPlayer* player) : CPlayerBehavior_Attack(player)
 	{
 		SetEndTime(END_TIME);
 	}		//コンストラクタ
@@ -394,7 +394,7 @@ public:
 	static constexpr float ATTACK_LENGTH{ 75.0f };		//攻撃の距離
 
 	CPlayerBehavior_DashAttack() {}
-	CPlayerBehavior_DashAttack(CPlayer* player)
+	CPlayerBehavior_DashAttack(CPlayer* player) : CPlayerBehavior_Attack(player)
 	{
 		//パラメータの設定
 		SetCancelTime(START_CANCELTIME);	//キャンセル

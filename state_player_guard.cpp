@@ -12,6 +12,7 @@
 #include "behavior_player.h"
 #include "effect_guard.h"
 #include "effect_justguard.h"
+#include "manager.h"
 
 //====================================
 //コンストラクタ
@@ -149,6 +150,9 @@ bool CState_Player_Guard::SetDamage(CPlayer* player, int damage)
 	KnockBackMove = { sinf(player->GetRot().y) * VALUE_KNOCKBACK, 0.0f, cosf(player->GetRot().y) * VALUE_KNOCKBACK };
 	m_bStiffening = true;
 	m_nStiffnessCount = 0;
+
+	//SEの設定
+	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_REPEL);
 
 	return true;
 }

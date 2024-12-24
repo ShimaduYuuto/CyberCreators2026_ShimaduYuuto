@@ -9,6 +9,7 @@
 #include "state_player_knockback.h"
 #include "state_player_normal.h"
 #include "state_player_damage.h"
+#include "manager.h"
 
 //====================================
 //ó‘Ô‚ÌXV
@@ -79,6 +80,9 @@ bool CState_Player_Knockback::SetDamage(CPlayer* player, int damage)
 	}
 
 	player->SetLifeGauge(pGauge);
+
+	//SE‚ÌÝ’è
+	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_DAMAGE);
 
 	return true;
 }

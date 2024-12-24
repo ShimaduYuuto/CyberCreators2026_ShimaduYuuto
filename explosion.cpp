@@ -54,6 +54,9 @@ HRESULT CExplosion::Init()
 	}
 	m_pCollision->SetRadius(100.0f);
 
+	//SE‚ÌÝ’è
+	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_EXPLOSION);
+
 	return S_OK;
 }
 

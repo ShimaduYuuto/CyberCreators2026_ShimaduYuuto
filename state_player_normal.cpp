@@ -8,6 +8,7 @@
 //ヘッダーのインクルード
 #include "state_player_normal.h"
 #include "state_player_damage.h"
+#include "manager.h"
 
 //========================
 //ダメージの設定
@@ -51,6 +52,9 @@ bool CState_Player_Normal::SetDamage(CPlayer* player, int damage)
 	}
 
 	player->SetLifeGauge(pGauge);
+
+	//SEの設定
+	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_DAMAGE);
 
 	return true;
 }

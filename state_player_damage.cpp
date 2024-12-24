@@ -80,5 +80,8 @@ bool CState_Player_Damage::SetDamage(CPlayer* player, int damage)
 
 	player->SetLifeGauge(pGauge);
 
+	//SE‚ÌÝ’è
+	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_DAMAGE);
+
 	return true;
 }

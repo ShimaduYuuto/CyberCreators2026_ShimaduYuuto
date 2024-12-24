@@ -86,11 +86,7 @@ public:
 	static constexpr float ADD_SCALE_VALUE{ 0.03f };//スケールの加算量
 
 	//コンストラクタ
-	CEnemyAction_ChargeShot(CEnemy* enemy) : m_nChargeCount(0), m_pBullet(nullptr), m_pEffect(nullptr)
-	{
-		//設定
-		enemy->SetMotion(4);
-	};
+	CEnemyAction_ChargeShot(CEnemy* enemy);
 
 	//デストラクタ
 	~CEnemyAction_ChargeShot();

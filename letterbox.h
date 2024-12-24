@@ -20,7 +20,7 @@ public:
 	//定数
 	static constexpr int NUM_LETTERBOX{ 2 };			//レターボックスの数
 	static constexpr int TIME_INTERPOLATION{ 30 };		//補間の時間
-	static constexpr float HEIGHT_LETTERBOX{ 70.0f };	//2Dオブジェクトの高さ
+	static constexpr float HEIGHT_LETTERBOX{ 100.0f };	//2Dオブジェクトの高さ
 
 	//メンバ関数
 	CLetterBox();					//コンストラクタ
