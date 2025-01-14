@@ -15,6 +15,9 @@
 #define FVF_VERTEX_3D (D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_DIFFUSE | D3DFVF_TEX1)
 #define CLASS_NAME "WindowClass" //ウィンドウクラスの名前
 
+//汎用的なコードをまとめたヘッダー
+#include "useful.h"
+
 //頂点情報[2D]の構造体定義
 typedef struct
 {

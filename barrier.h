@@ -24,7 +24,8 @@ public:
 	static constexpr int HORIZONTAL{ 10 };	//横の分割数(U座標)
 	static constexpr int VERTICAL{ 2 };		//縦の分割数(V座標)
 	static constexpr int SPEED_UPDATE{ 3 };	//更新速度
-	static constexpr bool LOOP{ true };	//ループ
+	static constexpr bool LOOP{ true };		//ループ
+	static const D3DXVECTOR3 SIZE;			//ポリゴンサイズ
 
 	//メンバ関数
 	CBarrier();					//コンストラクタ

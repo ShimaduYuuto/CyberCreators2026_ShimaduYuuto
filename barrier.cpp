@@ -7,12 +7,10 @@
 
 //ヘッダーのインクルード
 #include "barrier.h"
-#include "game.h"
-#include "manager.h"
-#include "barriermanager.h"
 
 //定数
-const std::string CBarrier::TEXTURE_PATH = "data\\TEXTURE\\wall002.png";
+const std::string CBarrier::TEXTURE_PATH = "data\\TEXTURE\\wall002.png";	//テクスチャパス
+const D3DXVECTOR3 CBarrier::SIZE = { 1000.0f, 300.0f, 0.0f };				//ポリゴンサイズ
 
 //============================
 //コンストラクタ
@@ -38,7 +36,7 @@ CBarrier::~CBarrier()
 HRESULT CBarrier::Init()
 {
 	CObject3D::Init();
-	CObject3D::SetSize({ 1000.0f, 300.0f, 0.0f }, CObject3D::TYPE_WALL);
+	CObject3D::SetSize(SIZE, CObject3D::TYPE_WALL);
 	return S_OK;
 }
 

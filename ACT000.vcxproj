@@ -282,6 +282,7 @@
     <ClInclude Include="tree.h" />
     <ClInclude Include="ui_gameguide.h" />
     <ClInclude Include="ui_rushchance.h" />
+    <ClInclude Include="useful.h" />
     <ClInclude Include="venue.h" />
     <ClInclude Include="xfile.h" />
   </ItemGroup>
@@ -414,6 +415,7 @@
     <ClCompile Include="tree.cpp" />
     <ClCompile Include="ui_gameguide.cpp" />
     <ClCompile Include="ui_rushchance.cpp" />
+    <ClCompile Include="useful.cpp" />
     <ClCompile Include="venue.cpp" />
     <ClCompile Include="xfile.cpp" />
   </ItemGroup>

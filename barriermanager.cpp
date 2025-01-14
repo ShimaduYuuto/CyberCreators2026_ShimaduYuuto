@@ -63,10 +63,45 @@ void CBarrierManager::Load()
 {
 	m_BarrierList.clear();
 
-	//結界の生成
-	Regist(CBarrier::Create({ 0.0f, 150.0f, 1000.0f }));
-	Regist(CBarrier::Create({ 0.0f, 150.0f, 2000.0f }));
-	Regist(CBarrier::Create({ 0.0f, 150.0f, 3000.0f }));
+	// ファイルの読み込み
+	FILE* pFile = fopen("data\\FILE\\barrier.txt", "r");
+
+	if (pFile == NULL)
+	{// 種類毎の情報のデータファイルが開けなかった場合、
+	 //処理を終了する
+		return;
+	}
+
+	char aDataSearch[256];		// データ検索用
+
+	// ENDが見つかるまで読み込みを繰り返す
+	while (1)
+	{
+		fscanf(pFile, "%s", aDataSearch);	// 検索
+
+		if (!strcmp(aDataSearch, "END"))
+		{// 読み込みを終了
+			fclose(pFile);
+			break;
+		}
+
+		if (aDataSearch[0] == '#')
+		{// 折り返す
+			continue;
+		}
+
+		//位置情報を見つけたらその位置に生成
+		if (!strcmp(aDataSearch, "POS"))
+		{
+			D3DXVECTOR3 Pos = { 0.0f, 0.0f, 0.0f };
+
+			fscanf(pFile, "%f", &Pos.x);
+			fscanf(pFile, "%f", &Pos.y);
+			fscanf(pFile, "%f", &Pos.z);
+
+			Regist(CBarrier::Create(Pos));
+		}
+	}
 }
 
 //============================
