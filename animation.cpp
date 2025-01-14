@@ -7,9 +7,6 @@
 
 //ヘッダーのインクルード
 #include "animation.h"
-#include "normalattack.h"
-#include "smash.h"
-#include "arial.h"
 
 //============================
 //コンストラクタ

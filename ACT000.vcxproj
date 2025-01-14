@@ -151,17 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="action.h" />
-    <ClInclude Include="action_enemy.h" />
-    <ClInclude Include="action_enemy000.h" />
-    <ClInclude Include="action_enemy001.h" />
-    <ClInclude Include="action_player.h" />
     <ClInclude Include="animation.h" />
-    <ClInclude Include="arial.h" />
-    <ClInclude Include="arial000.h" />
-    <ClInclude Include="arial001.h" />
-    <ClInclude Include="arial002.h" />
-    <ClInclude Include="attack_player.h" />
     <ClInclude Include="barrier.h" />
     <ClInclude Include="barriermanager.h" />
     <ClInclude Include="battlearea.h" />
@@ -170,7 +160,6 @@
     <ClInclude Include="battlearea002.h" />
     <ClInclude Include="battlearea003.h" />
     <ClInclude Include="battleareamanager.h" />
-    <ClInclude Include="battlemanager.h" />
     <ClInclude Include="behavior_character.h" />
     <ClInclude Include="behavior_enemy.h" />
     <ClInclude Include="behavior_enemy000.h" />
@@ -194,7 +183,6 @@
     <ClInclude Include="effect_brow.h" />
     <ClInclude Include="effect_charge.h" />
     <ClInclude Include="effect_chargeshot.h" />
-    <ClInclude Include="effect_dash.h" />
     <ClInclude Include="effect_death.h" />
     <ClInclude Include="effect_death_boss.h" />
     <ClInclude Include="effect_explosion.h" />
@@ -237,12 +225,6 @@
     <ClInclude Include="manager.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="modelparts.h" />
-    <ClInclude Include="normalattack.h" />
-    <ClInclude Include="normalattack000.h" />
-    <ClInclude Include="normalattack001.h" />
-    <ClInclude Include="normalattack002.h" />
-    <ClInclude Include="normalattack_enemy000.h" />
-    <ClInclude Include="normalattack_enemy001.h" />
     <ClInclude Include="number.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="object2D.h" />
@@ -304,15 +286,7 @@
     <ClInclude Include="xfile.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="action.cpp" />
-    <ClCompile Include="action_enemy000.cpp" />
-    <ClCompile Include="action_enemy001.cpp" />
-    <ClCompile Include="action_player.cpp" />
     <ClCompile Include="animation.cpp" />
-    <ClCompile Include="arial.cpp" />
-    <ClCompile Include="arial000.cpp" />
-    <ClCompile Include="arial001.cpp" />
-    <ClCompile Include="arial002.cpp" />
     <ClCompile Include="barrier.cpp" />
     <ClCompile Include="barriermanager.cpp" />
     <ClCompile Include="battlearea.cpp" />
@@ -385,12 +359,6 @@
     <ClCompile Include="manager.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="modelparts.cpp" />
-    <ClCompile Include="normalattack.cpp" />
-    <ClCompile Include="normalattack000.cpp" />
-    <ClCompile Include="normalattack001.cpp" />
-    <ClCompile Include="normalattack002.cpp" />
-    <ClCompile Include="normalattack_enemy.cpp" />
-    <ClCompile Include="normalattack_enemy001.cpp" />
     <ClCompile Include="number.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="object2D.cpp" />
@@ -418,10 +386,8 @@
     <ClCompile Include="shadow.cpp" />
     <ClCompile Include="shield.cpp" />
     <ClCompile Include="sky.cpp" />
-    <ClCompile Include="smash.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="spawn_enemy.cpp" />
-    <ClCompile Include="spawn_shield.cpp" />
     <ClCompile Include="state.cpp" />
     <ClCompile Include="state_enemy.cpp" />
     <ClCompile Include="state_enemy000.cpp" />
