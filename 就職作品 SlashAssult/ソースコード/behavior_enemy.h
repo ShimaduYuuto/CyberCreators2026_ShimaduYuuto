@@ -66,7 +66,7 @@ class CEnemyAction_Attack : public CEnemyAction
 public:
 
 	//定数
-	static constexpr float POS_LENGTH = 20.0f;	//攻撃の発生する距離
+	static constexpr float POS_LENGTH{ 20.0f };	//攻撃の発生する距離
 
 	//コンストラクタとデストラクタ
 	CEnemyAction_Attack(CEnemy* enemy);

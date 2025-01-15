@@ -69,7 +69,7 @@ void CEnemyAction_ChargeAttack::Action(CEnemy* enemy)
 		if (m_nChargeCount >= CHARGE_TIME)
 		{
 			//攻撃判定にする
-			CEnemy003* pEnemy003 = (CEnemy003*)enemy;
+			CEnemy003* pEnemy003 = dynamic_cast<CEnemy003*>(enemy);
 			pEnemy003->SetAttacking(true);
 
 			//移動値の設定
@@ -84,9 +84,9 @@ void CEnemyAction_ChargeAttack::Action(CEnemy* enemy)
 
 		//変数宣言
 		CGame* pGame = nullptr;
-		pGame = (CGame*)CManager::GetInstance()->GetScene();						//ゲームシーンの取得
+		pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());			//ゲームシーンの取得
 		D3DXVECTOR3 PlayerPos = pGame->GetGamePlayer()->GetCollision()->GetPos();	//プレイヤーの当たり判定の位置
-		D3DXVECTOR3 EnemyPos = enemy->GetCollision()->GetPos();
+		D3DXVECTOR3 EnemyPos = enemy->GetCollision()->GetPos();						//エネミーの位置を取得
 
 		//距離を計算
 		float fXZ = sqrtf((EnemyPos.x - PlayerPos.x) * (EnemyPos.x - PlayerPos.x) + (EnemyPos.z - PlayerPos.z) * (EnemyPos.z - PlayerPos.z)); //距離を算出する
@@ -97,10 +97,10 @@ void CEnemyAction_ChargeAttack::Action(CEnemy* enemy)
 		if (fLength < pGame->GetGamePlayer()->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius())
 		{
 			//プレイヤーにダメージを与える
-			if (pGame->GetGamePlayer()->SetDamage(1))
+			if (pGame->GetGamePlayer()->SetDamage(CEnemy003::ENEMY003MOTION_WALK))
 			{
 				//攻撃判定の終了
-				CEnemy003* pEnemy003 = (CEnemy003*)enemy;
+				CEnemy003* pEnemy003 = dynamic_cast<CEnemy003*>(enemy);
 				pEnemy003->SetAttacking(false);
 
 				//待機状態になる
@@ -112,7 +112,7 @@ void CEnemyAction_ChargeAttack::Action(CEnemy* enemy)
 		if (m_nChargeCount > END_TIME)
 		{
 			//攻撃判定の終了
-			CEnemy003* pEnemy003 = (CEnemy003*)enemy;
+			CEnemy003* pEnemy003 = dynamic_cast<CEnemy003*>(enemy);
 			pEnemy003->SetAttacking(false);
 
 			SetNextAction(new CEnemyAction_Standby003(enemy));

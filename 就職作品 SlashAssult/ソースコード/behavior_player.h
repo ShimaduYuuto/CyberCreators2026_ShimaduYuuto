@@ -11,7 +11,6 @@
 //ヘッダーのインクルード
 #include "player.h"
 #include "enemy.h"
-#include "impactrange.h"
 #include "effect_charge.h"
 
 //プレイヤーの前方宣言
@@ -335,49 +334,6 @@ public:
 
 	//行動
 	void Behavior(CPlayer* player) override;
-};
-
-//==========================
-//打ち上げ攻撃
-//==========================
-class CPlayerBehavior_Smash : public CPlayerBehavior
-{
-public:
-	//定数
-	static constexpr int DELAY_TIME{ 20 };		//遅延の時間
-	static constexpr int ADD_SLOWTIME{ 60 };	//追加のスロー時間
-
-	//メンバ関数
-	CPlayerBehavior_Smash() :
-		m_pImpact(nullptr),
-		m_bAttack(false),
-		m_bHit(false),
-		m_nDelayCount(0),
-		m_nSlowTime(0)
-	{}						//コンストラクタ
-	CPlayerBehavior_Smash(CPlayer* player);	//コンストラクタ
-	~CPlayerBehavior_Smash()  override
-	{
-		//メモリの破棄
-		if (m_pImpact != nullptr)
-		{
-			delete m_pImpact;
-			m_pImpact = nullptr;
-		}
-	}			//デストラクタ
-
-	//打ち上げ攻撃の行動
-	void Behavior(CPlayer* player) override;
-	
-	//取得用
-	bool GetHit() { return m_bHit; }//当たり判定
-
-private:
-	CImpactRange* m_pImpact;	//スマッシュの範囲
-	bool m_bAttack;				//攻撃をしたか
-	bool m_bHit;				//攻撃が当たったか
-	int m_nDelayCount;			//遅らせる時間
-	int m_nSlowTime;			//スロウの時間
 };
 
 //==========================

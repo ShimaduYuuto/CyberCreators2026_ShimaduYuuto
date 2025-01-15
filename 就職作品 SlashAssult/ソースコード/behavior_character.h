@@ -13,36 +13,6 @@
 #include "character.h"
 
 //==========================
-//移動ストラテジー
-//==========================
-class CMove
-{
-public:
-	virtual void Move(CCharacter* character) = 0;
-
-	//Move関数の中の関数
-	virtual void UpdatePos(CCharacter* character) = 0;
-	virtual void UpdateRot(CCharacter* character) = 0;
-};
-
-//==========================
-//共通の移動
-//==========================
-class CNormalMove : CMove
-{
-public:
-
-	//定数
-	static const float GRAVITY;			//重力の強さ
-
-	//メンバ関数
-	void Move(CCharacter* character) override;
-	virtual D3DXVECTOR3 Gravity(D3DXVECTOR3 move, const bool onstand);
-	virtual D3DXVECTOR3 AddPos(D3DXVECTOR3 pos, const D3DXVECTOR3 move);
-
-};
-
-//==========================
 //アクションストラテジー
 //==========================
 class CBaseAction

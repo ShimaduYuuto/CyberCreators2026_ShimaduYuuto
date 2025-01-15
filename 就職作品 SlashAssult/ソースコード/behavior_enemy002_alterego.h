@@ -18,21 +18,11 @@ class CEnemyActionAlterEgo_ChargeShot : public CEnemyAction_ChargeShot
 {
 public:
 
-	//コンストラクタ
+	//関数
 	CEnemyActionAlterEgo_ChargeShot(CEnemy* enemy) : CEnemyAction_ChargeShot(enemy){}	//コンストラクタ
 	~CEnemyActionAlterEgo_ChargeShot() {}												//デストラクタ
-
-	void Action(CEnemy* enemy) override
-	{
-		CEnemyAction_ChargeShot::Action(enemy);
-	}
-
-	//待機アクションを設定
-	void NextAction(CEnemy* enemy) override
-	{
-		SetNextAction(new CEnemyActionAlterEgo_ChargeShot(enemy));
-		enemy->Uninit();
-	}
+	void Action(CEnemy* enemy) override;												//行動
+	void NextAction(CEnemy* enemy) override;											//待機アクションを設定
 
 };
 

@@ -63,7 +63,17 @@ void CShadow::Update()
 	//位置の更新
 	D3DXVECTOR3 Pos = *m_TargetPos;		//ターゲットの位置を取得
 	D3DXVECTOR3 Rot = GetRot();			//向き
-	
+
+	Pos.y = 0.01f;		//高さだけ変更
+
+	//ゲームシーンならフィールドの高さに位置を補正
+	if (CManager::GetInstance()->GetScene()->GetMode() == CScene::MODE_GAME)
+	{
+		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+		pGame->GetGameField()->MeshCollision(Pos, Rot);
+		Pos.y += 1.0f;												//埋まらないように少しだけ高くする
+	}
+
 	//位置と向きを設定
 	SetPos(Pos);
 	SetRot(Rot);

@@ -19,7 +19,7 @@
 //==============================
 CEnemyAction_Chase::CEnemyAction_Chase(CEnemy* enemy)
 {
-	enemy->SetMotion(1);
+	//enemy->SetMotion(1);
 	enemy->SetCollisionProcess(true);
 }
 

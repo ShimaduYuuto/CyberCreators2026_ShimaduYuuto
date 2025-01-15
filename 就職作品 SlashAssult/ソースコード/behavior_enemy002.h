@@ -24,53 +24,18 @@ class CEnemyAction_Standby : public CEnemyAction
 {
 public:
 
-	//コンストラクタ
-	CEnemyAction_Standby(CEnemy* enemy) : m_nCoolTime(0)
-	{
-		enemy->SetMotion(0);
-		m_nCoolTime = COOL_TIME;
-		enemy->SetCollisionProcess(true);
-	};
-
 	//定数
-	static constexpr int COOL_TIME{90};		//クールタイムの時間
-	void Action(CEnemy* enemy) override;	//アクション
+	static constexpr int COOL_TIME{ 90 };			//クールタイムの時間
+	static constexpr int LIFE_FIRST_ATTACK{ 35 };	//１番目の攻撃を行う体力
 
-	//攻撃アクションを設定
-	void NextAction(CEnemy* enemy) override;
+	//関数
+	CEnemyAction_Standby(CEnemy* enemy);	//コンストラクタ
+	void Action(CEnemy* enemy) override;	//アクション
+	void NextAction(CEnemy* enemy) override;//攻撃アクションを設定
 
 private:
-	int m_nCoolTime;
-};
 
-//==========================
-//エネミー002の攻撃処理
-//==========================
-class CEnemyAction_Attack002 : public CEnemyAction_Attack
-{
-public:
-
-	//コンストラクタ
-	CEnemyAction_Attack002(CEnemy* enemy) : CEnemyAction_Attack(enemy)
-	{
-		//設定
-		GetAttackInstanse()->SetCollisionTime(65);
-		GetAttackInstanse()->SetEndTime(100.0f);
-		GetAttackInstanse()->SetDamageValue(1);
-		SetAttackLength(30.0f);
-		enemy->SetMotion(2);
-	};
-
-	void Action(CEnemy* enemy) override
-	{
-		CEnemyAction_Attack::Action(enemy);
-	};	//攻撃
-
-	//待機アクションを設定
-	void NextAction(CEnemy* enemy) override
-	{
-		SetNextAction(new CEnemyAction_Standby(enemy));
-	}
+	int m_nCoolTime;	//クールタイム
 };
 
 //==========================
@@ -84,20 +49,14 @@ public:
 	static constexpr int CREATE_BULLET_TIME{ 50 };	//弾の生成時間
 	static constexpr int END_TIME{ 300 };			//アクション終了時間
 	static constexpr float ADD_SCALE_VALUE{ 0.03f };//スケールの加算量
+	static constexpr float BULLET_LENGTH{ 20.0f };	//弾の生成する距離
+	static constexpr float BULLET_SPEED{ 3.0f };	//弾速
 
-	//コンストラクタ
-	CEnemyAction_ChargeShot(CEnemy* enemy);
-
-	//デストラクタ
-	~CEnemyAction_ChargeShot();
-
+	//関数
+	CEnemyAction_ChargeShot(CEnemy* enemy);	//コンストラクタ
+	~CEnemyAction_ChargeShot();				//デストラクタ
 	void Action(CEnemy* enemy) override;	//攻撃
-
-	//待機アクションを設定
-	void NextAction(CEnemy* enemy) override
-	{
-		SetNextAction(new CEnemyAction_Standby(enemy));
-	}
+	void NextAction(CEnemy* enemy) override;//待機アクションを設定
 
 private:
 	int m_nChargeCount;				//チャージのカウント
@@ -114,16 +73,10 @@ public:
 
 	static constexpr int DIRECTION_TIME{ 300 };	//演出の時間
 
-	//コンストラクタ
-	CEnemyAction_Direction(CEnemy* enemy);
-
+	//関数
+	CEnemyAction_Direction(CEnemy* enemy);	//コンストラクタ
 	void Action(CEnemy* enemy) override;	//演出
-
-	//追いかけるアクションを設定
-	void NextAction(CEnemy* enemy) override
-	{
-		SetNextAction(new CEnemyAction_Standby(enemy));
-	}
+	void NextAction(CEnemy* enemy) override;//スタンバイアクションを設定
 
 private:
 	int m_nCount;	//カウント用
@@ -136,12 +89,13 @@ class CEnemyAction_Direction_Destroy : public CEnemyAction
 {
 public:
 
+	//定数
 	static constexpr int DIRECTION_TIME{ 500 };	//演出の時間
+	static const D3DXVECTOR3 CAMERA_POSV;		//カメラ視点の位置
 
-	//コンストラクタ
-	CEnemyAction_Direction_Destroy(CEnemy* enemy);
-
-	void Action(CEnemy* enemy) override;	//演出
+	//関数
+	CEnemyAction_Direction_Destroy(CEnemy* enemy);	//コンストラクタ
+	void Action(CEnemy* enemy) override;			//演出
 
 private:
 	int m_nCount;	//カウント用
@@ -167,20 +121,12 @@ public:
 	static constexpr int END_TIME{ 300 };					//アクション終了時間
 	static constexpr float ADD_SCALE_VALUE{ 0.03f };		//スケールの加算量
 	
-	//コンストラクタ
-	CEnemyAction_AlterEgoAttack(CEnemy* enemy);
-	~CEnemyAction_AlterEgoAttack();
-
-	void Action(CEnemy* enemy) override;	//分身後に射撃
-
-	//待機アクションを設定
-	void NextAction(CEnemy* enemy) override
-	{
-		SetNextAction(new CEnemyAction_Standby(enemy));
-	}
-
-	//分身のポインタを削除
-	void Erase(CEnemy002_AlterEgo* enemy);
+	//関数
+	CEnemyAction_AlterEgoAttack(CEnemy* enemy);	//コンストラクタ
+	~CEnemyAction_AlterEgoAttack();				//デストラクタ
+	void Action(CEnemy* enemy) override;		//分身後に射撃
+	void NextAction(CEnemy* enemy) override;	//待機アクションを設定
+	void Erase(CEnemy002_AlterEgo* enemy);		//分身のポインタを削除
 
 private:
 

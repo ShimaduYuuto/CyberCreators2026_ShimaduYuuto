@@ -18,19 +18,13 @@ class CEnemyAction_Chase001 : public CEnemyAction_Chase
 {
 public:
 
-	//コンストラクタ
-	CEnemyAction_Chase001(CEnemy* enemy);
-
 	//定数
 	static constexpr float VALUE_MOVE = 1.0f;	//移動量
 
-	void Action(CEnemy* enemy) override
-	{
-		CEnemyAction_Chase::Action(enemy);
-	};	//アクション
-
-	//攻撃アクションを設定
-	void NextAction(CEnemy* enemy) override;
+	//関数
+	CEnemyAction_Chase001(CEnemy* enemy);	//コンストラクタ
+	void Action(CEnemy* enemy) override;	//アクション
+	void NextAction(CEnemy* enemy) override;//攻撃アクションを設定
 };
 
 //==========================
@@ -40,19 +34,16 @@ class CEnemyAction_Attack001 : public CEnemyAction_Attack
 {
 public:
 
-	//コンストラクタ
-	CEnemyAction_Attack001(CEnemy* enemy);
+	//定数
+	static constexpr float START_COLLISON_TIME{ 45.0f };	//当たり判定が出始めるフレーム
+	static constexpr float END_TIME{ 100.0f };				//攻撃が終了するフレーム
+	static constexpr int DAMAGE_VALUE{ 1 };					//与えるダメージ量
+	static constexpr float ATTACK_LENGTH{ 50.0f };			//攻撃が発生する距離
 
-	void Action(CEnemy* enemy) override
-	{
-		CEnemyAction_Attack::Action(enemy);
-	};	//攻撃
-
-	//追いかけるアクションを設定
-	void NextAction(CEnemy* enemy) override
-	{
-		SetNextAction(new CEnemyAction_Chase001(enemy));
-	}
+	//関数
+	CEnemyAction_Attack001(CEnemy* enemy);		//コンストラクタ
+	void Action(CEnemy* enemy) override;		//攻撃
+	void NextAction(CEnemy* enemy) override;	//追いかけるアクションを設定
 };
 
 #endif

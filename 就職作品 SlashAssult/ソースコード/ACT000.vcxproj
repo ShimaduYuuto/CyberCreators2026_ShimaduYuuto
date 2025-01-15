@@ -97,6 +97,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>precompile.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>precompile.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(ProjectDir)state</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -114,6 +115,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>precompile.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>precompile.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(ProjectDir)state</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -168,7 +170,6 @@
     <ClInclude Include="behavior_enemy002_alterego.h" />
     <ClInclude Include="behavior_enemy003.h" />
     <ClInclude Include="behavior_player.h" />
-    <ClInclude Include="billboardeffect.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="cleartime.h" />
@@ -214,8 +215,6 @@
     <ClInclude Include="gauge_slow.h" />
     <ClInclude Include="gimmick.h" />
     <ClInclude Include="gimmickmanager.h" />
-    <ClInclude Include="impactmesh.h" />
-    <ClInclude Include="impactrange.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="letterbox.h" />
     <ClInclude Include="light.h" />
@@ -250,10 +249,8 @@
     <ClInclude Include="shadow.h" />
     <ClInclude Include="shield.h" />
     <ClInclude Include="sky.h" />
-    <ClInclude Include="smash.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="spawn_enemy.h" />
-    <ClInclude Include="spawn_shield.h" />
     <ClInclude Include="state.h" />
     <ClInclude Include="state_enemy.h" />
     <ClInclude Include="state_enemy000.h" />
@@ -301,9 +298,9 @@
     <ClCompile Include="behavior_enemy000.cpp" />
     <ClCompile Include="behavior_enemy001.cpp" />
     <ClCompile Include="behavior_enemy002.cpp" />
+    <ClCompile Include="behavior_enemy002_alterego.cpp" />
     <ClCompile Include="behavior_enemy003.cpp" />
     <ClCompile Include="behavior_player.cpp" />
-    <ClCompile Include="billboardeffect.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="cleartime.cpp" />
@@ -349,8 +346,6 @@
     <ClCompile Include="gauge_slow.cpp" />
     <ClCompile Include="gimmick.cpp" />
     <ClCompile Include="gimmickmanager.cpp" />
-    <ClCompile Include="impactmesh.cpp" />
-    <ClCompile Include="impactrange.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="letterbox.cpp" />
     <ClCompile Include="light.cpp" />

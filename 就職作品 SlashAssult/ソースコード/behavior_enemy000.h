@@ -18,22 +18,13 @@ class CEnemyAction_Chase000 : public CEnemyAction_Chase
 {
 public:
 
-	//コンストラクタ
-	CEnemyAction_Chase000(CEnemy* enemy) : CEnemyAction_Chase(enemy)
-	{
-		enemy->SetMotion(1);
-	};
-
 	//定数
 	static constexpr float VALUE_MOVE = 1.0f;	//移動量
 
-	void Action(CEnemy* enemy) override
-	{
-		CEnemyAction_Chase::Action(enemy);
-	};	//アクション
-
-	//攻撃アクションを設定
-	void NextAction(CEnemy* enemy) override;
+	//関数
+	CEnemyAction_Chase000(CEnemy* enemy);	//コンストラクタ
+	void Action(CEnemy* enemy) override;	//アクション
+	void NextAction(CEnemy* enemy) override;//攻撃アクションを設定
 };
 
 //==========================
@@ -43,26 +34,15 @@ class CEnemyAction_Attack000 : public CEnemyAction_Attack
 {
 public:
 
-	//コンストラクタ
-	CEnemyAction_Attack000(CEnemy* enemy) : CEnemyAction_Attack(enemy)
-	{
-		//設定
-		GetAttackInstanse()->SetCollisionTime(65);
-		GetAttackInstanse()->SetEndTime(100.0f);
-		GetAttackInstanse()->SetDamageValue(1);
-		SetAttackLength(30.0f);
-		enemy->SetMotion(2);
-	};
+	//定数
+	static constexpr float START_COLLISON_TIME{ 65.0f };	//当たり判定が出始めるフレーム
+	static constexpr float END_TIME{ 100.0f };				//攻撃が終了するフレーム
+	static constexpr int DAMAGE_VALUE{ 1 };					//与えるダメージ量
+	static constexpr float ATTACK_LENGTH{ 30.0f };			//攻撃が発生する距離
 
-	void Action(CEnemy* enemy) override
-	{
-		CEnemyAction_Attack::Action(enemy);
-	};	//攻撃
-
-	//追いかけるアクションを設定
-	void NextAction(CEnemy* enemy) override
-	{
-		SetNextAction(new CEnemyAction_Chase000(enemy));
-	}
+	//関数
+	CEnemyAction_Attack000(CEnemy* enemy);	//コンストラクタ
+	void Action(CEnemy* enemy) override;	//攻撃
+	void NextAction(CEnemy* enemy) override;//追いかけるアクションを設定
 };
 #endif

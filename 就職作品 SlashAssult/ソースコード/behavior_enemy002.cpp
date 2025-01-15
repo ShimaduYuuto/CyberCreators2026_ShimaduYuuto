@@ -20,6 +20,16 @@
 //======================================================================
 
 //====================================
+//コンストラクタ
+//====================================
+CEnemyAction_Standby::CEnemyAction_Standby(CEnemy* enemy) : m_nCoolTime(0)
+{
+	enemy->SetMotion(CEnemy002::ENEMY002MOTION_NORMAL);
+	m_nCoolTime = COOL_TIME;
+	enemy->SetCollisionProcess(true);
+};
+
+//====================================
 //アクション(待機)
 //====================================
 void CEnemyAction_Standby::Action(CEnemy* enemy)
@@ -29,17 +39,7 @@ void CEnemyAction_Standby::Action(CEnemy* enemy)
 
 	if (m_nCoolTime < 0)
 	{
-		//残り体力に応じて行動を変化
-		if (enemy->GetLife() > 35)
-		{
-			//攻撃する
-			SetNextAction(new CEnemyAction_ChargeShot(enemy));
-		}
-		else
-		{
-			//攻撃する
-			SetNextAction(new CEnemyAction_AlterEgoAttack(enemy));
-		}
+		NextAction(enemy);
 	}
 }
 
@@ -48,8 +48,17 @@ void CEnemyAction_Standby::Action(CEnemy* enemy)
 //====================================
 void CEnemyAction_Standby::NextAction(CEnemy* enemy)
 {
-	//攻撃を設定
-	SetNextAction(new CEnemyAction_Attack002(enemy));
+	//残り体力に応じて行動を変化
+	if (enemy->GetLife() > LIFE_FIRST_ATTACK)
+	{
+		//攻撃する
+		SetNextAction(new CEnemyAction_ChargeShot(enemy));
+	}
+	else
+	{
+		//攻撃する
+		SetNextAction(new CEnemyAction_AlterEgoAttack(enemy));
+	}
 }
 
 //======================================================================
@@ -62,7 +71,7 @@ void CEnemyAction_Standby::NextAction(CEnemy* enemy)
 CEnemyAction_ChargeShot::CEnemyAction_ChargeShot(CEnemy* enemy) : m_nChargeCount(0), m_pBullet(nullptr), m_pEffect(nullptr)
 {
 	//設定
-	enemy->SetMotion(4);
+	enemy->SetMotion(CEnemy002::ENEMY002MOTION_CHARGESHOT);	//モーション
 };
 
 //====================================
@@ -126,13 +135,13 @@ void CEnemyAction_ChargeShot::Action(CEnemy* enemy)
 		{
 			//スケールを大きくする
 			m_pBullet->AddSizeRate(ADD_SCALE_VALUE);
-			m_pBullet->SetPos({ enemy->GetCollision()->GetPos().x + sinf(fAngle) * 20.0f * m_pBullet->GetSizeRate() , enemy->GetCollision()->GetPos().y, enemy->GetCollision()->GetPos().z + cosf(fAngle) * 20.0f * m_pBullet->GetSizeRate() });
+			m_pBullet->SetPos({ enemy->GetCollision()->GetPos().x + sinf(fAngle) * BULLET_LENGTH * m_pBullet->GetSizeRate() , enemy->GetCollision()->GetPos().y, enemy->GetCollision()->GetPos().z + cosf(fAngle) * BULLET_LENGTH * m_pBullet->GetSizeRate() });
 
 			//チャージ時間を終えたら発射
 			if (m_nChargeCount > CHARGE_TIME)
 			{
 				//向いている方向に撃つ
-				m_pBullet->SetMove({ sinf(fAngle) * 3.0f, 0.0f, cosf(fAngle) * 3.0f });
+				m_pBullet->SetMove({ sinf(fAngle) * BULLET_SPEED, 0.0f, cosf(fAngle) * BULLET_SPEED });
 				m_pBullet->SetShooting(true);
 
 				//SEの設定
@@ -166,6 +175,14 @@ void CEnemyAction_ChargeShot::Action(CEnemy* enemy)
 	}
 }
 
+//====================================
+//次の行動を設定
+//====================================
+void CEnemyAction_ChargeShot::NextAction(CEnemy* enemy)
+{
+	SetNextAction(new CEnemyAction_Standby(enemy));
+}
+
 //======================================================================
 //登場演出
 //======================================================================
@@ -176,7 +193,7 @@ void CEnemyAction_ChargeShot::Action(CEnemy* enemy)
 CEnemyAction_Direction::CEnemyAction_Direction(CEnemy* enemy) :
 	m_nCount(0)
 {
-	enemy->SetMotion(6);
+	enemy->SetMotion(CEnemy002::ENEMY002MOTION_DIRECTION);
 
 	//ゲームシーンに演出を設定
 	CGame* pGame = nullptr;
@@ -201,6 +218,14 @@ void CEnemyAction_Direction::Action(CEnemy* enemy)
 	}
 }
 
+//====================================
+//次の行動を設定
+//====================================
+void CEnemyAction_Direction::NextAction(CEnemy* enemy)
+{
+	SetNextAction(new CEnemyAction_Standby(enemy));
+}
+
 //======================================================================
 //分身攻撃
 //======================================================================
@@ -217,7 +242,8 @@ CEnemyAction_AlterEgoAttack::CEnemyAction_AlterEgoAttack(CEnemy* enemy) :
 	m_pEffect(nullptr),
 	m_nChargeCount(0)
 {
-	enemy->SetMotion(0);
+	//設定
+	enemy->SetMotion(CEnemy002::ENEMY002MOTION_NORMAL);	//モーション
 
 	//分身のポインタを初期化
 	for (int i = 0; i < NUM_ALTEREGO; i++)
@@ -296,13 +322,13 @@ void CEnemyAction_AlterEgoAttack::Action(CEnemy* enemy)
 			m_bCreateAlterEgo = true;
 			std::random_device Random;
 			float fRandom = (Random() % 628) * 0.01f;
-			enemy->SetPos(D3DXVECTOR3(sinf(fRandom) * 200.0f, 0.0f, cosf(fRandom) * 200.0f) + enemy->GetStartPos());
-			enemy->SetMotion(4);
+			enemy->SetPos(D3DXVECTOR3(sinf(fRandom) * CEnemyAction_ChargeShot::BULLET_LENGTH, 0.0f, cosf(fRandom) * CEnemyAction_ChargeShot::BULLET_LENGTH) + enemy->GetStartPos());
+			enemy->SetMotion(CEnemy002::ENEMY002MOTION_CHARGESHOT);
 
 			//分身を生成
 			for (int i = 0; i < NUM_ALTEREGO; i++)
 			{
-				m_pAlterEgo[i] = CEnemy002_AlterEgo::Create(D3DXVECTOR3(sinf(((D3DX_PI * 2.0f) / 4) * (i + 1) + fRandom) * 200.0f, 0.0f, cosf(((D3DX_PI * 2.0f) / 4) * (i + 1) + fRandom) * 200.0f) + enemy->GetStartPos(), this);
+				m_pAlterEgo[i] = CEnemy002_AlterEgo::Create(D3DXVECTOR3(sinf(((D3DX_PI * 2.0f) / (NUM_ALTEREGO + 1)) * (i + 1) + fRandom) * 200.0f, 0.0f, cosf(((D3DX_PI * 2.0f) / (NUM_ALTEREGO + 1)) * (i + 1) + fRandom) * 200.0f) + enemy->GetStartPos(), this);
 			}
 		}
 
@@ -362,13 +388,13 @@ void CEnemyAction_AlterEgoAttack::Action(CEnemy* enemy)
 		{
 			//スケールを大きくする
 			m_pBullet->AddSizeRate(ADD_SCALE_VALUE);
-			m_pBullet->SetPos({ enemy->GetCollision()->GetPos().x + sinf(fAngle) * 20.0f * m_pBullet->GetSizeRate() , enemy->GetCollision()->GetPos().y, enemy->GetCollision()->GetPos().z + cosf(fAngle) * 20.0f * m_pBullet->GetSizeRate() });
+			m_pBullet->SetPos({ enemy->GetCollision()->GetPos().x + sinf(fAngle) * CEnemyAction_ChargeShot::BULLET_LENGTH * m_pBullet->GetSizeRate() , enemy->GetCollision()->GetPos().y, enemy->GetCollision()->GetPos().z + cosf(fAngle) * CEnemyAction_ChargeShot::BULLET_LENGTH * m_pBullet->GetSizeRate() });
 
 			//チャージ時間を終えたら発射
 			if (m_nChargeCount > CHARGE_TIME)
 			{
 				//向いている方向に撃つ
-				m_pBullet->SetMove({ sinf(fAngle) * 3.0f, 0.0f, cosf(fAngle) * 3.0f });
+				m_pBullet->SetMove({ sinf(fAngle) * CEnemyAction_ChargeShot::BULLET_SPEED, 0.0f, cosf(fAngle) * CEnemyAction_ChargeShot::BULLET_SPEED });
 				m_pBullet->SetShooting(true);
 
 				//エフェクトの破棄
@@ -433,9 +459,20 @@ void CEnemyAction_AlterEgoAttack::Erase(CEnemy002_AlterEgo* enemy)
 	}
 }
 
+//====================================
+//次の行動を設定
+//====================================
+void CEnemyAction_AlterEgoAttack::NextAction(CEnemy* enemy)
+{
+	SetNextAction(new CEnemyAction_Standby(enemy));
+}
+
 //======================================================================
 //撃破演出
 //======================================================================
+
+//定数
+const D3DXVECTOR3 CEnemyAction_Direction_Destroy::CAMERA_POSV = { 0.0f, 0.0f, -200.0f };
 
 //====================================
 //コンストラクタ
@@ -443,13 +480,14 @@ void CEnemyAction_AlterEgoAttack::Erase(CEnemy002_AlterEgo* enemy)
 CEnemyAction_Direction_Destroy::CEnemyAction_Direction_Destroy(CEnemy* enemy) :
 	m_nCount(0)
 {
-	enemy->SetMotion(7);
+	enemy->SetMotion(CEnemy002::ENEMY002MOTION_DEATHDIRECTION);
 
 	//ゲームシーンに演出を設定
 	CGame* pGame = nullptr;
-	pGame = (CGame*)CManager::GetInstance()->GetScene();		//ゲームシーンの取得
+	pGame = (CGame*)CManager::GetInstance()->GetScene();			//ゲームシーンの取得
 	pGame->SetDirection(CDirection::DIRECTIONTYPE_BOSS_DESTROY);	//演出の設定
 
+	//固有の設定
 	CEnemy002* pEnemy002 = (CEnemy002*)enemy;
 	pEnemy002->SetMaterialized(true);
 	pEnemy002->SetPos(pEnemy002->GetPos() + D3DXVECTOR3(0.0f, 1.0f, 0.0f));
@@ -466,8 +504,9 @@ void CEnemyAction_Direction_Destroy::Action(CEnemy* enemy)
 	//演出の時間が終わったら行動開始
 	m_nCount++;
 
+	//カメラの位置を設定
 	CManager::GetInstance()->GetCamera()->SetPosR(enemy->GetCollision()->GetPos());
-	CManager::GetInstance()->GetCamera()->SetPosV(enemy->GetCollision()->GetPos() + D3DXVECTOR3(0.0f, 0.0f, -200.0f));
+	CManager::GetInstance()->GetCamera()->SetPosV(enemy->GetCollision()->GetPos() + CAMERA_POSV);
 	
 	if (m_nCount == CDirection_Boss_Destroy::START_SHAKE_FRAME)
 	{
