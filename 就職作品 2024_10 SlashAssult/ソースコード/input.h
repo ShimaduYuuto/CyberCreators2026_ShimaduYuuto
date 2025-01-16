@@ -48,6 +48,7 @@ public:
 	bool GetTrigger(int nKey);	//トリガー状態を取得
 	bool GetRerease(int nKey);	//リリース状態を取得
 	bool GetRepeate(int nKey);	//リピート状態を取得
+	bool GetAnyTrigger();		//トリガー情報を取得
 
 private:
 	BYTE m_aKeyState[MAX_KEY];			//キーの状態
@@ -128,6 +129,7 @@ public:
 	bool GetTrigger(JOYKEY key);	//トリガー状態を取得
 	bool GetRerease(JOYKEY key);	//リリース状態を取得
 	bool GetRepeate(JOYKEY key);	//リピート状態を取得
+	bool GetAnyTrigger();			//トリガー情報を取得
 	XINPUT_STATE* GetXInputState(); //コントローラーの入力情報の取得
 	STICKINPUT GetStick();			//スティックの情報を取得
 	WORD GetJoypadStick(SHORT sThumbX, SHORT sThumbY, SHORT sDeadZone);
@@ -186,6 +188,7 @@ public:
 	bool GetPress(MOUSEBUTTON nKey);	//プレス
 	bool GetTrigger(MOUSEBUTTON nKey);	//トリガー
 	bool GetRerease(MOUSEBUTTON nKey);	//リリース
+	bool GetAnyTrigger();				//トリガー情報を取得
 	D3DXVECTOR3 GetMove();				//移動量
 	D3DXVECTOR2 GetPos();				//位置
 

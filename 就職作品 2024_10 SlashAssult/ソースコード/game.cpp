@@ -41,7 +41,8 @@ CGame::CGame() :
 	m_pEnemyBulletManager(nullptr),
 	m_pDirection(nullptr),
 	m_bBattle(false),
-	m_bGameOver(false)
+	m_bGameOver(false),
+	m_ControllerUIType(CUi_GameGuide::CONTROLLER_KEYBOARDMAUSE)
 {
 	
 }
@@ -116,12 +117,10 @@ HRESULT CGame::Init()
 
 	//ステージに配置するオブジェクト
 	CSky::Create();
-	ModelLoad();
 
-	//ゲーム内で表示するUI
-	CUi_GameGuide::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.2f, SCREEN_HEIGHT * 0.9f, 0.0f), CUi_GameGuide::GUIDE_ATTACK, D3DXVECTOR3(200.0f, 80.0f, 0.0f));
-	CUi_GameGuide::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.4f, SCREEN_HEIGHT * 0.9f, 0.0f), CUi_GameGuide::GUIDE_GUARD, D3DXVECTOR3(200.0f, 80.0f, 0.0f));
-	CUi_GameGuide::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.7f, SCREEN_HEIGHT * 0.9f, 0.0f), CUi_GameGuide::GUIDE_DASH, D3DXVECTOR3(400.0f, 100.0f, 0.0f));
+	//読み込み処理
+	ModelLoad();
+	GuideUILoad();
 
 	//クリアタイムの初期化
 	CClearTime::GetInstance()->ResetTime();
@@ -270,6 +269,21 @@ void CGame::Update()
 	//マネージャーのインスタンスを取得
 	CManager* pManager = CManager::GetInstance();
 
+	//ガイドUIの確認
+	if (pManager->GetJoypad()->GetAnyTrigger() ||
+		pManager->GetJoypad()->GetStick().afTplDiameter[CInputMouse::MOUSEBUTTON_LEFT] > 0.0f ||
+		pManager->GetJoypad()->GetStick().afTplDiameter[CInputMouse::MOUSEBUTTON_RIGHT] > 0.0f)
+	{
+		m_ControllerUIType = CUi_GameGuide::CONTROLLER_JOYPAD;
+	}
+	if (pManager->GetKeyboard()->GetAnyTrigger() ||
+		pManager->GetMouse()->GetAnyTrigger() ||
+		pManager->GetMouse()->GetMove().x > 0.0f ||
+		pManager->GetMouse()->GetMove().y > 0.0f)
+	{
+		m_ControllerUIType = CUi_GameGuide::CONTROLLER_KEYBOARDMAUSE;
+	}
+
 	//フェードが終わっていたら更新
 	if (CManager::GetInstance()->GetFade()->GetEnd())
 	{
@@ -306,6 +320,77 @@ void CGame::Draw()
 void CGame::Load()
 {
 
+}
+
+//============================
+//ガイドUIの情報
+//============================
+void CGame::GuideUILoad()
+{
+	// ファイルの読み込み
+	FILE* pFile = fopen("data\\FILE\\gameui.txt", "r");
+
+	if (pFile == NULL)
+	{// 種類毎の情報のデータファイルが開けなかった場合、
+	 //処理を終了する
+		return;
+	}
+
+	char aDataSearch[256];	// データ検索用
+	int nDataCount = 0;		//データのカウント
+
+	// ENDが見つかるまで読み込みを繰り返す
+	while (1)
+	{
+		fscanf(pFile, "%s", aDataSearch);	// 検索
+
+		if (!strcmp(aDataSearch, "END_SCREPT"))
+		{// 読み込みを終了
+			fclose(pFile);
+			break;
+		}
+
+		if (aDataSearch[0] == '#')
+		{// 折り返す
+			continue;
+		}
+
+		if (!strcmp(aDataSearch, "INFO"))
+		{
+			D3DXVECTOR3 Pos = { 0.0f, 0.0f, 0.0f };
+			D3DXVECTOR3 Size = { 0.0f, 0.0f, 0.0f };
+
+			while (1)
+			{
+				fscanf(pFile, "%s", aDataSearch);	// 検索
+
+				//読み込みの終了
+				if (!strcmp(aDataSearch, "END_INFO"))
+				{
+					//UIの生成
+					CUi_GameGuide::Create(Pos, static_cast<CUi_GameGuide::GUIDE>(nDataCount), Size);
+					nDataCount++;
+					break;
+				}
+
+				//位置
+				if (!strcmp(aDataSearch, "POS"))
+				{
+					fscanf(pFile, "%f", &Pos.x);
+					fscanf(pFile, "%f", &Pos.y);
+					fscanf(pFile, "%f", &Pos.z);
+				}
+
+				//サイズ
+				if (!strcmp(aDataSearch, "SIZE"))
+				{
+					fscanf(pFile, "%f", &Size.x);
+					fscanf(pFile, "%f", &Size.y);
+					fscanf(pFile, "%f", &Size.z);
+				}
+			}
+		}
+	}
 }
 
 //============================

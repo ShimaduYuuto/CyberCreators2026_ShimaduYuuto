@@ -12,7 +12,7 @@
 #include "object2D.h"
 #include "animation.h"
 
-//ラッシュチャンスのUIクラス
+//ゲームのUIクラス
 class CUi_GameGuide : public CObject2D
 {
 public:
@@ -26,8 +26,16 @@ public:
 		GUIDE_MAX,
 	}GUIDE;
 
+	//コントローラの種類
+	typedef enum
+	{
+		CONTROLLER_KEYBOARDMAUSE = 0,
+		CONTROLLER_JOYPAD,
+		CONTROLLER_MAX,
+	}CONTROLLER;
+
 	//定数
-	static const std::string TEXTURE_PATH[GUIDE_MAX];	//テクスチャパス
+	static const std::string TEXTURE_PATH[CONTROLLER_MAX][GUIDE_MAX];	//テクスチャパス
 
 	//メンバ関数
 	CUi_GameGuide(int nPriority = 3);		//コンストラクタ

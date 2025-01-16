@@ -28,7 +28,7 @@ const D3DXVECTOR3 CPlayerBehavior_Attack::POS_OFFSET{ 0.0f, 20.0f, 30.0f };
 //=========================
 CPlayerBehavior_Move::CPlayerBehavior_Move(CPlayer* player)
 {
-	player->SetEnableGravity(true);
+	player->SetEnableGravity(true);	//重力を受ける
 }
 
 //=========================
@@ -45,7 +45,8 @@ void CPlayerBehavior_Move::Behavior(CPlayer* player)
 	CXfile* pCXfile = CManager::GetInstance()->GetXfile();
 
 	//ジャンプ
-	if ((CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_SPACE) == true || CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_A)) && player->GetOnStand())
+	if ((CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_SPACE) == true ||
+		 CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_A)) && player->GetOnStand())
 	{//SPACEが押された場合
 		move.y += JUMP_SPEED;
 		player->SetOnStand(false);
@@ -84,15 +85,18 @@ D3DXVECTOR3 CPlayerBehavior_Move::UpdateMove(CPlayer* player, D3DXVECTOR3& Rotgo
 	//動いたかの判定用
 	bool bMove = false;
 
-	if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_A) || CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_LEFT))
+	if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_A)/* ||
+		CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_LEFT)*/)
 	{//Aキーが押された場合
-		if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_W) || CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_UP))
+		if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_W)/* ||
+			CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_UP)*/)
 		{
 			move.x += sinf(D3DX_PI * -0.75f - pCamera->GetRot().y) * MOVE_SPEED;
 			move.z -= cosf(D3DX_PI * -0.75f - pCamera->GetRot().y) * MOVE_SPEED;
 			Rotgoal.y = D3DX_PI * 0.75f + pCamera->GetRot().y;
 		}
-		else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_S) || CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_DOWN))
+		else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_S)/* ||
+				 CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_DOWN)*/)
 		{
 			move.x += sinf(D3DX_PI * -0.25f - pCamera->GetRot().y) * MOVE_SPEED;
 			move.z -= cosf(D3DX_PI * -0.25f - pCamera->GetRot().y) * MOVE_SPEED;
@@ -107,16 +111,19 @@ D3DXVECTOR3 CPlayerBehavior_Move::UpdateMove(CPlayer* player, D3DXVECTOR3& Rotgo
 
 		bMove = true;	//動いた判定
 	}
-	else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_D) || CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_RIGHT))
+	else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_D)/* ||
+			 CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_RIGHT)*/)
 	{//Dキーが押された場合
 
-		if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_W) || CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_UP))
+		if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_W)/* ||
+			CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_UP)*/)
 		{
 			move.x += sinf(D3DX_PI * 0.75f - pCamera->GetRot().y) * MOVE_SPEED;
 			move.z -= cosf(D3DX_PI * 0.75f - pCamera->GetRot().y) * MOVE_SPEED;
 			Rotgoal.y = D3DX_PI * -0.75f + pCamera->GetRot().y;
 		}
-		else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_S) || CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_DOWN))
+		else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_S)/* ||
+				 CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_DOWN)*/)
 		{
 			move.x += sinf(D3DX_PI * 0.25f - pCamera->GetRot().y) * MOVE_SPEED;
 			move.z -= cosf(D3DX_PI * 0.25f - pCamera->GetRot().y) * MOVE_SPEED;
@@ -129,9 +136,10 @@ D3DXVECTOR3 CPlayerBehavior_Move::UpdateMove(CPlayer* player, D3DXVECTOR3& Rotgo
 			Rotgoal.y = -(D3DX_PI * 0.5f - pCamera->GetRot().y);
 		}
 
-		bMove = true;								//動いた判定
+		bMove = true;	//動いた判定
 	}
-	else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_W) || CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_UP))
+	else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_W)/* ||
+			 CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_UP)*/)
 	{//Wキーが押された場合
 		{
 			move.z -= cosf(D3DX_PI + pCamera->GetRot().y) * MOVE_SPEED;
@@ -139,9 +147,10 @@ D3DXVECTOR3 CPlayerBehavior_Move::UpdateMove(CPlayer* player, D3DXVECTOR3& Rotgo
 			Rotgoal.y = D3DX_PI + pCamera->GetRot().y;
 		}
 
-		bMove = true;								//動いた判定
+		bMove = true;	//動いた判定
 	}
-	else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_S) || CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_DOWN))
+	else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_S)/* ||
+			 CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_DOWN)*/)
 	{//Sキーが押された場合
 		{
 			move.z -= cosf(pCamera->GetRot().y) * MOVE_SPEED;
@@ -149,7 +158,18 @@ D3DXVECTOR3 CPlayerBehavior_Move::UpdateMove(CPlayer* player, D3DXVECTOR3& Rotgo
 			Rotgoal.y = pCamera->GetRot().y;
 		}
 
-		bMove = true;								//動いた判定
+		bMove = true;	//動いた判定
+	}
+
+	//スティックが倒れていたらその方向に進む
+	if (CManager::GetInstance()->GetJoypad()->GetStick().afTplDiameter[CInputJoypad::STICKTYPE_LEFT] > 0.001f)
+	{
+		float fAngle = CManager::GetInstance()->GetJoypad()->GetStick().afAngle[CInputJoypad::STICKTYPE_LEFT];
+		move.z += cosf(pCamera->GetRot().y + -fAngle + D3DX_PI) * MOVE_SPEED;
+		move.x += sinf(pCamera->GetRot().y + -fAngle + D3DX_PI) * MOVE_SPEED;
+		Rotgoal.y = pCamera->GetRot().y + -fAngle;
+
+		bMove = true;	//動いた判定
 	}
 
 	//動いたかの判定
@@ -180,7 +200,8 @@ D3DXVECTOR3 CPlayerBehavior_Move::UpdateMove(CPlayer* player, D3DXVECTOR3& Rotgo
 void CPlayerBehavior_Move::Action(CPlayer* player)
 {
 	//左シフトでダッシュを設定
-	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_LSHIFT) || CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_RB))
+	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_LSHIFT) ||
+		CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_RB))
 	{
 		//アクションをしていないなら
 		if (GetNextBehavior() == nullptr)
@@ -189,7 +210,7 @@ void CPlayerBehavior_Move::Action(CPlayer* player)
 			if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
 			{
 				//ゲームシーンの取得
-				CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+				CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 				//ロックオン相手の確認
 				if (pGame->GetLockon() != nullptr)
@@ -254,7 +275,7 @@ void CPlayerBehavior_Move::Action(CPlayer* player)
 			if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
 			{
 				//ゲームシーンの取得
-				CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+				CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 				//ロックオンの設定
 				pGame->SetLockon(true);
@@ -274,7 +295,7 @@ CPlayerBehavior_Dash::CPlayerBehavior_Dash(CPlayer* player) :
 	m_bFirst(true),
 	m_DashSpeed()
 {
-	//モーションの設定をする予定
+	//設定
 	player->SetMotion(CPlayer::PLAYERMOTION_JUMP);
 	player->SetOnStand(false);		//立っていない状態
 	player->SetEnableGravity(false);//重力を受けない
@@ -287,7 +308,8 @@ CPlayerBehavior_Dash::CPlayerBehavior_Dash(CPlayer* player) :
 void CPlayerBehavior_Dash::Behavior(CPlayer* player)
 {
 	//押している間ダッシュする
-	if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_LSHIFT) || CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_RB))
+	if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_LSHIFT) ||
+		CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_RB))
 	{
 		//返す用の変数
 		D3DXVECTOR3 move = { 0.0f, 0.0f, 0.0f };
@@ -351,7 +373,8 @@ void CPlayerBehavior_Dash::Behavior(CPlayer* player)
 		//移動量の設定
 		player->SetMove({ move.x , move.y, move.z });
 	}
-	else if(CManager::GetInstance()->GetKeyboard()->GetRerease(DIK_LSHIFT) || CManager::GetInstance()->GetJoypad()->GetRerease(CInputJoypad::JOYKEY_B)) //離したらダッシュを終了
+	else if(CManager::GetInstance()->GetKeyboard()->GetRerease(DIK_LSHIFT) ||
+			CManager::GetInstance()->GetJoypad()->GetRerease(CInputJoypad::JOYKEY_B)) //離したらダッシュを終了
 	{
 		//移動状態にする
 		SetNextBehavior(new CPlayerBehavior_Move(player));
@@ -526,13 +549,15 @@ void CPlayerBehavior_Attack::Behavior(CPlayer* player)
 //============================
 void CPlayerBehavior_Attack::Damage(CPlayer* player, CEnemy* enemy, int damage)
 {
-	//ダメージ
+	//ダメージが与えられたらヒット処理
 	if (enemy->SetDamage(damage, player->GetRot().y))
 	{
 		//ヒット時の処理
 		CEffect_HitAttack::Create(enemy->GetCollision()->GetPos());
 		CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_ATTACK);
 	}
+
+	//ダメージが与えられなかったら敵の効果を受ける
 	else
 	{
 		enemy->DamageEffect(player);
@@ -580,7 +605,7 @@ void CPlayerBehavior_NormalAttack::Behavior(CPlayer* player)
 //============================
 CPlayerBehavior_NormalAttack000::CPlayerBehavior_NormalAttack000(CPlayer* player) : CPlayerBehavior_NormalAttack(player)
 {
-	player->SetMotion(2);
+	player->SetMotion(CPlayer::PLAYERMOTION_ACTION);
 }
 
 //============================
@@ -589,7 +614,8 @@ CPlayerBehavior_NormalAttack000::CPlayerBehavior_NormalAttack000(CPlayer* player
 void CPlayerBehavior_NormalAttack000::Cancel(CPlayer* player)
 {
 	//左クリックをしたら
-	if (CManager::GetInstance()->GetMouse()->GetTrigger(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_LEFT) || CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_X))
+	if (CManager::GetInstance()->GetMouse()->GetTrigger(CInputMouse::MOUSEBUTTON_LEFT) ||
+		CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_X))
 	{
 		//次の攻撃の生成
 		SetNextBehavior(new CPlayerBehavior_NormalAttack001(player));
@@ -605,7 +631,7 @@ void CPlayerBehavior_NormalAttack000::Cancel(CPlayer* player)
 //============================
 CPlayerBehavior_NormalAttack001::CPlayerBehavior_NormalAttack001(CPlayer* player) : CPlayerBehavior_NormalAttack(player)
 {
-	player->SetMotion(9);
+	player->SetMotion(CPlayer::PLAYERMOTION_ACTION001);
 }
 
 //============================
@@ -614,7 +640,8 @@ CPlayerBehavior_NormalAttack001::CPlayerBehavior_NormalAttack001(CPlayer* player
 void CPlayerBehavior_NormalAttack001::Cancel(CPlayer* player)
 {
 	//左クリックをしたら
-	if (CManager::GetInstance()->GetMouse()->GetTrigger(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_LEFT) || CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_X))
+	if (CManager::GetInstance()->GetMouse()->GetTrigger(CInputMouse::MOUSEBUTTON_LEFT) ||
+		CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_X))
 	{
 		//次の攻撃の生成
 		SetNextBehavior(new CPlayerBehavior_NormalAttack002(player));
@@ -772,7 +799,7 @@ void CPlayerBehavior_NormalAttack002::Damage(CPlayer* player, CEnemy* enemy, int
 //============================
 CPlayerBehavior_Arial000::CPlayerBehavior_Arial000(CPlayer* player)
 {
-	player->SetMotion(4);
+	player->SetMotion(CPlayer::PLAYERMOTION_ARIAL000);
 	player->SetEnableGravity(false);
 	player->SetMove({ player->GetMove().x, 0.0f, player->GetMove().z });
 }
@@ -783,7 +810,8 @@ CPlayerBehavior_Arial000::CPlayerBehavior_Arial000(CPlayer* player)
 void CPlayerBehavior_Arial000::Cancel(CPlayer* player)
 {
 	//左クリックをしたら
-	if (CManager::GetInstance()->GetMouse()->GetTrigger(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_LEFT) || CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_X))
+	if (CManager::GetInstance()->GetMouse()->GetTrigger(CInputMouse::MOUSEBUTTON_LEFT) ||
+		CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_X))
 	{
 		//次の攻撃の生成
 		SetNextBehavior(new CPlayerBehavior_Arial001(player));
@@ -807,7 +835,7 @@ void CPlayerBehavior_Arial000::Behavior(CPlayer* player)
 //============================
 CPlayerBehavior_Arial001::CPlayerBehavior_Arial001(CPlayer* player)
 {
-	player->SetMotion(5);
+	player->SetMotion(CPlayer::PLAYERMOTION_ARIAL001);
 }
 
 //============================
@@ -816,7 +844,8 @@ CPlayerBehavior_Arial001::CPlayerBehavior_Arial001(CPlayer* player)
 void CPlayerBehavior_Arial001::Cancel(CPlayer* player)
 {
 	//左クリックをしたら
-	if (CManager::GetInstance()->GetMouse()->GetTrigger(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_LEFT) || CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_X))
+	if (CManager::GetInstance()->GetMouse()->GetTrigger(CInputMouse::MOUSEBUTTON_LEFT) ||
+		CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_X))
 	{
 		//次の攻撃の生成
 		SetNextBehavior(new CPlayerBehavior_Arial002(player));
@@ -840,7 +869,7 @@ void CPlayerBehavior_Arial001::Behavior(CPlayer* player)
 //============================
 CPlayerBehavior_Arial002::CPlayerBehavior_Arial002(CPlayer* player)
 {
-	player->SetMotion(6);
+	player->SetMotion(CPlayer::PLAYERMOTION_ARIAL002);
 }
 
 //============================
@@ -871,10 +900,11 @@ CPlayerBehavior_DashAttack000::CPlayerBehavior_DashAttack000(CPlayer* player) : 
 void CPlayerBehavior_DashAttack000::Cancel(CPlayer* player)
 {
 	//左クリックをしたら
-	if (CManager::GetInstance()->GetMouse()->GetTrigger(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_LEFT) || CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_X))
+	if (CManager::GetInstance()->GetMouse()->GetTrigger(CInputMouse::MOUSEBUTTON_LEFT) ||
+		CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_X))
 	{
 		//ゲームシーンの取得
-		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+		CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 		//ロックオン相手の確認
 		if (pGame->GetLockon() != nullptr)
@@ -919,7 +949,7 @@ void CPlayerBehavior_DashAttack000::Behavior(CPlayer* player)
 //============================
 CPlayerBehavior_DashAttack001::CPlayerBehavior_DashAttack001(CPlayer* player) : CPlayerBehavior_DashAttack(player)
 {
-	player->SetMotion(player->PLAYERMOTION_DASHATTACK001);
+	player->SetMotion(CPlayer::PLAYERMOTION_DASHATTACK001);
 }
 
 //============================
@@ -928,7 +958,8 @@ CPlayerBehavior_DashAttack001::CPlayerBehavior_DashAttack001(CPlayer* player) : 
 void CPlayerBehavior_DashAttack001::Cancel(CPlayer* player)
 {
 	//左クリックをしたら
-	if (CManager::GetInstance()->GetMouse()->GetTrigger(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_LEFT) || CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_X))
+	if (CManager::GetInstance()->GetMouse()->GetTrigger(CInputMouse::MOUSEBUTTON_LEFT) ||
+		CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_X))
 	{
 		//ゲームシーンの取得
 		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
@@ -981,7 +1012,7 @@ CPlayerBehavior_CounterAttack::CPlayerBehavior_CounterAttack(CPlayer* player)
 	SetEndTime(END_TIME);				//終了時間
 	SetCollisionTime(START_COLLISION);	//当たり判定
 	SetAttackLength(ATTACK_LENGTH);		//攻撃の距離
-	SetOffsetPos({ 0.0f, 30.0f, 0.0f });//オフセットは無し
+	SetOffsetPos({ 0.0f, 30.0f, 0.0f });//オフセット
 	player->SetMotion(CPlayer::PLAYERMOTION_ACTION002);
 }
 
@@ -1031,7 +1062,8 @@ CPlayerBehavior_Guard::CPlayerBehavior_Guard(CPlayer* player) : m_nStiffnessCoun
 void CPlayerBehavior_Guard::Behavior(CPlayer* player)
 {
 	//左クリックを離したら
-	if (!CManager::GetInstance()->GetMouse()->GetPress(CInputMouse::MOUSEBUTTON_RIGHT) && !CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_B))
+	if (!CManager::GetInstance()->GetMouse()->GetPress(CInputMouse::MOUSEBUTTON_RIGHT) &&
+		!CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_B))
 	{
 		//通常状態に変更
 		player->GetState()->SetNextState(new CState_Player_Normal(player));

@@ -20,6 +20,7 @@
 #include "barriermanager.h"
 #include "lockon.h"
 #include "direction.h"
+#include "ui_gameguide.h"
 
 class CPlayer;
 
@@ -66,19 +67,23 @@ public:
 	void SetDirection(CDirection::DIRECTIONTYPE type);	//演出の種類を設定
 	bool GetDirectioning() { return m_bDirectioning; }	//取得
 
+	//コントローラーの種類
+	CUi_GameGuide::CONTROLLER GetControllerUIType() { return m_ControllerUIType; }
+
 private:
 
 	void ModelLoad();	//モデルの読み込み
+	void GuideUILoad();	//ガイドUI情報の読み込み
 
-	CPlayer* m_pPlayer;					//プレイヤー
-	CField* m_pField;					//フィールド
-	CTime* m_pTime;						//タイムクラス
-	CEnemyManager* m_pEnemyManager;		//エネミーマネージャー
-	CGimmickManager* m_pGimmickManager;	//ギミックマネージャー
-	CExplosionManager* m_pExplosionManager;	//爆発マネージャー
-	CLockon* m_pLockon;						//ロックオン
+	CPlayer* m_pPlayer;							//プレイヤー
+	CField* m_pField;							//フィールド
+	CTime* m_pTime;								//タイムクラス
+	CEnemyManager* m_pEnemyManager;				//エネミーマネージャー
+	CGimmickManager* m_pGimmickManager;			//ギミックマネージャー
+	CExplosionManager* m_pExplosionManager;		//爆発マネージャー
+	CLockon* m_pLockon;							//ロックオン
 	CEnemyBulletManager* m_pEnemyBulletManager;	//エネミー弾マネージャー
-	CBarrierManager* m_pBarrierManager;		//結界マネージャー
+	CBarrierManager* m_pBarrierManager;			//結界マネージャー
 
 	//判定
 	bool m_bClear;			//クリア判定
@@ -88,6 +93,9 @@ private:
 	//演出
 	bool m_bDirectioning;		//演出中か
 	CDirection* m_pDirection;	//演出のポインタ
+
+	//ゲームに表示するガイドUIの種類
+	CUi_GameGuide::CONTROLLER m_ControllerUIType;
 };
 
 #endif

@@ -11,11 +11,18 @@
 #include "game.h"
 
 //定数
-const std::string CUi_GameGuide::TEXTURE_PATH[CUi_GameGuide::GUIDE_MAX] =
+const std::string CUi_GameGuide::TEXTURE_PATH[CONTROLLER_MAX][GUIDE_MAX] =
 {
-	{"data\\TEXTURE\\gameguide000.png"},
-	{"data\\TEXTURE\\gameguide001.png"},
-	{"data\\TEXTURE\\gameguide002.png"},
+	{//キーボードマウス
+		{"data\\TEXTURE\\gameguide000.png"},
+		{"data\\TEXTURE\\gameguide001.png"},
+		{"data\\TEXTURE\\gameguide002.png"},
+	},
+	{//ジョイパッド
+		{"data\\TEXTURE\\gameguide003.png"},
+		{"data\\TEXTURE\\gameguide004.png"},
+		{"data\\TEXTURE\\gameguide005.png"},
+	}
 };
 
 //============================
@@ -69,14 +76,14 @@ void CUi_GameGuide::Draw()
 	//ゲームシーンの取得
 	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
-	//演出中なら更新しない
+	//演出中なら描画しない
 	if (pGame->GetDirectioning())
 	{
 		return;
 	}
 
 	//テクスチャ描画
-	CObject2D::Draw(TEXTURE_PATH[m_GuideType].c_str());
+	CObject2D::Draw(TEXTURE_PATH[pGame->GetControllerUIType()][m_GuideType].c_str());
 }
 
 //============================

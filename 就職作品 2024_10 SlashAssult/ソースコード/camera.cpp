@@ -87,7 +87,7 @@ void CCamera::Update()
 
 			//ゲームシーンのプレイヤーの位置を取得
 			CGame* pGame = nullptr;
-			pGame = (CGame*)CManager::GetInstance()->GetScene();	//ゲームシーンの取得
+			pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());	//ゲームシーンの取得
 
 			//演出
 			if (pGame->GetDirectioning())
@@ -96,10 +96,8 @@ void CCamera::Update()
 			}
 
 			//プレイヤーの位置を注視点に代入
-			m_posR = pGame->GetGamePlayer()->GetPos();				//プレイヤーの位置を注視点に代入
-			//m_posV.y = pGame->GetGamePlayer()->GetPos().y + 50.0f;
+			m_posR = pGame->GetGamePlayer()->GetPos();	
 			
-
 			//マウスの移動量で向きを変更
 			{
 				//マウスの移動量の取得
@@ -107,6 +105,14 @@ void CCamera::Update()
 
 				//カメラに反映
 				m_rot.y += MouseMove.x * 0.004f;
+			}
+
+			//ジョイパッドの操作
+			if (CManager::GetInstance()->GetJoypad()->GetStick().afTplDiameter[CInputJoypad::STICKTYPE_RIGHT] > 0.0f)
+			{
+				//カメラに反映
+				float fAngle = CManager::GetInstance()->GetJoypad()->GetStick().afAngle[CInputJoypad::STICKTYPE_RIGHT];
+				m_rot.y += sinf(fAngle) * 0.04f * CManager::GetInstance()->GetJoypad()->GetStick().afTplDiameter[CInputJoypad::STICKTYPE_RIGHT];
 			}
 
 			//向きの補正

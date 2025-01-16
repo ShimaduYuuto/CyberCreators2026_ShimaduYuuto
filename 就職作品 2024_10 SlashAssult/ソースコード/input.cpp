@@ -196,6 +196,22 @@ bool CInputKeyboard::GetRerease(int nKey)
 	return((m_aKeyStateRerease[nKey] & 0x80) != 0) ? true : false;
 }
 
+//========================================
+//キーボードのトリガー情報を取得
+//========================================
+bool CInputKeyboard::GetAnyTrigger()
+{
+	for (int nCntKey = 0; nCntKey < MAX_KEY; nCntKey++)
+	{
+		if (GetTrigger(nCntKey))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 //*****************************************************************
 //CInputJoypadクラスの処理
 //*****************************************************************
@@ -313,6 +329,22 @@ bool CInputJoypad::GetRerease(JOYKEY key)
 	return m_joykeyStateRelease & (0x01 << key);
 }
 
+//========================================
+//ジョイパッドのトリガー情報を取得
+//========================================
+bool CInputJoypad::GetAnyTrigger()
+{
+	for (int nCntKey = 0; nCntKey < JOYKEY_MAX; nCntKey++)
+	{
+		if (GetTrigger(static_cast<JOYKEY>(nCntKey)))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 //===========================================================================================================================================================================================
 //スティックの更新処理
 //===========================================================================================================================================================================================
@@ -423,6 +455,12 @@ float CInputJoypad::FindAngle(D3DXVECTOR3 pos, D3DXVECTOR3 TargetPos)
 
 	fAngle -= (D3DX_PI * 0.5f);
 	fAngle *= -1.0f;
+
+	//-3.14～3.14に補正
+	if (fAngle > D3DX_PI)
+	{
+		fAngle = -D3DX_PI + (fAngle - D3DX_PI);
+	}
 
 	return fAngle;
 }
@@ -620,6 +658,22 @@ bool CInputMouse::GetTrigger(MOUSEBUTTON nKey)
 bool CInputMouse::GetRerease(MOUSEBUTTON nKey)
 {
 	return((m_aMouseStateRerease.rgbButtons[nKey] & 0x80) != 0) ? true : false;
+}
+
+//========================================
+//マウスのトリガー情報を取得
+//========================================
+bool CInputMouse::GetAnyTrigger()
+{
+	for (int nCntKey = 0; nCntKey < MOUSEBUTTON_MAX; nCntKey++)
+	{
+		if (GetTrigger(static_cast<MOUSEBUTTON>(nCntKey)))
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 //========================================
