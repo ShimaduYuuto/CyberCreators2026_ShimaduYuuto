@@ -16,6 +16,7 @@
 
 //前方宣言
 class CState_Player;
+class CPlayerBehavior;
 
 //プレイヤークラス
 class CPlayer : public CGame_Character
@@ -78,9 +79,14 @@ public:
 	static CPlayer* Create();	//Playerの生成
 private:
 
+	void CollisionJudge();	//コリジョンの判定
+	void UpdateState();		//状態の更新
+	void UpdateBehavior();	//行動の更新
+
 	//メンバ変数
 	CGauge_PlayerLife* m_pLifeGauge;//体力ゲージのポインタ
 	CState_Player* m_pState;		//状態のインスタンス
+	CPlayerBehavior* m_pBehavior;	//行動
 };
 
 #endif

@@ -9,17 +9,24 @@
 #include "camera.h"
 #include "manager.h"
 #include "main.h"
-#include "player.h"
-#include "game.h"
 
 //定数の設定
-const float CCamera::LENGTH_NORMAL = 400.0f;				//通常カメラの距離
-const float CCamera::LENGTH_SLOW = LENGTH_NORMAL * 0.7f;	//スローカメラの距離
+const float CCamera::LENGTH_NORMAL = 320.0f;				//通常カメラの距離
+const float CCamera::LENGTH_RUSH = LENGTH_NORMAL * 0.7f;	//ラッシュカメラの距離
 
 //============================
 //カメラのコンストラクタ
 //============================
-CCamera::CCamera()
+CCamera::CCamera() :
+	m_posV(),			//視点の初期化
+	m_posR(),			//注視点の初期化
+	m_vecU(D3DXVECTOR3(0.0f, 1.0f, 0.0f)),		//上ベクトルの初期化
+	m_mtxProjection(),							//プロジェクションマトリックスの初期化
+	m_mtxView(),	
+	m_Viewport(),								//ビューマトリックスの初期化
+	m_fShakeFrameCount(0.0f),
+	m_rot(),
+	m_fLength(0.0f)
 {
 
 }
@@ -70,111 +77,7 @@ void CCamera::Uninit()
 //============================
 void CCamera::Update()
 {
-	//モードの取得
-	CScene::MODE Mode = CManager::GetInstance()->GetScene()->GetMode();
-
-	//シーンによって処理を変更
-	switch (Mode)
-	{
-	case CScene::MODE_TITLE:	//タイトル
-		m_posV = D3DXVECTOR3(-30.0f, 30.0f, -100.0f);		//視点
-		m_posR = D3DXVECTOR3(-30.0f, 20.0f, 0.0f);			//注視点
-		break;
-
-	case CScene::MODE_GAME:		//ゲーム
-
-		{
-
-			//ゲームシーンのプレイヤーの位置を取得
-			CGame* pGame = nullptr;
-			pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());	//ゲームシーンの取得
-
-			//演出
-			if (pGame->GetDirectioning())
-			{
-				return;
-			}
-
-			//プレイヤーの位置を注視点に代入
-			m_posR = pGame->GetGamePlayer()->GetPos();	
-			
-			//マウスの移動量で向きを変更
-			{
-				//マウスの移動量の取得
-				D3DXVECTOR3 MouseMove = CManager::GetInstance()->GetMouse()->GetMove();
-
-				//カメラに反映
-				m_rot.y += MouseMove.x * 0.004f;
-			}
-
-			//ジョイパッドの操作
-			if (CManager::GetInstance()->GetJoypad()->GetStick().afTplDiameter[CInputJoypad::STICKTYPE_RIGHT] > 0.0f)
-			{
-				//カメラに反映
-				float fAngle = CManager::GetInstance()->GetJoypad()->GetStick().afAngle[CInputJoypad::STICKTYPE_RIGHT];
-				m_rot.y += sinf(fAngle) * 0.04f * CManager::GetInstance()->GetJoypad()->GetStick().afTplDiameter[CInputJoypad::STICKTYPE_RIGHT];
-			}
-
-			//向きの補正
-			if (m_rot.y > D3DX_PI)
-			{
-				m_rot.y -= D3DX_PI * 2.0f;
-			}
-			if (m_rot.y < -D3DX_PI)
-			{
-				m_rot.y += D3DX_PI * 2.0f;
-			}
-
-			if (m_rot.x > D3DX_PI * 0.4f)
-			{
-				m_rot.x = D3DX_PI * 0.4f;
-			}
-			if (m_rot.x < D3DX_PI * -0.4f)
-			{
-				m_rot.x = D3DX_PI * -0.4f;
-			}
-
-			//時間の状態に応じて距離を変更
-			if (pGame->GetTime()->GetTimeState() == pGame->GetTime()->TIME_SLOW)
-			{
-				m_fLength -= 0.03f * m_fLength;
-
-				if (m_fLength < LENGTH_SLOW)
-				{
-					m_fLength = LENGTH_SLOW;
-				}
-			}
-			else
-			{
-				m_fLength += 0.03f * m_fLength;
-
-				if (m_fLength > LENGTH_NORMAL)
-				{
-					m_fLength = LENGTH_NORMAL;
-				}
-			}
-
-			m_posV.y = -sinf(m_rot.x) * m_fLength;
-			m_posV.x = sinf(m_rot.y + D3DX_PI) * cosf(m_rot.x) * m_fLength;
-			m_posV.z = cosf(m_rot.y + D3DX_PI) * cosf(m_rot.x) * m_fLength;
-			m_posV += pGame->GetGamePlayer()->GetPos();
-
-			//視点の更新
-			D3DXVECTOR3 PosVLength = pGame->GetGamePlayer()->GetPos() - m_posR;
-			PosVLength = m_posR - pGame->GetGamePlayer()->GetPos();
-			float fAngleY = atan2f(PosVLength.x, PosVLength.z);	//y軸の角度を算出
-			float fAngleX = atan2f(PosVLength.z, PosVLength.y);	//x軸の角度を算出
-			float fAngleZ = atan2f(PosVLength.x, PosVLength.y);	//z軸の角度を算出
-
-		}
-		
-		break;
-
-	case CScene::MODE_RESULT:	//リザルト
-		m_posV = D3DXVECTOR3(0.0f, 100.0f, -300.0f);		//視点
-		m_posR = D3DXVECTOR3(0.0f, 20.0f, 0.0f);			//注視点
-		break;
-	};
+	
 }
 
 //============================

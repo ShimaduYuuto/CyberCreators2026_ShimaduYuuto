@@ -13,6 +13,7 @@
 #include "title_player.h"
 #include "field.h"
 #include "model.h"
+#include "camera_title.h"
 
 //============================
 //タイトルのコンストラクタ
@@ -70,6 +71,9 @@ HRESULT CTitle::Init()
 
 	//BGM
 	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_TITLE);
+
+	//カメラを切り替え
+	CManager::GetInstance()->ChangeCamera(new CCamera_Title());
 
 	return S_OK;
 }

@@ -145,6 +145,12 @@
     <Filter Include="ソース ファイル\modelparts">
       <UniqueIdentifier>{42b15e71-d8cc-43c5-a4ab-df87bf1e3ebf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\camera">
+      <UniqueIdentifier>{27a090a6-cd25-42b9-80a7-9fd5d85e7671}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\camera">
+      <UniqueIdentifier>{6151e141-4526-4cdf-aefe-4354454c9916}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -154,9 +160,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="input.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="camera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="fade.h">
@@ -534,6 +537,21 @@
     <ClInclude Include="letterbox.h">
       <Filter>ヘッダー ファイル\ui</Filter>
     </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>ヘッダー ファイル\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="camera_game.h">
+      <Filter>ヘッダー ファイル\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="camera_result.h">
+      <Filter>ヘッダー ファイル\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="camera_title.h">
+      <Filter>ヘッダー ファイル\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="particle_rush.h">
+      <Filter>ヘッダー ファイル\particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -543,9 +561,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="input.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="camera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="fade.cpp">
@@ -913,6 +928,21 @@
     </ClCompile>
     <ClCompile Include="behavior_enemy002_alterego.cpp">
       <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>ソース ファイル\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="camera_game.cpp">
+      <Filter>ソース ファイル\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="camera_result.cpp">
+      <Filter>ソース ファイル\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="camera_title.cpp">
+      <Filter>ソース ファイル\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="particle_rush.cpp">
+      <Filter>ソース ファイル\particle</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

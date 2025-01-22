@@ -20,6 +20,7 @@ public:
 	static const std::string FILEPATH;						//読み込むファイル
 	static constexpr float VALUE_INVISIBLE_ALPHA{ 0.3f };	//透明状態のα値
 	static constexpr int LIFE{ 70 };						//体力
+	static constexpr int TIME_GOAL_ALPHA{ 10 };				//目的のα値になるまでの時間
 	
 	//敵のモーション
 	typedef enum
@@ -62,14 +63,25 @@ public:
 	void ChangeStanState() override;
 
 	//実体化しているか
-	void SetMaterialized(bool materialized);									//設定
-	bool GetMaterialized() { return m_bMaterialized; }							//取得
+	void SetMaterialized(bool materialized);				//設定
+	bool GetMaterialized() { return m_bMaterialized; }		//取得
+
+	//α値
+	void SetAlpha(float alpha) { m_fGoalfAlpha = alpha; }	//設定
+	float GetAlpha() { return m_fCurrentAlpha; }			//取得
 
 	//死亡時の処理
 	void SetCharacterDeath() override;
 
 private:
+
+	void UpdateAlpha();		//α値の更新
+
 	bool m_bMaterialized;	//実体化しているか
+	float m_fGoalfAlpha;	//目的のアルファ値
+	float m_fCurrentAlpha;	//現在の色
+	float m_fAddAlpha;		//加算するα値
+	bool m_bUpdateAlpha;	//α値を更新しているか
 };
 
 #endif

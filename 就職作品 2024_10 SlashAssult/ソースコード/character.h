@@ -22,7 +22,7 @@ public:
 	//定数
 	static const float ROTATE_SPEED;			//回転の速度
 	static const int DAMAGE_TIME{5};			//ダメージ状態の時間
-	static const int INTERPOLATION_FRAME{10};	//モーションの補間カウント
+	static const int INTERPOLATION_FRAME{6};	//モーションの補間カウント
 	static const float GRAVITY;					//重力の強さ
 	static constexpr float SIZE_RADIUS{30.0f};	//サイズの半径
 

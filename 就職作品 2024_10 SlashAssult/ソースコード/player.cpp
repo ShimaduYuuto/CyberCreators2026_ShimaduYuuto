@@ -27,7 +27,8 @@ const std::string CPlayer::FILEPATH = "data\\MODEL\\player001.x";
 //============================
 CPlayer::CPlayer(int nPriority) : CGame_Character(nPriority),
 	m_pLifeGauge(nullptr),
-	m_pState(nullptr)
+	m_pState(nullptr),
+	m_pBehavior(nullptr)
 {
 	m_pState = new CState_Player_Normal(this);
 	SetType(TYPE_PLAYER);	//種類の設定
@@ -108,6 +109,21 @@ void CPlayer::Update()
 		return;
 	}
 
+	//状態の更新
+	CPlayer::UpdateState();
+
+	//コリジョンの判定
+	CPlayer::CollisionJudge();
+
+	//共通処理の更新
+	CGame_Character::Update();
+}
+
+//============================
+//状態の更新
+//============================
+void CPlayer::UpdateState()
+{
 	//次の状態があるなら変更
 	if (m_pState->GetNextState() != nullptr)
 	{
@@ -137,6 +153,40 @@ void CPlayer::Update()
 			m_pState = pNext;
 		}
 	}
+}
+
+//============================
+//行動の更新
+//============================
+void CPlayer::UpdateBehavior()
+{
+	//行動しているなら更新
+	//if (m_pBehavior != nullptr)
+	//{
+	//	//派生先のアクションを実行
+	//	m_pBehavior->Behavior(this);
+
+	//	//次のアクションがあるなら変更
+	//	if (m_pBehavior->GetNextBehavior() != nullptr)
+	//	{
+	//		//次のアクションに変更
+	//		CPlayerBehavior* pNext = m_pBehavior->GetNextBehavior();
+	//		delete m_pBehavior;
+	//		m_pBehavior = nullptr;
+
+	//		//代入
+	//		m_pBehavior = pNext;
+	//	}
+	//}
+}
+
+//============================
+//コリジョンの判定
+//============================
+void CPlayer::CollisionJudge()
+{
+	//ゲームシーンの取得
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 	//結界との当たり判定
 	for (auto itr : pGame->GetBarrierManager()->GetList())
@@ -176,9 +226,7 @@ void CPlayer::Update()
 		}
 	}
 
-	//共通処理の更新
-	CGame_Character::Update();
-
+	//位置を補正
 	if (GetPos().z < 0.0f)
 	{
 		GetPos().z = 0.0f;
@@ -278,7 +326,7 @@ void CPlayer::UpdatePos()
 	if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
 	{
 		//ゲームシーンの取得
-		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+		CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 		//移動量を位置に加算
 		pos += GetMove();

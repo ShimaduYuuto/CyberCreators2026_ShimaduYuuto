@@ -500,6 +500,7 @@ void CCharacter::SetMotion(int motion)
 			D3DXVECTOR3 GoalRot = m_Motion[m_MotionState].KeySet[0].Key[nCount].rot + m_PartsInfo[nCount].rot;
 			D3DXVECTOR3 Movepos = GoalPos - m_apModel[nCount]->GetPos();
 			D3DXVECTOR3 Moverot = GoalRot - m_apModel[nCount]->GetRot();
+			Moverot = RotCalculation(GoalRot, m_apModel[nCount]->GetRot());
 
 			//モーションの移動量の保存
 			iter.pos = Movepos / INTERPOLATION_FRAME;
@@ -540,40 +541,11 @@ void CCharacter::UpdateMotion()
 		{
 			Movepos = m_Motion[m_MotionState].KeySet[m_nMotionCount + 1].Key[nCount].pos - m_Motion[m_MotionState].KeySet[m_nMotionCount].Key[nCount].pos;
 			Moverot = RotCalculation(m_Motion[m_MotionState].KeySet[m_nMotionCount + 1].Key[nCount].rot, m_Motion[m_MotionState].KeySet[m_nMotionCount].Key[nCount].rot);
-			//Moverot = m_Motion[m_MotionState].KeySet[m_nMotionCount + 1].Key[nCount].rot - m_Motion[m_MotionState].KeySet[m_nMotionCount].Key[nCount].rot;
-
-			//半周以上の動きをするなら補正
-			//if (Moverot.x > D3DX_PI || Moverot.x < -D3DX_PI) //X軸
-			//{
-			//	Moverot.x = -(m_Motion[m_MotionState].KeySet[m_nMotionCount + 1].Key[nCount].rot.x + m_Motion[m_MotionState].KeySet[m_nMotionCount].Key[nCount].rot.x);
-			//}
-			//if (Moverot.y > D3DX_PI || Moverot.y < -D3DX_PI) //Y軸
-			//{
-			//	Moverot.y = m_Motion[m_MotionState].KeySet[m_nMotionCount + 1].Key[nCount].rot.y + m_Motion[m_MotionState].KeySet[m_nMotionCount].Key[nCount].rot.y;
-			//}
-			//if (Moverot.z > D3DX_PI || Moverot.z < -D3DX_PI) //Z軸
-			//{
-			//	Moverot.z = m_Motion[m_MotionState].KeySet[m_nMotionCount + 1].Key[nCount].rot.z + m_Motion[m_MotionState].KeySet[m_nMotionCount].Key[nCount].rot.z;
-			//}
 		}
 		else
 		{
 			Movepos = m_Motion[m_MotionState].KeySet[0].Key[nCount].pos - m_Motion[m_MotionState].KeySet[m_Motion[m_MotionState].nNumKey - 1].Key[nCount].pos;
-			//Moverot = m_Motion[m_MotionState].KeySet[0].Key[nCount].rot - m_Motion[m_MotionState].KeySet[m_Motion[m_MotionState].nNumKey - 1].Key[nCount].rot;
 			Moverot = RotCalculation(m_Motion[m_MotionState].KeySet[0].Key[nCount].rot, m_Motion[m_MotionState].KeySet[m_Motion[m_MotionState].nNumKey - 1].Key[nCount].rot);
-			//半周以上の動きをするなら補正
-			//if (Moverot.x > D3DX_PI || Moverot.x < -D3DX_PI) //X軸
-			//{
-			//	Moverot.x = m_Motion[m_MotionState].KeySet[0].Key[nCount].rot.x + m_Motion[m_MotionState].KeySet[m_Motion[m_MotionState].nNumKey - 1].Key[nCount].rot.x;
-			//}
-			//if (Moverot.y > D3DX_PI || Moverot.y < -D3DX_PI) //Y軸
-			//{
-			//	Moverot.y = m_Motion[m_MotionState].KeySet[0].Key[nCount].rot.y + m_Motion[m_MotionState].KeySet[m_Motion[m_MotionState].nNumKey - 1].Key[nCount].rot.y;
-			//}
-			//if (Moverot.z > D3DX_PI || Moverot.z < -D3DX_PI) //Z軸
-			//{
-			//	Moverot.z = m_Motion[m_MotionState].KeySet[0].Key[nCount].rot.z + m_Motion[m_MotionState].KeySet[m_Motion[m_MotionState].nNumKey - 1].Key[nCount].rot.z;
-			//}
 		}
 
 		//差分の分をフレームで割った値で加算
@@ -690,29 +662,6 @@ D3DXVECTOR3 CCharacter::RotCalculation(D3DXVECTOR3 goal, D3DXVECTOR3 current)
 	{
 		InterpolationRot.z = (D3DX_PI - current.z) + (D3DX_PI + goal.z);
 	}
-
-	//半周の値を算出
-	/*if (InterpolationRot.x > D3DX_PI)
-	{
-		InterpolationRot.x - D3DX_PI * 2.0f;
-	}
-	if (InterpolationRot.y > D3DX_PI)
-	{
-		InterpolationRot.y - D3DX_PI * 2.0f;
-	}
-	if (InterpolationRot.z > D3DX_PI)
-	{
-		InterpolationRot.z - D3DX_PI * 2.0f;
-	}
-
-	if (InterpolationRot.x > current.x)
-	{
-		InterpolationRot.x = -(D3DX_PI - goal.x) + (-D3DX_PI - current.x);
-	}
-	else if (InterpolationRot.x > current.x)
-	{
-		InterpolationRot.x = (D3DX_PI - goal.x) + -(-D3DX_PI - current.x);
-	}*/
 
 	return InterpolationRot;
 }

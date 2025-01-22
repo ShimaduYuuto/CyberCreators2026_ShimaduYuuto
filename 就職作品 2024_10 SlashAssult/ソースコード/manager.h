@@ -52,7 +52,8 @@ public:
 	CInputKeyboard* GetKeyboard();	//キーボードの取得
 	CInputJoypad* GetJoypad();		//ジョイパッドの取得
 	CInputMouse* GetMouse();		//マウスの取得
-	CCamera* GetCamera();			//ビュー情報の取得
+	CCamera* GetCamera();			//カメラの取得
+	void ChangeCamera(CCamera* camera);	//カメラの切り替え
 	CLight* GetLight();				//ライトの情報
 	CTexture* GetTexture();			//テクスチャの情報
 	CXfile* GetXfile();				//Xファイルの取得
@@ -60,23 +61,37 @@ public:
 	CScene* GetScene();				//シーンの取得
 	void SetScene(CScene::MODE mode);//シーンの設定
 
+	template<typename T>
+	constexpr T GetRundom(T min, T max)
+	{
+		// メルセンヌ・ツイスター法による擬似乱数生成器を、
+		// ハードウェア乱数をシードにして初期化
+		std::random_device seed_gen;
+		std::mt19937 engine(seed_gen());
+
+		std::uniform_real_distribution<float> Rundom(min, max);
+		T Value = Rundom(engine);
+
+		return Value;
+	}
+
 	//FPSの設定と取得
 	void SetFPS(int fps);			//設定
 
 private:
 
 	//メンバ変数
-	CRenderer* m_pRenderer;				//レンダラーのインスタンス
-	CInputKeyboard* m_pKeyboard;		//キーボードのインスタンス
-	CInputJoypad* m_pJoypad;			//ジョイパッドのインスタンス
-	CInputMouse* m_pMouse;				//マウスのインスタンス
-	CSound* m_pSound;					//サウンドのインスタンス
-	CCamera* m_pCamera;					//ビュー情報のインスタンス
-	CLight* m_pLight;					//ライト情報のインスタンス
-	CTexture* m_pTexture;				//テクスチャのインスタンス
-	CXfile* m_pXfile;					//Xファイルのインスタンス
-	CFade* m_pFade;						//フェードのインスタンス
-	CScene* m_pScene;					//シーンのインスタンス
+	CRenderer* m_pRenderer;				//レンダラー
+	CInputKeyboard* m_pKeyboard;		//キーボード
+	CInputJoypad* m_pJoypad;			//ジョイパッド
+	CInputMouse* m_pMouse;				//マウス
+	CSound* m_pSound;					//サウンド
+	CCamera* m_pCamera;					//カメラ
+	CLight* m_pLight;					//ライト
+	CTexture* m_pTexture;				//テクスチャ
+	CXfile* m_pXfile;					//Xファイル
+	CFade* m_pFade;						//フェード
+	CScene* m_pScene;					//シーン
 };
 
 #endif

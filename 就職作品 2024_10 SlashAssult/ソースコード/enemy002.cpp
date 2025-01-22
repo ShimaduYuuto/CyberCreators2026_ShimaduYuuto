@@ -18,7 +18,11 @@ const std::string CEnemy002::FILEPATH = "data\\enemy012motion.txt";
 //エネミーのコンストラクタ
 //============================
 CEnemy002::CEnemy002() : 
-	m_bMaterialized(true)
+	m_bMaterialized(true),
+	m_fCurrentAlpha(1.0f),
+	m_fGoalfAlpha(1.0f),
+	m_fAddAlpha(0.0f),
+	m_bUpdateAlpha(false)
 {
 	SetMaterialized(false);
 }
@@ -71,6 +75,9 @@ void CEnemy002::Update()
 		return;
 	}
 
+	//α値の更新
+	UpdateAlpha();
+
 	//共通処理の更新
 	CEnemy::Update();
 }
@@ -96,6 +103,41 @@ void CEnemy002::UpdatePos()
 	}
 
 	CGame_Character::UpdatePos();
+}
+
+//============================
+//α値の更新
+//============================
+void CEnemy002::UpdateAlpha()
+{
+	//目的のα値と同じなら抜ける
+	if (m_fCurrentAlpha == m_fGoalfAlpha)
+	{
+		m_bUpdateAlpha = false;
+		m_fAddAlpha = 0.0f;
+		return;
+	}
+
+	//更新中の判定にして初期設定
+	if (!m_bUpdateAlpha)
+	{
+		m_bUpdateAlpha = true;
+		m_fAddAlpha = (m_fGoalfAlpha - m_fCurrentAlpha) / TIME_GOAL_ALPHA;	//加算する色を算出
+	}
+
+	m_fCurrentAlpha += m_fAddAlpha;	//加算
+
+	//誤差を修正
+	if (m_fCurrentAlpha > m_fGoalfAlpha - 0.001f && m_fCurrentAlpha < m_fGoalfAlpha + 0.001f)
+	{
+		m_fCurrentAlpha = m_fGoalfAlpha;
+	}
+
+	//パーツ数だけ周回
+	for (auto itr : GetModelPartsVector())
+	{
+		itr->SetAlpha(m_fCurrentAlpha);
+	}
 }
 
 //============================
@@ -191,18 +233,22 @@ void CEnemy002::SetMaterialized(bool materialized)
 	if (materialized)
 	{
 		//パーツ数だけ周回
-		for (auto itr : GetModelPartsVector())
+		/*for (auto itr : GetModelPartsVector())
 		{
 			itr->SetAlpha(1.0f);
-		}
+		}*/
+
+		m_fGoalfAlpha = 1.0f;
 	}
 	else
 	{
 		//パーツ数だけ周回
-		for (auto itr : GetModelPartsVector())
+		/*for (auto itr : GetModelPartsVector())
 		{
 			itr->SetAlpha(VALUE_INVISIBLE_ALPHA);
-		}
+		}*/
+
+		m_fGoalfAlpha = VALUE_INVISIBLE_ALPHA;
 	}
 
 	//設定

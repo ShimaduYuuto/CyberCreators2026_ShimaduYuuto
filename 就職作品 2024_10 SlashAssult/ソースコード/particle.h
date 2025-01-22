@@ -28,6 +28,7 @@ public:
 	void Uninit() override;								//終了
 	void Update() override;								//更新
 	void Draw() override;								//描画
+	void Draw(const char* texturepath) override;		//引数のテクスチャで描画
 	static CParticle* Create(D3DXVECTOR3 pos);			//Particleの生成
 
 	//寿命

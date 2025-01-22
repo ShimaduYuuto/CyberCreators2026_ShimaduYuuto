@@ -11,6 +11,10 @@
 //ヘッダーのインクルード
 #include "objectX.h"
 #include "collision.h"
+#include "behavior_enemy002.h"
+
+//前方宣言
+class CEnemyAction_ChargeShot;
 
 //ボスの弾クラス
 class CEnemyBullet : public CObjectX
@@ -32,7 +36,7 @@ public:
 	void Uninit() override;							//終了
 	void Update() override;							//更新
 	void Draw() override;							//描画
-	static CEnemyBullet* Create(D3DXVECTOR3 pos, D3DXVECTOR3 move);	//生成
+	static CEnemyBullet* Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, CEnemyAction_ChargeShot* action);	//生成
 
 	//移動量
 	void SetMove(D3DXVECTOR3 move) { m_Move = move; }	//設定
@@ -60,11 +64,12 @@ public:
 private:
 
 	//メンバ変数
-	D3DXVECTOR3 m_Move;			//移動量
-	float m_fSizeRate;			///サイズ倍率
-	bool m_bReflection;			//反射したか
-	bool m_bShooting;			//撃たれたか
-	CCollision* m_Collision;	//当たり判定
+	D3DXVECTOR3 m_Move;							//移動量
+	float m_fSizeRate;							///サイズ倍率
+	bool m_bReflection;							//反射したか
+	bool m_bShooting;							//撃たれたか
+	CCollision* m_Collision;					//当たり判定
+	CEnemyAction_ChargeShot* m_pParentAction;	//親のアクションのポインタ
 };
 
 #endif

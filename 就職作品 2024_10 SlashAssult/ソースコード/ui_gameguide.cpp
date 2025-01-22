@@ -20,7 +20,7 @@ const std::string CUi_GameGuide::TEXTURE_PATH[CONTROLLER_MAX][GUIDE_MAX] =
 	},
 	{//ジョイパッド
 		{"data\\TEXTURE\\gameguide003.png"},
-		{"data\\TEXTURE\\gameguide004.png"},
+		{"data\\TEXTURE\\gameguide006.png"},
 		{"data\\TEXTURE\\gameguide005.png"},
 	}
 };

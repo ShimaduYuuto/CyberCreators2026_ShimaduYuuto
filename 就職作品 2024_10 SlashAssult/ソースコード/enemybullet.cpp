@@ -12,7 +12,7 @@
 #include "character.h"
 #include "battleareamanager.h"
 
-const std::string CEnemyBullet::FILEPATH = "data\\MODEL\\enemybullet.x";
+const std::string CEnemyBullet::FILEPATH = "data\\MODEL\\enemybullet002.x";
 
 //============================
 //コンストラクタ
@@ -21,7 +21,8 @@ CEnemyBullet::CEnemyBullet(int nPriority) : CObjectX(nPriority),
 	m_Move(),
 	m_fSizeRate(0.0f),
 	m_bReflection(false),
-	m_bShooting(false)
+	m_bShooting(false),
+	m_pParentAction(nullptr)
 {
 	m_fSizeRate = 1.0f;
 
@@ -29,7 +30,7 @@ CEnemyBullet::CEnemyBullet(int nPriority) : CObjectX(nPriority),
 	if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
 	{
 		//ゲームシーンの取得
-		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+		CGame* pGame = static_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 		//マネージャーに登録
 		pGame->GetEnemyBulletManager()->Regist(this);
@@ -63,6 +64,13 @@ CEnemyBullet::~CEnemyBullet()
 		m_Collision->Uninit();
 		m_Collision = nullptr;
 	}
+
+	//親に消えたことを伝える
+	if (m_pParentAction != nullptr)
+	{
+		m_pParentAction->Erase(this);
+		m_pParentAction = nullptr;
+	}
 }
 
 //============================
@@ -83,6 +91,13 @@ void CEnemyBullet::Uninit()
 {
 	//初期化
 	CObjectX::Uninit();
+
+	//親に消えたことを伝える
+	if (m_pParentAction != nullptr)
+	{
+		m_pParentAction->Erase(this);
+		m_pParentAction = nullptr;
+	}
 }
 
 //============================
@@ -144,7 +159,7 @@ void CEnemyBullet::Update()
 	else
 	{
 		//ゲームシーンの取得
-		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+		CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 		//敵の周回
 		for (auto& iter : pGame->GetEnemyManager()->GetList())
@@ -208,7 +223,7 @@ void CEnemyBullet::Draw()
 //============================
 //クリエイト
 //============================
-CEnemyBullet* CEnemyBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move)
+CEnemyBullet* CEnemyBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, CEnemyAction_ChargeShot* action)
 {
 	//種類に応じて動的確保
 	CEnemyBullet* pEnemyBullet = NULL;
@@ -220,8 +235,9 @@ CEnemyBullet* CEnemyBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move)
 	pEnemyBullet->Init();
 
 	//パラメータの設定
-	pEnemyBullet->SetPos(pos);		//位置
-	pEnemyBullet->m_Move = move;	//移動量
+	pEnemyBullet->SetPos(pos);				//位置
+	pEnemyBullet->m_Move = move;			//移動量
+	pEnemyBullet->m_pParentAction = action;	//親のアクション
 
 	//設定した情報を返す
 	return pEnemyBullet;

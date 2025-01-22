@@ -286,6 +286,16 @@ CCamera* CManager::GetCamera()
 }
 
 //============================
+//ƒJƒƒ‰‚ÌØ‚è‘Ö‚¦
+//============================
+void CManager::ChangeCamera(CCamera* camera)
+{
+	SafeDelete(m_pCamera);	//íœ
+	m_pCamera = camera;
+	m_pCamera->Init();
+}
+
+//============================
 //ƒ‰ƒCƒg‚ÌŽæ“¾
 //============================
 CLight* CManager::GetLight()

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -171,6 +171,9 @@
     <ClInclude Include="behavior_enemy003.h" />
     <ClInclude Include="behavior_player.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="camera_game.h" />
+    <ClInclude Include="camera_result.h" />
+    <ClInclude Include="camera_title.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="cleartime.h" />
     <ClInclude Include="collision.h" />
@@ -237,6 +240,7 @@
     <ClInclude Include="orbit.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="particle_charge.h" />
+    <ClInclude Include="particle_rush.h" />
     <ClInclude Include="particle_spawn.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="precompile.h" />
@@ -302,6 +306,9 @@
     <ClCompile Include="behavior_enemy003.cpp" />
     <ClCompile Include="behavior_player.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="camera_game.cpp" />
+    <ClCompile Include="camera_result.cpp" />
+    <ClCompile Include="camera_title.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="cleartime.cpp" />
     <ClCompile Include="collision.cpp" />
@@ -367,6 +374,7 @@
     <ClCompile Include="oldpaper.cpp" />
     <ClCompile Include="orbit.cpp" />
     <ClCompile Include="particle.cpp" />
+    <ClCompile Include="particle_rush.cpp" />
     <ClCompile Include="particle_spawn.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="precompile.cpp">

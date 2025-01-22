@@ -19,6 +19,7 @@
 #include "model.h"
 #include "cleartime.h"
 #include "ui_gameguide.h"
+#include "camera_game.h"
 
 //’è”
 const D3DXVECTOR3 CGame::TIME_POS = { SCREEN_WIDTH * 0.4f, 50.0f, 0.0f };
@@ -138,6 +139,9 @@ HRESULT CGame::Init()
 
 	//BGM
 	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_WIND);
+
+	//ƒJƒƒ‰‚ðØ‚è‘Ö‚¦
+	CManager::GetInstance()->ChangeCamera(new CCamera_Game());
 	
 	return S_OK;
 }

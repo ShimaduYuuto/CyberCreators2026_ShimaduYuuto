@@ -15,6 +15,7 @@
 #include "oldpaper.h"
 #include "rank.h"
 #include "result_txtui.h"
+#include "camera_result.h"
 
 //’è”
 const D3DXVECTOR3 CResult::TIME_POS = { SCREEN_WIDTH * 0.4f, 355.0f, 0.0f };
@@ -72,6 +73,9 @@ HRESULT CResult::Init()
 
 	//BGM
 	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_RESULT);
+
+	//ƒJƒƒ‰‚ðØ‚è‘Ö‚¦
+	CManager::GetInstance()->ChangeCamera(new CCamera_Result());
 	
 	return S_OK;
 }

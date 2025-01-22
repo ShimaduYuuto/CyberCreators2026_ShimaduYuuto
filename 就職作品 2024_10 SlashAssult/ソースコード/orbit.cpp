@@ -25,16 +25,18 @@ COrbit::COrbit(int nPriority) : CObjectMesh(nPriority)
 	{
 		//頂点情報の初期化
 		m_SaveVtx[i].pos = { 0.0f, 0.0f, 0.0f };
-		m_SaveVtx[i].col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 0.7f);
+		m_SaveVtx[i].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f);
 		m_SaveVtx[i].nor = { 0.0f, 0.0, -1.0f };
+
+		float fTextureU = (i / 2) / (float)((NUM_VTX / 2) - 1);
 
 		if ((i & 1) == 0) //偶数
 		{
-			m_SaveVtx[i].tex = { 0.0f, 0.0f };
+			m_SaveVtx[i].tex = { fTextureU , 0.0f };
 		}
 		else
 		{
-			m_SaveVtx[i].tex = { 0.0f, 1.0f };
+			m_SaveVtx[i].tex = { fTextureU , 1.0f };
 		}
 	}
 
@@ -80,6 +82,7 @@ void COrbit::Update()
 		//位置と色を反映
 		CObjectMesh::SetVtxPos(i, m_SaveVtx[i].pos);
 		CObjectMesh::SetVtxColor(i, m_SaveVtx[i].col);
+		CObjectMesh::SetVtxTex(i,m_SaveVtx[i].tex);
 	}
 }
 
@@ -88,8 +91,17 @@ void COrbit::Update()
 //============================
 void COrbit::Draw()
 {
+	//ローカル変数宣言
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
+
+	//カリング方法を変更
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
 	//親クラスで描画
 	CObjectMesh::Draw(TEXTUREPATH.c_str());
+
+	//カリング方法を変更
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 //================================

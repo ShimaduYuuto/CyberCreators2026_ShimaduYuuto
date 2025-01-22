@@ -12,6 +12,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "effect_charge.h"
+#include "orbit.h"
 
 //プレイヤーの前方宣言
 class CPlayer;
@@ -90,7 +91,7 @@ public:
 
 	//定数
 	static constexpr float DASH_SPEED{ 14.0f };		//ダッシュの速度
-	static constexpr float STOP_LENGYH{ 50.0f };	//止まる距離
+	static constexpr float STOP_LENGYH{ 70.0f };	//止まる距離
 	static constexpr float RATIO_LINEAR_INTERPOLATION{ 0.08f };	//線形補間の割合
 
 	//メンバ関数
@@ -117,14 +118,12 @@ public:
 	static constexpr int START_CANCEL{ 15 };			//キャンセルが始める時間
 	static constexpr float ATTACK_LENGTH{ 50.0f };		//攻撃の距離
 	static const D3DXVECTOR3 POS_OFFSET;				//オフセット位置
+	static constexpr float ORBIT_OFFSET_LENGTH{ 50.0f };//軌跡のオフセットの距離
 
 	//メンバ関数
 	CPlayerBehavior_Attack();						//コンストラクタ
 	CPlayerBehavior_Attack(CPlayer* player);		//コンストラクタ
-	~CPlayerBehavior_Attack() override
-	{
-		m_HitEnemy.clear();
-	}		//デストラクタ
+	~CPlayerBehavior_Attack() override;				//デストラクタ
 
 	//行動
 	void Behavior(CPlayer* player) override;
@@ -158,6 +157,7 @@ private:
 	int m_nCollisionlTime;			//当たり判定が出現する時間
 	float m_fAttackLength;			//攻撃の距離
 	D3DXVECTOR3 m_OffsetPos;		//オフセットの位置
+	COrbit* m_pOrbit;				//軌跡のポインタ
 };
 
 //==========================
@@ -344,24 +344,23 @@ class CPlayerBehavior_DashAttack : public CPlayerBehavior_Attack
 public:
 
 	//定数
-	static constexpr int END_TIME{ 20 };			//終了までの時間
-	static constexpr int START_COLLISION{ 4 };	//コリジョンの判定を始めるカウント
-	static constexpr int START_CANCELTIME{ 10 };	//キャンセルが始める時間
+	static constexpr int END_TIME{ 20 };				//終了までの時間
+	static constexpr int START_COLLISION{ 4 };			//コリジョンの判定を始めるカウント
+	static constexpr int START_CANCELTIME{ 10 };		//キャンセルが始める時間
 	static constexpr float ATTACK_LENGTH{ 75.0f };		//攻撃の距離
 
 	CPlayerBehavior_DashAttack() {}
-	CPlayerBehavior_DashAttack(CPlayer* player) : CPlayerBehavior_Attack(player)
-	{
-		//パラメータの設定
-		SetCancelTime(START_CANCELTIME);	//キャンセル
-		SetEndTime(END_TIME);				//終了時間
-		SetCollisionTime(START_COLLISION);	//当たり判定
-		SetAttackLength(ATTACK_LENGTH);		//攻撃の距離
-	}
-	~CPlayerBehavior_DashAttack() override {}			//デストラクタ
+	CPlayerBehavior_DashAttack(CPlayer* player);	//コンストラクタ
+	~CPlayerBehavior_DashAttack() override;			//デストラクタ
+	void Behavior(CPlayer* player) override;		//行動
 
-	//行動
-	void Behavior(CPlayer* player) override {};
+	//ラッシュを続けるか
+	void SetRushContinue(bool set) { m_RushContinue = set; }	//設定
+	bool GetRushContinue() { return m_RushContinue; }			//取得
+
+private:
+
+	bool m_RushContinue;	//ラッシュを続けるか
 };
 
 //==========================

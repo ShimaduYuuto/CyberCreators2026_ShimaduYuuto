@@ -67,6 +67,10 @@ public:
 	void SetDirection(CDirection::DIRECTIONTYPE type);	//演出の種類を設定
 	bool GetDirectioning() { return m_bDirectioning; }	//取得
 
+	//ラッシュ中か
+	void SetRushJudge(bool judge) { m_bRush = judge; }	//設定
+	bool GetRushJudge() { return m_bRush; }				//取得
+
 	//コントローラーの種類
 	CUi_GameGuide::CONTROLLER GetControllerUIType() { return m_ControllerUIType; }
 
@@ -96,6 +100,9 @@ private:
 
 	//ゲームに表示するガイドUIの種類
 	CUi_GameGuide::CONTROLLER m_ControllerUIType;
+
+	//ラッシュ判定
+	bool m_bRush;	//ラッシュ中か
 };
 
 #endif

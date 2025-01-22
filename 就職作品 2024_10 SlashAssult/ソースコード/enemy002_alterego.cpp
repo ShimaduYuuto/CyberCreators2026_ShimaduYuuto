@@ -82,7 +82,7 @@ void CEnemy002_AlterEgo::Update()
 	}
 
 	//‹¤’Êˆ—‚ÌXV
-	CEnemy::Update();
+	CEnemy002::Update();
 }
 
 //============================

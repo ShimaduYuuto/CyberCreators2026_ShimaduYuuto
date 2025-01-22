@@ -15,6 +15,7 @@
 #include "state_player_normal.h"
 #include "state_player_counter.h"
 #include "state_player_guard.h"
+#include "particle_rush.h"
 
 //定数
 const D3DXVECTOR3 CPlayerBehavior_Attack::POS_OFFSET{ 0.0f, 20.0f, 30.0f };
@@ -84,19 +85,17 @@ D3DXVECTOR3 CPlayerBehavior_Move::UpdateMove(CPlayer* player, D3DXVECTOR3& Rotgo
 
 	//動いたかの判定用
 	bool bMove = false;
+	bool bPressKey = false;
 
-	if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_A)/* ||
-		CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_LEFT)*/)
+	if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_A))
 	{//Aキーが押された場合
-		if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_W)/* ||
-			CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_UP)*/)
+		if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_W))
 		{
 			move.x += sinf(D3DX_PI * -0.75f - pCamera->GetRot().y) * MOVE_SPEED;
 			move.z -= cosf(D3DX_PI * -0.75f - pCamera->GetRot().y) * MOVE_SPEED;
 			Rotgoal.y = D3DX_PI * 0.75f + pCamera->GetRot().y;
 		}
-		else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_S)/* ||
-				 CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_DOWN)*/)
+		else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_S))
 		{
 			move.x += sinf(D3DX_PI * -0.25f - pCamera->GetRot().y) * MOVE_SPEED;
 			move.z -= cosf(D3DX_PI * -0.25f - pCamera->GetRot().y) * MOVE_SPEED;
@@ -109,21 +108,19 @@ D3DXVECTOR3 CPlayerBehavior_Move::UpdateMove(CPlayer* player, D3DXVECTOR3& Rotgo
 			Rotgoal.y = -(D3DX_PI * -0.5f - pCamera->GetRot().y);
 		}
 
-		bMove = true;	//動いた判定
+		bMove = true;		//動いた判定
+		bPressKey = true;	//キーボードを触っている
 	}
-	else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_D)/* ||
-			 CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_RIGHT)*/)
+	else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_D))
 	{//Dキーが押された場合
 
-		if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_W)/* ||
-			CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_UP)*/)
+		if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_W))
 		{
 			move.x += sinf(D3DX_PI * 0.75f - pCamera->GetRot().y) * MOVE_SPEED;
 			move.z -= cosf(D3DX_PI * 0.75f - pCamera->GetRot().y) * MOVE_SPEED;
 			Rotgoal.y = D3DX_PI * -0.75f + pCamera->GetRot().y;
 		}
-		else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_S)/* ||
-				 CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_DOWN)*/)
+		else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_S))
 		{
 			move.x += sinf(D3DX_PI * 0.25f - pCamera->GetRot().y) * MOVE_SPEED;
 			move.z -= cosf(D3DX_PI * 0.25f - pCamera->GetRot().y) * MOVE_SPEED;
@@ -136,10 +133,10 @@ D3DXVECTOR3 CPlayerBehavior_Move::UpdateMove(CPlayer* player, D3DXVECTOR3& Rotgo
 			Rotgoal.y = -(D3DX_PI * 0.5f - pCamera->GetRot().y);
 		}
 
-		bMove = true;	//動いた判定
+		bMove = true;		//動いた判定
+		bPressKey = true;	//キーボードを触っている
 	}
-	else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_W)/* ||
-			 CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_UP)*/)
+	else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_W))
 	{//Wキーが押された場合
 		{
 			move.z -= cosf(D3DX_PI + pCamera->GetRot().y) * MOVE_SPEED;
@@ -147,10 +144,10 @@ D3DXVECTOR3 CPlayerBehavior_Move::UpdateMove(CPlayer* player, D3DXVECTOR3& Rotgo
 			Rotgoal.y = D3DX_PI + pCamera->GetRot().y;
 		}
 
-		bMove = true;	//動いた判定
+		bMove = true;		//動いた判定
+		bPressKey = true;	//キーボードを触っている
 	}
-	else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_S)/* ||
-			 CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_DOWN)*/)
+	else if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_S))
 	{//Sキーが押された場合
 		{
 			move.z -= cosf(pCamera->GetRot().y) * MOVE_SPEED;
@@ -158,11 +155,12 @@ D3DXVECTOR3 CPlayerBehavior_Move::UpdateMove(CPlayer* player, D3DXVECTOR3& Rotgo
 			Rotgoal.y = pCamera->GetRot().y;
 		}
 
-		bMove = true;	//動いた判定
+		bMove = true;		//動いた判定
+		bPressKey = true;	//キーボードを触っている
 	}
 
 	//スティックが倒れていたらその方向に進む
-	if (CManager::GetInstance()->GetJoypad()->GetStick().afTplDiameter[CInputJoypad::STICKTYPE_LEFT] > 0.001f)
+	if (CManager::GetInstance()->GetJoypad()->GetStick().afTplDiameter[CInputJoypad::STICKTYPE_LEFT] > 0.001f && !bPressKey)
 	{
 		float fAngle = CManager::GetInstance()->GetJoypad()->GetStick().afAngle[CInputJoypad::STICKTYPE_LEFT];
 		move.z += cosf(pCamera->GetRot().y + -fAngle + D3DX_PI) * MOVE_SPEED;
@@ -201,7 +199,7 @@ void CPlayerBehavior_Move::Action(CPlayer* player)
 {
 	//左シフトでダッシュを設定
 	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_LSHIFT) ||
-		CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_RB))
+		CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_LB))
 	{
 		//アクションをしていないなら
 		if (GetNextBehavior() == nullptr)
@@ -229,7 +227,7 @@ void CPlayerBehavior_Move::Action(CPlayer* player)
 	if (player->GetOnStand())
 	{
 		//右クリックをしたら
-		if (CManager::GetInstance()->GetMouse()->GetPress(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_RIGHT) || CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_B))
+		if (CManager::GetInstance()->GetMouse()->GetPress(CManager::GetInstance()->GetMouse()->MOUSEBUTTON_RIGHT) || CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_RB))
 		{
 			//アクションをしていないなら
 			if (GetNextBehavior() == nullptr)
@@ -309,7 +307,7 @@ void CPlayerBehavior_Dash::Behavior(CPlayer* player)
 {
 	//押している間ダッシュする
 	if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_LSHIFT) ||
-		CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_RB))
+		CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_LB))
 	{
 		//返す用の変数
 		D3DXVECTOR3 move = { 0.0f, 0.0f, 0.0f };
@@ -414,7 +412,8 @@ CPlayerBehavior_Attack::CPlayerBehavior_Attack(CPlayer* player) :
 	m_nCancelStartTime(0),
 	m_nCollisionlTime(0),
 	m_nEndCount(0),
-	m_nEndTime(0)
+	m_nEndTime(0),
+	m_pOrbit(nullptr)
 {
 	//パラメータの設定
 	SetEndTime(END_TIME);
@@ -423,8 +422,28 @@ CPlayerBehavior_Attack::CPlayerBehavior_Attack(CPlayer* player) :
 	SetAttackLength(ATTACK_LENGTH);
 	SetOffsetPos(POS_OFFSET);
 
+	//軌跡の生成
+	if (m_pOrbit == nullptr)
+	{
+		m_pOrbit = COrbit::Create();
+	}
+
 	//SEを鳴らす
 	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_SWING);
+}
+
+//============================
+//デストラクタ
+//============================
+CPlayerBehavior_Attack::~CPlayerBehavior_Attack()
+{
+	m_HitEnemy.clear();
+
+	if (m_pOrbit != nullptr)
+	{
+		m_pOrbit->Uninit();
+		m_pOrbit = nullptr;
+	}
 }
 
 //============================
@@ -439,7 +458,7 @@ void CPlayerBehavior_Attack::Behavior(CPlayer* player)
 		if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
 		{
 			//ゲームシーンの取得
-			CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+			CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 			//攻撃判定の生成
 			D3DXVECTOR3 AttackPos = player->GetPos();
@@ -542,6 +561,25 @@ void CPlayerBehavior_Attack::Behavior(CPlayer* player)
 
 	//カウントの更新
 	m_nEndCount++;
+
+	//軌跡の処理
+	if (m_pOrbit == nullptr)
+	{
+		return;
+	}
+
+	//モデルパーツの取得
+	CModelparts* pModelParts = player->GetModelParts(15);
+
+	//オフセット位置の設定
+	D3DXVECTOR3 OffsetPos = { 0.0f, ORBIT_OFFSET_LENGTH, 0.0f };
+	D3DXVec3TransformCoord(&OffsetPos, &OffsetPos, &pModelParts->GetMtx());
+
+	//軌跡の設定
+	m_pOrbit->SetOrbit(pModelParts->GetWorldPos(), OffsetPos);
+	m_pOrbit->SetOrbit(OffsetPos, pModelParts->GetWorldPos());
+
+	CParticle_Rush::Create(OffsetPos, player->GetRot());
 }
 
 //============================
@@ -581,7 +619,7 @@ void CPlayerBehavior_NormalAttack::Behavior(CPlayer* player)
 	if (GetCount() < END_MOVE)
 	{
 		//ゲームシーンの取得
-		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+		CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 		//移動量を加算
 		D3DXVECTOR3 Move = player->GetMove();
@@ -881,6 +919,67 @@ void CPlayerBehavior_Arial002::Behavior(CPlayer* player)
 }
 
 //=================================================
+//ダッシュ攻撃(基底)
+//=================================================
+
+//============================
+//コンストラクタ
+//============================
+CPlayerBehavior_DashAttack::CPlayerBehavior_DashAttack(CPlayer* player) : CPlayerBehavior_Attack(player),
+	m_RushContinue(false)
+{
+	//パラメータの設定
+	SetCancelTime(START_CANCELTIME);	//キャンセル
+	SetEndTime(END_TIME);				//終了時間
+	SetCollisionTime(START_COLLISION);	//当たり判定
+	SetAttackLength(ATTACK_LENGTH);		//攻撃の距離
+
+	//ラッシュ判定をゲームシーンに設定
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+	pGame->SetRushJudge(true);
+}
+
+//============================
+//デストラクタ
+//============================
+CPlayerBehavior_DashAttack::~CPlayerBehavior_DashAttack()
+{
+	//ラッシュ判定をゲームシーンに設定
+	if (!m_RushContinue)
+	{
+		CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+		pGame->SetRushJudge(false);
+	}
+}
+
+//============================
+//行動処理(攻撃)
+//============================
+void CPlayerBehavior_DashAttack::Behavior(CPlayer* player)
+{
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+
+	//ラッシュ判定の確認
+	if (!pGame->GetRushJudge())
+	{
+		pGame->SetRushJudge(true);
+	}
+
+	//モデルパーツの取得
+	CModelparts* pModelParts = player->GetModelParts(15);
+
+	//オフセット位置の設定
+	D3DXVECTOR3 OffsetPos = { 0.0f, ORBIT_OFFSET_LENGTH, 0.0f };
+	D3DXVec3TransformCoord(&OffsetPos, &OffsetPos, &pModelParts->GetMtx());
+
+	//パーティクルの生成
+	//CParticle_Rush::Create(OffsetPos, player->GetRot());
+
+	//攻撃処理
+	CPlayerBehavior_Attack::Behavior(player);
+}
+
+//=================================================
 //ダッシュ攻撃(1段目)
 //=================================================
 
@@ -889,7 +988,7 @@ void CPlayerBehavior_Arial002::Behavior(CPlayer* player)
 //============================
 CPlayerBehavior_DashAttack000::CPlayerBehavior_DashAttack000(CPlayer* player) : CPlayerBehavior_DashAttack(player)
 {
-	player->SetMotion(player->PLAYERMOTION_DASHATTACK000);
+	player->SetMotion(CPlayer::PLAYERMOTION_ARIAL000);
 	player->SetEnableGravity(false);
 	player->SetMove({ player->GetMove().x, 0.0f, player->GetMove().z });
 }
@@ -926,6 +1025,7 @@ void CPlayerBehavior_DashAttack000::Cancel(CPlayer* player)
 				{
 					//次の攻撃の生成
 					SetNextBehavior(new CPlayerBehavior_DashAttack001(player));
+					SetRushContinue(true);
 				}
 			}
 		}
@@ -937,7 +1037,7 @@ void CPlayerBehavior_DashAttack000::Cancel(CPlayer* player)
 //============================
 void CPlayerBehavior_DashAttack000::Behavior(CPlayer* player)
 {
-	CPlayerBehavior_Attack::Behavior(player);
+	CPlayerBehavior_DashAttack::Behavior(player);
 }
 
 //=================================================
@@ -949,7 +1049,7 @@ void CPlayerBehavior_DashAttack000::Behavior(CPlayer* player)
 //============================
 CPlayerBehavior_DashAttack001::CPlayerBehavior_DashAttack001(CPlayer* player) : CPlayerBehavior_DashAttack(player)
 {
-	player->SetMotion(CPlayer::PLAYERMOTION_DASHATTACK001);
+	player->SetMotion(CPlayer::PLAYERMOTION_ARIAL001);
 }
 
 //============================
@@ -962,7 +1062,7 @@ void CPlayerBehavior_DashAttack001::Cancel(CPlayer* player)
 		CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_X))
 	{
 		//ゲームシーンの取得
-		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+		CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 		//ロックオン相手の確認
 		if (pGame->GetLockon() != nullptr)
@@ -984,6 +1084,7 @@ void CPlayerBehavior_DashAttack001::Cancel(CPlayer* player)
 				{
 					//次の攻撃の生成
 					SetNextBehavior(new CPlayerBehavior_DashAttack000(player));
+					SetRushContinue(true);
 				}
 			}
 		}
@@ -995,7 +1096,7 @@ void CPlayerBehavior_DashAttack001::Cancel(CPlayer* player)
 //============================
 void CPlayerBehavior_DashAttack001::Behavior(CPlayer* player)
 {
-	CPlayerBehavior_Attack::Behavior(player);
+	CPlayerBehavior_DashAttack::Behavior(player);
 }
 
 //=================================================
@@ -1063,7 +1164,7 @@ void CPlayerBehavior_Guard::Behavior(CPlayer* player)
 {
 	//左クリックを離したら
 	if (!CManager::GetInstance()->GetMouse()->GetPress(CInputMouse::MOUSEBUTTON_RIGHT) &&
-		!CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_B))
+		!CManager::GetInstance()->GetJoypad()->GetPress(CInputJoypad::JOYKEY_RB))
 	{
 		//通常状態に変更
 		player->GetState()->SetNextState(new CState_Player_Normal(player));

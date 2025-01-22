@@ -98,6 +98,9 @@ void CParticle::Draw()
 	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 
+	//フォグの設定
+	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+
 	CObjectBillboard::Draw(TEXTUREPATH.c_str());
 	
 	//α値を元に戻す
@@ -106,6 +109,42 @@ void CParticle::Draw()
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+	//フォグの設定
+	pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
+}
+
+//============================
+//パーティクルの描画
+//============================
+void CParticle::Draw(const char* texturepath)
+{
+	LPDIRECT3DDEVICE9 pDevice;
+
+	//デバイスの取得
+	pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
+
+	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	//αブレンディングを加算
+	pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+
+	//フォグの設定
+	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+
+	CObjectBillboard::Draw(texturepath);
+
+	//α値を元に戻す
+	pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+	//フォグの設定
+	pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
 }
 
 //============================

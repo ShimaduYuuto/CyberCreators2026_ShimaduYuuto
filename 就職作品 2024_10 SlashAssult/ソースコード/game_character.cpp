@@ -168,7 +168,7 @@ D3DXVECTOR3 CGame_Character::GravityMove(D3DXVECTOR3 move)
 		if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
 		{
 			//ƒQ[ƒ€ƒV[ƒ“‚ÌŽæ“¾
-			CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+			CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 			move.y -= pGame->GetTime()->GetValue<float>(GRAVITY);
 		}

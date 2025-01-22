@@ -10,7 +10,7 @@
 #include "game.h"
 
 //’è”
-const std::string CVenue::MODEL_PATH = "data\\model\\venue001.x";
+const std::string CVenue::MODEL_PATH = "data\\model\\venue003.x";
 
 //============================
 //•`‰æ

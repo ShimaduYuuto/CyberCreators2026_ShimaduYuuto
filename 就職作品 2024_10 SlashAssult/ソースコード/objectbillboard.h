@@ -30,7 +30,7 @@ public:
 	void Uninit() override;										//終了
 	void Update() override;										//更新
 	void Draw() override;										//描画
-	void Draw(const char* texturepath);							//引数のテクスチャで描画
+	virtual void Draw(const char* texturepath);					//引数のテクスチャで描画
 	static CObjectBillboard* Create();							//ObjectBillboardの生成
 	
 	//パラメータ関連
