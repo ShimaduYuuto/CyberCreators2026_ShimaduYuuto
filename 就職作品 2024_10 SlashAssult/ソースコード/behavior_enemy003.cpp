@@ -87,6 +87,8 @@ void CEnemyAction_ChargeAttack::Action(CEnemy* enemy)
 		pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());			//ゲームシーンの取得
 		D3DXVECTOR3 PlayerPos = pGame->GetGamePlayer()->GetCollision()->GetPos();	//プレイヤーの当たり判定の位置
 		D3DXVECTOR3 EnemyPos = enemy->GetCollision()->GetPos();						//エネミーの位置を取得
+		D3DXVECTOR3 Distance = PlayerPos - enemy->GetPos();
+		float fAngle = atan2f(Distance.x, Distance.z);
 
 		//距離を計算
 		float fXZ = sqrtf((EnemyPos.x - PlayerPos.x) * (EnemyPos.x - PlayerPos.x) + (EnemyPos.z - PlayerPos.z) * (EnemyPos.z - PlayerPos.z)); //距離を算出する
@@ -97,7 +99,7 @@ void CEnemyAction_ChargeAttack::Action(CEnemy* enemy)
 		if (fLength < pGame->GetGamePlayer()->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius())
 		{
 			//プレイヤーにダメージを与える
-			if (pGame->GetGamePlayer()->SetDamage(CEnemy003::ENEMY003MOTION_WALK))
+			if (pGame->GetGamePlayer()->SetDamage(1, fAngle))
 			{
 				//攻撃判定の終了
 				CEnemy003* pEnemy003 = dynamic_cast<CEnemy003*>(enemy);

@@ -16,13 +16,23 @@ class CState_Player_Invincible : public CState_Player
 {
 public:
 
+	//ノックバックの時間
+	static constexpr int TIME_INVINCIBLE{ 90 };	//無敵時間
+
 	//メンバ関数
 	CState_Player_Invincible() {};					//コンストラクタ
 	CState_Player_Invincible(CPlayer* player)
 	{
-		//SetBehavior(new CPlayerBehavior(player));
+		SetBehavior(new CPlayerBehavior_Move(player));
+		SetEndTime(TIME_INVINCIBLE);
 	};	//コンストラクタ
 	~CState_Player_Invincible() {};					//デストラクタ
+
+	//状態の更新
+	void UpdateState(CPlayer* player) override;
+	bool SetDamage(CPlayer* player, int damage, float angle) override;	//ダメージの設定
+
+private:
 };
 
 #endif

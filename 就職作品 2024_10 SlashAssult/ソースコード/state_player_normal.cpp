@@ -13,7 +13,7 @@
 //========================
 //ダメージの設定
 //========================
-bool CState_Player_Normal::SetDamage(CPlayer* player, int damage)
+bool CState_Player_Normal::SetDamage(CPlayer* player, int damage, float angle)
 {
 	//体力がないなら更新しない
 	if (player->GetLife() <= 0)
@@ -28,7 +28,7 @@ bool CState_Player_Normal::SetDamage(CPlayer* player, int damage)
 	}
 
 	//ダメージを受ける
-	player->CGame_Character::SetDamage(damage);
+	player->CGame_Character::SetDamage(damage, angle);
 	player->SetMotion(8);											//モーションの設定
 	SetNextState(new CState_Player_Damage(player));					//ステートの設定
 

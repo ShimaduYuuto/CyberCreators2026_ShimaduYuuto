@@ -29,10 +29,10 @@ public:
 
 	//状態ごとの更新
 	virtual void Update(CPlayer* player);					//更新
-	virtual bool SetDamage(CPlayer* player, int damage) { return true; }		//ダメージの設定
+	virtual bool SetDamage(CPlayer* player, int damage, float angle) { return true; }		//ダメージの設定
 
-	//アクションのインスタンス
-	void SetBehavior(CPlayerBehavior* behavior) { m_pBehavior = behavior; }	//設定
+	//アクション
+	void SetBehavior(CPlayerBehavior* behavior);/* { m_pBehavior = behavior; }*/	//設定
 	CPlayerBehavior* GetBehavior() { return m_pBehavior; }					//取得
 
 	//次の状態

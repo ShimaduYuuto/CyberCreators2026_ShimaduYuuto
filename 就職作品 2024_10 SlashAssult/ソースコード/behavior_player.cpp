@@ -316,7 +316,7 @@ void CPlayerBehavior_Dash::Behavior(CPlayer* player)
 		if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
 		{
 			//ゲームシーンの取得
-			CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+			CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 			//ロックオン相手の確認
 			if (pGame->GetLockon() != nullptr)
@@ -422,6 +422,9 @@ CPlayerBehavior_Attack::CPlayerBehavior_Attack(CPlayer* player) :
 	SetAttackLength(ATTACK_LENGTH);
 	SetOffsetPos(POS_OFFSET);
 
+	//敵の方向を向く
+	LookAtEnemy(player);
+
 	//軌跡の生成
 	if (m_pOrbit == nullptr)
 	{
@@ -444,6 +447,78 @@ CPlayerBehavior_Attack::~CPlayerBehavior_Attack()
 		m_pOrbit->Uninit();
 		m_pOrbit = nullptr;
 	}
+}
+
+//============================
+//敵の方を見る
+//============================
+void CPlayerBehavior_Attack::LookAtEnemy(CPlayer* player)
+{
+	//ゲームシーンの取得
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+
+	//敵が見つかったか
+	bool bHit = false;
+
+	//保存する情報
+	D3DXVECTOR3 GoalEnemyPos = { VEC3_RESET_ZERO };
+	float ShortLength = 100.0f;
+
+	//敵の周回
+	for (auto& iter : pGame->GetEnemyManager()->GetList())
+	{
+		//位置の情報を更新
+		D3DXVECTOR3 PlayerPos = player->GetPos();
+		D3DXVECTOR3 EnemyLength = iter->GetCollision()->GetPos() - PlayerPos;
+
+		float fXZ = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.z * EnemyLength.z); //XZ距離を算出する
+		float fXY = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.y * EnemyLength.y); //XY距離を算出する
+		float fLength = sqrtf(fXZ * fXZ + fXY * fXY);	//距離を算出
+
+		//より近い敵を見つけたら更新
+		if (fLength < ShortLength)
+		{
+			//プレイヤーの向いている方向にいるかを判断
+			float fPlayerAngle = player->GetRot().y + D3DX_PI;
+			D3DXVECTOR3 Length = iter->GetPos() - player->GetPos();
+			float fAngle = atan2f(-Length.x, -Length.z)/* + D3DX_PI*/;
+			
+			if (CheckEnemyInFront(player, fAngle, D3DX_PI))
+			{
+				//情報を保存
+				ShortLength = fLength;
+				GoalEnemyPos = iter->GetPos();
+				bHit = true;
+			}
+		}
+	}
+
+	//追尾する敵を見つけたらそっちを向く
+	if (bHit)
+	{
+		D3DXVECTOR3 Length = GoalEnemyPos - player->GetPos();
+		float fAngle = atan2f(Length.x, Length.z);
+		player->SetGoalRot({ 0.0f, fAngle + D3DX_PI, 0.0f });
+	}
+}
+
+//============================
+//前方に敵がいるかの確認
+//============================
+bool CPlayerBehavior_Attack::CheckEnemyInFront(CPlayer* player, float targetangle, float radian)
+{
+	float fPlayerRot = player->GetRot().y;
+	float fRot = targetangle;
+	float fMin = fPlayerRot - radian * 0.5f;
+	float fMax = fPlayerRot + radian * 0.5f;
+
+	//後ろからの攻撃なら通す
+	if (fRot > fMin && fRot < fMax)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 //============================
@@ -530,12 +605,14 @@ void CPlayerBehavior_Attack::Behavior(CPlayer* player)
 				float fXZ = sqrtf(Length.x * Length.x + Length.z * Length.z); //XZ距離を算出する
 				float fXY = sqrtf(Length.x * Length.x + Length.y * Length.y); //XY距離を算出する
 				float fLength = sqrtf(fXZ * fXZ + fXY * fXY);	//距離を算出
+				D3DXVECTOR3 Distance = AttackPos - iter->GetPos();
+				float fAngle = atan2f(Distance.x, Distance.z);
 
 				//敵の判定内なら
 				if (fLength < m_fAttackLength + iter->GetCollision()->GetRadius())
 				{
 					//弾を反射
-					iter->Reflection();
+					iter->Reflection(fAngle);
 					CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_REPEL);	//SE
 				}
 			}
@@ -576,8 +653,9 @@ void CPlayerBehavior_Attack::Behavior(CPlayer* player)
 	D3DXVec3TransformCoord(&OffsetPos, &OffsetPos, &pModelParts->GetMtx());
 
 	//軌跡の設定
-	m_pOrbit->SetOrbit(pModelParts->GetWorldPos(), OffsetPos);
-	m_pOrbit->SetOrbit(OffsetPos, pModelParts->GetWorldPos());
+	//m_pOrbit->SetOrbit(pModelParts->GetWorldPos(), OffsetPos);
+	//m_pOrbit->SetOrbit(OffsetPos, pModelParts->GetWorldPos());
+	//m_pOrbit->SetOrbit(player->GetPos() + D3DXVECTOR3({ 0.0f, ORBIT_OFFSET_LENGTH + 50.0f, 0.0f }), player->GetPos());
 
 	CParticle_Rush::Create(OffsetPos, player->GetRot());
 }

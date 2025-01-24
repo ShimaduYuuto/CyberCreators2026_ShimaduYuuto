@@ -408,6 +408,7 @@
     <ClCompile Include="state_player_damage.cpp" />
     <ClCompile Include="state_player_death.cpp" />
     <ClCompile Include="state_player_guard.cpp" />
+    <ClCompile Include="state_player_invincible.cpp" />
     <ClCompile Include="state_player_knockback.cpp" />
     <ClCompile Include="state_player_normal.cpp" />
     <ClCompile Include="texture.cpp" />

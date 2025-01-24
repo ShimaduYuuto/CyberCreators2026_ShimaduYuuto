@@ -27,8 +27,7 @@ const std::string CPlayer::FILEPATH = "data\\MODEL\\player001.x";
 //============================
 CPlayer::CPlayer(int nPriority) : CGame_Character(nPriority),
 	m_pLifeGauge(nullptr),
-	m_pState(nullptr),
-	m_pBehavior(nullptr)
+	m_pState(nullptr)
 {
 	m_pState = new CState_Player_Normal(this);
 	SetType(TYPE_PLAYER);	//種類の設定
@@ -88,11 +87,23 @@ void CPlayer::Uninit()
 	//状態の消去
 	if (m_pState != nullptr)
 	{
+		//次の行動を削除
+		if (m_pState->GetBehavior()->GetNextBehavior() != nullptr)
+		{
+			delete m_pState->GetBehavior()->GetNextBehavior();
+		}
+
+		//次の状態を破棄
+		if (m_pState->GetNextState() != nullptr)
+		{
+			delete m_pState->GetNextState();
+		}
+		
 		delete m_pState;
 		m_pState = nullptr;
 	}
 
-	SetOrbit(false);	//軌跡の削除
+	//SetOrbit(false);	//軌跡の削除
 }
 
 //============================
@@ -158,27 +169,27 @@ void CPlayer::UpdateState()
 //============================
 //行動の更新
 //============================
-void CPlayer::UpdateBehavior()
-{
-	//行動しているなら更新
-	//if (m_pBehavior != nullptr)
-	//{
-	//	//派生先のアクションを実行
-	//	m_pBehavior->Behavior(this);
-
-	//	//次のアクションがあるなら変更
-	//	if (m_pBehavior->GetNextBehavior() != nullptr)
-	//	{
-	//		//次のアクションに変更
-	//		CPlayerBehavior* pNext = m_pBehavior->GetNextBehavior();
-	//		delete m_pBehavior;
-	//		m_pBehavior = nullptr;
-
-	//		//代入
-	//		m_pBehavior = pNext;
-	//	}
-	//}
-}
+//void CPlayer::UpdateBehavior()
+//{
+//	//行動しているなら更新
+//	if (m_pBehavior != nullptr)
+//	{
+//		//派生先のアクションを実行
+//		m_pBehavior->Behavior(this);
+//
+//		//次のアクションがあるなら変更
+//		if (m_pBehavior->GetNextBehavior() != nullptr)
+//		{
+//			//次のアクションに変更
+//			CPlayerBehavior* pNext = m_pBehavior->GetNextBehavior();
+//			delete m_pBehavior;
+//			m_pBehavior = nullptr;
+//
+//			//代入
+//			m_pBehavior = pNext;
+//		}
+//	}
+//}
 
 //============================
 //コリジョンの判定
@@ -236,10 +247,19 @@ void CPlayer::CollisionJudge()
 //============================
 //ダメージ時の処理
 //============================
-bool CPlayer::SetDamage(int damage)
+//bool CPlayer::SetDamage(int damage)
+//{
+//	//ダメージの設定
+//	return m_pState->SetDamage(this, damage);
+//}
+
+//============================
+//ダメージ時の処理
+//============================
+bool CPlayer::SetDamage(int damage, float angle)
 {
 	//ダメージの設定
-	return m_pState->SetDamage(this, damage);;
+	return m_pState->SetDamage(this, damage, angle);
 }
 
 //============================
@@ -367,14 +387,6 @@ void CPlayer::UpdatePos()
 }
 
 //============================
-//軌跡の設定
-//============================
-void CPlayer::SetOrbit(bool set)
-{
-	
-}
-
-//============================
 //ノックバックの設定
 //============================
 void CPlayer::SetKnockBack(int time)
@@ -393,12 +405,34 @@ void CPlayer::SetKnockBack(int time)
 }
 
 //============================
+//次の行動を設定
+//============================
+//void CPlayer::SetNextBehavior(CPlayerBehavior* behavior)
+//{
+//	//nullチェック
+//	if (m_pBehavior == nullptr)
+//	{
+//		return;
+//	}
+//
+//	//中身があったら消す
+//	if (m_pBehavior->GetNextBehavior() != nullptr)
+//	{
+//		CPlayerBehavior* pBehavior = m_pBehavior->GetNextBehavior();
+//		m_pBehavior = nullptr;
+//		delete pBehavior;
+//	}
+//
+//	m_pBehavior->SetNextBehavior(behavior);
+//}
+
+//============================
 //状態の設定
 //============================
 void CPlayer::SetState(CState_Player* state)
 {
 	//軌跡の削除
-	SetOrbit(false);	
+	//SetOrbit(false);	
 
 	//状態の変更
 	delete m_pState;

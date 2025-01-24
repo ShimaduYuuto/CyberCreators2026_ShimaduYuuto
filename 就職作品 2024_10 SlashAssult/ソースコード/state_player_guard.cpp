@@ -122,7 +122,7 @@ void CState_Player_Guard::UpdateStiffness(CPlayer* player)
 //========================
 //ダメージの設定
 //========================
-bool CState_Player_Guard::SetDamage(CPlayer* player, int damage)
+bool CState_Player_Guard::SetDamage(CPlayer* player, int damage, float angle)
 {
 	//体力がないなら更新しない
 	if (player->GetLife() <= 0)
@@ -147,7 +147,7 @@ bool CState_Player_Guard::SetDamage(CPlayer* player, int damage)
 	}
 
 	//ノックバックの移動量を設定
-	KnockBackMove = { sinf(player->GetRot().y) * VALUE_KNOCKBACK, 0.0f, cosf(player->GetRot().y) * VALUE_KNOCKBACK };
+	KnockBackMove = { sinf(angle) * VALUE_KNOCKBACK, 0.0f, cosf(angle) * VALUE_KNOCKBACK };
 	m_bStiffening = true;
 	m_nStiffnessCount = 0;
 

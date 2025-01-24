@@ -20,12 +20,17 @@ public:
 	CState_Player_Normal() {};					//コンストラクタ
 	CState_Player_Normal(CPlayer* player) 
 	{
-		SetBehavior(new CPlayerBehavior_Move(player));
+		//中身がないなら移動を設定
+		if (GetBehavior() == nullptr)
+		{
+			SetBehavior(new CPlayerBehavior_Move(player));
+		}
+		
 	};	//コンストラクタ
 	~CState_Player_Normal() {};					//デストラクタ
 
 	void UpdateState(CPlayer* player) override {};			//状態の更新
-	bool SetDamage(CPlayer* player, int damage) override;	//ダメージの設定
+	bool SetDamage(CPlayer* player, int damage, float angle) override;	//ダメージの設定
 };
 
 #endif

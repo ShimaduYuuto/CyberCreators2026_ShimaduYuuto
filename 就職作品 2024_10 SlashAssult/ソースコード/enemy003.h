@@ -42,7 +42,7 @@ public:
 	void Draw() override;				//描画
 
 	//ダメージの設定
-	bool SetDamage(int damage, float rotY) override;	//ダメージの設定
+	bool SetDamage(int damage, float angle) override;	//ダメージの設定
 
 	//状態のリセット
 	void StateReset() override;

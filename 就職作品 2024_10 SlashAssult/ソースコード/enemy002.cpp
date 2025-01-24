@@ -143,24 +143,24 @@ void CEnemy002::UpdateAlpha()
 //============================
 //ダメージの設定
 //============================
-bool CEnemy002::SetDamage(int damage)
-{
-	//実体化していないなら当たらない
-	if (!m_bMaterialized)
-	{
-		return false;
-	}
-
-	//基底の処理
-	CEnemy::SetDamage(damage);
-
-	return true;
-}
+//bool CEnemy002::SetDamage(int damage)
+//{
+//	//実体化していないなら当たらない
+//	if (!m_bMaterialized)
+//	{
+//		return false;
+//	}
+//
+//	//基底の処理
+//	CEnemy::SetDamage(damage);
+//
+//	return true;
+//}
 
 //============================
 //ダメージの設定
 //============================
-bool CEnemy002::SetDamage(int damage, float rotY)
+bool CEnemy002::SetDamage(int damage, float angle)
 {
 	//実体化していないなら当たらない
 	if (!m_bMaterialized)
@@ -175,12 +175,12 @@ bool CEnemy002::SetDamage(int damage, float rotY)
 		ChangeState(new CState_Enemy002_Damage(this));
 
 		//基底の処理
-		CEnemy::SetDamage(damage, rotY);
+		CEnemy::SetDamage(damage, angle);
 	}
 	else
 	{
 		//基底の処理
-		CEnemy::SetDamage(damage);
+		CEnemy::SetDamage(damage, angle);
 	}
 
 	return true;
@@ -232,22 +232,10 @@ void CEnemy002::SetMaterialized(bool materialized)
 	//実体化するならパーツを透明にする
 	if (materialized)
 	{
-		//パーツ数だけ周回
-		/*for (auto itr : GetModelPartsVector())
-		{
-			itr->SetAlpha(1.0f);
-		}*/
-
 		m_fGoalfAlpha = 1.0f;
 	}
 	else
 	{
-		//パーツ数だけ周回
-		/*for (auto itr : GetModelPartsVector())
-		{
-			itr->SetAlpha(VALUE_INVISIBLE_ALPHA);
-		}*/
-
 		m_fGoalfAlpha = VALUE_INVISIBLE_ALPHA;
 	}
 

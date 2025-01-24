@@ -16,7 +16,6 @@
 
 //前方宣言
 class CState_Player;
-class CPlayerBehavior;
 
 //プレイヤークラス
 class CPlayer : public CGame_Character
@@ -57,7 +56,8 @@ public:
 	void Uninit() override;					//終了
 	void Update() override;					//更新
 	void Draw() override;					//描画
-	bool SetDamage(int damage) override;	//ダメージを設定
+	//bool SetDamage(int damage) override;	//ダメージを設定
+	bool SetDamage(int damage, float angle) override;	//ダメージを設定
 	D3DXVECTOR3 GravityMove(D3DXVECTOR3 move) override;	//重力の処理
 	void UpdatePos() override;				//位置の更新
 
@@ -81,12 +81,10 @@ private:
 
 	void CollisionJudge();	//コリジョンの判定
 	void UpdateState();		//状態の更新
-	void UpdateBehavior();	//行動の更新
 
 	//メンバ変数
 	CGauge_PlayerLife* m_pLifeGauge;//体力ゲージのポインタ
 	CState_Player* m_pState;		//状態のインスタンス
-	CPlayerBehavior* m_pBehavior;	//行動
 };
 
 #endif

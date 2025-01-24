@@ -147,8 +147,10 @@ public:
 
 private:
 
-	//ダメージを与える
-	virtual void Damage(CPlayer* player, CEnemy* enemy, int damage);
+	
+	virtual void Damage(CPlayer* player, CEnemy* enemy, int damage);	//ダメージを与える
+	void LookAtEnemy(CPlayer* player);									//敵の方向を向く
+	bool CheckEnemyInFront(CPlayer* player, float targetangle, float radian);			//自分の前に敵がいるかを確認
 
 	int m_nEndCount;				//終了カウント
 	std::list<CEnemy*> m_HitEnemy;	//当たった敵保存用

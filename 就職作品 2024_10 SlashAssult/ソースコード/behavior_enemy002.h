@@ -72,8 +72,8 @@ public:
 	static constexpr int CHARGE_TIME{ 230 };			//チャージ時間
 	static constexpr int CREATE_BULLET_TIME{ 50 };		//弾の生成時間
 	static constexpr int END_TIME{ 300 };				//アクション終了時間
-	static constexpr float ADD_SCALE_VALUE{ 0.03f };	//スケールの加算量
-	static constexpr float BULLET_LENGTH{ 20.0f };		//弾の生成する距離
+	static constexpr float ADD_SCALE_VALUE{ 0.02f };	//スケールの加算量
+	static constexpr float BULLET_LENGTH{ 18.0f };		//弾の生成する距離
 	static constexpr float BULLET_SPEED{ 3.0f };		//弾速
 	static constexpr float MAX_RUNDOM_LENGTH{ 400.0f };	//距離の最大ランダム値
 

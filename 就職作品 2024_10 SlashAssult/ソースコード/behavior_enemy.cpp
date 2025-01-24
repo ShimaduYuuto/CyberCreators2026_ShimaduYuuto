@@ -129,12 +129,14 @@ void CEnemyAction_Attack::Action(CEnemy* enemy)
 			float fXZ = sqrtf((AttackPos.x - PlayerPos.x) * (AttackPos.x - PlayerPos.x) + (AttackPos.z - PlayerPos.z) * (AttackPos.z - PlayerPos.z)); //距離を算出する
 			float fXY = sqrtf((AttackPos.x - PlayerPos.x) * (AttackPos.x - PlayerPos.x) + (AttackPos.y - PlayerPos.y) * (AttackPos.y - PlayerPos.y)); //距離を算出する
 			float fLength = sqrtf(fXZ * fXZ + fXY * fXY);	//距離を算出
+			D3DXVECTOR3 Distance = PlayerPos - enemy->GetPos();
+			float fAngle = atan2f(Distance.x, Distance.z);
 
 			//攻撃の範囲内なら
 			if (fLength < m_fAttackLength)
 			{
 				//プレイヤーにダメージを与える
-				pGame->GetGamePlayer()->SetDamage(nDamageValue);
+				pGame->GetGamePlayer()->SetDamage(nDamageValue, fAngle);
 				bHit = true;
 			}
 		}

@@ -18,6 +18,7 @@ public:
 
 	//テクスチャパス
 	static const std::string MODEL_PATH;
+	static const std::string BOSSBATTLE_MODEL_PATH;
 
 	//描画
 	void Draw() override;

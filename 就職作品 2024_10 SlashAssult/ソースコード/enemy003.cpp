@@ -86,7 +86,7 @@ void CEnemy003::Draw()
 //============================
 //ダメージの設定
 //============================
-bool CEnemy003::SetDamage(int damage, float rotY)
+bool CEnemy003::SetDamage(int damage, float angle)
 {
 	//張り付いていないならダメージ状態に
 	if (!GetEnteredStick())
@@ -95,8 +95,8 @@ bool CEnemy003::SetDamage(int damage, float rotY)
 		if (m_bAttacking)
 		{
 			//状態の変更
-			CEnemy::SetBlowDamage(damage, rotY);
-			CEnemy::SetBlowValue({ sinf(rotY + D3DX_PI) * 60.0f, 0.0f, cosf(rotY + D3DX_PI) * 60.0f });
+			CEnemy::SetBlowDamage(damage, angle);
+			CEnemy::SetBlowValue({ sinf(angle + D3DX_PI) * 60.0f, 0.0f, cosf(angle + D3DX_PI) * 60.0f });
 
 			//状態の変更
 			ChangeState(new CState_Enemy003_Blow(this));
@@ -107,13 +107,13 @@ bool CEnemy003::SetDamage(int damage, float rotY)
 			ChangeState(new CState_Enemy003_Damage(this));
 
 			//基底の処理
-			CEnemy::SetDamage(damage, rotY);
+			CEnemy::SetDamage(damage, angle);
 		}
 	}
 	else
 	{
 		//基底の処理
-		CEnemy::SetDamage(damage);
+		CEnemy::SetDamage(damage, angle);
 	}
 
 	return true;

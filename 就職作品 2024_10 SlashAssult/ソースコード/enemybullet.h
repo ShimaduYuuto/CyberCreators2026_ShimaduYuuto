@@ -52,7 +52,7 @@ public:
 	bool GetReflection() { return m_bReflection; }						//æ“¾
 
 	//”½Ë‚³‚¹‚éˆ—
-	void Reflection();	//”½Ëˆ—
+	void Reflection(float angle);	//”½Ëˆ—
 
 	//Œ‚‚½‚ê‚½‚©
 	void SetShooting(bool shooting) { m_bShooting = shooting; }	//İ’è

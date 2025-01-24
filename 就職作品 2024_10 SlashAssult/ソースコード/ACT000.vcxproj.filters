@@ -944,5 +944,8 @@
     <ClCompile Include="particle_rush.cpp">
       <Filter>ソース ファイル\particle</Filter>
     </ClCompile>
+    <ClCompile Include="state_player_invincible.cpp">
+      <Filter>ソース ファイル\state\state_player</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

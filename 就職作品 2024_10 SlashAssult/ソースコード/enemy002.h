@@ -48,8 +48,8 @@ public:
 	void UpdatePos() override;
 
 	//ダメージの設定
-	bool SetDamage(int damage) override;								//ダメージの設定
-	bool SetDamage(int damage, float rotY) override;					//ダメージの設定
+	bool SetDamage(int damage, float angle) override;								//ダメージの設定
+	//bool SetDamage(int damage, float rotY) override;					//ダメージの設定
 	bool SetBlowDamage(int damage, float rotY) override;				//吹き飛ばしてダメージを与える
 	bool SetBlowDamage(int damage, float rotY, float value) override;	//吹き飛ばしてダメージを与える
 

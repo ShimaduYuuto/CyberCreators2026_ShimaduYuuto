@@ -33,7 +33,7 @@ void CState_Player_Death::UpdateState(CPlayer* player)
 //========================
 //ダメージの設定
 //========================
-bool CState_Player_Death::SetDamage(CPlayer* player, int damage)
+bool CState_Player_Death::SetDamage(CPlayer* player, int damage, float angle)
 {
 	//体力がないなら更新しない
 	if (player->GetLife() <= 0)

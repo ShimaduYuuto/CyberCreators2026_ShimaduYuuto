@@ -39,7 +39,9 @@ const CSound::SOUNDINFO CSound::SOUND_INFO[CSound::SOUND_LABEL_MAX] =
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CSound::CSound()
+CSound::CSound() : 
+	m_pXAudio2(nullptr),
+	m_pMasteringVoice(nullptr)
 {
 
 }

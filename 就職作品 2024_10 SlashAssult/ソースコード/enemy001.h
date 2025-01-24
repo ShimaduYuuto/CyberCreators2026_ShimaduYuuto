@@ -45,13 +45,13 @@ public:
 	void Draw() override;				//描画
 
 	//パラメータ関数
-	bool SetDamage(int damage) override;	//ダメージの設定
+	bool SetDamage(int damage, float angle) override;	//ダメージの設定
 
 	//状態処理の関数
 	bool SetBlowOff() override;
 
 	//ダメージの設定
-	bool SetDamage(int damage, float rotY) override;
+	//bool SetDamage(int damage, float rotY) override;
 
 	//状態のリセット
 	void StateReset() override

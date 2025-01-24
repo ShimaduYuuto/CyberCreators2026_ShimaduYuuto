@@ -25,7 +25,7 @@ public:
 
 	//状態ごとの更新
 	void UpdateState(CPlayer* player) override;				//状態の更新
-	bool SetDamage(CPlayer* player, int death) override;	//ダメージの設定
+	bool SetDamage(CPlayer* player, int death, float angle) override;	//ダメージの設定
 };
 
 #endif

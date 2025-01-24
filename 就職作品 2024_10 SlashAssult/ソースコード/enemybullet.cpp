@@ -139,12 +139,14 @@ void CEnemyBullet::Update()
 		float fXZ = sqrtf((m_Collision->GetPos().x - PlayerPos.x) * (m_Collision->GetPos().x - PlayerPos.x) + (m_Collision->GetPos().z - PlayerPos.z) * (m_Collision->GetPos().z - PlayerPos.z)); //距離を算出する
 		float fXY = sqrtf((m_Collision->GetPos().x - PlayerPos.x) * (m_Collision->GetPos().x - PlayerPos.x) + (m_Collision->GetPos().y - PlayerPos.y) * (m_Collision->GetPos().y - PlayerPos.y)); //距離を算出する
 		float fLength = sqrtf(fXZ * fXZ + fXY * fXY);	//距離を算出
+		D3DXVECTOR3 fDistance = PlayerPos - GetPos();
+		float fAngle = atan2f(fDistance.x, fDistance.z);
 
 		//攻撃の範囲内なら
 		if (fLength < m_Collision->GetRadius() + pGame->GetGamePlayer()->GetCollision()->GetRadius())
 		{
 			//プレイヤーにダメージを与える
-			if (pGame->GetGamePlayer()->SetDamage(1))
+			if (pGame->GetGamePlayer()->SetDamage(1, fAngle))
 			{
 				Uninit();
 
@@ -246,7 +248,7 @@ CEnemyBullet* CEnemyBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, CEnemyActi
 //============================
 //反射処理
 //============================
-void CEnemyBullet::Reflection()
+void CEnemyBullet::Reflection(float angle)
 {
 	//反射していないなら反射
 	if (!m_bReflection)

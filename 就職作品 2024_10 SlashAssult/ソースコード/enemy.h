@@ -50,8 +50,8 @@ public:
 	virtual bool SetBlowOff();
 
 	//ダメージの設定
-	bool SetDamage(int damage) override;							//ダメージの設定
-	virtual bool SetDamage(int damage, float rotY);					//ダメージの設定
+	bool SetDamage(int damage, float angle) override;				//ダメージの設定
+	//virtual bool SetDamage(int damage, float rotY);					//ダメージの設定
 	virtual bool SetBlowDamage(int damage, float rotY);				//吹き飛ばしてダメージを与える
 	virtual bool SetBlowDamage(int damage, float rotY, float value);//吹き飛ばしてダメージを与える
 

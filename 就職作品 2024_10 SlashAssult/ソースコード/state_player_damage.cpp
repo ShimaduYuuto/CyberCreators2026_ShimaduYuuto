@@ -10,6 +10,7 @@
 #include "game.h"
 #include "manager.h"
 #include "state_player_normal.h"
+#include "state_player_invincible.h"
 
 //====================================
 //状態の更新
@@ -30,7 +31,7 @@ void CState_Player_Damage::UpdateState(CPlayer* player)
 		if (GetNextState() == nullptr)
 		{
 			//通常状態に移行
-			SetNextState(new CState_Player_Normal(player));
+			SetNextState(new CState_Player_Invincible(player));
 		}
 	}
 
@@ -41,7 +42,7 @@ void CState_Player_Damage::UpdateState(CPlayer* player)
 //========================
 //ダメージの設定
 //========================
-bool CState_Player_Damage::SetDamage(CPlayer* player, int damage)
+bool CState_Player_Damage::SetDamage(CPlayer* player, int damage, float angle)
 {
 	//体力がないなら更新しない
 	if (player->GetLife() <= 0)
@@ -56,7 +57,7 @@ bool CState_Player_Damage::SetDamage(CPlayer* player, int damage)
 	}
 
 	//ダメージを受ける
-	player->CGame_Character::SetDamage(damage);
+	player->CGame_Character::SetDamage(damage, angle);
 	player->SetMotion(8);											//モーションの設定
 
 	//ノックバックの移動量を設定

@@ -59,6 +59,7 @@ HRESULT COrbit::Init()
 {
 	//初期化
 	CObjectMesh::Init(BLOCK.x, BLOCK.y, SIZE.x, SIZE.y, CObjectMesh::MESHTYPE_WALL);
+
 	return S_OK;
 }
 
@@ -82,7 +83,6 @@ void COrbit::Update()
 		//位置と色を反映
 		CObjectMesh::SetVtxPos(i, m_SaveVtx[i].pos);
 		CObjectMesh::SetVtxColor(i, m_SaveVtx[i].col);
-		CObjectMesh::SetVtxTex(i,m_SaveVtx[i].tex);
 	}
 }
 
@@ -95,13 +95,23 @@ void COrbit::Draw()
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
 
 	//カリング方法を変更
-	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	//pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+	//Zの比較方法変更
+	//pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+	//Zバッファに書き込まない
+	//pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	//親クラスで描画
 	CObjectMesh::Draw(TEXTUREPATH.c_str());
 
+	//Zの比較方法変更
+	//pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+	//Zバッファに書き込む
+	//pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+
 	//カリング方法を変更
-	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	//pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 //================================

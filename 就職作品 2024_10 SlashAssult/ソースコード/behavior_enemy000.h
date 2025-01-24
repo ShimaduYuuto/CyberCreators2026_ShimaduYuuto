@@ -35,7 +35,7 @@ class CEnemyAction_Attack000 : public CEnemyAction_Attack
 public:
 
 	//定数
-	static constexpr float START_COLLISON_TIME{ 65.0f };	//当たり判定が出始めるフレーム
+	static constexpr float START_COLLISON_TIME{ 70.0f };	//当たり判定が出始めるフレーム
 	static constexpr float END_TIME{ 100.0f };				//攻撃が終了するフレーム
 	static constexpr int DAMAGE_VALUE{ 1 };					//与えるダメージ量
 	static constexpr float ATTACK_LENGTH{ 30.0f };			//攻撃が発生する距離

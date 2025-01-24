@@ -191,10 +191,10 @@ CEnemy* CEnemy::Create(D3DXVECTOR3 pos, ENEMYTYPE type)
 //============================
 //ダメージの設定
 //============================
-bool CEnemy::SetDamage(int damage)
+bool CEnemy::SetDamage(int damage, float angle)
 {
 	//ダメージの設定
-	CGame_Character::SetDamage(damage);
+	CGame_Character::SetDamage(damage, angle);
 
 	return true;
 }
@@ -202,19 +202,19 @@ bool CEnemy::SetDamage(int damage)
 //============================
 //ダメージの設定
 //============================
-bool CEnemy::SetDamage(int damage, float rotY)
-{
-	//ノックバックの設定
-	D3DXVECTOR3 Move = {sinf(rotY + D3DX_PI) * VALUE_KNOCKBACK, 0.0f, cosf(rotY + D3DX_PI) * VALUE_KNOCKBACK };
-
-	//移動量を設定
-	CCharacter::AddMove(Move);
-
-	//ダメージの設定
-	CEnemy::SetDamage(damage);
-
-	return true;
-}
+//bool CEnemy::SetDamage(int damage, float rotY)
+//{
+//	//ノックバックの設定
+//	D3DXVECTOR3 Move = {sinf(rotY + D3DX_PI) * VALUE_KNOCKBACK, 0.0f, cosf(rotY + D3DX_PI) * VALUE_KNOCKBACK };
+//
+//	//移動量を設定
+//	CCharacter::AddMove(Move);
+//
+//	//ダメージの設定
+//	CEnemy::SetDamage(damage, rotY);
+//
+//	return true;
+//}
 
 //============================
 //吹き飛ばしてダメージの設定

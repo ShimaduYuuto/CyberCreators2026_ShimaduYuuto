@@ -188,7 +188,27 @@ D3DXVECTOR3 CGame_Character::GravityMove(D3DXVECTOR3 move)
 //============================
 //キャラクターのダメージを設定
 //============================
-bool CGame_Character::SetDamage(int damage)
+//bool CGame_Character::SetDamage(int damage)
+//{
+//	//ダメージを受ける
+//	m_nLife -= damage;
+//
+//	//0未満なら0にする
+//	if (m_nLife <= 0)
+//	{
+//		m_nLife = 0;
+//		
+//		//死亡時の処理
+//		SetCharacterDeath();
+//	}
+//
+//	return true;
+//}
+
+//============================
+//キャラクターのダメージを設定
+//============================
+bool CGame_Character::SetDamage(int damage, float angle)
 {
 	//ダメージを受ける
 	m_nLife -= damage;
@@ -197,7 +217,7 @@ bool CGame_Character::SetDamage(int damage)
 	if (m_nLife <= 0)
 	{
 		m_nLife = 0;
-		
+
 		//死亡時の処理
 		SetCharacterDeath();
 	}

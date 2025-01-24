@@ -71,6 +71,10 @@ public:
 	void SetRushJudge(bool judge) { m_bRush = judge; }	//設定
 	bool GetRushJudge() { return m_bRush; }				//取得
 
+	//ボス戦中か
+	void SetBossBattleJudge(bool judge) { m_bBossBattle = judge; }	//設定
+	bool GetBossBattleJudge() { return m_bBossBattle; }				//取得
+
 	//コントローラーの種類
 	CUi_GameGuide::CONTROLLER GetControllerUIType() { return m_ControllerUIType; }
 
@@ -90,9 +94,11 @@ private:
 	CBarrierManager* m_pBarrierManager;			//結界マネージャー
 
 	//判定
-	bool m_bClear;			//クリア判定
-	bool m_bBattle;			//戦闘中か
-	bool m_bGameOver;		//ゲームオーバー判定
+	bool m_bClear;				//クリア判定
+	bool m_bBattle;				//戦闘中か
+	bool m_bGameOver;			//ゲームオーバー判定
+	bool m_bRush;				//ラッシュ中か
+	bool m_bBossBattle;			//ボス戦中か
 
 	//演出
 	bool m_bDirectioning;		//演出中か
@@ -100,9 +106,6 @@ private:
 
 	//ゲームに表示するガイドUIの種類
 	CUi_GameGuide::CONTROLLER m_ControllerUIType;
-
-	//ラッシュ判定
-	bool m_bRush;	//ラッシュ中か
 };
 
 #endif

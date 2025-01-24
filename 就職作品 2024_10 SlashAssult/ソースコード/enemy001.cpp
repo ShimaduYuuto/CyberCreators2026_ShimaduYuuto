@@ -104,27 +104,27 @@ void CEnemy001::Draw()
 //============================
 //ダメージの設定
 //============================
-bool CEnemy001::SetDamage(int damage)
-{
-	//ダメージの設定
-	CEnemy::SetDamage(damage);
-
-	return true;
-}
+//bool CEnemy001::SetDamage(int damage)
+//{
+//	//ダメージの設定
+//	CEnemy::SetDamage(damage);
+//
+//	return true;
+//}
 
 //============================
 //ダメージの設定
 //============================
-bool CEnemy001::SetDamage(int damage, float rotY)
+bool CEnemy001::SetDamage(int damage, float angle)
 {
 	//ダメージを受けるかの判定
 	if (!m_bDamageJudge)
 	{
 		//絶対値に変換後に角度の誤差を計算する
-		float fAttackRot = rotY;
+		float fAttackRot = angle;
 		float fRot = GetRot().y;
-		float fMin = rotY - D3DX_PI * 0.5f;
-		float fMax = rotY + D3DX_PI * 0.5f;
+		float fMin = angle - D3DX_PI * 0.5f;
+		float fMax = angle + D3DX_PI * 0.5f;
 
 		//後ろからの攻撃なら通す
 		if (fRot > fMin && fRot < fMax)
@@ -147,12 +147,12 @@ bool CEnemy001::SetDamage(int damage, float rotY)
 		ChangeState(new CState_Enemy001_Damage(this));
 
 		//基底の処理
-		CEnemy::SetDamage(damage, rotY);
+		CEnemy::SetDamage(damage, angle);
 	}
 	else
 	{
 		//基底の処理
-		CEnemy::SetDamage(damage);
+		CEnemy::SetDamage(damage, angle);
 	}
 
 	return true;

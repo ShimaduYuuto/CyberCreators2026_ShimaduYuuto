@@ -30,15 +30,6 @@ CState_Player::~CState_Player()
 }
 
 //====================================
-//移動処理
-//====================================
-//void CState_Player::Move(CPlayer* player)
-//{
-//	//移動の更新
-//	player->CCharacter::Update();
-//}
-
-//====================================
 //状態に応じた更新処理
 //====================================
 void CState_Player::Update(CPlayer* player)
@@ -97,4 +88,14 @@ void CState_Player::UpdateState(CPlayer* player)
 			m_pNextState = new CState_Player_Normal(player);
 		}
 	}
+}
+
+//====================================
+//行動の設定
+//====================================
+void CState_Player::SetBehavior(CPlayerBehavior* behavior)
+{
+	//中身があるなら消去	//消した方が良いがnullで上書きできない
+	//SafeDelete(m_pBehavior);
+	m_pBehavior = behavior;
 }

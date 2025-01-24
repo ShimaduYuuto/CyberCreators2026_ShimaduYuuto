@@ -43,6 +43,7 @@ CGame::CGame() :
 	m_pDirection(nullptr),
 	m_bBattle(false),
 	m_bGameOver(false),
+	m_bBossBattle(false),
 	m_ControllerUIType(CUi_GameGuide::CONTROLLER_KEYBOARDMAUSE)
 {
 	

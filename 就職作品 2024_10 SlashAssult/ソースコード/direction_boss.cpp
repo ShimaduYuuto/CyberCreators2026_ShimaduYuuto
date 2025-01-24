@@ -8,6 +8,7 @@
 //ヘッダーのインクルード
 #include "direction_boss.h"
 #include "manager.h"
+#include "game.h"
 
 const D3DXVECTOR3 CDirection_Boss::CAMERA_POSR = { 0.0f, 50.0f, 3500.0f };
 const D3DXVECTOR3 CDirection_Boss::CAMERA_POSV = { 0.0f, 50.0f, 3300.0f };
@@ -21,6 +22,14 @@ CDirection_Boss::CDirection_Boss()
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 	pCamera->SetPosR(CAMERA_POSR);
 	pCamera->SetPosV(CAMERA_POSV);
+
+	//ゲームシーンなら判定
+	if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
+	{
+		//ボス戦が始まった合図を出す
+		CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+		pGame->SetBossBattleJudge(true);
+	}
 
 	//終了時間
 	SetEndTime(END_TIME);

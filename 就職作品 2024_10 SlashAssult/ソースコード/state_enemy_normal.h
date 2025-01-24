@@ -29,7 +29,7 @@ public:
 	void UpdateState(CEnemy* enemy) override;	//状態の更新
 
 	//状態ごとの更新
-	void SetDamage(CEnemy* enemy, int damage) override { enemy->SetDamage(damage); }	//ダメージの設定
+	void SetDamage(CEnemy* enemy, int damage) override { enemy->SetDamage(damage, enemy->GetRot().y); }	//ダメージの設定
 };
 
 #endif
