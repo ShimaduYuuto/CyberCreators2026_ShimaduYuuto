@@ -1,0 +1,49 @@
+#====================================
+#
+#バトルエリア000の情報
+#
+#====================================
+
+SCREPT
+
+#==========================
+#敵の情報
+#==========================
+ENEMYINFO
+
+ENEMY
+	POS 0.0 0.0 0.0
+	TYPE 0
+END_ENEMY
+
+ENEMY
+	POS 350.0 0.0 350.0
+	TYPE 0
+END_ENEMY
+
+ENEMY
+	POS -350.0 0.0 350.0
+	TYPE 0
+END_ENEMY
+
+ENEMY
+	POS 0.0 0.0 -350.0
+	TYPE 0
+END_ENEMY
+
+ENEMY
+	POS -350.0 0.0 -350.0
+	TYPE 0
+END_ENEMY
+
+END_ENEMYINFO
+
+#==========================
+#ギミックの情報
+#==========================
+GIMMICKINFO
+
+END_GIMMICKINFO
+
+END_SCREPT
+
