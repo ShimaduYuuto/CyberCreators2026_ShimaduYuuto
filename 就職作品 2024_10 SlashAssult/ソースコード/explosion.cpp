@@ -86,52 +86,8 @@ void CExplosion::Uninit()
 //============================
 void CExplosion::Update()
 {
-	if (m_fLife > INCREASE_RATE_LIFE && m_fSizeRate < MAX_SIZE_VALUE)
-	{
-		m_fSizeRate += INCREASE_VALUE;
-
-		if (m_fSizeRate >= MAX_SIZE_VALUE)
-		{
-			m_fSizeRate = MAX_SIZE_VALUE;
-
-			//ゲームシーンの取得
-			CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
-
-			//判定の生成
-			D3DXVECTOR3 ExplosionPos = GetPos();
-
-			//敵の周回
-			for (auto& iter : pGame->GetEnemyManager()->GetList())
-			{
-				//敵の位置を取得
-				D3DXVECTOR3 EnemyLength = iter->GetCollision()->GetPos() - ExplosionPos;
-
-				float fXZ = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.z * EnemyLength.z); //XZ距離を算出する
-				float fXY = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.y * EnemyLength.y); //XY距離を算出する
-				float fLength = sqrtf(fXZ * fXZ + fXY * fXY);	//距離を算出
-
-				//敵の判定内なら
-				if (fLength < iter->GetCollision()->GetRadius() + m_pCollision->GetRadius())
-				{
-					//角度を算出
-					float fAngleXZ = atan2f(EnemyLength.x, EnemyLength.z);
-					float fAngleXY = atan2f(EnemyLength.x, EnemyLength.y);
-
-					iter->SetBlowDamage(3, fAngleXZ, 100.0f);
-
-				}
-			}
-		}
-	}
-	else if (m_fLife < DECREASE_RATE_LIFE && m_fSizeRate > MIN_SIZE_VALUE)
-	{
-		m_fSizeRate -= DECREASE_VALUE;
-
-		if (m_fSizeRate < MIN_SIZE_VALUE)
-		{
-			m_fSizeRate = MIN_SIZE_VALUE;
-		}
-	}
+	//サイズ倍率の更新
+	UpdateSizeRate();
 
 	//倍率の設定
 	SetRate(m_fSizeRate);
@@ -150,6 +106,99 @@ void CExplosion::Update()
 
 	//当たり判定の更新
 	m_pCollision->Update(GetPos());
+}
+
+//============================
+//サイズ倍率の更新
+//============================
+void CExplosion::UpdateSizeRate()
+{
+	//倍率を増やすか
+	if (IsIncreaseSizeRate())
+	{
+		//倍率を増加
+		m_fSizeRate += INCREASE_VALUE;
+
+		//最大倍率時のみ当たり判定を行う
+		if (m_fSizeRate >= MAX_SIZE_VALUE)
+		{
+			//最大サイズに補正
+			m_fSizeRate = MAX_SIZE_VALUE;
+
+			//当たり判定の処理
+			CollisionProcess();
+		}
+	}
+	else if (IsDecreaseSizeRate())
+	{
+		//倍率を減少
+		m_fSizeRate -= DECREASE_VALUE;
+
+		//最小値を下回ったら補正
+		if (m_fSizeRate < MIN_SIZE_VALUE)
+		{
+			//最小サイズに補正
+			m_fSizeRate = MIN_SIZE_VALUE;
+		}
+	}
+}
+
+//============================
+//サイズ倍率を増やすか
+//============================
+bool CExplosion::IsIncreaseSizeRate()
+{
+	//判定
+	if (m_fLife <= INCREASE_RATE_LIFE) return false;	//増やす生存時間外なら抜ける
+	if (m_fSizeRate >= MAX_SIZE_VALUE) return false;	//最大倍率なら抜ける
+	
+	return true;
+}
+
+//============================
+//サイズ倍率を減らすか
+//============================
+bool CExplosion::IsDecreaseSizeRate()
+{
+	//判定
+	if (m_fLife >= DECREASE_RATE_LIFE)return false;	//減らす生存時間外なら抜ける
+	if (m_fSizeRate <= MIN_SIZE_VALUE) return false;//最小倍率なら抜ける
+
+	return true;
+}
+
+//============================
+//当たり判定の処理
+//============================
+void CExplosion::CollisionProcess()
+{
+	//ゲームシーンの取得
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+
+	//判定の生成
+	D3DXVECTOR3 ExplosionPos = GetPos();
+
+	//敵の周回
+	for (auto& iter : pGame->GetEnemyManager()->GetList())
+	{
+		//敵の位置を取得
+		D3DXVECTOR3 EnemyLength = iter->GetCollision()->GetPos() - ExplosionPos;
+
+		float fXZ = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.z * EnemyLength.z); //XZ距離を算出する
+		float fXY = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.y * EnemyLength.y); //XY距離を算出する
+		float fLength = sqrtf(fXZ * fXZ + fXY * fXY);	//距離を算出
+
+		//敵の判定内なら
+		if (fLength < iter->GetCollision()->GetRadius() + m_pCollision->GetRadius())
+		{
+			//角度を算出
+			float fAngleXZ = atan2f(EnemyLength.x, EnemyLength.z);
+			float fAngleXY = atan2f(EnemyLength.x, EnemyLength.y);
+
+			//吹き飛ばしながらダメージを与える
+			iter->SetBlowDamage(DAMAGE_VALUE, fAngleXZ, BLOW_VALUE);
+		}
+	}
 }
 
 //============================

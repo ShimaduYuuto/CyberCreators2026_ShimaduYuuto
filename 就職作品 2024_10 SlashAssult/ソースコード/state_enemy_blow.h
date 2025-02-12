@@ -20,12 +20,16 @@ public:
 	static constexpr float VALUE_BLOW = 10.0f;	//吹き飛ぶ値
 
 	//メンバ関数
-	CState_Enemy_Blow();					//コンストラクタ
 	CState_Enemy_Blow(CEnemy* enemy);		//コンストラクタ
 	~CState_Enemy_Blow() override {};		//デストラクタ
 
 	//状態ごとの更新
 	void UpdateState(CEnemy* enemy) override;	//状態の更新
+
+private:
+
+	//関数
+	void CheckHitWall(CEnemy* enemy);			//壁との当たり判定を確認
 };
 
 #endif

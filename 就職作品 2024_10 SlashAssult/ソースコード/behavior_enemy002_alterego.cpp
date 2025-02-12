@@ -18,7 +18,8 @@
 //====================================
 void CEnemyBehaviorAlterEgo_ChargeShot::Action(CEnemy* enemy)
 {
-	CEnemyBehavior_ChargeShot::Action(enemy);
+	//基底の行動を設定
+	CEnemyBehavior_ChargeShot::Action(enemy);	//チャージショット
 }
 
 //====================================
@@ -26,6 +27,6 @@ void CEnemyBehaviorAlterEgo_ChargeShot::Action(CEnemy* enemy)
 //====================================
 void CEnemyBehaviorAlterEgo_ChargeShot::NextAction(CEnemy* enemy)
 {
-	SetNextAction(new CEnemyBehaviorAlterEgo_ChargeShot(enemy));
-	enemy->Uninit();
+	SetNextAction(new CEnemyBehaviorAlterEgo_ChargeShot(enemy));	//次の行動を設定
+	enemy->Uninit();	//敵を破棄
 }

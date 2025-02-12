@@ -18,10 +18,11 @@
 //====================================
 CEnemyBehavior_Chase001::CEnemyBehavior_Chase001(CEnemy* enemy) : CEnemyBehavior_Chase(enemy)
 {
-	//モーションの設定
-	enemy->SetMotion(CEnemy001::ENEMY001MOTION_WALK);
+	enemy->SetMotion(CEnemy001::ENEMY001MOTION_WALK);	//モーションの設定
+
+	//固有の設定
 	CEnemy001* enemy001 = dynamic_cast<CEnemy001*>(enemy);
-	enemy001->SetDamageJudge(false);
+	enemy001->SetDamageJudge(false);	//ダメージを受けない判定
 }
 
 //====================================
@@ -29,6 +30,7 @@ CEnemyBehavior_Chase001::CEnemyBehavior_Chase001(CEnemy* enemy) : CEnemyBehavior
 //====================================
 void CEnemyBehavior_Chase001::Action(CEnemy* enemy)
 {
+	//追いかける行動(基底)を設定
 	CEnemyBehavior_Chase::Action(enemy);
 }
 
@@ -58,8 +60,8 @@ CEnemyBehavior_Attack001::CEnemyBehavior_Attack001(CEnemy* enemy) : CEnemyBehavi
 	enemy->SetMotion(CEnemy001::ENEMY001MOTION_ATTACK);			//モーション
 
 	//固有の設定
-	CEnemy001* enemy001 = (CEnemy001*)enemy;
-	enemy001->SetDamageJudge(true);
+	CEnemy001* enemy001 = dynamic_cast<CEnemy001*>(enemy);
+	enemy001->SetDamageJudge(true);				//ダメージを受ける判定
 }
 
 //====================================
@@ -75,5 +77,6 @@ void CEnemyBehavior_Attack001::Action(CEnemy* enemy)
 //====================================
 void CEnemyBehavior_Attack001::NextAction(CEnemy* enemy)
 {
+	//追いかける
 	SetNextAction(new CEnemyBehavior_Chase001(enemy));
 }

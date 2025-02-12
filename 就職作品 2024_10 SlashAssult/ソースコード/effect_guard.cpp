@@ -71,6 +71,15 @@ void CEffect_Guard::Update()
 	//位置の設定
 	SetPos(*m_pTargetPos);
 
+	//サイズ倍率の更新
+	UpdateSizeRatio();
+}
+
+//============================
+//サイズ倍率の更新
+//============================
+void CEffect_Guard::UpdateSizeRatio()
+{
 	//発動中なら倍率を更新
 	if (!m_bEnd)
 	{

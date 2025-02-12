@@ -46,16 +46,24 @@ private:
 class CEnemyBehavior_Chase : public CEnemyBehavior
 {
 public:
+
 	//定数
 	static constexpr float VALUE_MOVE = 1.0f;			//移動量
 	static constexpr float LENGTH_CHANGEATTACK = 35.0f;	//攻撃する距離
 
+	//関数
 	CEnemyBehavior_Chase(CEnemy* enemy);	//コンストラクタ
 
-	void Action(CEnemy* enemy) override;	//アクション
+	void Action(CEnemy* enemy) override;		//アクション
+	void NextAction(CEnemy* enemy) override {}	//次の行動を確定
 
-	//次の行動を確定
-	void NextAction(CEnemy* enemy) override {}
+private:
+
+	//関数
+	void LookAtPlayer(CEnemy* enemy);	//プレイヤーの方向を向く
+	void Move(CEnemy* enemy);			//移動処理
+	void ChaseMove(CEnemy* enemy);		//追いかける移動の処理
+	bool IsNextAction(CEnemy* enemy);	//次の行動に移るか
 };
 
 //==========================

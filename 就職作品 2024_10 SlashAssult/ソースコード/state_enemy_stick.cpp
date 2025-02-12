@@ -14,30 +14,20 @@
 //====================================
 //コンストラクタ
 //====================================
-CState_Enemy_Stick::CState_Enemy_Stick()
-{
-	//初期アクション
-	SetEndTime(60);
-	SetAction(new CEnemyBehavior());
-}
-
-//====================================
-//コンストラクタ
-//====================================
 CState_Enemy_Stick::CState_Enemy_Stick(CEnemy* enemy)
 {
-	//初期アクション
-	SetAction(new CEnemyBehavior());
-	SetEndTime(60);
-	enemy->SetEnableGravity(false);
-	enemy->SetBlowValue({ 0.0f, 0.0f, 0.0f });
-	enemy->SetMove({ enemy->GetMove().x, 0.0f, enemy->GetMove().z });
-	enemy->SetEnteredStick(true);
+	//設定
+	SetAction(new CEnemyBehavior());									//空の行動
+	SetEndTime(END_TIME);												//終了時間
+	enemy->SetEnableGravity(false);										//重力を受けない
+	enemy->SetBlowValue({ 0.0f, 0.0f, 0.0f });							//吹き飛ぶ量を無くす
+	enemy->SetMove({ enemy->GetMove().x, 0.0f, enemy->GetMove().z });	//移動量
+	enemy->SetEnteredStick(true);										//張り付き判定にする
 
 	//ゲームの処理
-	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();	//ゲームシーンの取得
-	pGame->SetLockon(true);
-	pGame->GetLockon()->Regist(enemy);
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());	//ゲームシーンの取得
+	pGame->SetLockon(true);														//ロックオンを設定
+	pGame->GetLockon()->Regist(enemy);											//ロックオン対象に登録
 
 	//効果音
 	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_STICK);
@@ -53,8 +43,8 @@ void CState_Enemy_Stick::UpdateState(CEnemy* enemy)
 	float fCount{ GetStateCount() };//カウントの取得
 
 	//カウントアップ
-	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();	//ゲームシーンの取得
-	fCount += pGame->GetTime()->GetValue<float>(1.0f);			//時間に応じてカウントアップ
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());	//ゲームシーンの取得
+	fCount += pGame->GetTime()->GetValue<float>(1.0f);							//時間に応じてカウントアップ
 
 	//カウントが周り切ったら状態を切り替える
 	if (fCount >= fEndTime)

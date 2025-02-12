@@ -38,6 +38,7 @@ HRESULT CExplodingBarrel::Init()
 	//‰Šú‰»
 	CGimmick::Init();
 
+	//“–‚½‚è”»’è‚ÌƒTƒCƒY‚ðÝ’è
 	GetCollision()->SetRadius(SIZE_RADIUS);
 
 	return S_OK;

@@ -34,7 +34,6 @@ CState_Enemy::~CState_Enemy()
 	//次の状態を破棄
 	if (m_pNextState != nullptr)
 	{
-		//delete m_pNextState;
 		m_pNextState = nullptr;
 	}
 }
@@ -86,8 +85,8 @@ void CState_Enemy::UpdateState(CEnemy* enemy)
 	float fCount{ GetStateCount() };//カウントの取得
 
 	//カウントアップ
-	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();	//ゲームシーンの取得
-	fCount += pGame->GetTime()->GetValue<float>(1.0f);			//時間に応じてカウントアップ
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());	//ゲームシーンの取得
+	fCount += pGame->GetTime()->GetValue<float>(1.0f);							//時間に応じてカウントアップ
 
 	//カウントが周り切ったら状態を切り替える
 	if (fCount >= fEndTime)
@@ -105,8 +104,8 @@ void CState_Enemy::UpdateState(CEnemy* enemy)
 //====================================
 void CState_Enemy::EnemyCollision(CEnemy* enemy)
 {
-	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();	//ゲームシーンの取得
-	CEnemyManager* pManager = pGame->GetEnemyManager();			//エネミーマネージャーの取得
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());	//ゲームシーンの取得
+	CEnemyManager* pManager = pGame->GetEnemyManager();							//エネミーマネージャーの取得
 
 	//他の敵との当たり判定
 	for (auto& itr : pManager->GetList())
@@ -116,31 +115,6 @@ void CState_Enemy::EnemyCollision(CEnemy* enemy)
 		{
 			continue;
 		}
-
-		////敵の位置を取得
-		//D3DXVECTOR3 EnemyLength = itr->GetCollision()->GetPos() - enemy->GetCollision()->GetPos();
-
-		////他の敵との距離を算出
-		//float fXZ = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.z * EnemyLength.z);	//XZ距離を算出する
-		//float fXY = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.y * EnemyLength.y);	//XY距離を算出する
-		//float fLength = sqrtf(fXZ * fXZ + fXY * fXY);										//距離を算出
-
-		////当たっていたら自分の位置を範囲外にする
-		//if (fLength < itr->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius())
-		//{
-		//	//計算用の変数
-		//	D3DXVECTOR3 Pos = enemy->GetPos();
-
-		//	//角度を算出して補正
-		//	float fAngle = atan2f(EnemyLength.x, EnemyLength.z);
-
-		//	//円の内側に補正
-		//	Pos.x = sinf(fAngle + D3DX_PI) * (itr->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius()) + itr->GetPos().x;
-		//	Pos.z = cosf(fAngle + D3DX_PI) * (itr->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius()) + itr->GetPos().z;
-
-		//	//補正後の位置を設定
-		//	enemy->SetPos(Pos);
-		//}
 
 		//位置の取得
 		D3DXVECTOR3 Pos = itr->GetCollision()->GetPos();
@@ -156,7 +130,7 @@ void CState_Enemy::EnemyCollision(CEnemy* enemy)
 			//敵の当たらない位置に補正
 			float fAngle = atan2f(Pos.x - EnemyPos.x, Pos.z - EnemyPos.z);//対角線の角度を算出
 
-			//円の内側に補正
+			//位置を設定
 			enemy->SetPos(D3DXVECTOR3(sinf(fAngle + D3DX_PI) * fTotalRadius + Pos.x,
 				enemy->GetPos().y,
 				cosf(fAngle + D3DX_PI) * fTotalRadius + Pos.z));

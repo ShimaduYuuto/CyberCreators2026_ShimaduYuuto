@@ -113,7 +113,7 @@ void CGame_Character::UpdatePos()
 	if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
 	{
 		//ゲームシーンの取得
-		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+		CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 		//位置に移動量を加算
 		pos += pGame->GetTime()->GetValue<D3DXVECTOR3>(Move);
@@ -187,26 +187,6 @@ D3DXVECTOR3 CGame_Character::GravityMove(D3DXVECTOR3 move)
 
 	return move;
 }
-
-//============================
-//キャラクターのダメージを設定
-//============================
-//bool CGame_Character::SetDamage(int damage)
-//{
-//	//ダメージを受ける
-//	m_nLife -= damage;
-//
-//	//0未満なら0にする
-//	if (m_nLife <= 0)
-//	{
-//		m_nLife = 0;
-//		
-//		//死亡時の処理
-//		SetCharacterDeath();
-//	}
-//
-//	return true;
-//}
 
 //============================
 //キャラクターのダメージを設定

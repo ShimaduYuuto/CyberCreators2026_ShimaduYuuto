@@ -60,16 +60,6 @@ void CShield::Uninit()
 //============================
 void CShield::Update()
 {
-	//シーンがゲームでポーズ中なら更新しない
-	if (CManager::GetInstance()->GetScene()->GetMode() == CScene::MODE_GAME)
-	{
-		//ポーズのチェック
-		/*if (CGame::GetPause())
-		{
-			return;
-		}*/
-	}
-
 	//ゲームオブジェクトの共通処理更新
 	CObject::Update();
 }

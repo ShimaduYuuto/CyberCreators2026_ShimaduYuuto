@@ -17,7 +17,7 @@ CSpawn_Enemy::CSpawn_Enemy(int nPriority) : CObject(nPriority),
 	m_pPaticleManager(nullptr),
 	m_EnemyType()
 {
-	//敵の数を減らす
+	//登録する敵の数を増やす
 	if (CBattleAreaManager::GetInstance()->GetCurrentBattleArea() != nullptr)
 	{
 		CBattleAreaManager::GetInstance()->GetCurrentBattleArea()->AddEnemyNum();
@@ -41,7 +41,9 @@ CSpawn_Enemy::~CSpawn_Enemy()
 //============================
 HRESULT CSpawn_Enemy::Init()
 {
+	//パーティクルの生成
 	m_pPaticleManager = CParticle_Spawn::Create(GetPos());
+
 	return S_OK;
 }
 
@@ -61,8 +63,10 @@ void CSpawn_Enemy::Update()
 	//パーティクルマネージャーの更新
 	m_pPaticleManager->Update();
 
+	//カウントアップ
 	m_nCount++;
 
+	//一定時間で敵を生成
 	if (m_nCount > SPAWN_TIME)
 	{
 		CEnemy::Create(GetPos(), m_EnemyType);

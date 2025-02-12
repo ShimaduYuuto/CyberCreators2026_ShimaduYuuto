@@ -16,9 +16,9 @@
 //====================================
 CState_Enemy_Damage::CState_Enemy_Damage(CEnemy* enemy)
 {
-	//初期アクション
-	SetAction(new CEnemyBehavior);
-	enemy->SetCollisionProcess(true);
+	//設定
+	SetAction(new CEnemyBehavior);		//空のアクション
+	enemy->SetCollisionProcess(true);	//当たり判定を行う
 }
 
 //====================================
@@ -31,8 +31,8 @@ void CState_Enemy_Damage::UpdateState(CEnemy* enemy)
 	float fCount{ GetStateCount() };//カウントの取得
 
 	//カウントアップ
-	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();	//ゲームシーンの取得
-	fCount += pGame->GetTime()->GetValue<float>(1.0f);			//時間に応じてカウントアップ
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());	//ゲームシーンの取得
+	fCount += pGame->GetTime()->GetValue<float>(1.0f);							//時間に応じてカウントアップ
 
 	//他の敵との当たり判定
 	EnemyCollision(enemy);

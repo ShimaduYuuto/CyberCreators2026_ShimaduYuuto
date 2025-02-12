@@ -61,6 +61,7 @@ void CParticle::Update()
 	//寿命を減らす
 	m_nLife--;
 
+	//サイズの設定
 	float fSize = ((float)m_nLife / m_nMaxLife) * m_fNormalSize;
 
 	SetSize({ fSize, fSize , 0.0f });
@@ -92,6 +93,7 @@ void CParticle::Draw()
 	//デバイスの取得
 	pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
+	//ライティングをoff
 	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	//αブレンディングを加算
@@ -109,6 +111,7 @@ void CParticle::Draw()
 	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
+	//ライティングをon
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 	//フォグの設定

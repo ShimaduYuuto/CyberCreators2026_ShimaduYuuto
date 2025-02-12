@@ -244,54 +244,146 @@ void CGame::Update()
 	}
 
 	//演出中の処理
-	if (m_bDirectioning)
-	{
-		if (m_pDirection != nullptr)
-		{
-			//更新が終わったら破棄
-			if (m_pDirection->TimeUpdate())
-			{
-				delete m_pDirection;
-				m_pDirection = nullptr;
-				m_bDirectioning = false;
-			}
-		}
-	}
+	DirectioningProcess();
 
-	//敵の生成
-#if _DEBUG
-	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_1))
-	{
-		CSpawn_Enemy::Create({ 0.0f, 10.0f, 0.0f }, CEnemy::ENEMYTYPE_ENEMY000);
-	}
-	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_2))
-	{
-		CEnemy::Create({ 0.0f, 0.0f, 0.0f }, CEnemy::ENEMYTYPE_ENEMY001);
-	}
-	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_3))
-	{
-		CExplodingBarrel::Create({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f });
-	}
-#endif
+	//表示UIの確認
+	CheckGuideUI();
 
+	//ポーズの処理
+	PauseProcess();
+
+	//次のシーンへ移行
+	NextScene();
+}
+
+//============================
+//演出中の処理
+//============================
+void CGame::DirectioningProcess()
+{
+	//判定
+	if (!IsDeleteDirection()) return;
+
+	//演出の破棄
+	delete m_pDirection;
+	m_pDirection = nullptr;
+	m_bDirectioning = false;
+}
+
+//============================
+//演出を破棄するか
+//============================
+bool CGame::IsDeleteDirection()
+{
+	//判定
+	if (!m_bDirectioning) return false;				//演出中か確認
+	if (m_pDirection == nullptr) return false;		//ヌルチェック
+	if (!m_pDirection->TimeUpdate()) return false;	//更新が終わったら破棄
+
+	return true;
+}
+
+//============================
+//ガイドUIの確認
+//============================
+void CGame::CheckGuideUI()
+{
 	//マネージャーのインスタンスを取得
 	CManager* pManager = CManager::GetInstance();
 
 	//ガイドUIの確認
-	if (pManager->GetJoypad()->GetAnyTrigger() ||
-		pManager->GetJoypad()->GetStick().afTplDiameter[CInputMouse::MOUSEBUTTON_LEFT] > 0.0f ||
-		pManager->GetJoypad()->GetStick().afTplDiameter[CInputMouse::MOUSEBUTTON_RIGHT] > 0.0f)
+	//ジョイパッドを触っているか
+	if (IsUsedJoipad())
 	{
+		//ジョイパッド用のUIに変更
 		m_ControllerUIType = CUi_GameGuide::CONTROLLER_JOYPAD;
 	}
-	if (pManager->GetKeyboard()->GetAnyTrigger() ||
-		pManager->GetMouse()->GetAnyTrigger() ||
-		pManager->GetMouse()->GetMove().x > 0.0f ||
-		pManager->GetMouse()->GetMove().y > 0.0f)
+
+	//キーボードかマウスを触っているか
+	if (IsUsedKeyboardMouse())
 	{
+		//キーマウ用のUIに変更
 		m_ControllerUIType = CUi_GameGuide::CONTROLLER_KEYBOARDMAUSE;
 	}
+}
 
+//============================
+//ジョイパッドを使っているか
+//============================
+bool CGame::IsUsedJoipad()
+{
+	//マネージャーのインスタンスを取得
+	CManager* pManager = CManager::GetInstance();
+
+	//判定
+	if (pManager->GetJoypad()->GetAnyTrigger()) return true;													//どれかのボタンに触れたか
+	if (pManager->GetJoypad()->GetStick().afTplDiameter[CInputJoypad::STICKTYPE_LEFT] > 0.0f) return true;		//左スティックを倒しているか
+	if (pManager->GetJoypad()->GetStick().afTplDiameter[CInputJoypad::STICKTYPE_RIGHT] > 0.0f) return true;		//右スティックを倒しているか
+
+	return false;
+}
+
+//============================
+//キーボードマウスを使っているか
+//============================
+bool CGame::IsUsedKeyboardMouse()
+{
+	//マネージャーのインスタンスを取得
+	CManager* pManager = CManager::GetInstance();
+
+	//判定
+	if (pManager->GetKeyboard()->GetAnyTrigger()) return true;	//どれかのボタンに触れたか
+	if (pManager->GetMouse()->GetAnyTrigger()) return true;		//どれかのボタンをクリックしたか
+	if (pManager->GetMouse()->GetMove().x > 0.0f) return true;	//マウスがX軸に動いたか
+	if (pManager->GetMouse()->GetMove().y > 0.0f) return true;	//マウスがY軸に動いたか
+
+	return false;
+}
+
+//============================
+//次のシーンへ移行
+//============================
+void CGame::NextScene()
+{
+	//次のシーンへ移行できるか
+	if (!CanNextScene()) return;
+
+	//マネージャーのインスタンスを取得
+	CManager* pManager = CManager::GetInstance();
+
+	//死んでいたらタイトルに遷移
+	if (m_bGameOver)
+	{
+		pManager->GetFade()->SetFade(CScene::MODE_TITLE);
+	}
+	else
+	{
+		//リザルトに画面遷移
+		pManager->GetFade()->SetFade(CScene::MODE_RESULT);
+	}
+}
+
+//============================
+//次のシーンへ移行できるか
+//============================
+bool CGame::CanNextScene()
+{
+	//判定
+	if (!CManager::GetInstance()->GetFade()->GetEnd()) return false; //フェードが終わっていたら更新
+	if (!m_bClear && !m_bGameOver) return false;					 //クリア条件を満たしているか
+
+	return true;
+}
+
+//============================
+//ポーズの処理
+//============================
+void CGame::PauseProcess()
+{
+	//マネージャーのインスタンスを取得
+	CManager* pManager = CManager::GetInstance();
+
+	//ポーズの設定
 	if ((pManager->GetKeyboard()->GetTrigger(DIK_P) || pManager->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_START)) && !m_bDirectioning && !m_bPause)
 	{
 		SetPause();
@@ -302,27 +394,6 @@ void CGame::Update()
 	{
 		m_pPause->Update();
 	}
-
-	//フェードが終わっていたら更新
-	if (CManager::GetInstance()->GetFade()->GetEnd())
-	{
-		//エンターで画面遷移
-		if (/*pManager->GetKeyboard()->GetTrigger(DIK_RETURN) || pManager->GetJoypad()->GetPress(CInputJoypad::JOYKEY_A) || pManager->GetJoypad()->GetPress(CInputJoypad::JOYKEY_START) || */m_bClear || m_bGameOver)
-		{
-			//死んでいたらタイトルに遷移
-			if (m_bGameOver)
-			{
-				pManager->GetFade()->SetFade(CScene::MODE_TITLE);
-			}
-			else
-			{
-				//リザルトに画面遷移
-				pManager->GetFade()->SetFade(CScene::MODE_RESULT);
-			}
-			
-		}
-	}
-	
 }
 
 //============================

@@ -17,9 +17,10 @@ class CEffect_Stan : public CObjectCylinder
 public:
 
 	//定数
-	static const std::string TEXTURE_PATH;	//テクスチャパス
-	static constexpr float RADIUS{ 20.0f };	//サイズ半径
-	static constexpr float HEIGHT{ 30.0f };	//高さ
+	static const std::string TEXTURE_PATH;			//テクスチャパス
+	static constexpr float RADIUS{ 20.0f };			//サイズ半径
+	static constexpr float HEIGHT{ 30.0f };			//高さ
+	static constexpr float ROTATE_SPEED{ 0.05f };	//回転速度
 
 	//メンバ関数
 	CEffect_Stan();			//コンストラクタ
@@ -34,8 +35,10 @@ public:
 
 private:
 
+	//関数
 	void MtxCalculation() override;		//マトリックスの計算
 	
+	//変数
 	D3DXMATRIX* m_pmtxParent;
 };
 

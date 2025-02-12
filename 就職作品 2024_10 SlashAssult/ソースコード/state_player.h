@@ -44,10 +44,10 @@ public:
 
 private:
 
-	//状態とアクションの更新
+	//関数
 	virtual void UpdateState(CPlayer* player);		//状態の更新
 
-	//インスタンス
+	//変数
 	CPlayerBehavior* m_pBehavior;	//行動
 	CState_Player* m_pNextState;	//次の状態
 };

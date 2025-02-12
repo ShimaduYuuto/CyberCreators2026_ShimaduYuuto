@@ -50,16 +50,17 @@ HRESULT CCamera::Init()
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);			//上ベクトルの初期化
 	m_mtxProjection = {};							//プロジェクションマトリックスの初期化
 	m_mtxView = {};									//ビューマトリックスの初期化
+	m_fShakeFrameCount = 0.0f;						//揺らす時間
+	m_rot = { VEC3_RESET_ZERO };					//向き
+	m_fLength = LENGTH_NORMAL;						//距離
+
+	//ビューポートの初期化
 	m_Viewport.X = 0;
 	m_Viewport.Y = 0;
 	m_Viewport.Width = SCREEN_WIDTH;
 	m_Viewport.Height = SCREEN_HEIGHT;
 	m_Viewport.MaxZ = 1.0f;
 	m_Viewport.MinZ = 0.0f;
-	m_fShakeFrameCount = 0.0f;
-	m_rot.y = atan2f(m_posR.x - m_posV.x, m_posR.z - m_posV.z);
-	m_rot.x = D3DX_PI * -0.1f;
-	m_fLength = LENGTH_NORMAL;
 
 	return S_OK;
 }

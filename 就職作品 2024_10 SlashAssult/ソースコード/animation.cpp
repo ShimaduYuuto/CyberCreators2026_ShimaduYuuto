@@ -38,9 +38,9 @@ D3DXVECTOR2 CAnimation::UpdateAnim()
 	UpdateCnt();
 
 	//計算用の変数
-	float fHorizontal = 1.0f / m_TextureInfo.nHorizontal;
-	float fVertical = 1.0f / m_TextureInfo.nVertical;
-	UV = D3DXVECTOR2(fHorizontal, fVertical);
+	float fHorizontal = 1.0f / m_TextureInfo.nHorizontal;	//横分割
+	float fVertical = 1.0f / m_TextureInfo.nVertical;		//縦分割
+	UV = D3DXVECTOR2(fHorizontal, fVertical);				//UV座標を算出
 
 	return UV;
 }
@@ -54,29 +54,35 @@ void CAnimation::UpdateCnt()
 	m_TextureCount.nFrameCount++;
 
 	//カウントが更新する値まで進んだら
-	if (m_TextureCount.nFrameCount >= m_TextureInfo.nUpdateSpeed)
+	if (m_TextureCount.nFrameCount < m_TextureInfo.nUpdateSpeed)
 	{
-		//カウントの更新
-		m_TextureCount.nFrameCount = 0;			//フレームカウントの初期化
-		m_TextureCount.nHorizontalAnimCount++;	//アニメーションカウントのカウントアップ
+		return;
+	}
 
-												//横のアニメカウントが最大まで進んだら
-		if (m_TextureCount.nHorizontalAnimCount >= m_TextureInfo.nHorizontal)
-		{
-			//カウントの更新
-			m_TextureCount.nHorizontalAnimCount = 0;	//横のカウントを初期化
-			m_TextureCount.nVerticalAnimCount++;		//縦のカウントアップ
+	//カウントの更新
+	m_TextureCount.nFrameCount = 0;			//フレームカウントの初期化
+	m_TextureCount.nHorizontalAnimCount++;	//アニメーションカウントのカウントアップ
 
-														//縦のカウントが最大まで進んだら
-			if (m_TextureCount.nVerticalAnimCount >= m_TextureInfo.nVertical)
-			{
-				//ループが無いなら
-				if (!m_TextureInfo.bLoop)
-				{
-					//終了処理
-					m_bEnd = true;
-				}
-			}
-		}
+	//横のアニメカウントが最大まで進んだら
+	if (m_TextureCount.nHorizontalAnimCount < m_TextureInfo.nHorizontal)
+	{
+		return;
+	}
+
+	//カウントの更新
+	m_TextureCount.nHorizontalAnimCount = 0;	//横のカウントを初期化
+	m_TextureCount.nVerticalAnimCount++;		//縦のカウントアップ
+
+	//縦のカウントが最大まで進んだら
+	if (m_TextureCount.nVerticalAnimCount < m_TextureInfo.nVertical)
+	{
+		return;
+	}
+
+	//ループが無いなら
+	if (!m_TextureInfo.bLoop)
+	{
+		//終了処理
+		m_bEnd = true;
 	}
 }

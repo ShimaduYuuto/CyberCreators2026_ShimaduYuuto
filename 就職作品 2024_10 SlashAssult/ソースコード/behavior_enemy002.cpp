@@ -24,9 +24,9 @@
 //====================================
 CEnemyBehavior_Standby::CEnemyBehavior_Standby(CEnemy* enemy) : m_nCoolTime(0)
 {
-	enemy->SetMotion(CEnemy002::ENEMY002MOTION_NORMAL);
-	m_nCoolTime = COOL_TIME;
-	enemy->SetCollisionProcess(true);
+	enemy->SetMotion(CEnemy002::ENEMY002MOTION_NORMAL);	//モーション
+	m_nCoolTime = COOL_TIME;							//クールタイム
+	enemy->SetCollisionProcess(true);					//当たり判定の処理を行う
 };
 
 //====================================
@@ -34,9 +34,10 @@ CEnemyBehavior_Standby::CEnemyBehavior_Standby(CEnemy* enemy) : m_nCoolTime(0)
 //====================================
 void CEnemyBehavior_Standby::Action(CEnemy* enemy)
 {
-	//クールタイムが終わったら次の行動を行う
+	//クールタイムを減らす
 	m_nCoolTime--;
 
+	//クールタイムが終わったら次の行動を行う
 	if (m_nCoolTime < 0)
 	{
 		NextAction(enemy);
@@ -61,9 +62,10 @@ void CEnemyBehavior_Standby::NextAction(CEnemy* enemy)
 //====================================
 CEnemyBehavior_Disappear::CEnemyBehavior_Disappear(CEnemy* enemy) : m_nDisappearTime(0)
 {
-	enemy->SetMotion(CEnemy002::ENEMY002MOTION_NORMAL);
-	m_nDisappearTime = DISAPPEAR_TIME;
-	enemy->SetCollisionProcess(true);
+	//基本の設定
+	enemy->SetMotion(CEnemy002::ENEMY002MOTION_NORMAL);	//モーション
+	m_nDisappearTime = DISAPPEAR_TIME;					//クールタイム
+	enemy->SetCollisionProcess(false);					//当たり判定の処理
 	
 	//固有の設定
 	CEnemy002* pEnemy002 = dynamic_cast<CEnemy002*>(enemy);
@@ -75,11 +77,13 @@ CEnemyBehavior_Disappear::CEnemyBehavior_Disappear(CEnemy* enemy) : m_nDisappear
 //====================================
 void CEnemyBehavior_Disappear::Action(CEnemy* enemy)
 {
-	//クールタイムが終わったら次の行動を行う
+	//クールタイムを減らす
 	m_nDisappearTime--;
 
+	//クールタイムが終わったら次の行動を行う
 	if (m_nDisappearTime < 0)
 	{
+		//次の行動を設定
 		NextAction(enemy);
 
 		//固有の設定
@@ -121,6 +125,7 @@ CEnemyBehavior_ChargeShot::CEnemyBehavior_ChargeShot(CEnemy* enemy) :
 {
 	//設定
 	enemy->SetMotion(CEnemy002::ENEMY002MOTION_CHARGESHOT);	//モーション
+	enemy->SetCollisionProcess(false);
 };
 
 //====================================
@@ -380,15 +385,17 @@ void CEnemyBehavior_WarpShot::NextAction(CEnemy* enemy)
 CEnemyBehavior_Direction::CEnemyBehavior_Direction(CEnemy* enemy) :
 	m_nCount(0)
 {
-	enemy->SetMotion(CEnemy002::ENEMY002MOTION_DIRECTION);
+	//基本の設定
+	enemy->SetMotion(CEnemy002::ENEMY002MOTION_DIRECTION);	//モーション
 
 	//ゲームシーンに演出を設定
 	CGame* pGame = nullptr;
 	pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());	//ゲームシーンの取得
 	pGame->SetDirection(CDirection::DIRECTIONTYPE_BOSS);				//演出の設定
 
+	//固有の設定
 	CEnemy002* pEnemy002 = dynamic_cast<CEnemy002*>(enemy);
-	pEnemy002->SetMaterialized(true);
+	pEnemy002->SetMaterialized(true);		//実体化の判定					
 }
 
 //====================================
@@ -396,9 +403,10 @@ CEnemyBehavior_Direction::CEnemyBehavior_Direction(CEnemy* enemy) :
 //====================================
 void CEnemyBehavior_Direction::Action(CEnemy* enemy)
 {
-	//演出の時間が終わったら行動開始
+	//カウントの増加
 	m_nCount++;
 
+	//演出の時間を迎えたら次の行動を設定
 	if (m_nCount > DIRECTION_TIME)
 	{
 		NextAction(enemy);
@@ -596,11 +604,13 @@ void CEnemyBehavior_Direction_Destroy::Action(CEnemy* enemy)
 	CManager::GetInstance()->GetCamera()->SetPosR(enemy->GetCollision()->GetPos());
 	CManager::GetInstance()->GetCamera()->SetPosV(enemy->GetCollision()->GetPos() + CAMERA_POSV);
 	
+	//カメラを揺らす時間に爆発を生成
 	if (m_nCount == CDirection_Boss_Destroy::START_SHAKE_FRAME)
 	{
 		CEffect_Explosion::Create(enemy->GetPos());
 	}
 
+	//演出の時間を迎えたら敵を破棄
 	if (m_nCount > DIRECTION_TIME)
 	{
 		enemy->Uninit();

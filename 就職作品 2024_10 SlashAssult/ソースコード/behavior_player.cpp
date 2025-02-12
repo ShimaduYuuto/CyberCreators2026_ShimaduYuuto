@@ -132,12 +132,10 @@ D3DXVECTOR3 CPlayerBehavior_Move::UpdateMove(CPlayer* player, D3DXVECTOR3& Rotgo
 	}
 
 	//スティックが倒れていたらその方向に進む
-	if (CManager::GetInstance()->GetJoypad()->GetStick().afTplDiameter[CInputJoypad::STICKTYPE_LEFT] > 0.001f && !bPressKey)
+	if (CheckUpdateStick(bPressKey))
 	{
-		float fAngle = CManager::GetInstance()->GetJoypad()->GetStick().afAngle[CInputJoypad::STICKTYPE_LEFT];
-		move.z += cosf(pCamera->GetRot().y + -fAngle + D3DX_PI) * MOVE_SPEED;
-		move.x += sinf(pCamera->GetRot().y + -fAngle + D3DX_PI) * MOVE_SPEED;
-		Rotgoal.y = pCamera->GetRot().y + -fAngle;
+		//スティックでの更新
+		UpdateStickMove(Rotgoal, &move);
 
 		bMove = true;	//動いた判定
 	}
@@ -242,6 +240,32 @@ bool CPlayerBehavior_Move::CheckUpdateKeyboard(CPlayer* player, D3DXVECTOR3& Rot
 	}
 
 	return bPressKey;
+}
+
+//============================
+//スティックで更新されたか
+//============================
+bool CPlayerBehavior_Move::CheckUpdateStick(bool pressed)
+{
+	float fDiameter = CManager::GetInstance()->GetJoypad()->GetStick().afTplDiameter[CInputJoypad::STICKTYPE_LEFT];	//スティックの倒し具合
+
+	if (pressed) return false;	//キーがすでに押されているなら抜ける
+	if (fDiameter > 0.001f) return true;	//スティックが倒れているなら真を返す
+
+	return false;
+}
+
+//============================
+//スティックで更新されたか
+//============================
+void CPlayerBehavior_Move::UpdateStickMove(D3DXVECTOR3& Rotgoal, D3DXVECTOR3* move)
+{
+	CCamera* pCamera = CManager::GetInstance()->GetCamera();												//カメラの取得
+	float fAngle = CManager::GetInstance()->GetJoypad()->GetStick().afAngle[CInputJoypad::STICKTYPE_LEFT];	//スティックの角度を取得
+
+	move->z += cosf(pCamera->GetRot().y + -fAngle + D3DX_PI) * MOVE_SPEED;	//X方向の移動
+	move->x += sinf(pCamera->GetRot().y + -fAngle + D3DX_PI) * MOVE_SPEED;	//Z方向の移動
+	Rotgoal.y = pCamera->GetRot().y + -fAngle;								//進行方向に向く
 }
 
 //============================
@@ -558,103 +582,27 @@ bool CPlayerBehavior_Attack::CheckEnemyInFront(CPlayer* player, float targetangl
 //============================
 void CPlayerBehavior_Attack::Behavior(CPlayer* player)
 {
-	//カウントが一定以上なら
-	if (m_nEndCount > m_nCollisionlTime)
+	//当たり判定
+	if (IsHitProcess())
 	{
-		//ゲームシーンなら判定
-		if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
+		//ゲームシーンの取得
+		CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+
+		//攻撃判定の生成
+		D3DXVECTOR3 AttackPos = player->GetPos();
+		AttackPos += {sinf(player->GetRot().y + D3DX_PI)* m_OffsetPos.z, m_OffsetPos.y, cosf(player->GetRot().y + D3DX_PI)* m_OffsetPos.z};
+
+		//敵との当たり判定
+		HitEnemyProcess(player, AttackPos);
+
+		//弾との当たり判定
+		HitBulletProcess(player, AttackPos);
+
+		//キャンセルのカウント以上になったら
+		if (m_nEndCount > m_nCancelStartTime && m_bCancel)
 		{
-			//ゲームシーンの取得
-			CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
-
-			//攻撃判定の生成
-			D3DXVECTOR3 AttackPos = player->GetPos();
-			AttackPos += {sinf(player->GetRot().y + D3DX_PI) * m_OffsetPos.z, m_OffsetPos.y, cosf(player->GetRot().y + D3DX_PI)* m_OffsetPos.z};
-
-			//敵の周回
-			for (auto& iter : pGame->GetEnemyManager()->GetList())
-			{
-				//当たったか
-				bool bHit = false;
-
-				//すでに当たっているかを確認
-				for (auto& HitEnemyiter : m_HitEnemy)
-				{
-					//すでに当たっていたら抜ける
-					if (HitEnemyiter == iter)
-					{
-						bHit = true;	//すでに当たっている
-						break;
-					}
-				}
-
-				//すでに当たっていたら飛ばす
-				if (bHit)
-				{
-					continue;
-				}
-
-				//敵の位置を取得
-				D3DXVECTOR3 EnemyLength = iter->GetCollision()->GetPos() - AttackPos;
-
-				float fXZ = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.z * EnemyLength.z); //XZ距離を算出する
-				float fXY = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.y * EnemyLength.y); //XY距離を算出する
-				float fLength = sqrtf(fXZ * fXZ + fXY * fXY);	//距離を算出
-
-				//敵の判定内なら
-				if (fLength < m_fAttackLength)
-				{
-					//ダメージ処理
-					Damage(player, iter, 1);
-
-					D3DXVECTOR3 Move = iter->CCharacter::GetMove();
-
-					//落ちていたら少し浮かす
-					if (Move.y < 0.0f)
-					{
-						Move.y = 0.0f;
-					}
-
-					iter->CCharacter::SetMove(Move);
-
-					//敵の情報を保存
-					m_HitEnemy.push_back(iter);
-				}
-			}
-
-			//弾との当たり判定
-			for (auto& iter : pGame->GetEnemyBulletManager()->GetList())
-			{
-				//反射済みは飛ばす
-				if (iter->GetReflection() || !iter->GetShooting())
-				{
-					continue;
-				}
-
-				//敵の位置を取得
-				D3DXVECTOR3 Length = iter->GetCollision()->GetPos() - AttackPos;
-
-				float fXZ = sqrtf(Length.x * Length.x + Length.z * Length.z); //XZ距離を算出する
-				float fXY = sqrtf(Length.x * Length.x + Length.y * Length.y); //XY距離を算出する
-				float fLength = sqrtf(fXZ * fXZ + fXY * fXY);	//距離を算出
-				D3DXVECTOR3 Distance = iter->GetPos() - AttackPos;
-				float fAngle = atan2f(Distance.x, Distance.z);
-
-				//敵の判定内なら
-				if (fLength < m_fAttackLength + iter->GetCollision()->GetRadius())
-				{
-					//弾を反射
-					iter->Reflection(player->GetRot().y);
-					CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_REPEL);	//SE
-				}
-			}
-
-			//キャンセルのカウント以上になったら
-			if (m_nEndCount > m_nCancelStartTime && m_bCancel)
-			{
-				//キャンセルの処理
-				Cancel(player);
-			}
+			//キャンセルの処理
+			Cancel(player);
 		}
 	}
 
@@ -677,15 +625,119 @@ void CPlayerBehavior_Attack::Behavior(CPlayer* player)
 	//カウントの更新
 	m_nEndCount++;
 
-	//モデルパーツの取得
-	CModelparts* pModelParts = player->GetModelParts(15);
+	//エフェクト処理
+	Effect(player);
+}
 
-	//オフセット位置の設定
-	D3DXVECTOR3 OffsetPos = { 0.0f, ORBIT_OFFSET_LENGTH, 0.0f };
-	D3DXVec3TransformCoord(&OffsetPos, &OffsetPos, &pModelParts->GetMtx());
+//============================
+//当たり判定を行うか
+//============================
+bool CPlayerBehavior_Attack::IsHitProcess()
+{
+	//各判定
+	if (m_nEndCount <= m_nCollisionlTime) return false;	//カウントが当たり判定を行う時間じゃないなら抜ける
+	if (CManager::GetInstance()->GetScene()->GetMode() !=
+		CManager::GetInstance()->GetScene()->MODE_GAME)return false;	//ゲームシーンじゃないなら抜ける
 
-	//パーティクルの生成
-	CParticle_Rush::Create(OffsetPos, player->GetRot());
+	return true;
+}
+
+//============================
+//敵との当たり判定
+//============================
+void CPlayerBehavior_Attack::HitEnemyProcess(CPlayer* player, D3DXVECTOR3 pos)
+{
+	//ゲームシーンの取得
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+
+	//敵の周回
+	for (auto& iter : pGame->GetEnemyManager()->GetList())
+	{
+		//当たったか
+		bool bHit = false;
+
+		//すでに当たっているかを確認
+		for (auto& HitEnemyiter : m_HitEnemy)
+		{
+			//すでに当たっていたら抜ける
+			if (HitEnemyiter == iter)
+			{
+				bHit = true;	//すでに当たっている
+				break;
+			}
+		}
+
+		//すでに当たっていたら飛ばす
+		if (bHit)
+		{
+			continue;
+		}
+
+		//敵の位置を取得
+		D3DXVECTOR3 EnemyLength = iter->GetCollision()->GetPos() - pos;
+
+		float fXZ = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.z * EnemyLength.z); //XZ距離を算出する
+		float fXY = sqrtf(EnemyLength.x * EnemyLength.x + EnemyLength.y * EnemyLength.y); //XY距離を算出する
+		float fLength = sqrtf(fXZ * fXZ + fXY * fXY);	//距離を算出
+
+		//敵の判定内なら
+		if (fLength < m_fAttackLength)
+		{
+			//ダメージ処理
+			Damage(player, iter, 1);
+
+			//敵の移動量を取得
+			D3DXVECTOR3 Move = iter->CCharacter::GetMove();
+
+			//落ちていたら移動量を戻す
+			if (Move.y < 0.0f)
+			{
+				Move.y = 0.0f;
+			}
+
+			//設定
+			iter->CCharacter::SetMove(Move);
+
+			//敵の情報を保存
+			m_HitEnemy.push_back(iter);
+		}
+	}
+}
+
+//============================
+//弾との当たり判定
+//============================
+void CPlayerBehavior_Attack::HitBulletProcess(CPlayer* player, D3DXVECTOR3 pos)
+{
+	//ゲームシーンの取得
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+
+	//弾との当たり判定
+	for (auto& iter : pGame->GetEnemyBulletManager()->GetList())
+	{
+		//反射済みは飛ばす
+		if (iter->GetReflection() || !iter->GetShooting())
+		{
+			continue;
+		}
+
+		//敵の位置を取得
+		D3DXVECTOR3 Length = iter->GetCollision()->GetPos() - pos;
+
+		float fXZ = sqrtf(Length.x * Length.x + Length.z * Length.z); //XZ距離を算出する
+		float fXY = sqrtf(Length.x * Length.x + Length.y * Length.y); //XY距離を算出する
+		float fLength = sqrtf(fXZ * fXZ + fXY * fXY);	//距離を算出
+		D3DXVECTOR3 Distance = iter->GetPos() - pos;
+		float fAngle = atan2f(Distance.x, Distance.z);
+
+		//敵の判定内なら
+		if (fLength < m_fAttackLength + iter->GetCollision()->GetRadius())
+		{
+			//弾を反射
+			iter->Reflection(player->GetRot().y);
+			CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_REPEL);	//SE
+		}
+	}
 }
 
 //============================
@@ -738,6 +790,22 @@ void CPlayerBehavior_Attack::CancelInput()
 	}
 }
 
+//============================
+//エフェクトの処理
+//============================
+void CPlayerBehavior_Attack::Effect(CPlayer* player)
+{
+	//モデルパーツの取得
+	CModelparts* pModelParts = player->GetModelParts(15);
+
+	//オフセット位置の設定
+	D3DXVECTOR3 OffsetPos = { 0.0f, ORBIT_OFFSET_LENGTH, 0.0f };
+	D3DXVec3TransformCoord(&OffsetPos, &OffsetPos, &pModelParts->GetMtx());
+
+	//パーティクルの生成
+	CParticle_Rush::Create(OffsetPos, player->GetRot());
+}
+
 //================================================================
 //通常攻撃(基底クラス)
 //================================================================
@@ -783,13 +851,6 @@ CPlayerBehavior_NormalAttack000::CPlayerBehavior_NormalAttack000(CPlayer* player
 //============================
 void CPlayerBehavior_NormalAttack000::Cancel(CPlayer* player)
 {
-	//左クリックをしたら
-	/*if (CManager::GetInstance()->GetMouse()->GetTrigger(CInputMouse::MOUSEBUTTON_LEFT) ||
-		CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_X))
-	{
-		
-	}*/
-
 	//次の攻撃の生成
 	SetNextBehavior(new CPlayerBehavior_NormalAttack001(player));
 }
@@ -811,13 +872,6 @@ CPlayerBehavior_NormalAttack001::CPlayerBehavior_NormalAttack001(CPlayer* player
 //============================
 void CPlayerBehavior_NormalAttack001::Cancel(CPlayer* player)
 {
-	//左クリックをしたら
-	/*if (CManager::GetInstance()->GetMouse()->GetTrigger(CInputMouse::MOUSEBUTTON_LEFT) ||
-		CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_X))
-	{
-		
-	}*/
-
 	//次の攻撃の生成
 	SetNextBehavior(new CPlayerBehavior_NormalAttack002(player));
 }
@@ -836,12 +890,13 @@ CPlayerBehavior_NormalAttack002::CPlayerBehavior_NormalAttack002(CPlayer* player
 	m_nCancelCount(0),
 	m_pEffect(nullptr)
 {
+	//モーションの設定
 	player->SetMotion(player->PLAYERMOTION_ATTACKCHARGE);
 
 	//パラメータの設定
-	SetEndTime(20);
-	SetCollisionTime(5);
-	SetCancelTime(25);
+	SetEndTime(END_TIME);
+	SetCollisionTime(START_COLLISION);
+	SetCancelTime(START_CANCEL);
 	SetAttackLength(ATTACK_LENGTH);
 	SetOffsetPos(POS_OFFSET);
 
@@ -973,9 +1028,10 @@ void CPlayerBehavior_NormalAttack002::Damage(CPlayer* player, CEnemy* enemy, int
 //============================
 CPlayerBehavior_Arial000::CPlayerBehavior_Arial000(CPlayer* player)
 {
-	player->SetMotion(CPlayer::PLAYERMOTION_ARIAL000);
-	player->SetEnableGravity(false);
-	player->SetMove({ player->GetMove().x, 0.0f, player->GetMove().z });
+	//基本の設定
+	player->SetMotion(CPlayer::PLAYERMOTION_ARIAL000);	//モーション
+	player->SetEnableGravity(false);					//重力を受けない
+	player->SetMove({ player->GetMove().x, 0.0f, player->GetMove().z });	//Y方向の移動量を無くす
 }
 
 //============================
@@ -1004,6 +1060,7 @@ void CPlayerBehavior_Arial000::Behavior(CPlayer* player)
 //============================
 CPlayerBehavior_Arial001::CPlayerBehavior_Arial001(CPlayer* player)
 {
+	//モーションの設定
 	player->SetMotion(CPlayer::PLAYERMOTION_ARIAL001);
 }
 
@@ -1021,6 +1078,7 @@ void CPlayerBehavior_Arial001::Cancel(CPlayer* player)
 //============================
 void CPlayerBehavior_Arial001::Behavior(CPlayer* player)
 {
+	//攻撃の基底行動
 	CPlayerBehavior_Attack::Behavior(player);
 }
 
@@ -1033,6 +1091,7 @@ void CPlayerBehavior_Arial001::Behavior(CPlayer* player)
 //============================
 CPlayerBehavior_Arial002::CPlayerBehavior_Arial002(CPlayer* player)
 {
+	//モーションの設定
 	player->SetMotion(CPlayer::PLAYERMOTION_ARIAL002);
 }
 
@@ -1041,6 +1100,7 @@ CPlayerBehavior_Arial002::CPlayerBehavior_Arial002(CPlayer* player)
 //============================
 void CPlayerBehavior_Arial002::Behavior(CPlayer* player)
 {
+	//攻撃の基底行動
 	CPlayerBehavior_Attack::Behavior(player);
 }
 
@@ -1111,9 +1171,10 @@ void CPlayerBehavior_DashAttack::Behavior(CPlayer* player)
 //============================
 CPlayerBehavior_DashAttack000::CPlayerBehavior_DashAttack000(CPlayer* player) : CPlayerBehavior_DashAttack(player)
 {
-	player->SetMotion(CPlayer::PLAYERMOTION_ARIAL000);
-	player->SetEnableGravity(false);
-	player->SetMove({ player->GetMove().x, 0.0f, player->GetMove().z });
+	//基本の設定
+	player->SetMotion(CPlayer::PLAYERMOTION_ARIAL000);					//モーション
+	player->SetEnableGravity(false);									//重力を受けない
+	player->SetMove({ player->GetMove().x, 0.0f, player->GetMove().z });//Y方向の移動量を無くす
 }
 
 //============================
@@ -1155,6 +1216,7 @@ void CPlayerBehavior_DashAttack000::Cancel(CPlayer* player)
 //============================
 void CPlayerBehavior_DashAttack000::Behavior(CPlayer* player)
 {
+	//ダッシュ攻撃
 	CPlayerBehavior_DashAttack::Behavior(player);
 }
 
@@ -1167,6 +1229,7 @@ void CPlayerBehavior_DashAttack000::Behavior(CPlayer* player)
 //============================
 CPlayerBehavior_DashAttack001::CPlayerBehavior_DashAttack001(CPlayer* player) : CPlayerBehavior_DashAttack(player)
 {
+	//モーションの設定
 	player->SetMotion(CPlayer::PLAYERMOTION_ARIAL001);
 }
 
@@ -1209,53 +1272,8 @@ void CPlayerBehavior_DashAttack001::Cancel(CPlayer* player)
 //============================
 void CPlayerBehavior_DashAttack001::Behavior(CPlayer* player)
 {
+	//ダッシュ攻撃
 	CPlayerBehavior_DashAttack::Behavior(player);
-}
-
-//=================================================
-//カウンター攻撃
-//=================================================
-
-//============================
-//行動処理(攻撃)
-//============================
-CPlayerBehavior_CounterAttack::CPlayerBehavior_CounterAttack(CPlayer* player)
-{
-	//パラメータの設定
-	SetCancelTime(START_CANCELTIME);	//キャンセル
-	SetEndTime(END_TIME);				//終了時間
-	SetCollisionTime(START_COLLISION);	//当たり判定
-	SetAttackLength(ATTACK_LENGTH);		//攻撃の距離
-	SetOffsetPos({ 0.0f, 30.0f, 0.0f });//オフセット
-	player->SetMotion(CPlayer::PLAYERMOTION_ACTION002);
-}
-
-//============================
-//行動処理(攻撃)
-//============================
-void CPlayerBehavior_CounterAttack::Behavior(CPlayer* player)
-{
-	CPlayerBehavior_Attack::Behavior(player);
-}
-
-//============================
-//行動処理(通常状態に変更)
-//============================
-void CPlayerBehavior_CounterAttack::NextBehavior(CPlayer* player)
-{
-	player->GetState()->SetNextState(new CState_Player_Normal(player));
-}
-
-//============================
-//攻撃ヒット時の処理
-//============================
-void CPlayerBehavior_CounterAttack::Damage(CPlayer* player, CEnemy* enemy, int damage)
-{
-	D3DXVECTOR3 Vector = enemy->GetCollision()->GetPos() - player->GetCollision()->GetPos();
-	float fAngle = atan2f(Vector.x, Vector.z);
-
-	//ダメージ
-	enemy->SetBlowDamage(damage, fAngle + D3DX_PI, 10.0f);
 }
 
 //=================================================
@@ -1267,8 +1285,9 @@ void CPlayerBehavior_CounterAttack::Damage(CPlayer* player, CEnemy* enemy, int d
 //============================
 CPlayerBehavior_Guard::CPlayerBehavior_Guard(CPlayer* player) : m_nStiffnessCount(0)
 {
-	player->SetMotion(CPlayer::PLAYERMOTION_GUARD);
-	player->SetGuardJudge(true);
+	//基本の処理
+	player->SetMotion(CPlayer::PLAYERMOTION_GUARD);	//モーション
+	player->SetGuardJudge(true);					//ガードをしているか
 }
 
 //============================

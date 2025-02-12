@@ -36,9 +36,6 @@ public:
 	void Update() override;		//更新
 	void Draw() override;		//描画
 
-	//ガード解除
-	void Cancellation();
-
 	//終了の設定
 	void SetEnd() { m_bEnd = true; }
 
@@ -46,6 +43,9 @@ public:
 	static CEffect_Guard* Create(D3DXVECTOR3* pos);
 
 private:
+
+	//関数
+	void UpdateSizeRatio();	//サイズ倍率の更新
 
 	CAnimation m_Anim;				//アニメーション用の情報
 	int m_nRatioInterpolationCount;	//倍率の補間カウント

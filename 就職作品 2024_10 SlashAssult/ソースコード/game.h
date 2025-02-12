@@ -85,8 +85,17 @@ public:
 
 private:
 
-	void ModelLoad();	//モデルの読み込み
-	void GuideUILoad();	//ガイドUI情報の読み込み
+	//関数
+	void DirectioningProcess();	//演出中の処理
+	bool IsDeleteDirection();	//演出を破棄するか
+	void CheckGuideUI();		//ガイドUIの確認
+	bool IsUsedJoipad();		//ジョイパッドを使っているか
+	bool IsUsedKeyboardMouse();	//キーマウを使っているか
+	void NextScene();			//次のシーンへ移行
+	bool CanNextScene();		//次のシーンへ移行できるか
+	void ModelLoad();			//モデルの読み込み
+	void GuideUILoad();			//ガイドUI情報の読み込み
+	void PauseProcess();		//ポーズの処理
 
 	CPlayer* m_pPlayer;							//プレイヤー
 	CField* m_pField;							//フィールド

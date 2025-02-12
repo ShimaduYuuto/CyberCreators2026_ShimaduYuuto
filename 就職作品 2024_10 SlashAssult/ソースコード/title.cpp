@@ -53,7 +53,6 @@ HRESULT CTitle::Init()
 	{
 		m_pField = CField::Create({ 0.0f, 0.0f, 0.0f });
 		m_pPlayer->SetPos(m_pField->ConvertMeshPos(m_pPlayer->GetPos()));
-		
 	}
 
 	//その他のオブジェクト

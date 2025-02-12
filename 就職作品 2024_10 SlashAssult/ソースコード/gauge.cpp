@@ -96,7 +96,7 @@ void CGauge::SetNowGauge(float value)
 	{
 		m_fNowGauge = m_fMaxGauge;
 	}
-	else if (value < 0.0f)
+	else if (value < 0.0f)	//値が最低値を下回ったら補正
 	{
 		m_fNowGauge = 0.0f;
 	}
@@ -119,7 +119,7 @@ void CGauge::AddGauge(float value)
 	{
 		m_fNowGauge = m_fMaxGauge;
 	}
-	else if (m_fNowGauge < 0.0f)
+	else if (m_fNowGauge < 0.0f)	//値が最低値を下回ったら補正
 	{
 		m_fNowGauge = 0.0f;
 	}

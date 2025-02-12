@@ -84,7 +84,7 @@ void CBattleAreaManager::Load()
 	m_BattleAreaList.clear();
 
 	std::ifstream File("data\\FILE\\battleareaInfo.txt");	//読み込むファイルのパスを指定
-	std::string String;								//読み取り用
+	std::string String;										//読み取り用
 
 	if (!File) return;	//読み込みに失敗したら抜ける
 

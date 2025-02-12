@@ -31,8 +31,8 @@ CBarrierManager::~CBarrierManager()
 //============================
 HRESULT CBarrierManager::Init()
 {
-	//“Ç‚İ‚İ
-	Load();
+	Load();	//“Ç‚İ‚İ
+
 	return S_OK;
 }
 

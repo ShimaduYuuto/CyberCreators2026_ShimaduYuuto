@@ -83,6 +83,9 @@ private:
 	void Action(CPlayer* player);									//アクション処理
 
 	bool CheckUpdateKeyboard(CPlayer* player, D3DXVECTOR3& Rotgoal, D3DXVECTOR3* move);	//キーボードで更新されたかを確認
+	bool CheckUpdateStick(bool pressed);												//スティックで更新されたかを確認
+	void UpdateStickMove(D3DXVECTOR3& Rotgoal, D3DXVECTOR3* move);						//スティック移動での更新
+	void ChangeMotion();
 };
 
 //==========================
@@ -124,7 +127,7 @@ public:
 	static const D3DXVECTOR3 POS_OFFSET;				//オフセット位置
 	static constexpr float ORBIT_OFFSET_LENGTH{ 50.0f };//軌跡のオフセットの距離
 
-	//メンバ関数
+	//関数
 	CPlayerBehavior_Attack();						//コンストラクタ
 	CPlayerBehavior_Attack(CPlayer* player);		//コンストラクタ
 	~CPlayerBehavior_Attack() override;				//デストラクタ
@@ -155,11 +158,16 @@ public:
 
 private:
 
-	
+	//関数
+	bool IsHitProcess();												//当たり判定の処理を行うか
+	void HitEnemyProcess(CPlayer* player, D3DXVECTOR3 pos);				//敵との当たり判定を確認
+	void HitBulletProcess(CPlayer* player, D3DXVECTOR3 pos);			//弾との当たり判定を確認
 	virtual void Damage(CPlayer* player, CEnemy* enemy, int damage);	//ダメージを与える
 	void LookAtEnemy(CPlayer* player);									//敵の方向を向く
 	bool CheckEnemyInFront(CPlayer* player, float targetangle, float radian);			//自分の前に敵がいるかを確認
+	void Effect(CPlayer* player);										//エフェクトの処理
 
+	//変数
 	int m_nEndCount;				//終了カウント
 	std::list<CEnemy*> m_HitEnemy;	//当たった敵保存用
 	int m_nCancelStartTime;			//キャンセル出来るカウント
@@ -247,6 +255,7 @@ public:
 	static constexpr float MAX_RATE{ 100.0f };			//最大倍率
 	static constexpr int ACCEPT_CANCELTIME{ 10 };		//キャンセルを受け付ける時間
 	static constexpr float ACCELERATION_VALUE{ 0.1f };	//1フレームに加速度に加算する値
+	static const int END_TIME{ 20 };					//終了までの時間
 
 	//メンバ関数
 	CPlayerBehavior_NormalAttack002(CPlayer* player);			//コンストラクタ
@@ -407,35 +416,6 @@ public:
 
 	//キャンセル時の処理
 	void Cancel(CPlayer* player) override;
-};
-
-//==========================
-//カウンター攻撃
-//==========================
-class CPlayerBehavior_CounterAttack : public CPlayerBehavior_Attack
-{
-public:
-
-	//定数
-	static constexpr int END_TIME{ 20 };			//終了までの時間
-	static constexpr int START_COLLISION{ 4 };		//コリジョンの判定を始めるカウント
-	static constexpr int START_CANCELTIME{ 10 };	//キャンセルが始める時間
-	static constexpr float ATTACK_LENGTH{ 100.0f };	//攻撃の距離
-
-	CPlayerBehavior_CounterAttack() {}
-	CPlayerBehavior_CounterAttack(CPlayer* player);
-	~CPlayerBehavior_CounterAttack() override {}			//デストラクタ
-
-	//行動
-	void Behavior(CPlayer* player) override;
-
-	//次の行動
-	void NextBehavior(CPlayer* player) override;
-
-private:
-
-	//ダメージを与える
-	void Damage(CPlayer* player, CEnemy* enemy, int damage) override;
 };
 
 //==========================

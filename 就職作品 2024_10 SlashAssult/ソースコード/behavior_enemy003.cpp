@@ -20,9 +20,10 @@
 //====================================
 void CEnemyBehavior_Standby003::Action(CEnemy* enemy)
 {
-	//クールタイムが終わったら次の行動を行う
+	//クールタイムを減らす
 	m_nCoolTime--;
 
+	//クールタイムが終わったら次の行動を行う
 	if (m_nCoolTime < 0)
 	{
 		//攻撃する

@@ -16,10 +16,12 @@
 //====================================
 CState_Player_Death::CState_Player_Death(CPlayer* player)
 {
-	//死亡モーション
-	player->SetMotion(CPlayer::PLAYERMOTION_DEATH);
+	//設定
+	player->SetMotion(CPlayer::PLAYERMOTION_DEATH);	//死亡モーション
+
+	//ゲームシーンの設定
 	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
-	pGame->SetGameOver(true);
+	pGame->SetGameOver(true);	//ゲームオーバーを設定
 }
 
 //====================================

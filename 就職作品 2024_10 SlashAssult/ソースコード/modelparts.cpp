@@ -38,14 +38,6 @@ HRESULT CModelparts::Init()
 	//初期化
 	CObjectX::Init();
 
-	//Xファイルパーツの読み込み
-	//位置(オフセット)の設定
-	//向き(オフセット)の設定
-
-	//パラメータの初期化
-	//CObjectX::SetRot({ 0.0f, 0.0f, 0.0f });
-	//CObjectX::SetPos({ 1.0f, 50.0f, 0.0f });
-
 	return S_OK;
 }
 
@@ -72,7 +64,7 @@ void CModelparts::Update()
 //============================
 void CModelparts::Draw()
 {
-	
+	//パーツを持っているクラスで描画するので空
 }
 
 //============================

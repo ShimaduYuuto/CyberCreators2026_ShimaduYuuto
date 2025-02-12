@@ -38,6 +38,7 @@ HRESULT CCollision_Wall::Init()
 {
 	//Šî’ê‚Ì‰Šú‰»
 	CObjectCylinder::Init();
+
 	SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));	//’¸“_‚ğ“§–¾‚É
 
 	return S_OK;

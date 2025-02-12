@@ -29,6 +29,11 @@ public:
 	static CGauge_Slow* Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, float max);	//スローゲージの生成
 
 private:
+
+	//関数
+	void UpdateGauge();
+
+	//変数
 	D3DXVECTOR3 m_MaxSize;	//最大サイス
 };
 

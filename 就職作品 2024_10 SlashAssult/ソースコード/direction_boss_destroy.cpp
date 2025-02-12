@@ -30,11 +30,14 @@ CDirection_Boss_Destroy::CDirection_Boss_Destroy() :
 	//終了時間
 	SetEndTime(END_TIME);
 
+	//演出用フェード
 	m_pDirectionFade = new CObject2D(5);	//プライオリティを変更したいのでnew
 	m_pDirectionFade->Init();
 	m_pDirectionFade->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
 	m_pDirectionFade->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
 	m_pDirectionFade->SetSize(D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
+
+	//サウンド
 	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_DESTROY);
 }
 
@@ -69,8 +72,10 @@ bool CDirection_Boss_Destroy::TimeUpdate()
 		//カメラを揺らす
 		CCamera* pCamera = CManager::GetInstance()->GetCamera();
 		pCamera->SetShake(SHAKE_FRAME, SHAKE_MAGNITUDE);
-		CManager::GetInstance()->GetSound()->Stop(CSound::SOUND_LABEL_DESTROY);
-		CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_EXPLOSION001);
+
+		//サウンド
+		CManager::GetInstance()->GetSound()->Stop(CSound::SOUND_LABEL_DESTROY);				//死亡SEを止める
+		CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_EXPLOSION001);	//爆発SEを再生
 	}
 
 	//パーティクルを出す
@@ -78,9 +83,7 @@ bool CDirection_Boss_Destroy::TimeUpdate()
 	{
 		CCamera* pCamera = CManager::GetInstance()->GetCamera();
 		CParticle* pParticle = CParticle::Create(D3DXVECTOR3(pCamera->GetPosR()));
-
-		std::random_device Random;
-		float fRandom = (Random() % 628) * 0.01f;
+		float fRandom = CManager::GetInstance()->GetRundom(0, 628) * 0.01f;
 		pParticle->SetMove(D3DXVECTOR3(sinf(fRandom) * 10.0f, cosf(fRandom) * 10.0f, 0.0f));
 		pParticle->SetNormalSize(100.0f);
 	}
@@ -108,4 +111,19 @@ bool CDirection_Boss_Destroy::TimeUpdate()
 
 	//演出の更新
 	return CDirection::TimeUpdate();
+}
+
+//============================
+//パーティクルの生成
+//============================
+void CDirection_Boss_Destroy::CreateParticle()
+{
+	//変数宣言
+	CCamera* pCamera = CManager::GetInstance()->GetCamera();					//カメラを取得
+	CParticle* pParticle = CParticle::Create(D3DXVECTOR3(pCamera->GetPosR()));	//パーティクルの生成
+	float fRandom = CManager::GetInstance()->GetRundom(0, 628) * 0.01f;			//ランダム値の算出(0.0f, 6.28f)
+
+	//パラメータの設定
+	pParticle->SetMove(D3DXVECTOR3(sinf(fRandom) * PARTICLE_SPEED, cosf(fRandom) * PARTICLE_SPEED, 0.0f));	//移動量の設定
+	pParticle->SetNormalSize(PARTICLE_SIZE);																//通常サイズの設定
 }

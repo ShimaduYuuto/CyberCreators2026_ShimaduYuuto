@@ -83,11 +83,13 @@ void CEffect_HitAttack::Draw()
 	//デバイスの取得
 	pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
+	//ライティングをoff
 	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	//テクスチャ描画
 	CObjectBillboard::Draw(TEXTURE_PATH.c_str());
 
+	//ライティングをon
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 

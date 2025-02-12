@@ -45,12 +45,8 @@ void CState_Bullet_Reflection::CheckCollision(CEnemyBullet* bullet)
 			iter->ChangeStanState();
 			iter->SetBlowDamage(CEnemyBullet::ENEMY_DAMAGE_VALUE, fAngle + D3DX_PI, CEnemyBullet::ENEMY_BROW_VALUE);
 
-			//SE‚ÌÝ’è
-			CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_BULLETHIT);
-
-			CManager::GetInstance()->GetCamera()->SetShake(CEnemyBullet::CAMERA_SHAKE_FRAME, CEnemyBullet::CAMERA_SHAKE_VALUE);	//ƒqƒbƒgŽžƒJƒƒ‰‚ð—h‚ç‚·
-
-			bullet->Uninit();
+			//ƒqƒbƒgŽž‚Ìˆ—
+			bullet->HitProcess();
 			return;
 		}
 	}

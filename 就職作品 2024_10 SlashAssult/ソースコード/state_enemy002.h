@@ -67,7 +67,7 @@ class CState_Enemy002_Blow : public CState_Enemy_Blow
 public:
 
 	//メンバ関数
-	CState_Enemy002_Blow()
+	CState_Enemy002_Blow(CEnemy* enemy) : CState_Enemy_Blow(enemy)
 	{
 		SetAction(new CEnemyBehavior());
 	};	//コンストラクタ
@@ -90,16 +90,12 @@ public:
 	static constexpr int TIME_END{ 300 };	//終了時間
 
 	//メンバ関数
-	CState_Enemy002_Stick()
-	{
-		SetEndTime(TIME_END);
-	};	//コンストラクタ
-
 	CState_Enemy002_Stick(CEnemy* enemy);	//コンストラクタ
 
 	//状態の更新
 	void UpdateState(CEnemy* enemy) override
 	{
+		//親の更新
 		CState_Enemy_Stick::UpdateState(enemy);
 	}
 };
@@ -111,13 +107,10 @@ class CState_Enemy002_Stan : public CState_Enemy_Stan
 {
 public:
 
-	//メンバ関数
-	CState_Enemy002_Stan()
-	{
-		SetAction(new CEnemyBehavior());
-		SetEndTime(60);
-	};	//コンストラクタ
+	//定数
+	static constexpr int END_TIME{ 3000 };	//終了時間
 
+	//メンバ関数
 	CState_Enemy002_Stan(CEnemy* enemy);	//コンストラクタ
 	~CState_Enemy002_Stan() override;		//デストラクタ
 

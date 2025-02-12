@@ -116,20 +116,14 @@ void CEnemyBullet::Uninit()
 //============================
 void CEnemyBullet::Update()
 {
-	//移動量の加算
-	D3DXVECTOR3 Pos = GetPos();
-	Pos += m_Move;
-	SetPos(Pos);
+	//位置の更新
+	UpdatePos();
 
 	//スケールの設定
 	SetScale({ m_fSizeRate, m_fSizeRate , m_fSizeRate });
 
 	//当たり判定の更新
-	if (m_Collision != nullptr)
-	{
-		m_Collision->SetRadius(m_fSizeRate * COLLISION_RADIUS);
-		m_Collision->Update(Pos);
-	}
+	UpdateCollision();
 
 	//撃たれていないなら抜ける
 	if (!m_bShooting)
@@ -143,15 +137,35 @@ void CEnemyBullet::Update()
 		m_pState->CheckCollision(this);
 	}
 
-	//壁と当たったら消える
+	//ヒット確認
 	if (IsHitWall())
 	{
-		CManager::GetInstance()->GetCamera()->SetShake(CAMERA_SHAKE_FRAME, CAMERA_SHAKE_VALUE);	//ヒット時カメラを揺らす
+		//ヒット時の処理
+		HitProcess();
+	}
+}
 
-		CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_BULLETHIT);
+//============================
+//位置の更新
+//============================
+void CEnemyBullet::UpdatePos()
+{
+	//移動量の加算
+	D3DXVECTOR3 Pos = GetPos();
+	Pos += m_Move;
+	SetPos(Pos);
+}
 
-		Uninit();
-		return;
+//============================
+//当たり判定の更新
+//============================
+void CEnemyBullet::UpdateCollision()
+{
+	//nullチェック
+	if (m_Collision != nullptr)
+	{
+		m_Collision->SetRadius(m_fSizeRate * COLLISION_RADIUS);	//半径を設定
+		m_Collision->Update(GetPos());							//位置を更新
 	}
 }
 
@@ -162,6 +176,21 @@ bool CEnemyBullet::IsHitWall()
 {
 	return CBattleAreaManager::GetInstance()->GetCurrentBattleArea()->GetWall()->
 		GetHit(m_Collision->GetPos(), m_Collision->GetRadius());
+}
+
+//============================
+//ヒット時の処理
+//============================
+void CEnemyBullet::HitProcess()
+{
+	//カメラの処理
+	CManager::GetInstance()->GetCamera()->SetShake(CAMERA_SHAKE_FRAME, CAMERA_SHAKE_VALUE);	//ヒット時カメラを揺らす
+
+	//サウンド処理
+	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_BULLETHIT);
+
+	//終了処理
+	Uninit();
 }
 
 //============================
@@ -209,6 +238,7 @@ void CEnemyBullet::Reflection(float angle)
 		SafeDelete(m_pState);
 		m_pState = new CState_Bullet_Reflection(this);
 
+		//反射角度計算用の変数
 		float fPlayerRot = angle;
 		float fRot = atan2f(m_pParentEnemy->GetPos().x - GetPos().x, m_pParentEnemy->GetPos().z - GetPos().z);
 		float fMin = fPlayerRot - D3DX_PI * 0.5f;
@@ -221,7 +251,7 @@ void CEnemyBullet::Reflection(float angle)
 		}
 		else
 		{
-			m_Move = D3DXVECTOR3(sinf(angle + D3DX_PI) * 5.0f, 0.0f, cosf(angle + D3DX_PI) * 5.0f);
+			m_Move = D3DXVECTOR3(sinf(angle + D3DX_PI) * REFLECTION_SPEED, 0.0f, cosf(angle + D3DX_PI) * REFLECTION_SPEED);
 		}
 	}
 }

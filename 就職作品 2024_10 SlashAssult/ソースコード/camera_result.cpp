@@ -8,6 +8,10 @@
 //ヘッダーのインクルード
 #include "camera_result.h"
 
+//定数
+const D3DXVECTOR3 CCamera_Result::POSV = { 0.0f, 100.0f, -300.0f };
+const D3DXVECTOR3 CCamera_Result::POSR = { 0.0f, 20.0f, 0.0f };
+
 //============================
 //カメラのコンストラクタ
 //============================
@@ -36,8 +40,9 @@ HRESULT CCamera_Result::Init()
 	D3DXVECTOR3 PosR = GetPosR();
 	D3DXVECTOR3 PosV = GetPos();
 
-	PosV = D3DXVECTOR3(0.0f, 100.0f, -300.0f);		//視点
-	PosR = D3DXVECTOR3(0.0f, 20.0f, 0.0f);			//注視点
+	//代入
+	PosV = POSV;		//視点
+	PosR = POSR;		//注視点
 
 	//設定
 	SetPosR(PosR);

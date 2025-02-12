@@ -53,7 +53,7 @@ class CState_Enemy002_AlterEgo_Blow : public CState_Enemy002_Blow
 public:
 
 	//メンバ関数
-	CState_Enemy002_AlterEgo_Blow()
+	CState_Enemy002_AlterEgo_Blow(CEnemy* enemy) : CState_Enemy002_Blow(enemy)
 	{
 		SetAction(new CEnemyBehavior());
 	};	//コンストラクタ
@@ -73,7 +73,6 @@ class CState_Enemy002_AlterEgo_Stick : public CState_Enemy002_Stick
 public:
 
 	//メンバ関数
-	CState_Enemy002_AlterEgo_Stick(){}												//コンストラクタ
 	CState_Enemy002_AlterEgo_Stick(CEnemy* enemy) : CState_Enemy002_Stick(enemy){}	//コンストラクタ
 
 	//状態の更新
@@ -91,7 +90,6 @@ class CState_Enemy002_AlterEgo_Stan : public CState_Enemy002_Stan
 public:
 
 	//メンバ関数
-	CState_Enemy002_AlterEgo_Stan(){}												//コンストラクタ
 	CState_Enemy002_AlterEgo_Stan(CEnemy* enemy) : CState_Enemy002_Stan(enemy) {}	//コンストラクタ
 	~CState_Enemy002_AlterEgo_Stan() override {};									//デストラクタ
 
@@ -109,6 +107,7 @@ class CState_Enemy002_AlterEgo_Direction : public CState_Enemy002_Direction
 {
 public:
 
+	//関数
 	CState_Enemy002_AlterEgo_Direction() {}													//コンストラクタ
 	CState_Enemy002_AlterEgo_Direction(CEnemy* enemy) : CState_Enemy002_Direction(enemy) {}	//コンストラクタ
 

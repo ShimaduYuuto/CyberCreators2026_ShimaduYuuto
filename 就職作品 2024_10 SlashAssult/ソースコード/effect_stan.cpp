@@ -55,7 +55,7 @@ void CEffect_Stan::Update()
 {
 	//‰ñ“]
 	D3DXVECTOR3 Rot = GetRot();
-	Rot.y += 0.05f;
+	Rot.y += ROTATE_SPEED;
 	SetRot(Rot);
 
 	//Šî’ê‚ÌXV

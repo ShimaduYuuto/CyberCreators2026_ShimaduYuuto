@@ -37,11 +37,13 @@ public:
 	static CParticle_Spawn* Create(D3DXVECTOR3 pos); //生成
 
 private:
-	void Load();	//読み込み処理
 
+	//関数
+	void Load();			//読み込み処理
+	void CreateParticle();	//パーティクルの生成
+
+	//変数
 	ParticleInfo m_Info;	//情報
-
-	//パラメーター
 	int m_nCount;			//カウント
 	D3DXVECTOR3 m_Pos;		//位置
 };

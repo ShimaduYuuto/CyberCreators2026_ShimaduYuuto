@@ -17,10 +17,24 @@ const std::string CFence::MODEL_PATH = "data\\model\\fence000.x";
 //============================
 void CFence::Draw()
 {
-	if ((GetPos().x < 0.0f && GetPos().x > CManager::GetInstance()->GetCamera()->GetPos().x) || (GetPos().x > 0.0f && GetPos().x < CManager::GetInstance()->GetCamera()->GetPos().x))
+	//描画するかを確認
+	if (IsDraw())
 	{
 		return;
 	}
 
+	//親クラスで描画
 	CObjectX::Draw(MODEL_PATH.c_str());
+}
+
+//============================
+//描画をするかの判定を返す
+//============================
+bool CFence::IsDraw()
+{
+	//判定
+	if ((GetPos().x < 0.0f && GetPos().x > CManager::GetInstance()->GetCamera()->GetPos().x)) return true;	//自身のX座標が-でカメラの視点より値が小さいなら描画する
+	if ((GetPos().x > 0.0f && GetPos().x < CManager::GetInstance()->GetCamera()->GetPos().x)) return true;	//自身のX座標が+でカメラの視点より値が大きいなら描画する
+
+	return false;
 }

@@ -18,6 +18,8 @@ public:
 
 	//ノックバックの時間
 	static constexpr int TIME_INVINCIBLE{ 90 };	//無敵時間
+	static constexpr float ALPHA_ODD{ 0.5f };	//奇数時のアルファ値
+	static constexpr float ALPHA_EVEN{ 0.2f };	//偶数時のアルファ値
 
 	//メンバ関数
 	CState_Player_Invincible() {};					//コンストラクタ
@@ -33,6 +35,9 @@ public:
 	bool SetDamage(CPlayer* player, int damage, float angle) override;	//ダメージの設定
 
 private:
+
+	//関数
+	void ChangeAlpha(CPlayer* player, int count);	//α値の変更
 };
 
 #endif

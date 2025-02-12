@@ -8,6 +8,8 @@
 //ヘッダーのインクルード
 #include "state_player.h"
 #include "state_player_normal.h"
+#include "state_player_damage.h"
+#include "manager.h"
 
 //====================================
 //デストラクタ
@@ -89,7 +91,6 @@ void CState_Player::UpdateState(CPlayer* player)
 void CState_Player::SetBehavior(CPlayerBehavior* behavior)
 {
 	//中身があるなら消去	//消した方が良いがnullで上書きできない
-	//SafeDelete(m_pBehavior);
 	m_pBehavior = behavior;
 }
 
@@ -98,5 +99,46 @@ void CState_Player::SetBehavior(CPlayerBehavior* behavior)
 //========================
 bool CState_Player::SetDamage(CPlayer* player, int damage, float angle)
 {
+	//体力がないなら更新しない
+	if (player->GetLife() <= 0)
+	{
+		return false;
+	}
+
+	//死亡フラグが立っていたら抜ける
+	if (player->GetDeath())
+	{
+		return true;
+	}
+
+	//ダメージを受ける
+	player->CGame_Character::SetDamage(damage, angle);		//ダメージ処理を設定
+	player->SetMotion(CPlayer::PLAYERMOTION_DAMAGE);		//モーションの設定
+	SetNextState(new CState_Player_Damage(player));			//次の状態の設定
+
+	//ノックバックの移動量を算出
+	D3DXVECTOR3 Move = player->GetMove();
+	D3DXVECTOR3 AddMove = { sinf(angle + D3DX_PI) * 10.0f, 0.0f, cosf(angle + D3DX_PI) * 10.0f };
+
+	//移動量の加算
+	Move += AddMove;
+	player->SetMove(Move);
+
+	//インスタンスの取得
+	CGauge_PlayerLife* pGauge = player->GetLifeGauge();
+
+	//体力ゲージに反映
+	if (pGauge != nullptr)
+	{
+		//ゲージに反映
+		pGauge->GetGauge()->AddGauge(-(float)damage);
+	}
+
+	//体力ゲージを設定
+	player->SetLifeGauge(pGauge);
+
+	//SEの設定
+	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_DAMAGE);
+
 	return true;
 }

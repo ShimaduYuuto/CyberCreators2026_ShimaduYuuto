@@ -27,6 +27,18 @@ CEnemyBehavior_Chase::CEnemyBehavior_Chase(CEnemy* enemy)
 //==============================
 void CEnemyBehavior_Chase::Action(CEnemy* enemy)
 {
+	//プレイヤーの方を向く
+	LookAtPlayer(enemy);
+
+	//移動
+	Move(enemy);
+}
+
+//==============================
+//プレイヤーの方向を向く
+//==============================
+void CEnemyBehavior_Chase::LookAtPlayer(CEnemy* enemy)
+{
 	//ゲームシーンのプレイヤーの位置を取得
 	CGame* pGame = nullptr;
 	pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());	//ゲームシーンの取得
@@ -38,30 +50,74 @@ void CEnemyBehavior_Chase::Action(CEnemy* enemy)
 
 	//角度を設定
 	enemy->SetGoalRot({ enemy->GetRot().x, fAngle + D3DX_PI, enemy->GetRot().z });
+}
 
+//==============================
+//移動処理
+//==============================
+void CEnemyBehavior_Chase::Move(CEnemy* enemy)
+{
 	//立っていたら
 	if (enemy->GetOnStand())
 	{
-		//距離の計算
-		D3DXVECTOR3 fLengthPos = PlayerPos - Pos;
-		float fLength = sqrtf(fLengthPos.x * fLengthPos.x + fLengthPos.z * fLengthPos.z);
-
 		//一定範囲内に入ったら攻撃
-		if (fLength < LENGTH_CHANGEATTACK)
+		if (IsNextAction(enemy))
 		{
 			//次のアクションに移行
 			NextAction(enemy);
 		}
 		else
 		{
-			enemy->CCharacter::AddMove({ sinf(fAngle) * VALUE_MOVE, 0.0f, cosf(fAngle) * VALUE_MOVE });
+			//追いかける移動を処理
+			ChaseMove(enemy);
 		}
 	}
 	else
 	{
+		//重力の影響のみ反映
 		enemy->CCharacter::SetMove({ 0.0f, enemy->CCharacter::GetMove().y, 0.0f });
-		
 	}
+}
+
+//==============================
+//次の行動に移行するか
+//==============================
+bool CEnemyBehavior_Chase::IsNextAction(CEnemy* enemy)
+{
+	if (!enemy->GetOnStand()) return false;	//立っていないなら移行しない
+
+	//ゲームシーンのプレイヤーの位置を取得
+	CGame* pGame = nullptr;
+	pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());	//ゲームシーンの取得
+	D3DXVECTOR3 PlayerPos = pGame->GetGamePlayer()->GetPos();			//プレイヤーの位置を取得
+	D3DXVECTOR3 Pos = enemy->GetPos();									//自分の位置を取得
+
+	//距離の計算
+	D3DXVECTOR3 fLengthPos = PlayerPos - Pos;
+	float fLength = sqrtf(fLengthPos.x * fLengthPos.x + fLengthPos.z * fLengthPos.z);
+
+	//範囲外なら抜ける
+	if (fLength > LENGTH_CHANGEATTACK) return false;
+
+	//範囲内なら移行
+	return true;
+}
+
+//==============================
+//追いかける移動の処理
+//==============================
+void CEnemyBehavior_Chase::ChaseMove(CEnemy* enemy)
+{
+	//ゲームシーンのプレイヤーの位置を取得
+	CGame* pGame = nullptr;
+	pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());	//ゲームシーンの取得
+	D3DXVECTOR3 PlayerPos = pGame->GetGamePlayer()->GetPos();			//プレイヤーの位置を取得
+	D3DXVECTOR3 Pos = enemy->GetPos();									//自分の位置を取得
+
+	//プレイヤーとの角度を算出
+	float fAngle = atan2f(PlayerPos.x - Pos.x, PlayerPos.z - Pos.z);//対角線の角度を算出
+
+	enemy->CCharacter::AddMove({ sinf(fAngle) * VALUE_MOVE, 0.0f, cosf(fAngle) * VALUE_MOVE });
 }
 
 //===========================
@@ -79,6 +135,7 @@ CEnemyBehavior_Attack::CEnemyBehavior_Attack(CEnemy* enemy) :m_pAttack(nullptr),
 		m_pAttack = new CAttack();
 	}
 
+	//攻撃中は当たり判定を行わない
 	enemy->SetCollisionProcess(false);
 }
 

@@ -37,25 +37,35 @@ void CParticle_Spawn::Update()
 	//一定間隔ごとにパーティクルを生成
 	m_nCount++;
 
+	//インターバルを終えたら生成
 	if (m_nCount >= m_Info.nCreateInterval)
 	{
-		CParticle* pParticle = CParticle::Create(m_Pos);
-		pParticle->SetMaxLife(m_Info.nParticleLife);
-		pParticle->SetNormalSize(m_Info.fParticleSize);
-		pParticle->SetAttenuationValue(m_Info.fAttenuationValue);
-		pParticle->SetColor(m_Info.Color);
+		//パーティクルの生成
+		CreateParticle();
 
-		std::random_device rd;		// シード生成器
-		std::mt19937 gen(rd());		// メルセンヌ・ツイスタ乱数エンジン
-
-		// 整数型の一様分布を指定
-		std::uniform_int_distribution<> dist(-314, 314); // -314～314の範囲
-		float fRandom = dist(gen) * 0.01f;
-
-		pParticle->SetMove({ sinf(fRandom) * m_Info.fMoveValue, 0.0f, cosf(fRandom) * m_Info.fMoveValue });
-
+		//カウントを初期化
 		m_nCount = 0;
 	}
+}
+
+//============================
+//パーティクルの生成
+//============================
+void CParticle_Spawn::CreateParticle()
+{
+	//パラメータの設定
+	CParticle* pParticle = CParticle::Create(m_Pos);			//生成
+	pParticle->SetMaxLife(m_Info.nParticleLife);				//寿命
+	pParticle->SetNormalSize(m_Info.fParticleSize);				//サイズ
+	pParticle->SetAttenuationValue(m_Info.fAttenuationValue);	//減衰量
+	pParticle->SetColor(m_Info.Color);							//色
+
+	// -314～314の範囲
+	float fRandom = CManager::GetInstance()->GetRundom(-314, 314) * 0.01f;
+
+	//移動量の設定
+	pParticle->SetMove({ sinf(fRandom) * m_Info.fMoveValue, 0.0f, cosf(fRandom) * m_Info.fMoveValue });
+
 }
 
 //============================

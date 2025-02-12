@@ -26,8 +26,9 @@ CEnemyBehavior_Chase000::CEnemyBehavior_Chase000(CEnemy* enemy) : CEnemyBehavior
 //====================================
 void CEnemyBehavior_Chase000::Action(CEnemy* enemy)
 {
+	//アクション
 	CEnemyBehavior_Chase::Action(enemy);
-};	//アクション
+};	
 
 //====================================
 //次の行動を設定

@@ -38,8 +38,8 @@ CBarrier::~CBarrier()
 //============================
 HRESULT CBarrier::Init()
 {
-	CObject3D::Init();
-	CObject3D::SetSize(SIZE, CObject3D::TYPE_WALL);
+	CObject3D::Init();								//基底の初期化
+	CObject3D::SetSize(SIZE, CObject3D::TYPE_WALL);	//ポリゴンサイズの設定
 	return S_OK;
 }
 
@@ -64,7 +64,7 @@ void CBarrier::Update()
 		UV.y * m_Anim.GetTextureCount().nVerticalAnimCount,
 		UV.y * (m_Anim.GetTextureCount().nVerticalAnimCount + 1));
 
-	CObject3D::Update();
+	CObject3D::Update();	//基底の更新
 }
 
 //============================

@@ -12,6 +12,7 @@
 //定数
 const D3DXVECTOR3 CParticle_Rush::SIZE = { 50.0f, 50.0f, 0.0f };
 const std::string CParticle_Rush::TEXTUREPATH = "data\\TEXTURE\\effect000.jpg";
+const D3DXCOLOR CParticle_Rush::COLOR = { 0.3f, 0.1f, 0.1f, 0.5f };
 
 //============================
 //パーティクルのコンストラクタ
@@ -35,10 +36,13 @@ CParticle_Rush::~CParticle_Rush()
 //============================
 HRESULT CParticle_Rush::Init()
 {
+	//初期化
 	CParticle::Init();
-	SetColor(D3DXCOLOR(0.3f, 0.1f, 0.1f, 0.5f));
-	SetMaxLife(MAX_LIFE);
-	SetNormalSize(5.0f);
+
+	//パラメータの設定
+	SetColor(COLOR);			//色
+	SetMaxLife(MAX_LIFE);		//寿命
+	SetNormalSize(NORMAL_SIZE);	//サイズ
 	return S_OK;
 }
 

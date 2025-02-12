@@ -56,6 +56,7 @@ void CEffect_Explosion::Uninit()
 //============================
 void CEffect_Explosion::Update()
 {
+	//ƒTƒCƒY‚Ì”{—¦‚ğ‘‰Á
 	m_fSizeRate += 0.01f;
 
 	//”{—¦‚Ìİ’è

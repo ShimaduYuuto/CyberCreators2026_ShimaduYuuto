@@ -116,67 +116,73 @@ void CFade::Uninit()
 void CFade::Update()
 {
 	//フェードが終わっていなかったら
-	if (!m_bEndFade)
+	if (m_bEndFade)
 	{
-		//フェードの状態によって処理を変更
-		switch (m_FadeState)
+		return;
+	}
+
+	//フェードの状態によって処理を変更
+	switch (m_FadeState)
+	{
+	case FADE_NONE:	//何もなし
+		break;
+
+	case FADE_OUT:	//フェードアウト
+
+		//透明度が最大じゃないなら
+		if (m_fAlpha > 1.0f)
 		{
-		case FADE_NONE:	//何もなし
-			break;
-
-		case FADE_OUT:	//フェードアウト
-
-			//透明度が最大じゃないなら
-			if (m_fAlpha <= 1.0f)
-			{
-				//α値を増加
-				m_fAlpha += 1.0f / (float)FADE_TIME;
-
-				//α値の設定
-				SetAlpha(m_fAlpha);
-
-				//透明度が最大になったら
-				if (m_fAlpha >= 1.0f)
-				{
-					//最大値に補正
-					m_fAlpha = 1.0f;
-
-					//シーンの設定
-					CManager::GetInstance()->SetScene(m_Mode);
-					CManager::GetInstance()->GetScene()->Init();
-
-					//フェードインの処理に移る
-					m_FadeState = FADE_IN;
-					
-				}
-			}
-
-			break;
-
-		case FADE_IN:	//フェードイン
-
-			//透明度が0.0fじゃないなら
-			if (m_fAlpha >= 0.0f)
-			{
-				//α値を増加
-				m_fAlpha -= 1.0f / (float)FADE_TIME;
-
-				//α値の設定
-				SetAlpha(m_fAlpha);
-
-				//透明度が0.0f以下になったら
-				if (m_fAlpha <= 0.0f)
-				{
-					//最小値に補正
-					m_fAlpha = 0.0f;
-
-					//フェードインの処理に移る
-					m_FadeState = FADE_NONE;
-					m_bEndFade = true;	//処理が終わった判定に
-				}
-			}
 			break;
 		}
+
+		//α値を増加
+		m_fAlpha += 1.0f / (float)FADE_TIME;
+
+		//α値の設定
+		SetAlpha(m_fAlpha);
+
+		//透明度が最大になったら
+		if (m_fAlpha >= 1.0f)
+		{
+			//最大値に補正
+			m_fAlpha = 1.0f;
+
+			//シーンの設定
+			CManager::GetInstance()->SetScene(m_Mode);
+			CManager::GetInstance()->GetScene()->Init();
+
+			//フェードインの処理に移る
+			m_FadeState = FADE_IN;
+
+		}
+
+		break;
+
+	case FADE_IN:	//フェードイン
+
+		//透明度が0.0fじゃないなら
+		if (m_fAlpha < 0.0f)
+		{
+			break;
+		}
+
+		//α値を増加
+		m_fAlpha -= 1.0f / (float)FADE_TIME;
+
+		//α値の設定
+		SetAlpha(m_fAlpha);
+
+		//透明度が0.0f以下になったら
+		if (m_fAlpha <= 0.0f)
+		{
+			//最小値に補正
+			m_fAlpha = 0.0f;
+
+			//フェードインの処理に移る
+			m_FadeState = FADE_NONE;
+			m_bEndFade = true;	//処理が終わった判定に
+		}
+		break;
 	}
 }
 

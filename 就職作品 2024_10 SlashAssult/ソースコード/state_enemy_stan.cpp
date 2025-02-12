@@ -14,7 +14,7 @@
 //====================================
 //コンストラクタ
 //====================================
-CState_Enemy_Stan::CState_Enemy_Stan()
+CState_Enemy_Stan::CState_Enemy_Stan(CEnemy* enemy) : CState_Enemy(enemy)
 {
 	//初期アクション
 	SetAction(new CEnemyBehavior);
@@ -30,35 +30,14 @@ void CState_Enemy_Stan::UpdateState(CEnemy* enemy)
 	float fCount{ GetStateCount() };//カウントの取得
 
 	//カウントアップ
-	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();	//ゲームシーンの取得
-	fCount += pGame->GetTime()->GetValue<float>(1.0f);			//時間に応じてカウントアップ
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());	//ゲームシーンの取得
+	fCount += pGame->GetTime()->GetValue<float>(1.0f);							//時間に応じてカウントアップ
 
 	//他の敵との当たり判定
 	EnemyCollision(enemy);
 
-	//各ギミックとの当たり判定
-	for (auto& iter : pGame->GetGimmickManager()->GetList())
-	{
-		//位置の取得
-		D3DXVECTOR3 Pos = iter->GetCollision()->GetPos();
-		D3DXVECTOR3 EnemyPos = enemy->GetCollision()->GetPos();
-
-		//距離を計算
-		float fLength = sqrtf((EnemyPos.x - Pos.x) * (EnemyPos.x - Pos.x) + (EnemyPos.z - Pos.z) * (EnemyPos.z - Pos.z));
-		float fTotalRadius = iter->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius();
-
-		//範囲内の確認
-		if (fLength < fTotalRadius)
-		{
-			//樽の当たらない位置に補正
-			float fAngle = atan2f(Pos.x - EnemyPos.x, Pos.z - EnemyPos.z);//対角線の角度を算出
-
-			//円の内側に補正
-			enemy->SetPos(D3DXVECTOR3(sinf(fAngle + D3DX_PI) * fTotalRadius + Pos.x,
-				enemy->GetPos().y,
-				cosf(fAngle + D3DX_PI) * fTotalRadius + Pos.z));
-		}
-	}
+	//ギミックとの当たり判定
+	UpdateGimmickCollison(enemy);
 
 	//カウントが周り切ったら状態を切り替える
 	if (fCount >= fEndTime)

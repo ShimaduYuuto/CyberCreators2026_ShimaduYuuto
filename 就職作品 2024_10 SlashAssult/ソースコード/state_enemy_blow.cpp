@@ -16,21 +16,13 @@
 //====================================
 //コンストラクタ
 //====================================
-CState_Enemy_Blow::CState_Enemy_Blow()
-{
-	//初期アクション
-	SetAction(new CEnemyBehavior());
-}
-
-//====================================
-//コンストラクタ
-//====================================
 CState_Enemy_Blow::CState_Enemy_Blow(CEnemy* enemy)
 {
 	//初期アクション
 	SetAction(new CEnemyBehavior());
 
-	enemy->SetCollisionProcess(true);
+	//設定
+	enemy->SetCollisionProcess(true);	//当たり判定の処理を行う
 }
 
 //====================================
@@ -39,33 +31,10 @@ CState_Enemy_Blow::CState_Enemy_Blow(CEnemy* enemy)
 void CState_Enemy_Blow::UpdateState(CEnemy* enemy)
 {
 	//ゲームシーンの取得
-	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
-	//エリアの確認
-	if (CBattleAreaManager::GetInstance()->GetCurrentBattleArea() != nullptr)
-	{
-		//壁に触れていたら
-		if (CBattleAreaManager::GetInstance()->GetCurrentBattleArea()->GetWall()->GetHit(enemy->GetPos(), enemy->GetSizeRadius()))
-		{
-			//連続じゃないなら張り付く
-			if (!enemy->GetEnteredStick())
-			{
-				//張り付き状態に変更
-				enemy->ChangeStickState();
-
-				//カメラを揺らす
-				CManager::GetInstance()->GetCamera()->SetShake(5, 15);	//ヒット時カメラを揺らす
-			}
-			else
-			{
-				//反射
-				enemy->SetBlowValue(enemy->GetBlowValue() * -1.0f);
-				enemy->SetEnableGravity(true);
-				enemy->SetEnteredStick(false);
-				pGame->GetLockon()->Erase(enemy);
-			}
-		}
-	}
+	//壁にヒットしたか確認
+	CheckHitWall(enemy);
 
 	//各ギミックとの当たり判定
 	for (auto& iter : pGame->GetGimmickManager()->GetList())
@@ -80,6 +49,7 @@ void CState_Enemy_Blow::UpdateState(CEnemy* enemy)
 		//範囲内の確認
 		if (fLength < iter->GetCollision()->GetRadius() + enemy->GetCollision()->GetRadius())
 		{
+			//ギミックの作動
 			iter->GimmickActivation();
 		}
 	}
@@ -94,5 +64,38 @@ void CState_Enemy_Blow::UpdateState(CEnemy* enemy)
 			enemy->StateReset();
 			enemy->SetBlowValue({0.0f, 0.0f, 0.0f});
 		}
+	}
+}
+
+//====================================
+//壁との当たり判定を確認
+//====================================
+void CState_Enemy_Blow::CheckHitWall(CEnemy* enemy)
+{
+	//エリアの確認
+	if (CBattleAreaManager::GetInstance()->GetCurrentBattleArea() == nullptr) return;
+	
+	//壁に触れていたら
+	if (!CBattleAreaManager::GetInstance()->GetCurrentBattleArea()->GetWall()->GetHit(enemy->GetPos(), enemy->GetSizeRadius())) return;
+
+	//ゲームシーンの取得
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+
+	//連続じゃないなら張り付く
+	if (!enemy->GetEnteredStick())
+	{
+		//張り付き状態に変更
+		enemy->ChangeStickState();
+
+		//カメラを揺らす
+		CManager::GetInstance()->GetCamera()->SetShake(5, 15);	//ヒット時カメラを揺らす
+	}
+	else
+	{
+		//反射
+		enemy->SetBlowValue(enemy->GetBlowValue() * -1.0f);	//反対に吹き飛ばし、張り付きをはがす
+		enemy->SetEnableGravity(true);						//重力を受ける
+		enemy->SetEnteredStick(false);						//張り付いていない状態にする
+		pGame->GetLockon()->Erase(enemy);					//ロックオン対象から削除
 	}
 }

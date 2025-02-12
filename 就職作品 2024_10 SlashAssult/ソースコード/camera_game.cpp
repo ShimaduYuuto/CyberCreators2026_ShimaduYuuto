@@ -41,6 +41,7 @@ HRESULT CCamera_Game::Init()
 	D3DXVECTOR3 Rot = GetRot();
 	float fLength = GetLength();
 
+	//Ž‹“_‚ÌŠp“xŒvŽZ
 	Rot.y = atan2f(PosR.x - PosV.x, PosR.z - PosV.z);
 	Rot.x = D3DX_PI * -0.1f;
 	fLength = LENGTH_NORMAL;
@@ -138,13 +139,6 @@ void CCamera_Game::Update()
 			fLength = LENGTH_NORMAL;
 		}
 	}
-
-	/*fLength += 0.03f * fLength;
-
-	if (fLength > LENGTH_NORMAL)
-	{
-		fLength = LENGTH_NORMAL;
-	}*/
 
 	PosV.y = -sinf(Rot.x) * fLength;
 	PosV.x = sinf(Rot.y + D3DX_PI) * cosf(Rot.x) * fLength;

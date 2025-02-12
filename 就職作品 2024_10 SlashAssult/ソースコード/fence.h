@@ -21,6 +21,11 @@ public:
 
 	//•`‰æ
 	void Draw() override;
+
+private:
+
+	//ŠÖ”
+	bool IsDraw();	//•`‰æ‚·‚é‚©
 };
 
 #endif

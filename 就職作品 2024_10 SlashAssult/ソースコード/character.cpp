@@ -65,7 +65,7 @@ HRESULT CCharacter::Init()
 	m_nMotionCount = 0;
 
 	//âeÇÃê∂ê¨
-	m_pShadow = CShadow::Create(&GetPos(), 30.0f);
+	m_pShadow = CShadow::Create(&GetPos(), SIZE_RADIUS);
 
 	return S_OK;
 }

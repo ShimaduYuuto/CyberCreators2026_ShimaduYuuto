@@ -15,9 +15,9 @@
 //====================================
 CState_Enemy_Normal::CState_Enemy_Normal(CEnemy* enemy)
 {
-	//初期アクション
-	enemy->SetEnableGravity(true);
-	enemy->SetCollisionProcess(true);
+	//設定
+	enemy->SetEnableGravity(true);		//重力の影響を受ける
+	enemy->SetCollisionProcess(true);	//当たり判定を行う
 }
 
 //====================================
@@ -25,9 +25,6 @@ CState_Enemy_Normal::CState_Enemy_Normal(CEnemy* enemy)
 //====================================
 void CState_Enemy_Normal::UpdateState(CEnemy* enemy)
 {
-	//ゲームシーンの取得
-	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
-
 	//他の敵との当たり判定
 	if (enemy->GetCollisionProcess())
 	{

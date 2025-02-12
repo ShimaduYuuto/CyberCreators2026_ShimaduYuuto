@@ -7,12 +7,14 @@
 
 //ヘッダーのインクルード
 #include "state_enemy000.h"
+#include "enemy000.h"
 
 //====================================
 //コンストラクタ
 //====================================
 CState_Enemy000_Stick::CState_Enemy000_Stick(CEnemy* enemy) : CState_Enemy_Stick(enemy)
 {
-	SetEndTime(160);
-	enemy->SetMotion(6);
+	//設定
+	SetEndTime(END_TIME);								//終了時間
+	enemy->SetMotion(CEnemy000::ENEMY000MOTION_STICK);	//モーション
 }

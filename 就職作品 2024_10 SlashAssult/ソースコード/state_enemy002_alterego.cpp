@@ -17,5 +17,6 @@
 //====================================
 CState_Enemy002_AlterEgo_Normal::CState_Enemy002_AlterEgo_Normal(CEnemy* enemy) : CState_Enemy_Normal(enemy)
 {
-	SetAction(new CEnemyBehaviorAlterEgo_ChargeShot(enemy));
+	//設定
+	SetAction(new CEnemyBehaviorAlterEgo_ChargeShot(enemy));	//チャージショットを設定
 };

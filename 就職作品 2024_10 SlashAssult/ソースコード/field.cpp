@@ -269,7 +269,7 @@ bool CField::MeshCollision(D3DXVECTOR3& pos)
 	//インデックスバッファのアンロック
 	m_pIdxBuff->Unlock();
 
-	//高さを返す
+	//当たり判定を返す
 	return bHit;
 }
 
@@ -389,7 +389,7 @@ bool CField::MeshCollision(D3DXVECTOR3& pos, D3DXVECTOR3& rot)
 	//インデックスバッファのアンロック
 	m_pIdxBuff->Unlock();
 
-	//高さを返す
+	//当たり判定を返す
 	return bHit;
 }
 
@@ -503,7 +503,7 @@ D3DXVECTOR3 CField::ConvertMeshPos(D3DXVECTOR3 pos)
 	//インデックスバッファのアンロック
 	m_pIdxBuff->Unlock();
 
-	//高さを返す
+	//当たり判定を返す
 	return pos;
 }
 
@@ -581,7 +581,6 @@ void CField::Draw()
 
 	//テクスチャの設定
 	pDevice->SetTexture(0, pTexture->GetAddress(pTexture->Regist(TEXTUREPATH.c_str())));
-	
 
 	//ポリゴンの描画
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, m_nVertex, 0, m_nPolygon);
@@ -630,6 +629,7 @@ void CField::Load()
 		fread(&m_nIndex, sizeof(int), 1, pFile);	//番号
 		fread(&m_nPolygon, sizeof(int), 1, pFile);	//ポリゴン数
 
+		//バーテックスバッファの生成
 		pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * (m_nVertex),
 			D3DUSAGE_WRITEONLY,
 			FVF_VERTEX_3D,

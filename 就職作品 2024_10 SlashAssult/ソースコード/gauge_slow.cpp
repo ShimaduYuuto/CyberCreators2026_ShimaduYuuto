@@ -54,6 +54,25 @@ void CGauge_Slow::Uninit()
 //============================
 void CGauge_Slow::Update()
 {
+	//ゲージの更新
+	UpdateGauge();
+
+	//オブジェクト2Dの更新
+	CObject2D::Update();
+
+	//0になったら
+	if (GetNowGauge() <= 0)
+	{
+		//破棄
+		CGauge::Uninit();
+	}
+}
+
+//============================
+//ゲージの更新処理
+//============================
+void CGauge_Slow::UpdateGauge()
+{
 	//ゲージの取得
 	float fNowGauge = GetNowGauge();
 	float fRate = 1.0f;
@@ -71,15 +90,6 @@ void CGauge_Slow::Update()
 
 	//ゲージの設定
 	SetNowGauge(fNowGauge);
-
-	//オブジェクト2Dの更新
-	CObject2D::Update();
-
-	//0になったら
-	if (fNowGauge <= 0)
-	{
-		CGauge::Uninit();
-	}
 }
 
 //============================

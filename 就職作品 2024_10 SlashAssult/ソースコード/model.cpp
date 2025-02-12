@@ -22,15 +22,15 @@ CModel* CModel::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, MODEL_TYPE type)
 	//引数のオブジェクトを生成
 	switch (type)
 	{
-	case MODEL_TYPE::MODEL_TYPE_TREE:
+	case MODEL_TYPE::MODEL_TYPE_TREE:	//木
 		pModel = new CTree;
 		break;
 
-	case MODEL_TYPE::MODEL_TYPE_FENCE:
+	case MODEL_TYPE::MODEL_TYPE_FENCE:	//フェンス
 		pModel = new CFence;
 		break;
 
-	case MODEL_TYPE::MODEL_TYPE_VENUE:
+	case MODEL_TYPE::MODEL_TYPE_VENUE:	//サーカス会場
 		pModel = new CVenue;
 		break;
 

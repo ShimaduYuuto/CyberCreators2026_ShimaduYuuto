@@ -44,7 +44,6 @@ public:
 	float GetSizeRadius() { return m_fRadiusSize; }								//取得
 
 	//ダメージ処理
-	//virtual bool SetDamage(int damage);										//設定
 	virtual bool SetDamage(int damage, float angle);							//取得
 
 	//重力を受けるか

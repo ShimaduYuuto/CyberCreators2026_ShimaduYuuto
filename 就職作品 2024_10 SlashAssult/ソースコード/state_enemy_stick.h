@@ -16,8 +16,10 @@ class CState_Enemy_Stick : public CState_Enemy
 {
 public:
 
+	//定数
+	static constexpr int END_TIME{ 120 };	//終了時間
+
 	//メンバ関数
-	CState_Enemy_Stick();					//コンストラクタ
 	CState_Enemy_Stick(CEnemy* enemy);		//コンストラクタ
 	~CState_Enemy_Stick() override  {};		//デストラクタ
 

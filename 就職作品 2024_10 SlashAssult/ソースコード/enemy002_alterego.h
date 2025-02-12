@@ -40,8 +40,9 @@ public:
 	//死亡時の処理
 	void SetCharacterDeath() override;
 
-
 private:
+
+	//変数
 	CEnemyBehavior_AlterEgoAttack* m_pMainEnemyBehavior;	//ボス本体のポインタ
 };
 

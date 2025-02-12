@@ -88,10 +88,13 @@ void CPlayer::Uninit()
 	//ó‘Ô‚ÌÁ‹
 	if (m_pState != nullptr)
 	{
-		//Ÿ‚Ìs“®‚ğíœ
-		if (m_pState->GetBehavior()->GetNextBehavior() != nullptr)
+		if (m_pState->GetBehavior() != nullptr)
 		{
-			delete m_pState->GetBehavior()->GetNextBehavior();
+			//Ÿ‚Ìs“®‚ğíœ
+			if (m_pState->GetBehavior()->GetNextBehavior() != nullptr)
+			{
+				delete m_pState->GetBehavior()->GetNextBehavior();
+			}
 		}
 
 		//Ÿ‚Ìó‘Ô‚ğ”jŠü

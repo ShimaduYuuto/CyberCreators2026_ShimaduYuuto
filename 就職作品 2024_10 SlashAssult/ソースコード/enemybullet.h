@@ -30,6 +30,7 @@ public:
 	static constexpr float CAMERA_SHAKE_VALUE{ 30.0f };	//カメラの揺れる強さ
 	static constexpr float ENEMY_BROW_VALUE{ 80.0f };	//敵が吹き飛ぶ値
 	static constexpr int ENEMY_DAMAGE_VALUE{ 3 };		//敵が与えるダメージ値
+	static constexpr float REFLECTION_SPEED{ 5.0f };	//反射時のスピード
 
 	//メンバ関数
 	CEnemyBullet(int nPriority = 2);				//コンストラクタ
@@ -39,6 +40,7 @@ public:
 	void Update() override;							//更新
 	void Draw() override;							//描画
 	static CEnemyBullet* Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, CEnemyBehavior_ChargeShot* action, CEnemy* enemy);	//生成
+	void HitProcess();								//ヒット時の処理
 
 	//移動量
 	void SetMove(D3DXVECTOR3 move) { m_Move = move; }	//設定
@@ -67,6 +69,10 @@ public:
 	bool IsHitWall();	//壁に当たったか
 
 private:
+
+	//関数
+	void UpdatePos();		//位置の更新
+	void UpdateCollision();	//当たり判定の更新
 
 	//メンバ変数
 	D3DXVECTOR3 m_Move;							//移動量

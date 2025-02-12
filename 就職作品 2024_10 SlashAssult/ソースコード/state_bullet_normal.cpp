@@ -33,14 +33,8 @@ void CState_Bullet_Normal::CheckCollision(CEnemyBullet* bullet)
 		//ƒvƒŒƒCƒ„[‚Éƒ_ƒ[ƒW‚ð—^‚¦‚é
 		if (pGame->GetGamePlayer()->SetDamage(1, fAngle))
 		{
-			//SE‚ÌÝ’è
-			CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_BULLETHIT);	//ƒqƒbƒg‰¹
-
-			//ƒJƒƒ‰‚ð—h‚ç‚·
-			CManager::GetInstance()->GetCamera()->SetShake(CEnemyBullet::CAMERA_SHAKE_FRAME, CEnemyBullet::CAMERA_SHAKE_VALUE);	//ƒqƒbƒgŽžƒJƒƒ‰‚ð—h‚ç‚·
-
-			//’e‚ðÁ‚·
-			bullet->Uninit();
+			//ƒqƒbƒgŽž‚Ìˆ—
+			bullet->HitProcess();
 		}
 	}
 }

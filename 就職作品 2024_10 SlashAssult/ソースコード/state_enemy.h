@@ -46,11 +46,11 @@ public:
 
 private:
 
-	//状態とアクションの更新
+	//関数
 	virtual void UpdateState(CEnemy* enemy);	//状態の更新
 	void UpdateAction(CEnemy*& enemy);			//アクションの処理
 
-	//インスタンス
+	//変数
 	CEnemyBehavior* m_pAction;	//アクション
 	CState_Enemy* m_pNextState;	//次の状態
 };

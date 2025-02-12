@@ -59,6 +59,7 @@ public:
 
 private:
 
+	//•Ï”
 	bool m_bAttacking;	//UŒ‚’†‚©
 };
 

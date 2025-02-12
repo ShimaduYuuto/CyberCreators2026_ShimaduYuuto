@@ -65,6 +65,7 @@ bool CDirection_Boss::TimeUpdate()
 		CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_RUMBLING);
 	}
 
+	//I—¹ŽžŠÔ‚Ìˆ—
 	if (GetCount() == END_TIME)
 	{
 		CManager::GetInstance()->GetSound()->Stop(CSound::SOUND_LABEL_RUMBLING);

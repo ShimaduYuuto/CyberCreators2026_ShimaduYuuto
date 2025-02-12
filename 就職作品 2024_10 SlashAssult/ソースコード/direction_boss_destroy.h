@@ -26,6 +26,8 @@ public:
 	static constexpr int START_SHAKE_FRAME{ 250 };		//揺らし始める時間
 	static constexpr int SHAKE_FRAME{ END_TIME - START_SHAKE_FRAME };	//揺らす時間
 	static constexpr float SHAKE_MAGNITUDE{ 40.0f };	//揺らす値
+	static constexpr float PARTICLE_SPEED{ 10.0f };		//パーティクルの速度
+	static constexpr float PARTICLE_SIZE{ 100.0f };		//パーティクルサイズ
 
 	//ゲームを終了
 	static constexpr int TIME_ENDGAME_FRAME{ 660 };		//ゲームを終える時間
@@ -42,6 +44,9 @@ public:
 	bool TimeUpdate() override;	//更新
 
 private:
+
+	//関数
+	void CreateParticle();	//パーティクルの生成
 
 	CObject2D* m_pDirectionFade;	//演出用のフェード
 	float m_fFadeAlpfa;				//フェードのα値

@@ -38,6 +38,7 @@ public:
 
 private:
 
+	//変数
 	float m_fStateCount;	//状態カウント
 	float m_fEndTime;		//終了時間
 };

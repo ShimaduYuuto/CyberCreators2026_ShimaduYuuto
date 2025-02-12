@@ -17,7 +17,8 @@
 //====================================
 CState_Enemy002_Normal::CState_Enemy002_Normal(CEnemy* enemy) : CState_Enemy_Normal(enemy)
 {
-	SetAction(new CEnemyBehavior_Standby(enemy));
+	//設定
+	SetAction(new CEnemyBehavior_Standby(enemy));	//空のアクション
 };	
 
 //===============================================
@@ -27,12 +28,13 @@ CState_Enemy002_Normal::CState_Enemy002_Normal(CEnemy* enemy) : CState_Enemy_Nor
 //====================================
 //コンストラクタ
 //====================================
-CState_Enemy002_Stan::CState_Enemy002_Stan(CEnemy* enemy) : m_pStanEffect(nullptr)
+CState_Enemy002_Stan::CState_Enemy002_Stan(CEnemy* enemy) : CState_Enemy_Stan(enemy),
+	m_pStanEffect(nullptr)
 {
-	SetAction(new CEnemyBehavior());
-	//enemy->SetMotion(5);
-	SetEndTime(3000);
-	m_pStanEffect = CEffect_Stan::Create({ 0.0f, 40.0f, 0.0f }, &enemy->GetModelParts(1)->GetMtx());
+	//設定
+	SetAction(new CEnemyBehavior());	//空の行動
+	SetEndTime(END_TIME);				//終了時間
+	m_pStanEffect = CEffect_Stan::Create({ 0.0f, 40.0f, 0.0f }, &enemy->GetModelParts(1)->GetMtx());	//エフェクトの生成
 }
 
 //====================================
@@ -40,6 +42,7 @@ CState_Enemy002_Stan::CState_Enemy002_Stan(CEnemy* enemy) : m_pStanEffect(nullpt
 //====================================
 CState_Enemy002_Stan::~CState_Enemy002_Stan()
 {
+	//エフェクトの破棄
 	if (m_pStanEffect != nullptr)
 	{
 		m_pStanEffect->Uninit();
@@ -56,8 +59,9 @@ CState_Enemy002_Stan::~CState_Enemy002_Stan()
 //====================================
 CState_Enemy002_Stick::CState_Enemy002_Stick(CEnemy* enemy) : CState_Enemy_Stick(enemy)
 {
-	SetEndTime(TIME_END);
-	enemy->SetMotion(CEnemy002::ENEMY002MOTION_STICK);
+	//設定
+	SetEndTime(TIME_END);								//終了時間
+	enemy->SetMotion(CEnemy002::ENEMY002MOTION_STICK);	//モーション
 }
 
 //===============================================
@@ -69,8 +73,9 @@ CState_Enemy002_Stick::CState_Enemy002_Stick(CEnemy* enemy) : CState_Enemy_Stick
 //====================================
 CState_Enemy002_Direction::CState_Enemy002_Direction(CEnemy* enemy) : m_nCount(0)
 {
-	SetAction(new CEnemyBehavior_Direction(enemy));
-	SetEndTime(TIME_END);
+	//設定
+	SetAction(new CEnemyBehavior_Direction(enemy));	//演出の行動
+	SetEndTime(TIME_END);							//終了時間
 };
 
 //====================================
@@ -98,5 +103,6 @@ void CState_Enemy002_Direction::UpdateState(CEnemy* enemy)
 //====================================
 CState_Enemy002_Direction_Destroy::CState_Enemy002_Direction_Destroy(CEnemy* enemy)
 {
-	SetAction(new CEnemyBehavior_Direction_Destroy(enemy));
+	//設定
+	SetAction(new CEnemyBehavior_Direction_Destroy(enemy));	//終了時間
 };
