@@ -69,6 +69,7 @@ CEnemyBehavior_Attack001::CEnemyBehavior_Attack001(CEnemy* enemy) : CEnemyBehavi
 //====================================
 void CEnemyBehavior_Attack001::Action(CEnemy* enemy)
 {
+	//Šî’ê‚ÌXV
 	CEnemyBehavior_Attack::Action(enemy);
 }
 

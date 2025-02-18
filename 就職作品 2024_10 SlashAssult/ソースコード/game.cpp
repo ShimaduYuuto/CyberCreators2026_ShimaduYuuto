@@ -32,7 +32,6 @@ const std::string CGame::FILEPATH_MODEL = "data\\FILE\\model.bin";
 CGame::CGame() :
 	m_pPlayer(nullptr),
 	m_pField(nullptr),
-	m_pTime(nullptr),
 	m_pEnemyManager(nullptr),
 	m_pLockon(nullptr),
 	m_pGimmickManager(nullptr),
@@ -78,12 +77,6 @@ HRESULT CGame::Init()
 	if (m_pField == nullptr)
 	{
 		m_pField = CField::Create({ 0.0f, 0.0f, 0.0f });
-	}
-
-	//タイムの生成
-	if (m_pTime == nullptr)
-	{
-		m_pTime = new CTime;
 	}
 
 	//エネミーマネージャーの生成
@@ -168,12 +161,6 @@ void CGame::Uninit()
 	}
 
 	//メモリの破棄
-	if (m_pTime != nullptr)
-	{
-		m_pTime = nullptr;
-	}
-
-	//メモリの破棄
 	if (m_pEnemyManager != nullptr)
 	{
 		m_pEnemyManager = nullptr;
@@ -225,9 +212,6 @@ void CGame::Uninit()
 //============================
 void CGame::Update()
 {
-	//時間の更新
-	m_pTime->Update();
-
 	//戦闘中はクリア時間を加算
 	if (m_bBattle && !m_bDirectioning && !m_bPause)
 	{

@@ -1,6 +1,6 @@
 //======================================
 //
-//	演出の処理[direction_boss.cpp]
+//	撃破演出の処理[direction_boss.cpp]
 //	Author : Yuuto Shimadu
 //
 //======================================
@@ -81,11 +81,12 @@ bool CDirection_Boss_Destroy::TimeUpdate()
 	//パーティクルを出す
 	if (GetCount() >= START_SHAKE_FRAME)
 	{
+		//パーティクルの生成
 		CCamera* pCamera = CManager::GetInstance()->GetCamera();
-		CParticle* pParticle = CParticle::Create(D3DXVECTOR3(pCamera->GetPosR()));
-		float fRandom = CManager::GetInstance()->GetRundom(0, 628) * 0.01f;
-		pParticle->SetMove(D3DXVECTOR3(sinf(fRandom) * 10.0f, cosf(fRandom) * 10.0f, 0.0f));
-		pParticle->SetNormalSize(100.0f);
+		CParticle* pParticle = CParticle::Create(D3DXVECTOR3(pCamera->GetPosR()));								//カメラの注視点に生成
+		float fRandom = CRandom::GetInstance()->GetRandom(0, 628) * 0.01f;										//乱数を取得
+		pParticle->SetMove(D3DXVECTOR3(sinf(fRandom) * PARTICLE_SPEED, cosf(fRandom) * PARTICLE_SPEED, 0.0f));	//移動量を取得
+		pParticle->SetNormalSize(PARTICLE_SIZE);																//サイズの設定
 	}
 
 	//演出用フェードの更新
@@ -121,7 +122,7 @@ void CDirection_Boss_Destroy::CreateParticle()
 	//変数宣言
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();					//カメラを取得
 	CParticle* pParticle = CParticle::Create(D3DXVECTOR3(pCamera->GetPosR()));	//パーティクルの生成
-	float fRandom = CManager::GetInstance()->GetRundom(0, 628) * 0.01f;			//ランダム値の算出(0.0f, 6.28f)
+	float fRandom = CRandom::GetInstance()->GetRandom(0, 628) * 0.01f;			//ランダム値の算出(0.0f, 6.28f)
 
 	//パラメータの設定
 	pParticle->SetMove(D3DXVECTOR3(sinf(fRandom) * PARTICLE_SPEED, cosf(fRandom) * PARTICLE_SPEED, 0.0f));	//移動量の設定

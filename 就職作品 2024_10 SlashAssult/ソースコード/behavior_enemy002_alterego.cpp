@@ -28,5 +28,5 @@ void CEnemyBehaviorAlterEgo_ChargeShot::Action(CEnemy* enemy)
 void CEnemyBehaviorAlterEgo_ChargeShot::NextAction(CEnemy* enemy)
 {
 	SetNextAction(new CEnemyBehaviorAlterEgo_ChargeShot(enemy));	//Ÿ‚Ìs“®‚ğİ’è
-	enemy->Uninit();	//“G‚ğ”jŠü
+	enemy->Uninit();												//“G‚ğ”jŠü
 }

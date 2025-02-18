@@ -1,6 +1,6 @@
 //================================
 //
-//ó‘Ô‚É‰‚¶‚½ˆ—‚ğÀs[state_enemy_damage.cpp]
+//’Êíó‘Ôˆ—‚ğÀs[state_enemy_damage.cpp]
 //Author:yuuto shimadu
 // 
 //================================

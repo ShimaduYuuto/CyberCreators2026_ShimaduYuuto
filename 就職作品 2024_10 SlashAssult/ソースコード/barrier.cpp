@@ -40,6 +40,7 @@ HRESULT CBarrier::Init()
 {
 	CObject3D::Init();								//基底の初期化
 	CObject3D::SetSize(SIZE, CObject3D::TYPE_WALL);	//ポリゴンサイズの設定
+
 	return S_OK;
 }
 
@@ -72,6 +73,7 @@ void CBarrier::Update()
 //============================
 void CBarrier::Draw()
 {
+	//引数のテクスチャを描画
 	CObject3D::Draw(TEXTURE_PATH.c_str());
 }
 

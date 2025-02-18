@@ -46,7 +46,7 @@ HRESULT CModelparts::Init()
 //============================
 void CModelparts::Uninit()
 {
-	//‰Šú‰»
+	//I—¹
 	CObjectX::Uninit();
 }
 

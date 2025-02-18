@@ -18,15 +18,15 @@ const float CCamera::LENGTH_RUSH = LENGTH_NORMAL * 0.7f;	//ラッシュカメラの距離
 //カメラのコンストラクタ
 //============================
 CCamera::CCamera() :
-	m_posV(),			//視点の初期化
-	m_posR(),			//注視点の初期化
+	m_posV(),									//視点の初期化
+	m_posR(),									//注視点の初期化
 	m_vecU(D3DXVECTOR3(0.0f, 1.0f, 0.0f)),		//上ベクトルの初期化
 	m_mtxProjection(),							//プロジェクションマトリックスの初期化
-	m_mtxView(),	
-	m_Viewport(),								//ビューマトリックスの初期化
-	m_fShakeFrameCount(0.0f),
-	m_rot(),
-	m_fLength(0.0f)
+	m_mtxView(),								//ビューマトリックスの初期化
+	m_Viewport(),								//ビューポートの初期化
+	m_fShakeFrameCount(0.0f),					//揺れる時間
+	m_rot(),									//向き
+	m_fLength(0.0f)								//距離
 {
 
 }
@@ -117,7 +117,7 @@ void CCamera::SetCamera()
 		m_fShakeFrameCount--;
 		
 		//揺れの大きさの設定
-		adjust = D3DXVECTOR3(rand() % (int)m_fShakeMagnitude, rand() % (int)m_fShakeMagnitude, 0.0f);
+		adjust = D3DXVECTOR3(CRandom::GetRandom(0.0f, m_fShakeMagnitude), CRandom::GetRandom(0.0f, m_fShakeMagnitude), 0.0f);
 	}
 
 	//カメラの揺れた時の変数

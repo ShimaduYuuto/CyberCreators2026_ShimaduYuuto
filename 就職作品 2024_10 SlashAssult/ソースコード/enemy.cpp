@@ -22,14 +22,13 @@
 //エネミーのコンストラクタ
 //============================
 CEnemy::CEnemy(int nPriority) : 
-	CGame_Character(nPriority),
-	m_EnemyType(),
-	m_pState(nullptr),
-	m_bCollisionProcess(true)
+	CGame_Character(nPriority),	//親のコンストラクタ
+	m_EnemyType(),				//敵の種類
+	m_pState(nullptr),			//状態
+	m_bCollisionProcess(true)	//当たり判定を行うか
 {
 	//敵の種類を設定
 	m_EnemyType = ENEMYTYPE_ENEMY000;
-	SetType(TYPE_ENEMY);	//敵の種類
 
 	//ゲームシーンなら判定
 	if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
@@ -198,23 +197,6 @@ bool CEnemy::SetDamage(int damage, float angle)
 
 	return true;
 }
-
-//============================
-//ダメージの設定
-//============================
-//bool CEnemy::SetDamage(int damage, float rotY)
-//{
-//	//ノックバックの設定
-//	D3DXVECTOR3 Move = {sinf(rotY + D3DX_PI) * VALUE_KNOCKBACK, 0.0f, cosf(rotY + D3DX_PI) * VALUE_KNOCKBACK };
-//
-//	//移動量を設定
-//	CCharacter::AddMove(Move);
-//
-//	//ダメージの設定
-//	CEnemy::SetDamage(damage, rotY);
-//
-//	return true;
-//}
 
 //============================
 //吹き飛ばしてダメージの設定

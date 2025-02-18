@@ -126,7 +126,7 @@ bool CEnemyBehavior_ChargeAttack::CheckAttackHit(CEnemy* enemy)
 	pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());			//ゲームシーンの取得
 	D3DXVECTOR3 PlayerPos = pGame->GetGamePlayer()->GetCollision()->GetPos();	//プレイヤーの当たり判定の位置
 	D3DXVECTOR3 EnemyPos = enemy->GetCollision()->GetPos();						//エネミーの位置を取得
-	D3DXVECTOR3 Distance = PlayerPos - enemy->GetPos();
+	D3DXVECTOR3 Distance = enemy->GetPos() - PlayerPos;
 	float fAngle = atan2f(Distance.x, Distance.z);
 
 	//距離を計算

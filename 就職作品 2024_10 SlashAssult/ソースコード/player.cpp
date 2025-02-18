@@ -30,8 +30,8 @@ CPlayer::CPlayer(int nPriority) : CGame_Character(nPriority),
 	m_pState(nullptr),
 	m_bGuard(false)
 {
+	//状態の設定
 	m_pState = new CState_Player_Normal(this);
-	SetType(TYPE_PLAYER);	//種類の設定
 }
 
 //============================
@@ -61,11 +61,11 @@ HRESULT CPlayer::Init()
 	//ゲージの生成
 	if (m_pLifeGauge == nullptr)
 	{
-		m_pLifeGauge = CGauge_PlayerLife::Create(20);
+		m_pLifeGauge = CGauge_PlayerLife::Create(MAX_LIFE);
 	}
 
 	//仮のライフ設定
-	SetLife(20);
+	SetLife(MAX_LIFE);
 
 	return S_OK;
 }
@@ -173,6 +173,29 @@ void CPlayer::UpdateState()
 //============================
 void CPlayer::CollisionJudge()
 {
+	//結界との当たり判定
+	CollisionBarrier();
+
+	//ギミックとの当たり判定
+	CollisionGimmick();
+
+	//位置を補正
+	if (GetPos().z < 0.0f)
+	{
+		GetPos().z = 0.0f;
+	}
+
+	if (GetPos().z > MAX_DEPTH)
+	{
+		GetPos().z = MAX_DEPTH;
+	}
+}
+
+//============================
+//結界の当たり判定
+//============================
+void CPlayer::CollisionBarrier()
+{
 	//ゲームシーンの取得
 	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
@@ -180,11 +203,20 @@ void CPlayer::CollisionJudge()
 	for (auto itr : pGame->GetBarrierManager()->GetList())
 	{
 		//仮の当たり判定
-		if (GetPos().z + 30.0f >= itr->GetPos().z)
+		if (GetPos().z + GetSizeRadius() >= itr->GetPos().z)
 		{
-			GetPos().z = itr->GetPos().z - 30.0f;
+			GetPos().z = itr->GetPos().z - GetSizeRadius();
 		}
 	}
+}
+
+//============================
+//ギミックの当たり判定
+//============================
+void CPlayer::CollisionGimmick()
+{
+	//ゲームシーンの取得
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 	//各ギミックとの当たり判定
 	for (auto& iter : pGame->GetGimmickManager()->GetList())
@@ -213,17 +245,6 @@ void CPlayer::CollisionJudge()
 				cosf(fAngle + D3DX_PI) * fTotalRadius + GimmickPos.z));
 		}
 	}
-
-	//位置を補正
-	if (GetPos().z < 0.0f)
-	{
-		GetPos().z = 0.0f;
-	}
-
-	if (GetPos().z > 4000.0f)
-	{
-		GetPos().z = 4000.0f;
-	}
 }
 
 //============================
@@ -248,6 +269,7 @@ void CPlayer::Draw()
 	{
 		return;
 	}
+
 	//キャラクタークラスの描画
 	CCharacter::Draw();
 }
@@ -348,7 +370,7 @@ void CPlayer::UpdatePos()
 		}
 
 		//横の当たり判定
-		pos = pGame->GetGameField()->WidthCollision(pos);
+		pos = pGame->GetGameField()->WidthCollision(pos, GetSizeRadius());
 	}
 
 	//移動量を減衰
@@ -369,7 +391,7 @@ void CPlayer::SetKnockBack(int time)
 	//ノックバックの移動量を設定
 	D3DXVECTOR3 Rot = GetRot();
 	D3DXVECTOR3 Move = GetMove();
-	D3DXVECTOR3 AddMove = { sinf(Rot.y) * 10.0f, 0.0f, cosf(Rot.y) * 10.0f };
+	D3DXVECTOR3 AddMove = { sinf(Rot.y) * KNOCKBACK_IMPULSE, 0.0f, cosf(Rot.y) * KNOCKBACK_IMPULSE };
 
 	//移動量の加算
 	Move += AddMove;

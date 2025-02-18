@@ -61,7 +61,7 @@ void CParticle_Spawn::CreateParticle()
 	pParticle->SetColor(m_Info.Color);							//F
 
 	// -314`314‚Ì”ÍˆÍ
-	float fRandom = CManager::GetInstance()->GetRundom(-314, 314) * 0.01f;
+	float fRandom = CRandom::GetInstance()->GetRandom(-314, 314) * 0.01f;
 
 	//ˆÚ“®—Ê‚ÌÝ’è
 	pParticle->SetMove({ sinf(fRandom) * m_Info.fMoveValue, 0.0f, cosf(fRandom) * m_Info.fMoveValue });

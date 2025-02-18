@@ -48,7 +48,6 @@ HRESULT CLight::Init()
 		//ライトの種類を設定
 		m_aLight[nLightCnt].Type = D3DLIGHT_DIRECTIONAL;
 		
-		
 		//ライトの拡散光を設定
 		m_aLight[nLightCnt].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 		

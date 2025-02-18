@@ -1,6 +1,6 @@
 //======================================
 //
-//	Œ‹ŠE‚Ìˆ—[barriermanager.cpp]
+//	Œ‹ŠEŠÇ—‚Ìˆ—[barriermanager.cpp]
 //	Author : Yuuto Shimadu
 //
 //======================================
@@ -99,6 +99,7 @@ void CBarrierManager::Load()
 			fscanf(pFile, "%f", &Pos.y);
 			fscanf(pFile, "%f", &Pos.z);
 
+			//¶¬‚µ‚Ä“o˜^
 			Regist(CBarrier::Create(Pos));
 		}
 	}

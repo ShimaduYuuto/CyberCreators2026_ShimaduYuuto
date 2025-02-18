@@ -24,9 +24,6 @@ CEnemy002_AlterEgo::CEnemy002_AlterEgo() :
 	{
 		CBattleAreaManager::GetInstance()->GetCurrentBattleArea()->AddEnemyNum();
 	}
-
-	//オブジェクトの自動更新はしない
-	//SetUpdateJudge(false);
 }
 
 //============================
@@ -55,7 +52,7 @@ HRESULT CEnemy002_AlterEgo::Init()
 	//ポインタに行動を設定
 	ChangeState(new CState_Enemy002_AlterEgo_Normal(this));
 
-	SetMaterialized(true);
+	//透明に設定
 	SetMaterialized(false);
 
 	return S_OK;
@@ -66,7 +63,7 @@ HRESULT CEnemy002_AlterEgo::Init()
 //============================
 void CEnemy002_AlterEgo::Uninit()
 {
-	//初期化
+	//終了
 	CEnemy002::Uninit();
 }
 
@@ -129,5 +126,6 @@ void CEnemy002_AlterEgo::StateReset()
 //============================
 void CEnemy002_AlterEgo::SetCharacterDeath()
 {
+	//親の死亡処理
 	CEnemy::SetCharacterDeath();
 }

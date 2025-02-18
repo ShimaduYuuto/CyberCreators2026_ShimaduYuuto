@@ -11,25 +11,21 @@
 #include "game.h"
 #include "battleareamanager.h"
 
-//定数の設定
-const float CCharacter::ROTATE_SPEED = 0.2f;	//回転の速度
-const float CCharacter::GRAVITY = 0.6f;			//重力の強さ
-
 //============================
 //キャラクターのコンストラクタ
 //============================
-CCharacter::CCharacter(int nPriority) : CObject(nPriority)
+CCharacter::CCharacter(int nPriority) : CObject(nPriority),
+	m_OldPos { 0.0f, 0.0, 0.0f },		//前回の位置
+	m_Move { 0.0f, 0.0, 0.0f },			//移動量
+	m_GoalRot { 0.0f, 0.0, 0.0f },		//目的の向き
+	m_MotionState(0),					//モーションの初期化
+	m_bChangeMotion(true),				//モーションを切り替えられるか
+	m_fInterpolationCount(0.0f),		//線形補間のカウント
+	m_bInterpolationEnd(true),			//線形補間が終わっているか
+	m_Rot { 0.0f, 0.0, 0.0f },			//向き
+	m_pShadow(nullptr)					//影のポインタ
 {
-	//各パラメータの初期化
-	m_OldPos = {0.0f, 0.0, 0.0f};			//前回の位置
-	m_Move = { 0.0f, 0.0, 0.0f };			//移動量
-	m_GoalRot = { 0.0f, 0.0, 0.0f };		//目的の向き
-	m_MotionState = 0;						//モーションの初期化
-	m_bChangeMotion = true;					//モーションを切り替えられるか
-	m_fInterpolationCount = 0.0f;			//線形補間のカウント
-	m_bInterpolationEnd = true;				//線形補間が終わっているか
-	m_Rot = { 0.0f, 0.0, 0.0f };			//向き
-	m_pShadow = nullptr;					//影のポインタ
+	
 }
 
 //============================
@@ -75,19 +71,19 @@ HRESULT CCharacter::Init()
 //============================
 void CCharacter::SetMotionInfo(const char* motionfilename)
 {
-	int nCnt = 0;				// 現在のデータ数
-	char aDataSearch[256];		// データ検索用
-	int nMotionCount = 0;		//モーションのカウント
-	int nKeyCount = 0;			//キーのカウント
-	int nKeySetCount = 0;		//キーセットのカウント
-	int nPartsNum = 0;			//パーツの数
-	char aModelFileName[16][256];	//モデルのファイルネーム
+	int nCnt = 0;								// 現在のデータ数
+	char aDataSearch[MAX_STRING];				// データ検索用
+	int nMotionCount = 0;						//モーションのカウント
+	int nKeyCount = 0;							//キーのカウント
+	int nKeySetCount = 0;						//キーセットのカウント
+	int nPartsNum = 0;							//パーツの数
+	char aModelFileName[MAX_MODEL][MAX_STRING];	//モデルのファイルネーム
 
 	//パーツ情報を読み込む変数
-	D3DXVECTOR3 Pos[16];	//位置
-	D3DXVECTOR3 Rot[16];	//向き
-	int nIndex[16];			//自身の番号
-	int nParentIndex[16];	//親の番号
+	D3DXVECTOR3 Pos[MAX_MODEL];		//位置
+	D3DXVECTOR3 Rot[MAX_MODEL];		//向き
+	int nIndex[MAX_MODEL];			//自身の番号
+	int nParentIndex[MAX_MODEL];	//親の番号
 
 	// ファイルの読み込み
 	FILE* pFile = fopen(motionfilename, "r");
@@ -342,8 +338,9 @@ void CCharacter::SetMotionInfo(const char* motionfilename)
 			m_apModel[i]->SetParent(m_apModel[nParentIndex[i]]);
 		}
 		
-		m_apModel[i]->SetPos(m_Motion[0].KeySet[0].Key[i].pos + m_PartsInfo[i].pos);	//T+Info
-		m_apModel[i]->SetRot(m_Motion[0].KeySet[0].Key[i].rot + m_PartsInfo[i].rot);
+		//パラメータの設定
+		m_apModel[i]->SetPos(m_Motion[0].KeySet[0].Key[i].pos + m_PartsInfo[i].pos);	//位置
+		m_apModel[i]->SetRot(m_Motion[0].KeySet[0].Key[i].rot + m_PartsInfo[i].rot);	//角度
 	}
 }
 
@@ -481,9 +478,9 @@ void CCharacter::SetMotion(int motion)
 	}
 
 	//モーション情報の初期化
-	m_MotionState = motion; //モーションを設定
-	m_nMotionCount = 0;		//モーションのキーを初期化
-	m_fFrameCount = 0;		//モーションフレームを初期化
+	m_MotionState = motion;			 //モーションを設定
+	m_nMotionCount = 0;				//モーションのキーを初期化
+	m_fFrameCount = 0;				//モーションフレームを初期化
 	m_fInterpolationCount = 0.0f;	//線形補間のカウントの初期化
 	m_bInterpolationEnd = false;	//線形保管のフラグを立てる
 
@@ -587,7 +584,7 @@ void CCharacter::UpdateMotion()
 	//フレームのカウントが超えたら修正
 	if (m_fFrameCount > m_Motion[m_MotionState].KeySet[m_nMotionCount].nFrame)
 	{
-		m_fFrameCount = m_Motion[m_MotionState].KeySet[m_nMotionCount].nFrame;
+		m_fFrameCount = static_cast<float>(m_Motion[m_MotionState].KeySet[m_nMotionCount].nFrame);
 	}
 
 	//終わりのフレームになったらカウントを最初からにする
@@ -632,6 +629,7 @@ D3DXVECTOR3 CCharacter::RotCalculation(D3DXVECTOR3 goal, D3DXVECTOR3 current)
 {
 	D3DXVECTOR3 InterpolationRot = goal - current;
 
+	//Xの角度の補正
 	if (InterpolationRot.x > D3DX_PI)
 	{
 		InterpolationRot.x = (-D3DX_PI - current.x) + -(D3DX_PI - goal.x);
@@ -641,6 +639,7 @@ D3DXVECTOR3 CCharacter::RotCalculation(D3DXVECTOR3 goal, D3DXVECTOR3 current)
 		InterpolationRot.x = (D3DX_PI - current.x) + (D3DX_PI + goal.x);
 	}
 
+	//Yの角度の補正
 	if (InterpolationRot.y > D3DX_PI)
 	{
 		InterpolationRot.y = (-D3DX_PI - current.y) + -(D3DX_PI - goal.y);
@@ -650,6 +649,7 @@ D3DXVECTOR3 CCharacter::RotCalculation(D3DXVECTOR3 goal, D3DXVECTOR3 current)
 		InterpolationRot.y = (D3DX_PI - current.y) + (D3DX_PI + goal.y);
 	}
 
+	//Zの角度の補正
 	if (InterpolationRot.z > D3DX_PI)
 	{
 		InterpolationRot.z = (-D3DX_PI - current.z) + -(D3DX_PI - goal.z);

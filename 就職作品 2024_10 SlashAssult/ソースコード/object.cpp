@@ -21,7 +21,6 @@ CObject::CObject(int nPriority) :
 	m_bDeath(false),
 	m_bUpdateJudge(true),
 	m_Pos(),
-	m_Type(),
 	m_pNext(nullptr),
 	m_pPrev(nullptr),
 	m_TagType(TAG_NONE)
@@ -50,7 +49,6 @@ CObject::CObject(int nPriority) :
 	m_pCur[nPriority] = pObj;			//最後尾を更新
 	m_bDeath = false;					//死亡フラグの初期化
 	m_Pos = { NULL, NULL, NULL };		//位置の初期化
-	m_Type = TYPE_NONE;					//種類の初期化
 }
 
 //============================

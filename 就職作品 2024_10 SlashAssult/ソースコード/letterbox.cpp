@@ -13,9 +13,9 @@
 //レターボックスのコンストラクタ
 //============================
 CLetterBox::CLetterBox() :
-	m_pLetterBox(),
-	m_nTime(0),
-	m_nCurrentTime(0)
+	m_pLetterBox(),		//レターボックスのぽインタ
+	m_nTime(0),			//寿命時間
+	m_nCurrentTime(0)	//現在の時間
 {
 	//レターボックスの初期化
 	for (int i = 0; i < NUM_LETTERBOX; i++)
@@ -165,7 +165,7 @@ CLetterBox* CLetterBox::Create(int time)
 	pLetterBox->Init();
 
 	//時間
-	pLetterBox->m_nTime = time + static_cast<float>((TIME_INTERPOLATION * 2.0f));	//補間の時間を追加
+	pLetterBox->m_nTime = time + TIME_INTERPOLATION * 2;	//補間の時間を追加
 
 	return nullptr;
 }

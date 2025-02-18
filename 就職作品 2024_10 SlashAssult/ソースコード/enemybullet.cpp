@@ -20,13 +20,13 @@ const std::string CEnemyBullet::FILEPATH = "data\\MODEL\\enemybullet002.x";
 //コンストラクタ
 //============================
 CEnemyBullet::CEnemyBullet(int nPriority) : CObjectX(nPriority),
-	m_Move(),
-	m_fSizeRate(1.0f),
-	m_bReflection(false),
-	m_bShooting(false),
-	m_pParentAction(nullptr),
-	m_pParentEnemy(nullptr),
-	m_pState(nullptr)
+	m_Move(),					//移動量
+	m_fSizeRate(1.0f),			//サイズ倍率
+	m_bReflection(false),		//反射判定
+	m_bShooting(false),			//撃たれたかの判定
+	m_pParentAction(nullptr),	//親のアクション
+	m_pParentEnemy(nullptr),	//親の敵
+	m_pState(nullptr)			//状態
 {
 	//ゲームシーンなら判定
 	if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)

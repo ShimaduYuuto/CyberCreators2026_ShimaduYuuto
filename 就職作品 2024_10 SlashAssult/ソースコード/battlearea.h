@@ -18,6 +18,7 @@ class CBattleArea
 public:
 
 	static constexpr float RADIUS_ENTEREDAREA{ 400.0f };	//エリアに入ったかを感知する半径
+	static constexpr float RADIUS{ 500.0f };				//半径
 
 	//メンバ関数
 	CBattleArea();		//コンストラクタ

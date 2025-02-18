@@ -28,15 +28,6 @@ public:
 		TAG_MAX,		//列挙の最大
 	}TAG;
 
-	//オブジェクトの種類
-	typedef enum
-	{
-		TYPE_NONE = 0,	//タイプなし
-		TYPE_ENEMY,		//敵
-		TYPE_PLAYER,	//プレイヤー
-		TYPE_MAX,		//最大
-	}TYPE;
-
 	//関数
 	CObject(int nPriority = 3);			//コンストラクタ
 	virtual ~CObject();					//デストラクタ
@@ -55,8 +46,6 @@ public:
 	//パラメーターの設定と取得
 	virtual void SetPos(D3DXVECTOR3 Pos) { m_Pos = Pos; }		//位置の設定
 	D3DXVECTOR3& GetPos() { return m_Pos; }						//位置の取得
-	void SetType(TYPE type) {m_Type = type;}					//種類の設定
-	TYPE GetType() { return m_Type; }							//種類の取得
 	CObject* GetNext() { return m_pNext; }						//次のポインタの取得
 	void SetUpdateJudge(bool judge) { m_bUpdateJudge = judge; }	//更新するかを設定
 	bool GetUpdateJudge() { return m_bUpdateJudge; }			//更新するかを取得
@@ -92,6 +81,8 @@ protected:
 	void Release();							//自分自身の開放
 
 private:
+
+	//変数
 	static int m_nNumAll;					//オブジェクトの総数
 	static CObject* m_pTop[NUM_PRIORITY];	//先頭のオブジェクトポインタ
 	static CObject* m_pCur[NUM_PRIORITY];	//現在（最後尾）のポインタ
@@ -100,7 +91,6 @@ private:
 	bool m_bDeath;							//死亡フラグ
 	int m_nPriority;						//描画優先度
 	D3DXVECTOR3 m_Pos;						//オブジェクトの位置
-	TYPE m_Type;							//オブジェクトの種類
 	bool m_bUpdateJudge;					//オブジェクトを更新するか
 	TAG m_TagType;							//タグの種類
 };

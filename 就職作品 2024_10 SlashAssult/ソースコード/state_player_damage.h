@@ -16,17 +16,15 @@ class CState_Player_Damage : public CState_Player
 {
 public:
 
+	//定数
+	static constexpr int END_TIME{ 30 };	//終了時間
+
 	//メンバ関数
-	CState_Player_Damage() {};					//コンストラクタ
-	CState_Player_Damage(CPlayer* player)
-	{
-		SetEndTime(30);
-	};	//コンストラクタ
-	~CState_Player_Damage() {};					//デストラクタ
+	CState_Player_Damage(CPlayer* player);	//コンストラクタ
+	~CState_Player_Damage() {};				//デストラクタ
 
 	//状態ごとの更新
 	void UpdateState(CPlayer* player) override;				//状態の更新
-	//bool SetDamage(CPlayer* player, int damage, float angle) override;	//ダメージの設定
 };
 
 #endif

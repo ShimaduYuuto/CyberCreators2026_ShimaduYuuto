@@ -18,11 +18,11 @@ const std::string CEnemy002::FILEPATH = "data\\enemy012motion.txt";
 //エネミーのコンストラクタ
 //============================
 CEnemy002::CEnemy002() : 
-	m_bMaterialized(true),
-	m_fCurrentAlpha(1.0f),
-	m_fGoalfAlpha(1.0f),
-	m_fAddAlpha(0.0f),
-	m_bUpdateAlpha(false)
+	m_bMaterialized(true),	//実体化判定
+	m_fCurrentAlpha(1.0f),	//現在のα値
+	m_fGoalfAlpha(1.0f),	//目的のα値
+	m_fAddAlpha(0.0f),		//α値の加算量
+	m_bUpdateAlpha(false)	//α値の更新を行うか
 {
 	
 }
@@ -115,7 +115,7 @@ void CEnemy002::UpdateAlpha()
 	//目的のα値と同じなら抜ける
 	if (m_fCurrentAlpha == m_fGoalfAlpha)
 	{
-		m_bUpdateAlpha = false;
+		m_bUpdateAlpha = false;	//終了判定
 		m_fAddAlpha = 0.0f;
 		return;
 	}
@@ -135,7 +135,7 @@ void CEnemy002::UpdateAlpha()
 		m_fCurrentAlpha = m_fGoalfAlpha;
 	}
 
-	//パーツ数だけ周回
+	//パーツにα値を設定
 	for (auto itr : GetModelPartsVector())
 	{
 		itr->SetAlpha(m_fCurrentAlpha);

@@ -182,68 +182,15 @@ bool CField::MeshCollision(D3DXVECTOR3& pos)
 			continue;
 		}
 
-		//法線ベクトルを格納する変数
-		D3DXVECTOR3 SurfaceNorVec; //面法線のベクトル
-		D3DXVECTOR3 vecNormal; //正規化したベクトル
-		D3DXVECTOR3 vector1; //1つ目のベクトルの保管用
-		D3DXVECTOR3 vector2; //2つ目のベクトルの保管用
-		D3DXVECTOR3 vector3; //3つ目のベクトルの保管用
-		D3DXVECTOR3 playervector1; //1つ目のベクトルの保管用
-		D3DXVECTOR3 playervector2; //2つ目のベクトルの保管用
-		D3DXVECTOR3 playervector3; //3つ目のベクトルの保管用 
-		D3DXVECTOR3 Vec1; //1つ目のベクトルの保管用
-		D3DXVECTOR3 Vec2; //2つ目のベクトルの保管用
-		D3DXVECTOR3 Vec3; //3つ目のベクトルの保管用 
-
-		//インデックスを格納する変数
-		WORD index0 = pIdx[i + 0];
-		WORD index1 = pIdx[i + 1];
-		WORD index2 = pIdx[i + 2];
-
-		//頂点を格納する変数
-		VERTEX_3D* vtx0 = pVtx + index0;
-		VERTEX_3D* vtx1 = pVtx + index1;
-		VERTEX_3D* vtx2 = pVtx + index2;
-
-		//法線ベクトルの算出
-		if ((i & 1) == 0) //偶数
+		//当たり判定の確認
+		if (CheckHit(i, pos, pVtx, pIdx))
 		{
-			//ポリゴンのベクトルを計算
-			vector1 = vtx2->pos - vtx0->pos;
-			vector2 = vtx1->pos - vtx2->pos;
-			vector3 = vtx0->pos - vtx1->pos;
+			//インデックスを格納する変数
+			WORD index0 = pIdx[i + 0];
 
-			//プレイヤーのベクトルを計算
-			playervector1 = pos - vtx0->pos;
-			playervector2 = pos - vtx2->pos;
-			playervector3 = pos - vtx1->pos;
-		}
-		else //奇数
-		{
-			//ポリゴンのベクトルを計算
-			vector1 = vtx1->pos - vtx0->pos;
-			vector2 = vtx2->pos - vtx1->pos;
-			vector3 = vtx0->pos - vtx2->pos;
+			//頂点を格納する変数
+			VERTEX_3D* vtx0 = pVtx + index0;
 
-			//プレイヤーのベクトルを計算
-			playervector1 = pos - vtx0->pos;
-			playervector2 = pos - vtx1->pos;
-			playervector3 = pos - vtx2->pos;
-		}
-
-		//ベクトルの計算
-		D3DXVec3Cross(&Vec1, &playervector1, &vector1);
-		D3DXVec3Cross(&Vec2, &playervector2, &vector2);
-		D3DXVec3Cross(&Vec3, &playervector3, &vector3);
-
-		//ベクトルの正規化
-		D3DXVec3Normalize(&Vec1, &Vec1);
-		D3DXVec3Normalize(&Vec2, &Vec2);
-		D3DXVec3Normalize(&Vec3, &Vec3);
-
-		//ポリゴンの中にいたら色を変化
-		if (Vec1.y >= 0.0f && Vec2.y >= 0.0f && Vec3.y >= 0.0f)
-		{
 			//内積の計算から高さを算出
 			PlayerHeight = MeshIPCluculation(pos - vtx0->pos, m_SurfaceNorVec[nCnt]) + vtx0->pos.y;
 
@@ -303,68 +250,15 @@ bool CField::MeshCollision(D3DXVECTOR3& pos, D3DXVECTOR3& rot)
 			continue;
 		}
 
-		//法線ベクトルを格納する変数
-		D3DXVECTOR3 SurfaceNorVec; //面法線のベクトル
-		D3DXVECTOR3 vecNormal; //正規化したベクトル
-		D3DXVECTOR3 vector1; //1つ目のベクトルの保管用
-		D3DXVECTOR3 vector2; //2つ目のベクトルの保管用
-		D3DXVECTOR3 vector3; //3つ目のベクトルの保管用
-		D3DXVECTOR3 playervector1; //1つ目のベクトルの保管用
-		D3DXVECTOR3 playervector2; //2つ目のベクトルの保管用
-		D3DXVECTOR3 playervector3; //3つ目のベクトルの保管用 
-		D3DXVECTOR3 Vec1; //1つ目のベクトルの保管用
-		D3DXVECTOR3 Vec2; //2つ目のベクトルの保管用
-		D3DXVECTOR3 Vec3; //3つ目のベクトルの保管用 
-
-		//インデックスを格納する変数
-		WORD index0 = pIdx[i + 0];
-		WORD index1 = pIdx[i + 1];
-		WORD index2 = pIdx[i + 2];
-
-		//頂点を格納する変数
-		VERTEX_3D* vtx0 = pVtx + index0;
-		VERTEX_3D* vtx1 = pVtx + index1;
-		VERTEX_3D* vtx2 = pVtx + index2;
-
-		//法線ベクトルの算出
-		if ((i & 1) == 0) //偶数
+		//当たり判定の確認
+		if (CheckHit(i, pos, pVtx, pIdx))
 		{
-			//ポリゴンのベクトルを計算
-			vector1 = vtx2->pos - vtx0->pos;
-			vector2 = vtx1->pos - vtx2->pos;
-			vector3 = vtx0->pos - vtx1->pos;
+			//インデックスを格納する変数
+			WORD index0 = pIdx[i + 0];
 
-			//プレイヤーのベクトルを計算
-			playervector1 = pos - vtx0->pos;
-			playervector2 = pos - vtx2->pos;
-			playervector3 = pos - vtx1->pos;
-		}
-		else //奇数
-		{
-			//ポリゴンのベクトルを計算
-			vector1 = vtx1->pos - vtx0->pos;
-			vector2 = vtx2->pos - vtx1->pos;
-			vector3 = vtx0->pos - vtx2->pos;
+			//頂点を格納する変数
+			VERTEX_3D* vtx0 = pVtx + index0;
 
-			//プレイヤーのベクトルを計算
-			playervector1 = pos - vtx0->pos;
-			playervector2 = pos - vtx1->pos;
-			playervector3 = pos - vtx2->pos;
-		}
-
-		//ベクトルの計算
-		D3DXVec3Cross(&Vec1, &playervector1, &vector1);
-		D3DXVec3Cross(&Vec2, &playervector2, &vector2);
-		D3DXVec3Cross(&Vec3, &playervector3, &vector3);
-
-		//ベクトルの正規化
-		D3DXVec3Normalize(&Vec1, &Vec1);
-		D3DXVec3Normalize(&Vec2, &Vec2);
-		D3DXVec3Normalize(&Vec3, &Vec3);
-
-		//ポリゴンの中にいたら色を変化
-		if (Vec1.y >= 0.0f && Vec2.y >= 0.0f && Vec3.y >= 0.0f)
-		{
 			//内積の計算から高さを算出
 			PlayerHeight = MeshIPCluculation(pos - vtx0->pos, m_SurfaceNorVec[nCnt]) + vtx0->pos.y;
 
@@ -421,68 +315,15 @@ D3DXVECTOR3 CField::ConvertMeshPos(D3DXVECTOR3 pos)
 			continue;
 		}
 
-		//法線ベクトルを格納する変数
-		D3DXVECTOR3 SurfaceNorVec; //面法線のベクトル
-		D3DXVECTOR3 vecNormal; //正規化したベクトル
-		D3DXVECTOR3 vector1; //1つ目のベクトルの保管用
-		D3DXVECTOR3 vector2; //2つ目のベクトルの保管用
-		D3DXVECTOR3 vector3; //3つ目のベクトルの保管用
-		D3DXVECTOR3 playervector1; //1つ目のベクトルの保管用
-		D3DXVECTOR3 playervector2; //2つ目のベクトルの保管用
-		D3DXVECTOR3 playervector3; //3つ目のベクトルの保管用 
-		D3DXVECTOR3 Vec1; //1つ目のベクトルの保管用
-		D3DXVECTOR3 Vec2; //2つ目のベクトルの保管用
-		D3DXVECTOR3 Vec3; //3つ目のベクトルの保管用 
-
-		//インデックスを格納する変数
-		WORD index0 = pIdx[i + 0];
-		WORD index1 = pIdx[i + 1];
-		WORD index2 = pIdx[i + 2];
-
-		//頂点を格納する変数
-		VERTEX_3D* vtx0 = pVtx + index0;
-		VERTEX_3D* vtx1 = pVtx + index1;
-		VERTEX_3D* vtx2 = pVtx + index2;
-
-		//法線ベクトルの算出
-		if ((i & 1) == 0) //偶数
+		//当たり判定の確認
+		if (CheckHit(i, pos, pVtx, pIdx))
 		{
-			//ポリゴンのベクトルを計算
-			vector1 = vtx2->pos - vtx0->pos;
-			vector2 = vtx1->pos - vtx2->pos;
-			vector3 = vtx0->pos - vtx1->pos;
+			//インデックスを格納する変数
+			WORD index0 = pIdx[i + 0];
 
-			//プレイヤーのベクトルを計算
-			playervector1 = pos - vtx0->pos;
-			playervector2 = pos - vtx2->pos;
-			playervector3 = pos - vtx1->pos;
-		}
-		else //奇数
-		{
-			//ポリゴンのベクトルを計算
-			vector1 = vtx1->pos - vtx0->pos;
-			vector2 = vtx2->pos - vtx1->pos;
-			vector3 = vtx0->pos - vtx2->pos;
+			//頂点を格納する変数
+			VERTEX_3D* vtx0 = pVtx + index0;
 
-			//プレイヤーのベクトルを計算
-			playervector1 = pos - vtx0->pos;
-			playervector2 = pos - vtx1->pos;
-			playervector3 = pos - vtx2->pos;
-		}
-
-		//ベクトルの計算
-		D3DXVec3Cross(&Vec1, &playervector1, &vector1);
-		D3DXVec3Cross(&Vec2, &playervector2, &vector2);
-		D3DXVec3Cross(&Vec3, &playervector3, &vector3);
-
-		//ベクトルの正規化
-		D3DXVec3Normalize(&Vec1, &Vec1);
-		D3DXVec3Normalize(&Vec2, &Vec2);
-		D3DXVec3Normalize(&Vec3, &Vec3);
-
-		//ポリゴンの中にいたら色を変化
-		if (Vec1.y >= 0.0f && Vec2.y >= 0.0f && Vec3.y >= 0.0f)
-		{
 			//内積の計算から高さを算出
 			PlayerHeight = MeshIPCluculation(pos - vtx0->pos, m_SurfaceNorVec[nCnt]) + vtx0->pos.y;
 
@@ -508,6 +349,79 @@ D3DXVECTOR3 CField::ConvertMeshPos(D3DXVECTOR3 pos)
 }
 
 //===================================
+//当たり判定の確認
+//===================================
+bool CField::CheckHit(int count, D3DXVECTOR3 pos, VERTEX_3D* vtx, WORD* idx)
+{
+	//法線ベクトルを格納する変数
+	D3DXVECTOR3 SurfaceNorVec;	//面法線のベクトル
+	D3DXVECTOR3 vecNormal;		//正規化したベクトル
+	D3DXVECTOR3 vector1;		//1つ目のベクトルの保管用
+	D3DXVECTOR3 vector2;		//2つ目のベクトルの保管用
+	D3DXVECTOR3 vector3;		//3つ目のベクトルの保管用
+	D3DXVECTOR3 targetvector1;	//1つ目の対象ベクトルの保管用
+	D3DXVECTOR3 targetvector2;	//2つ目の対象ベクトルの保管用
+	D3DXVECTOR3 targetvector3;	//3つ目の対象ベクトルの保管用 
+	D3DXVECTOR3 VecCross1;		//1つ目のベクトルの外積結果
+	D3DXVECTOR3 VecCross2;		//2つ目のベクトルの外積結果
+	D3DXVECTOR3 VecCross3;		//3つ目のベクトルの外積結果 
+
+	//インデックスを格納する変数
+	WORD index0 = idx[count + 0];
+	WORD index1 = idx[count + 1];
+	WORD index2 = idx[count + 2];
+
+	//頂点を格納する変数
+	VERTEX_3D* vtx0 = vtx + index0;
+	VERTEX_3D* vtx1 = vtx + index1;
+	VERTEX_3D* vtx2 = vtx + index2;
+
+	//法線ベクトルの算出
+	if ((count & 1) == 0) //偶数
+	{
+		//ポリゴンのベクトルを計算
+		vector1 = vtx2->pos - vtx0->pos;
+		vector2 = vtx1->pos - vtx2->pos;
+		vector3 = vtx0->pos - vtx1->pos;
+
+		//対象のベクトルを計算
+		targetvector1 = pos - vtx0->pos;
+		targetvector2 = pos - vtx2->pos;
+		targetvector3 = pos - vtx1->pos;
+	}
+	else //奇数
+	{
+		//ポリゴンのベクトルを計算
+		vector1 = vtx1->pos - vtx0->pos;
+		vector2 = vtx2->pos - vtx1->pos;
+		vector3 = vtx0->pos - vtx2->pos;
+
+		//対象のベクトルを計算
+		targetvector1 = pos - vtx0->pos;
+		targetvector2 = pos - vtx1->pos;
+		targetvector3 = pos - vtx2->pos;
+	}
+
+	//ベクトルの計算
+	D3DXVec3Cross(&VecCross1, &targetvector1, &vector1);
+	D3DXVec3Cross(&VecCross2, &targetvector2, &vector2);
+	D3DXVec3Cross(&VecCross3, &targetvector3, &vector3);
+
+	//ベクトルの正規化
+	D3DXVec3Normalize(&VecCross1, &VecCross1);
+	D3DXVec3Normalize(&VecCross2, &VecCross2);
+	D3DXVec3Normalize(&VecCross3, &VecCross3);
+
+	//ポリゴンの中にいたら色を変化
+	if (VecCross1.y >= 0.0f && VecCross2.y >= 0.0f && VecCross3.y >= 0.0f)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+//===================================
 //内積の計算結果を返す
 //===================================
 float CField::MeshIPCluculation(D3DXVECTOR3 vec1, D3DXVECTOR3 vec2)
@@ -525,20 +439,20 @@ float CField::MeshIPCluculation(D3DXVECTOR3 vec1, D3DXVECTOR3 vec2)
 //===================================
 //横の判定
 //===================================
-D3DXVECTOR3 CField::WidthCollision(D3DXVECTOR3 pos)
+D3DXVECTOR3 CField::WidthCollision(D3DXVECTOR3 pos, float radius)
 {
 	//返す用の位置
 	D3DXVECTOR3 Pos = pos;
 
 	//左の判定
-	if (Pos.x < GetPos().x + COLLISION_WIDTH * -0.5f + 30.0f)
+	if (Pos.x < GetPos().x + COLLISION_WIDTH * -0.5f + radius)
 	{
-		Pos.x = GetPos().x + COLLISION_WIDTH * -0.5f + 30.0f;
+		Pos.x = GetPos().x + COLLISION_WIDTH * -0.5f + radius;
 	}
 	//右の判定
-	else if (Pos.x > GetPos().x + COLLISION_WIDTH * 0.5f - 30.0f)
+	else if (Pos.x > GetPos().x + COLLISION_WIDTH * 0.5f - radius)
 	{
-		Pos.x = GetPos().x + COLLISION_WIDTH * 0.5f - 30.0f;
+		Pos.x = GetPos().x + COLLISION_WIDTH * 0.5f - radius;
 	}
 
 	return Pos;

@@ -12,7 +12,6 @@
 #include "scene.h"
 #include "player.h"
 #include "field.h"
-#include "time.h"
 #include "enemymanager.h"
 #include "gimmickmanager.h"
 #include "explosionmanager.h"
@@ -46,7 +45,6 @@ public:
 	//ポインタの取得
 	CPlayer* GetGamePlayer() { if (m_pPlayer == nullptr) { return nullptr; } return m_pPlayer; }								//プレイヤーの取得
 	CField* GetGameField() { if (m_pField == nullptr) { return nullptr; } return m_pField; }									//フィールドの取得
-	CTime* GetTime() { if (m_pTime == nullptr) { return nullptr; } return m_pTime; }											//時間の取得
 	CEnemyManager* GetEnemyManager() { if (m_pEnemyManager == nullptr) { return nullptr; } return m_pEnemyManager; }			//エネミーマネージャーの取得
 	CGimmickManager* GetGimmickManager() { if (m_pGimmickManager == nullptr) { return nullptr; } return m_pGimmickManager; }	//ギミックマネージャーの取得
 	CExplosionManager* GetExplosionManager() { if (m_pExplosionManager == nullptr) { return nullptr; } return m_pExplosionManager; }	//爆発マネージャーの取得
@@ -99,7 +97,6 @@ private:
 
 	CPlayer* m_pPlayer;							//プレイヤー
 	CField* m_pField;							//フィールド
-	CTime* m_pTime;								//タイムクラス
 	CEnemyManager* m_pEnemyManager;				//エネミーマネージャー
 	CGimmickManager* m_pGimmickManager;			//ギミックマネージャー
 	CExplosionManager* m_pExplosionManager;		//爆発マネージャー

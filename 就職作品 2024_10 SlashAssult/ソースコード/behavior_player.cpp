@@ -249,7 +249,7 @@ bool CPlayerBehavior_Move::CheckUpdateStick(bool pressed)
 {
 	float fDiameter = CManager::GetInstance()->GetJoypad()->GetStick().afTplDiameter[CInputJoypad::STICKTYPE_LEFT];	//スティックの倒し具合
 
-	if (pressed) return false;	//キーがすでに押されているなら抜ける
+	if (pressed) return false;				//キーがすでに押されているなら抜ける
 	if (fDiameter > 0.001f) return true;	//スティックが倒れているなら真を返す
 
 	return false;
@@ -354,10 +354,10 @@ CPlayerBehavior_Dash::CPlayerBehavior_Dash(CPlayer* player) :
 	m_DashSpeed()
 {
 	//設定
-	player->SetMotion(CPlayer::PLAYERMOTION_JUMP);
-	player->SetOnStand(false);		//立っていない状態
-	player->SetEnableGravity(false);//重力を受けない
-	player->GetPos().y += 0.01f;
+	player->SetMotion(CPlayer::PLAYERMOTION_JUMP);	//モーション
+	player->SetOnStand(false);						//立っていない状態
+	player->SetEnableGravity(false);				//重力を受けない
+	player->GetPos().y += 0.01f;					//位置を少し上げる
 }
 
 //============================
@@ -373,59 +373,62 @@ void CPlayerBehavior_Dash::Behavior(CPlayer* player)
 		D3DXVECTOR3 move = { 0.0f, 0.0f, 0.0f };
 
 		//ゲームシーンなら判定
-		if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
+		if (CManager::GetInstance()->GetScene()->GetMode() != CManager::GetInstance()->GetScene()->MODE_GAME)
 		{
-			//ゲームシーンの取得
-			CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+			return;
+		}
 
-			//ロックオン相手の確認
-			if (pGame->GetLockon() != nullptr)
+		//ゲームシーンの取得
+		CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+
+		//ロックオン相手の確認
+		if (pGame->GetLockon() == nullptr)
+		{
+			return;
+		}
+
+		if (pGame->GetLockon()->GetTarget() != nullptr)
+		{
+			//ターゲットとの距離を算出
+			D3DXVECTOR3 TagPos = pGame->GetLockon()->GetTarget()->GetPos();
+			D3DXVECTOR3 Length = TagPos - player->GetPos();
+			float fLength = sqrtf((Length.x * Length.x) + (Length.z * Length.z));
+			fLength = D3DXVec3Length(&Length);	//距離を算出
+			float fAngle = atan2f(TagPos.x - player->GetPos().x, TagPos.z - player->GetPos().z);
+
+			//ロックオンの方に向ける
+			player->SetGoalRot({ 0.0f, fAngle + D3DX_PI, 0.0f });
+
+			//敵から離れているならダッシュ
+			if (fLength > STOP_LENGYH)
 			{
-				if (pGame->GetLockon()->GetTarget() != nullptr)
+				//初めて通るなら速度を算出
+				if (m_bFirst)
 				{
-					//ターゲットとの距離を算出
-					D3DXVECTOR3 TagPos = pGame->GetLockon()->GetTarget()->GetPos();
-					D3DXVECTOR3 Length = TagPos - player->GetPos();
-					float fLength = sqrtf((Length.x * Length.x) + (Length.z * Length.z));
-					fLength = D3DXVec3Length(&Length);	//距離を算出
-					float fAngle = atan2f(TagPos.x - player->GetPos().x, TagPos.z - player->GetPos().z);
-
-					//ロックオンの方に向ける
-					player->SetGoalRot({ 0.0f, fAngle + D3DX_PI, 0.0f });
-
-					//敵から離れているならダッシュ
-					if (fLength > STOP_LENGYH)
-					{
-						//初めて通るなら速度を算出
-						if (m_bFirst)
-						{
-							//線形補間の値を算出
-							m_DashSpeed = Length * RATIO_LINEAR_INTERPOLATION;
-							m_bFirst = false;
-						}
-						//ターゲットにダッシュ
-						move.x = m_DashSpeed.x;
-						move.y = m_DashSpeed.y;
-						move.z = m_DashSpeed.z;
-
-						//effect
-						CEffect_RunSmoke::Create(player->GetPos());
-					}
-					
-					//止まる距離になったら攻撃
-					if (fLength < STOP_LENGYH)
-					{
-						//移動状態にする
-						SetNextBehavior(new CPlayerBehavior_DashAttack000(player));
-					}
+					//線形補間の値を算出
+					m_DashSpeed = Length * RATIO_LINEAR_INTERPOLATION;
+					m_bFirst = false;
 				}
-				else
-				{
-					//移動状態にする
-					SetNextBehavior(new CPlayerBehavior_Move(player));
-				}
-				
+				//ターゲットにダッシュ
+				move.x = m_DashSpeed.x;
+				move.y = m_DashSpeed.y;
+				move.z = m_DashSpeed.z;
+
+				//effect
+				CEffect_RunSmoke::Create(player->GetPos());
 			}
+
+			//止まる距離になったら攻撃
+			if (fLength < STOP_LENGYH)
+			{
+				//移動状態にする
+				SetNextBehavior(new CPlayerBehavior_DashAttack000(player));
+			}
+		}
+		else
+		{
+			//移動状態にする
+			SetNextBehavior(new CPlayerBehavior_Move(player));
 		}
 
 		//移動量の設定
@@ -447,41 +450,41 @@ void CPlayerBehavior_Dash::Behavior(CPlayer* player)
 //コンストラクタ
 //============================
 CPlayerBehavior_Attack::CPlayerBehavior_Attack() :
-	m_fAttackLength(0.0f),
-	m_HitEnemy(),
-	m_nCancelStartTime(0),
-	m_nCollisionlTime(0),
-	m_nEndCount(0),
-	m_nEndTime(0),
-	m_OffsetPos({0.0f, 0.0f, 0.0f}),
-	m_bCancel(false)
+	m_fAttackLength(0.0f),				//攻撃の距離
+	m_HitEnemy(),						//ヒットした敵のリスト
+	m_nCancelStartTime(0),				//キャンセル時間
+	m_nCollisionlTime(0),				//当たり判定の発生時間
+	m_nEndCount(0),						//終了カウント
+	m_nEndTime(0),						//終了時間
+	m_OffsetPos({0.0f, 0.0f, 0.0f}),	//オフセット位置
+	m_bCancel(false)					//キャンセル判定
 {
 	//パラメータの設定
-	SetEndTime(END_TIME);
-	SetCollisionTime(START_COLLISION);
-	SetCancelTime(START_CANCEL);
-	SetAttackLength(ATTACK_LENGTH);
-	SetOffsetPos(POS_OFFSET);
+	SetEndTime(END_TIME);				//終了時間
+	SetCollisionTime(START_COLLISION);	//当たり判定の時間
+	SetCancelTime(START_CANCEL);		//キャンセル開始時間
+	SetAttackLength(ATTACK_LENGTH);		//攻撃の距離
+	SetOffsetPos(POS_OFFSET);			//オフセット位置
 }
 
 //============================
 //コンストラクタ
 //============================
 CPlayerBehavior_Attack::CPlayerBehavior_Attack(CPlayer* player) :
-	m_fAttackLength(0.0f),
-	m_HitEnemy(),
-	m_nCancelStartTime(0),
-	m_nCollisionlTime(0),
-	m_nEndCount(0),
-	m_nEndTime(0),
-	m_bCancel(false)
+	m_fAttackLength(0.0f),		//攻撃の距離
+	m_HitEnemy(),				//ヒットした敵のリスト
+	m_nCancelStartTime(0),		//キャンセル時間
+	m_nCollisionlTime(0),		//当たり判定の発生時間
+	m_nEndCount(0),				//終了カウント
+	m_nEndTime(0),				//終了時間
+	m_bCancel(false)			//キャンセル判定
 {
 	//パラメータの設定
-	SetEndTime(END_TIME);
-	SetCollisionTime(START_COLLISION);
-	SetCancelTime(START_CANCEL);
-	SetAttackLength(ATTACK_LENGTH);
-	SetOffsetPos(POS_OFFSET);
+	SetEndTime(END_TIME);				//終了時間
+	SetCollisionTime(START_COLLISION);	//当たり判定の時間
+	SetCancelTime(START_CANCEL);		//キャンセル開始時間
+	SetAttackLength(ATTACK_LENGTH);		//攻撃の距離
+	SetOffsetPos(POS_OFFSET);			//オフセット位置
 
 	//敵の方向を向く
 	LookAtEnemy(player);
@@ -843,6 +846,7 @@ void CPlayerBehavior_NormalAttack::Behavior(CPlayer* player)
 //============================
 CPlayerBehavior_NormalAttack000::CPlayerBehavior_NormalAttack000(CPlayer* player) : CPlayerBehavior_NormalAttack(player)
 {
+	//モーションの設定
 	player->SetMotion(CPlayer::PLAYERMOTION_ACTION);
 }
 
@@ -864,6 +868,7 @@ void CPlayerBehavior_NormalAttack000::Cancel(CPlayer* player)
 //============================
 CPlayerBehavior_NormalAttack001::CPlayerBehavior_NormalAttack001(CPlayer* player) : CPlayerBehavior_NormalAttack(player)
 {
+	//モーションの設定
 	player->SetMotion(CPlayer::PLAYERMOTION_ACTION001);
 }
 
@@ -884,11 +889,11 @@ void CPlayerBehavior_NormalAttack001::Cancel(CPlayer* player)
 //コンストラクタ
 //============================
 CPlayerBehavior_NormalAttack002::CPlayerBehavior_NormalAttack002(CPlayer* player) : CPlayerBehavior_NormalAttack(player),
-	m_bChargeEnd(false),
-	m_fChargeRate(0.5f), 
-	m_fChargeAcceleration(0.0f),
-	m_nCancelCount(0),
-	m_pEffect(nullptr)
+	m_bChargeEnd(false),			//チャージ終了フラグ
+	m_fChargeRate(0.5f),			//チャージ倍率
+	m_fChargeAcceleration(0.0f),	//チャージ加速度
+	m_nCancelCount(0),				//キャンセルカウント
+	m_pEffect(nullptr)				//エフェクトのポインタ
 {
 	//モーションの設定
 	player->SetMotion(player->PLAYERMOTION_ATTACKCHARGE);
@@ -1048,6 +1053,7 @@ void CPlayerBehavior_Arial000::Cancel(CPlayer* player)
 //============================
 void CPlayerBehavior_Arial000::Behavior(CPlayer* player)
 {
+	//攻撃の基底行動
 	CPlayerBehavior_Attack::Behavior(player);
 }
 

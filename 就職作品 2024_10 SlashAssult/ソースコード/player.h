@@ -22,8 +22,11 @@ class CPlayer : public CGame_Character
 {
 public:
 	//定数
-	static const float DAMAGE_IMPULSE;		//ダメージのノックバック量
-	static const std::string FILEPATH;		//読み込むファイル
+	static constexpr int MAX_LIFE{ 20 };				//最大体力値
+	static const float DAMAGE_IMPULSE;					//ダメージのノックバック量
+	static constexpr float KNOCKBACK_IMPULSE{ 10.0f };	//弾かれ時のノックバック量
+	static const std::string FILEPATH;					//読み込むファイル
+	static constexpr float MAX_DEPTH{ 4000.0f };		//奥行の最大
 	
 	//キーの種類
 	typedef enum
@@ -80,6 +83,8 @@ public:
 private:
 
 	void CollisionJudge();	//コリジョンの判定
+	void CollisionBarrier();//結界の当たり判定
+	void CollisionGimmick();//ギミックの当たり判定
 	void UpdateState();		//状態の更新
 
 	//メンバ変数

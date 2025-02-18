@@ -179,6 +179,7 @@ public:
 	static constexpr int TIME_END_ACTION{ 90 };				//アクションの終わる時間
 	static constexpr int NUM_ALTEREGO{ 3 };					//分身の数
 	static constexpr float LENGTH_ENEMY{ 300.0f };			//敵の距離
+	static constexpr float ADD_RUNDOM{ 0.03f };			//ランダム値の加算量
 
 	
 	//関数

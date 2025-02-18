@@ -16,8 +16,8 @@ const std::string CCollision_View::TEXTURE_PATH = "data\\TEXTURE\\circle000.png"
 //コンストラクタ
 //============================
 CCollision_View::CCollision_View() :
-	m_fRadius(),
-	m_Pos()
+	m_fRadius(),	//半径
+	m_Pos()			//位置
 {
 
 }

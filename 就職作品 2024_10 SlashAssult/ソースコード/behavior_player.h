@@ -187,7 +187,7 @@ public:
 
 	static const int END_TIME{ 40 };			//I—¹‚Ü‚Å‚ÌŠÔ
 	static const int END_MOVE{ 10 };			//ˆÚ“®‚·‚éŠÔ
-	static constexpr float VALUE_MOVE{ 0.8f };	//ˆÚ“®—Ê
+	static constexpr float VALUE_MOVE{ 0.5f };	//ˆÚ“®—Ê
 
 	CPlayerBehavior_NormalAttack() {}	
 	CPlayerBehavior_NormalAttack(CPlayer* player) : CPlayerBehavior_Attack(player)

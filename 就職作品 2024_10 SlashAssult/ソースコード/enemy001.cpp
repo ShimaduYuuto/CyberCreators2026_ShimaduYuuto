@@ -15,13 +15,14 @@
 const std::string CEnemy001::FILEPATH = "data\\enemy011motion.txt";
 const float CEnemy001::MOVE_VALUE = 2.0f;
 const float CEnemy001::STARTATTACK_RANGE = 50.0f;
+const D3DXVECTOR3 CEnemy001::SHIELD_OFFSET = D3DXVECTOR3(-5.0f, 0.0f, 0.0f);
 
 //============================
 //エネミーのコンストラクタ
 //============================
 CEnemy001::CEnemy001() :
-	m_pShield(nullptr),
-	m_bDamageJudge(false)
+	m_pShield(nullptr),		//シールドのポインタ
+	m_bDamageJudge(false)	//ダメージを受けるかの判定
 {
 	
 }
@@ -54,8 +55,8 @@ HRESULT CEnemy001::Init()
 	//盾の生成
 	if (m_pShield == nullptr)
 	{
-		m_pShield = CShield::Create(D3DXVECTOR3(-5.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI * 0.5f, 0.0f));
-		m_pShield->SetParent(GetModelParts(3));
+		m_pShield = CShield::Create(SHIELD_OFFSET, D3DXVECTOR3(0.0f, D3DX_PI * 0.5f, 0.0f));	//生成
+		m_pShield->SetParent(GetModelParts(3));													//手のパーツを親に設定
 	}
 
 	return S_OK;
@@ -100,17 +101,6 @@ void CEnemy001::Draw()
 	//描画
 	CCharacter::Draw();
 }
-
-//============================
-//ダメージの設定
-//============================
-//bool CEnemy001::SetDamage(int damage)
-//{
-//	//ダメージの設定
-//	CEnemy::SetDamage(damage);
-//
-//	return true;
-//}
 
 //============================
 //ダメージの設定

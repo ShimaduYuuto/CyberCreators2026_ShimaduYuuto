@@ -106,13 +106,13 @@ bool CEnemy003::SetDamage(int damage, float angle)
 			//状態の変更
 			ChangeState(new CState_Enemy003_Damage(this));
 
-			//基底の処理
+			//基底のダメージ処理
 			CEnemy::SetDamage(damage, angle);
 		}
 	}
 	else
 	{
-		//基底の処理
+		//基底のダメージ処理
 		CEnemy::SetDamage(damage, angle);
 	}
 

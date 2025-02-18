@@ -18,6 +18,7 @@
 //====================================
 CEnemyBehavior_Chase000::CEnemyBehavior_Chase000(CEnemy* enemy) : CEnemyBehavior_Chase(enemy)
 {
+	//モーションの設定
 	enemy->SetMotion(CEnemy000::ENEMY000MOTION_WALK);
 };
 
@@ -61,6 +62,7 @@ CEnemyBehavior_Attack000::CEnemyBehavior_Attack000(CEnemy* enemy) : CEnemyBehavi
 //====================================
 void CEnemyBehavior_Attack000::Action(CEnemy* enemy)
 {
+	//基底の更新
 	CEnemyBehavior_Attack::Action(enemy);
 }
 
@@ -69,5 +71,6 @@ void CEnemyBehavior_Attack000::Action(CEnemy* enemy)
 //====================================
 void CEnemyBehavior_Attack000::NextAction(CEnemy* enemy)
 {
+	//追いかける行動を設定
 	SetNextAction(new CEnemyBehavior_Chase000(enemy));
 }

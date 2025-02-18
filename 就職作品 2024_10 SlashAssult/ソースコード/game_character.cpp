@@ -116,7 +116,7 @@ void CGame_Character::UpdatePos()
 		CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 		//位置に移動量を加算
-		pos += pGame->GetTime()->GetValue<D3DXVECTOR3>(Move);
+		pos += Move;
 
 		//エリアの確認
 		if (CBattleAreaManager::GetInstance()->GetCurrentBattleArea() != nullptr)
@@ -173,7 +173,7 @@ D3DXVECTOR3 CGame_Character::GravityMove(D3DXVECTOR3 move)
 			//ゲームシーンの取得
 			CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
-			move.y -= pGame->GetTime()->GetValue<float>(GRAVITY);
+			move.y -= GRAVITY;
 		}
 	}
 	else

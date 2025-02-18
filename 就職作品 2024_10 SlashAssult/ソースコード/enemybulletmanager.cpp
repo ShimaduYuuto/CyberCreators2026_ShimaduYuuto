@@ -13,8 +13,9 @@
 //コンストラクタ
 //============================
 CEnemyBulletManager::CEnemyBulletManager() :
-	m_apManager()
+	m_apManager()	//管理している弾のリスト
 {
+	//リストのクリア
 	m_apManager.clear();
 }
 
@@ -39,6 +40,7 @@ HRESULT CEnemyBulletManager::Init()
 //============================
 void CEnemyBulletManager::Uninit()
 {
+	//リストのクリア
 	m_apManager.clear();
 }
 

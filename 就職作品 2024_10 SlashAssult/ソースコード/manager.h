@@ -61,19 +61,20 @@ public:
 	CScene* GetScene();				//シーンの取得
 	void SetScene(CScene::MODE mode);//シーンの設定
 
-	template<typename T>
-	constexpr T GetRundom(T min, T max)
-	{
-		// メルセンヌ・ツイスター法による擬似乱数生成器を、
-		// ハードウェア乱数をシードにして初期化
-		std::random_device seed_gen;
-		std::mt19937 engine(seed_gen());
+	////乱数値を返す(初期化を一度に変更したい)
+	//template<typename T>
+	//constexpr T GetRundom(T min, T max)
+	//{
+	//	// メルセンヌ・ツイスター法による擬似乱数生成器を、
+	//	// ハードウェア乱数をシードにして初期化
+	//	thread_local std::random_device seed_gen;
+	//	thread_local std::mt19937 engine(seed_gen());
 
-		std::uniform_real_distribution<float> Rundom(min, max);
-		T Value = Rundom(engine);
+	//	std::uniform_real_distribution<float> Rundom(min, max);
+	//	T Value = Rundom(engine);
 
-		return Value;
-	}
+	//	return Value;
+	//}
 
 	//FPSの設定と取得
 	void SetFPS(int fps);			//設定

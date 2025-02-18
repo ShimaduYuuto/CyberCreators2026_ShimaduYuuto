@@ -10,6 +10,7 @@
 #define _USEFUL_H_
 
 #include "main.h"
+#include "random.h"
 
 //当たり判定系
 bool JudgeBallCollision(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, float length);	//円の当たり判定(位置、位置、判定する長さ)

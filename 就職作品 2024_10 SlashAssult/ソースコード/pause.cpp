@@ -28,6 +28,7 @@ CPause::CPause() :
 //============================
 CPause::~CPause()
 {
+	//‘I‘ðŽˆ‚Ì”jŠü
 	for (int i = 0; i < CPause_Select::CHOICE_MAX; i++)
 	{
 		if (m_pPauseSelect[i] != nullptr)
@@ -37,6 +38,7 @@ CPause::~CPause()
 		}
 	}
 
+	//”wŒi‚Ì”jŠü
 	if (m_pPauseBg != nullptr)
 	{
 		m_pPauseBg->Uninit();
@@ -58,6 +60,7 @@ HRESULT CPause::Init()
 		m_pPauseSelect[i] = CPause_Select::Create((CPause_Select::CHOICE)i, D3DXVECTOR3(SCREEN_WIDTH * 0.5f, 250.0f + (SCREEN_HEIGHT * 0.2f) * i, 0.0f));
 		m_pPauseSelect[i]->SetColor(D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f));
 
+		//‘I‘ð‚µ‚Ä‚¢‚éUI‚ÌF‚ð•ÏX
 		if (i == m_nSelect)
 		{
 			m_pPauseSelect[i]->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));

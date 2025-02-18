@@ -43,11 +43,12 @@ HRESULT CRank::Init()
 
 	//時間からランクを設定
 	int nRank = CClearTime::GetInstance()->GetTime() - TIME_RANKS;
-	if (nRank < 0) { nRank = 0; }	//自然数に補正
 
-	nRank = nRank / TIME_CARRYUP;
-	if (nRank > NUM_RANK - 1) { nRank = NUM_RANK - 1; }
-	float fTextureU = 1.0f / NUM_RANK;
+	if (nRank < 0) { nRank = 0; }	//自然数に補正
+	nRank = nRank / TIME_CARRYUP;	//小数点を切り捨て
+
+	if (nRank > NUM_RANK - 1) { nRank = NUM_RANK - 1; }	//最低値を下回ったら補正
+	float fTextureU = 1.0f / NUM_RANK;					//U座標を算出
 
 	SetTextureUV(fTextureU * nRank, fTextureU * (nRank + 1), 0.0f, 1.0f);	//UV座標
 

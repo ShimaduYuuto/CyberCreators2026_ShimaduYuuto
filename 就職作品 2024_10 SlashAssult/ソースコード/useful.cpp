@@ -97,7 +97,7 @@ bool TriggerDown()
 bool TriggerRight()
 {
     if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_RIGHT)) return true;					//キーボード
-    if (CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_RIGHT)) return true;		//ジョイパッド
+    if (CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_RIGHT)) return true;	//ジョイパッド
 
     return false;
 }

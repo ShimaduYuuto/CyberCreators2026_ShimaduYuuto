@@ -23,6 +23,7 @@ public:
 	static const float MOVE_VALUE;			//移動量
 	static const float STARTATTACK_RANGE;	//攻撃を始める範囲
 	static constexpr int LIFE{ 10 };		//体力
+	static const D3DXVECTOR3 SHIELD_OFFSET;	//縦のオフセット
 
 	//敵のモーション
 	typedef enum
@@ -93,6 +94,7 @@ public:
 
 private:
 
+	//変数
 	CShield* m_pShield;	//盾のインスタンス
 	bool m_bDamageJudge;//ダメージを受けるかの判定
 };

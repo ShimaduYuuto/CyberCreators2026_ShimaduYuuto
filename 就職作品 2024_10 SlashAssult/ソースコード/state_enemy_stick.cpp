@@ -1,6 +1,6 @@
 //================================
 //
-//状態に応じた処理を実行[state_enemy_stick.cpp]
+//貼り付け状態処理を実行[state_enemy_stick.cpp]
 //Author:yuuto shimadu
 // 
 //================================
@@ -44,7 +44,7 @@ void CState_Enemy_Stick::UpdateState(CEnemy* enemy)
 
 	//カウントアップ
 	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());	//ゲームシーンの取得
-	fCount += pGame->GetTime()->GetValue<float>(1.0f);							//時間に応じてカウントアップ
+	fCount++;																	//時間に応じてカウントアップ
 
 	//カウントが周り切ったら状態を切り替える
 	if (fCount >= fEndTime)

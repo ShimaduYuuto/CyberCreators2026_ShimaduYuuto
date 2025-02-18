@@ -96,7 +96,7 @@ void CCamera_Game::Update()
 		D3DXVECTOR3 MouseMove = CManager::GetInstance()->GetMouse()->GetMove();
 
 		//カメラに反映
-		Rot.y += MouseMove.x * 0.004f;
+		Rot.y += MouseMove.x * MOUSE_RATE;
 	}
 
 	//ジョイパッドの操作
@@ -104,7 +104,7 @@ void CCamera_Game::Update()
 	{
 		//カメラに反映
 		float fAngle = CManager::GetInstance()->GetJoypad()->GetStick().afAngle[CInputJoypad::STICKTYPE_RIGHT];
-		Rot.y += sinf(fAngle) * 0.04f * CManager::GetInstance()->GetJoypad()->GetStick().afTplDiameter[CInputJoypad::STICKTYPE_RIGHT];
+		Rot.y += sinf(fAngle) * STICK_RATE * CManager::GetInstance()->GetJoypad()->GetStick().afTplDiameter[CInputJoypad::STICKTYPE_RIGHT];
 	}
 
 	//向きの補正
@@ -120,10 +120,10 @@ void CCamera_Game::Update()
 	//移動量の計算
 	D3DXVECTOR3 Move = (m_GoalPosR - PosR) * MOVE_RATE;
 
-	//時間の状態に応じて距離を変更
+	//ラッシュ状態なら距離を変更
 	if (pGame->GetRushJudge())
-	{
-		fLength -= 0.05f * fLength;
+	{//近づける
+		fLength -= LENGTH_RATE * fLength;
 
 		if (fLength < LENGTH_RUSH)
 		{
@@ -131,8 +131,8 @@ void CCamera_Game::Update()
 		}
 	}
 	else
-	{
-		fLength += 0.05f * fLength;
+	{//遠ざける
+		fLength += LENGTH_RATE * fLength;
 
 		if (fLength > LENGTH_NORMAL)
 		{

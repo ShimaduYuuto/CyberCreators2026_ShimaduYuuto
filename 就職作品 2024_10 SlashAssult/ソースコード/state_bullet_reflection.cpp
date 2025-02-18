@@ -1,6 +1,6 @@
 //======================================
 //
-//	’Êíó‘Ô‚Ì’e‚ÌŠÇ—‚ğ‚·‚éˆ—[state_bullet_reflection.cpp]
+//	”½Ëó‘Ô‚Ì’e‚Ìˆ—[state_bullet_reflection.cpp]
 //	Author : Yuuto Shimadu
 //
 //======================================
@@ -30,7 +30,7 @@ void CState_Bullet_Reflection::CheckCollision(CEnemyBullet* bullet)
 			continue;
 		}
 
-		//“G‚ÌˆÊ’u‚ğæ“¾
+		//“G‚Æ‚Ì‹——£‚ğZo
 		D3DXVECTOR3 Length = iter->GetCollision()->GetPos() - bullet->GetCollision()->GetPos();
 
 		float fXZ = sqrtf(Length.x * Length.x + Length.z * Length.z); //XZ‹——£‚ğZo‚·‚é

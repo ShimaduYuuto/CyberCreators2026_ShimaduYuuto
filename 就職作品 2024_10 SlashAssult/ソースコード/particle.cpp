@@ -39,9 +39,11 @@ CParticle::~CParticle()
 //============================
 HRESULT CParticle::Init()
 {
+	//基底初期化
 	CObjectBillboard::Init();
-	SetSize(SIZE);
-	SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+	//設定
+	SetSize(SIZE);	//サイズ			
 	return S_OK;
 }
 
@@ -50,6 +52,7 @@ HRESULT CParticle::Init()
 //============================
 void CParticle::Uninit()
 {
+	//基底終了
 	CObjectBillboard::Uninit();
 }
 

@@ -54,8 +54,10 @@ void CUi_GameStart::Uninit()
 //============================
 void CUi_GameStart::Update()
 {
+	//α値の更新
 	m_fCurrentAlpha += m_fAddAlpha;
 
+	//加算減算の確認
 	if (m_fCurrentAlpha >= 1.0f)
 	{
 		m_fCurrentAlpha = 1.0f;
@@ -67,6 +69,7 @@ void CUi_GameStart::Update()
 		m_fAddAlpha = ADD_ALPHA;
 	}
 
+	//色の設定
 	SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_fCurrentAlpha));
 
 	CObject2D::Update();

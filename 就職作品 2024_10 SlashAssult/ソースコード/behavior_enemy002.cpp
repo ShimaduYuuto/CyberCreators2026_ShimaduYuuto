@@ -24,6 +24,7 @@
 //====================================
 CEnemyBehavior_Standby::CEnemyBehavior_Standby(CEnemy* enemy) : m_nCoolTime(0)
 {
+	//設定
 	enemy->SetMotion(CEnemy002::ENEMY002MOTION_NORMAL);	//モーション
 	m_nCoolTime = COOL_TIME;							//クールタイム
 	enemy->SetCollisionProcess(true);					//当たり判定の処理を行う
@@ -118,10 +119,10 @@ void CEnemyBehavior_Disappear::NextAction(CEnemy* enemy)
 //コンストラクタ
 //====================================
 CEnemyBehavior_ChargeShot::CEnemyBehavior_ChargeShot(CEnemy* enemy) : 
-	m_nChargeCount(0), 
-	m_pBullet(nullptr), 
-	m_pEffect(nullptr), 
-	m_bNext(false)
+	m_nChargeCount(0),	//チャージカウント
+	m_pBullet(nullptr), //弾のポインタ
+	m_pEffect(nullptr), //エフェクトのポインタ
+	m_bNext(false)		//次の行動の移行フラグ
 {
 	//設定
 	enemy->SetMotion(CEnemy002::ENEMY002MOTION_CHARGESHOT);	//モーション
@@ -193,6 +194,7 @@ void CEnemyBehavior_ChargeShot::Action(CEnemy* enemy)
 //====================================
 void CEnemyBehavior_ChargeShot::LookAtPlayer(CEnemy* enemy)
 {
+	//プレイヤーの角度を取得
 	CGame* pGame = nullptr;
 	pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());	//ゲームシーンの取得
 	D3DXVECTOR3 PlayerPos = pGame->GetGamePlayer()->GetPos();			//プレイヤーの位置を取得
@@ -222,8 +224,9 @@ bool CEnemyBehavior_ChargeShot::CanCreateBullet()
 //====================================
 void CEnemyBehavior_ChargeShot::CreateBullet(CEnemy* enemy)
 {
-	m_pBullet = CEnemyBullet::Create(enemy->GetCollision()->GetPos(), { 0.0f, 0.0f, 0.0f }, this, enemy);
-	m_pEffect = CEffect_ChargeShot::Create(enemy->GetCollision()->GetPos());
+	//弾とエフェクトの生成
+	m_pBullet = CEnemyBullet::Create(enemy->GetCollision()->GetPos(), { 0.0f, 0.0f, 0.0f }, this, enemy);	//弾の生成
+	m_pEffect = CEffect_ChargeShot::Create(enemy->GetCollision()->GetPos());								//エフェクトの生成
 
 	//SEの設定
 	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_CHARGE001);
@@ -234,6 +237,7 @@ void CEnemyBehavior_ChargeShot::CreateBullet(CEnemy* enemy)
 //====================================
 void CEnemyBehavior_ChargeShot::UpdateBullet(CEnemy* enemy)
 {
+	//プレイヤーの取得
 	CGame* pGame = nullptr;
 	pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());	//ゲームシーンの取得
 	D3DXVECTOR3 PlayerPos = pGame->GetGamePlayer()->GetPos();			//プレイヤーの位置を取得
@@ -308,8 +312,8 @@ bool CEnemyBehavior_ChargeShot::CheckBulletHit()
 //====================================
 void CEnemyBehavior_ChargeShot::HitBullet()
 {
-	m_pBullet = nullptr;
-	m_bNext = true;
+	m_pBullet = nullptr;	//弾のポインタを持たない
+	m_bNext = true;			//次の行動へ移行フラグを立てる
 }
 
 //====================================
@@ -317,6 +321,7 @@ void CEnemyBehavior_ChargeShot::HitBullet()
 //====================================
 void CEnemyBehavior_ChargeShot::NextAction(CEnemy* enemy)
 {
+	//待機行動を設定
 	SetNextAction(new CEnemyBehavior_Standby(enemy));
 }
 
@@ -346,9 +351,9 @@ CEnemyBehavior_WarpShot::CEnemyBehavior_WarpShot(CEnemy* enemy) : CEnemyBehavior
 	enemy->SetMotion(CEnemy002::ENEMY002MOTION_CHARGESHOT);	//モーション
 
 	//ランダムな位置に敵を生成
-	enemy->SetPos(D3DXVECTOR3(sinf(CManager::GetInstance()->GetRundom(-D3DX_PI, D3DX_PI)) * CManager::GetInstance()->GetRundom(0.0f, MAX_RUNDOM_LENGTH)
+	enemy->SetPos(D3DXVECTOR3(sinf(CRandom::GetInstance()->GetRandom(-D3DX_PI, D3DX_PI)) * CRandom::GetInstance()->GetRandom(0.0f, MAX_RUNDOM_LENGTH)
 		, 0.0f
-		, cosf(CManager::GetInstance()->GetRundom(-D3DX_PI, D3DX_PI)) * CManager::GetInstance()->GetRundom(0.0f, MAX_RUNDOM_LENGTH)) + enemy->GetStartPos());
+		, cosf(CRandom::GetInstance()->GetRandom(-D3DX_PI, D3DX_PI)) * CRandom::GetInstance()->GetRandom(0.0f, MAX_RUNDOM_LENGTH)) + enemy->GetStartPos());
 };
 
 //====================================
@@ -364,6 +369,7 @@ CEnemyBehavior_WarpShot::~CEnemyBehavior_WarpShot()
 //====================================
 void CEnemyBehavior_WarpShot::Action(CEnemy* enemy)
 {
+	//チャージショットの更新
 	CEnemyBehavior_ChargeShot::Action(enemy);
 }
 
@@ -372,6 +378,7 @@ void CEnemyBehavior_WarpShot::Action(CEnemy* enemy)
 //====================================
 void CEnemyBehavior_WarpShot::NextAction(CEnemy* enemy)
 {
+	//待機状態の設定
 	SetNextAction(new CEnemyBehavior_Standby(enemy));
 }
 
@@ -394,8 +401,8 @@ CEnemyBehavior_Direction::CEnemyBehavior_Direction(CEnemy* enemy) :
 	pGame->SetDirection(CDirection::DIRECTIONTYPE_BOSS);				//演出の設定
 
 	//固有の設定
-	CEnemy002* pEnemy002 = dynamic_cast<CEnemy002*>(enemy);
-	pEnemy002->SetMaterialized(true);		//実体化の判定					
+	CEnemy002* pEnemy002 = dynamic_cast<CEnemy002*>(enemy);	//ダウンキャスト
+	pEnemy002->SetMaterialized(true);						//実体化の判定					
 }
 
 //====================================
@@ -418,6 +425,7 @@ void CEnemyBehavior_Direction::Action(CEnemy* enemy)
 //====================================
 void CEnemyBehavior_Direction::NextAction(CEnemy* enemy)
 {
+	//待機行動を設定
 	SetNextAction(new CEnemyBehavior_Standby(enemy));
 }
 
@@ -429,10 +437,10 @@ void CEnemyBehavior_Direction::NextAction(CEnemy* enemy)
 //コンストラクタ
 //====================================
 CEnemyBehavior_AlterEgoAttack::CEnemyBehavior_AlterEgoAttack(CEnemy* enemy) : CEnemyBehavior_ChargeShot(enemy),
-	m_pShotAction(nullptr),
-	m_bCreateAlterEgo(false),
-	m_pAlterEgo(),
-	m_fRundam(0.0f)
+	m_pShotAction(nullptr),		//アクションのポインタ
+	m_bCreateAlterEgo(false),	//分身を生成したか
+	m_pAlterEgo(),				//分身のポインタ
+	m_fRundam(0.0f)				//ランダム値
 {
 	//設定
 	enemy->SetMotion(CEnemy002::ENEMY002MOTION_NORMAL);	//モーション
@@ -444,19 +452,20 @@ CEnemyBehavior_AlterEgoAttack::CEnemyBehavior_AlterEgoAttack(CEnemy* enemy) : CE
 	}
 
 	//本体の設定
-	m_fRundam = CManager::GetInstance()->GetRundom(-D3DX_PI, D3DX_PI);
-	enemy->SetPos(D3DXVECTOR3(sinf(m_fRundam) * LENGTH_ENEMY, 0.0f, cosf(m_fRundam) * LENGTH_ENEMY) + enemy->GetStartPos());
-	enemy->SetMotion(CEnemy002::ENEMY002MOTION_CHARGESHOT);
+	m_fRundam = CRandom::GetInstance()->GetRandom(-D3DX_PI, D3DX_PI);
+	enemy->SetPos(D3DXVECTOR3(sinf(m_fRundam) * LENGTH_ENEMY, 0.0f, cosf(m_fRundam) * LENGTH_ENEMY) + enemy->GetStartPos());	//位置の設定
+	enemy->SetMotion(CEnemy002::ENEMY002MOTION_CHARGESHOT);																		//モーションの設定
 
 	//分身を生成
 	for (int i = 0; i < NUM_ALTEREGO; i++)
 	{
-		float fAngle = (D3DX_PI * 2.0f) / (NUM_ALTEREGO + 1) * (i + 1) + m_fRundam;
+		float fAngle = (D3DX_PI * 2.0f) / (NUM_ALTEREGO + 1) * (i + 1) + m_fRundam;	//角度を算出
 		D3DXVECTOR3 Pos = (D3DXVECTOR3(
 			sinf(fAngle) * LENGTH_ENEMY,
 			0.0f,
-			cosf(fAngle) * LENGTH_ENEMY));
+			cosf(fAngle) * LENGTH_ENEMY));	//位置を算出
 
+		//生成
 		m_pAlterEgo[i] = CEnemy002_AlterEgo::Create(Pos + enemy->GetStartPos(), this);
 	}
 }
@@ -517,25 +526,28 @@ void CEnemyBehavior_AlterEgoAttack::Action(CEnemy* enemy)
 //====================================
 void CEnemyBehavior_AlterEgoAttack::UpdatePos(CEnemy* enemy)
 {
+	//弾の発射状況を確認
 	if (GetBullet() == nullptr) return;
 	if (GetBullet()->GetShooting()) return;
 
 	//本体の設定
-	m_fRundam += 0.03f;
+	m_fRundam += ADD_RUNDOM;
 	enemy->SetPos(D3DXVECTOR3(sinf(m_fRundam) * LENGTH_ENEMY, 0.0f, cosf(m_fRundam) * LENGTH_ENEMY) + enemy->GetStartPos());
 
 	//分身を生成
 	for (int i = 0; i < NUM_ALTEREGO; i++)
 	{
+		//分身の確認
 		if (m_pAlterEgo[i] == nullptr) continue;
 
-		float fAngle = (D3DX_PI * 2.0f) / (NUM_ALTEREGO + 1) * (i + 1) + m_fRundam;
+		//位置を設定
+		float fAngle = (D3DX_PI * 2.0f) / (NUM_ALTEREGO + 1) * (i + 1) + m_fRundam;	//角度を算出
 		D3DXVECTOR3 Pos = (D3DXVECTOR3(
 			sinf(fAngle) * LENGTH_ENEMY,
 			0.0f,
-			cosf(fAngle) * LENGTH_ENEMY));
+			cosf(fAngle) * LENGTH_ENEMY));	//位置を算出
 
-		m_pAlterEgo[i]->SetPos(Pos + enemy->GetStartPos());
+		m_pAlterEgo[i]->SetPos(Pos + enemy->GetStartPos());	//位置の設定
 	}
 }
 
@@ -560,6 +572,7 @@ void CEnemyBehavior_AlterEgoAttack::Erase(CEnemy002_AlterEgo* enemy)
 //====================================
 void CEnemyBehavior_AlterEgoAttack::NextAction(CEnemy* enemy)
 {
+	//待機行動を設定
 	SetNextAction(new CEnemyBehavior_Standby(enemy));
 }
 
@@ -576,6 +589,7 @@ const D3DXVECTOR3 CEnemyBehavior_Direction_Destroy::CAMERA_POSV = { 0.0f, 0.0f, 
 CEnemyBehavior_Direction_Destroy::CEnemyBehavior_Direction_Destroy(CEnemy* enemy) :
 	m_nCount(0)
 {
+	//モーションの設定
 	enemy->SetMotion(CEnemy002::ENEMY002MOTION_DEATHDIRECTION);
 
 	//ゲームシーンに演出を設定
@@ -584,9 +598,9 @@ CEnemyBehavior_Direction_Destroy::CEnemyBehavior_Direction_Destroy(CEnemy* enemy
 	pGame->SetDirection(CDirection::DIRECTIONTYPE_BOSS_DESTROY);	//演出の設定
 
 	//固有の設定
-	CEnemy002* pEnemy002 = (CEnemy002*)enemy;
-	pEnemy002->SetMaterialized(true);
-	pEnemy002->SetPos(pEnemy002->GetPos() + D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+	CEnemy002* pEnemy002 = (CEnemy002*)enemy;									//ダウンキャスト
+	pEnemy002->SetMaterialized(true);											//実体化する
+	pEnemy002->SetPos(pEnemy002->GetPos() + D3DXVECTOR3(0.0f, 1.0f, 0.0f));		//位置の設定
 
 	//エフェクトの生成
 	CEffect_Death_Boss::Create(&pEnemy002->GetCollision()->GetPos());

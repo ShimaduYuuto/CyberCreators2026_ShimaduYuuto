@@ -20,11 +20,13 @@ class CCharacter : public CObject
 public:
 
 	//定数
-	static const float ROTATE_SPEED;			//回転の速度
-	static const int DAMAGE_TIME{5};			//ダメージ状態の時間
-	static const int INTERPOLATION_FRAME{6};	//モーションの補間カウント
-	static const float GRAVITY;					//重力の強さ
-	static constexpr float SIZE_RADIUS{30.0f};	//サイズの半径
+	static constexpr float ROTATE_SPEED{0.2f};		//回転の速度
+	static constexpr int DAMAGE_TIME{5};			//ダメージ状態の時間
+	static constexpr int INTERPOLATION_FRAME{6};	//モーションの補間カウント
+	static constexpr float GRAVITY{0.6f};			//重力の強さ
+	static constexpr float SIZE_RADIUS{30.0f};		//サイズの半径
+	static constexpr int MAX_MODEL{ 16 };			//読み込むモデルパーツの最大数
+	static constexpr int MAX_STRING{ 256 };			//読み込む文字の最大数
 
 	//キャラクターの種類
 	typedef enum

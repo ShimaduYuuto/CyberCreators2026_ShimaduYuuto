@@ -1,6 +1,6 @@
 //======================================
 //
-//	’Êíó‘Ô‚Ì’e‚ÌŠÇ—‚ğ‚·‚éˆ—[state_bullet_normal.cpp]
+//	’Êíó‘Ô‚Ì’e‚Ìˆ—[state_bullet_normal.cpp]
 //	Author : Yuuto Shimadu
 //
 //======================================
@@ -22,10 +22,9 @@ void CState_Bullet_Normal::CheckCollision(CEnemyBullet* bullet)
 	D3DXVECTOR3 PlayerPos = pGame->GetGamePlayer()->GetCollision()->GetPos();	//ƒvƒŒƒCƒ„[‚ÌˆÊ’u
 
 	//‹——£‚ğŒvZ
-	D3DXVECTOR3 Length = bullet->GetCollision()->GetPos() - PlayerPos;
-	float fLength = D3DXVec3Length(&Length);	//‹——£‚ğZo
-	D3DXVECTOR3 fDistance = PlayerPos - bullet->GetPos();
-	float fAngle = atan2f(fDistance.x, fDistance.z);
+	D3DXVECTOR3 Length = bullet->GetCollision()->GetPos() - PlayerPos;	//2“_‚Ì·‚ğZo
+	float fLength = D3DXVec3Length(&Length);							//‹——£‚ğZo		
+	float fAngle = atan2f(Length.x, Length.z);							//Šp“x‚ğZo
 
 	//UŒ‚‚Ì”ÍˆÍ“à‚È‚ç
 	if (fLength < bullet->GetCollision()->GetRadius() + pGame->GetGamePlayer()->GetCollision()->GetRadius())

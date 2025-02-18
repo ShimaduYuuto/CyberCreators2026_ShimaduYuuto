@@ -1,6 +1,6 @@
 //================================
 //
-//状態に応じた処理を実行[state_enemy_damage.cpp]
+//ダメージ状態処理を実行[state_enemy_damage.cpp]
 //Author:yuuto shimadu
 // 
 //================================
@@ -32,7 +32,7 @@ void CState_Enemy_Damage::UpdateState(CEnemy* enemy)
 
 	//カウントアップ
 	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());	//ゲームシーンの取得
-	fCount += pGame->GetTime()->GetValue<float>(1.0f);							//時間に応じてカウントアップ
+	fCount++;																	//時間に応じてカウントアップ
 
 	//他の敵との当たり判定
 	EnemyCollision(enemy);

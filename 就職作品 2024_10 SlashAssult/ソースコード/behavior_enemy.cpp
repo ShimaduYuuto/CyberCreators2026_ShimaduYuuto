@@ -117,6 +117,7 @@ void CEnemyBehavior_Chase::ChaseMove(CEnemy* enemy)
 	//ƒvƒŒƒCƒ„[‚Æ‚ÌŠp“x‚ðŽZo
 	float fAngle = atan2f(PlayerPos.x - Pos.x, PlayerPos.z - Pos.z);//‘ÎŠpü‚ÌŠp“x‚ðŽZo
 
+	//ˆÚ“®—Ê‚ð‰ÁŽZ
 	enemy->CCharacter::AddMove({ sinf(fAngle) * VALUE_MOVE, 0.0f, cosf(fAngle) * VALUE_MOVE });
 }
 

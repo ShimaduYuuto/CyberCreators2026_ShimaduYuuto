@@ -1,6 +1,6 @@
 //======================================
 //
-//	バトルエリアの処理[battleareamanager.cpp]
+//	バトルエリアの管理処理[battleareamanager.cpp]
 //	Author : Yuuto Shimadu
 //
 //======================================
@@ -17,6 +17,7 @@ CBattleAreaManager::CBattleAreaManager() :
 	m_BattleAreaList(),
 	m_pCurrentBattleArea(nullptr)
 {
+	//リストの初期化
 	m_BattleAreaList.clear();
 }
 
@@ -25,6 +26,7 @@ CBattleAreaManager::CBattleAreaManager() :
 //============================
 CBattleAreaManager::~CBattleAreaManager()
 {
+	//リストの初期化
 	m_BattleAreaList.clear();
 }
 
@@ -35,7 +37,7 @@ HRESULT CBattleAreaManager::Init()
 {
 	//読み込み
 	Load();
-	m_pCurrentBattleArea = nullptr;
+
 	return S_OK;
 }
 
@@ -44,6 +46,7 @@ HRESULT CBattleAreaManager::Init()
 //============================
 void CBattleAreaManager::Uninit()
 {
+	//リストのクリア
 	m_BattleAreaList.clear();
 	m_pCurrentBattleArea = nullptr;
 }

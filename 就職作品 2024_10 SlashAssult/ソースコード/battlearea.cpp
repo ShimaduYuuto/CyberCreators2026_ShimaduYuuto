@@ -18,7 +18,7 @@
 //============================
 CBattleArea::CBattleArea() :
 	m_EnemyList(),
-	m_fRadius(500.0f),
+	m_fRadius(RADIUS),
 	m_pWall(nullptr),
 	m_Pos(),
 	m_nEnemyNum(0),

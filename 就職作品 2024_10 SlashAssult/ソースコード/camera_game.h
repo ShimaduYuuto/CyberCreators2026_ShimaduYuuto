@@ -18,7 +18,10 @@ class CCamera_Game : public CCamera
 public:
 
 	//定数
-	static constexpr float MOVE_RATE{ 0.1f };	//目的の注視点まで移動する距離の割合
+	static constexpr float MOVE_RATE{ 0.1f };		//目的の注視点まで移動する距離の割合
+	static constexpr float LENGTH_RATE{ 0.05f };		//距離を変化させる割合
+	static constexpr float MOUSE_RATE{ 0.004f };	//マウスの移動量の反映倍率
+	static constexpr float STICK_RATE{ 0.04f };		//スティックでの移動量の反映倍率
 
 	//メンバ関数
 	CCamera_Game();					//コンストラクタ

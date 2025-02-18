@@ -47,13 +47,9 @@ HRESULT CClearTime::Init()
 
 		//数字のクリエイト
 		m_pNumber[i] = CNumber::Create(Pos, 0);
-
-		/*if (i == 2)
-		{
-			CDot::Create(D3DXVECTOR3(Pos.x + NUM_SPACE * 0.5f, Pos.y + 30.0f, 0.0f), { 15.0f, 15.0f, 0.0f });
-		}*/
 	}
 
+	//時間の設定
 	SetTime();
 
 	return S_OK;
