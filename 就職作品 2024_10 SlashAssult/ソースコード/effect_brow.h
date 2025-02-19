@@ -27,10 +27,9 @@ public:
 	static constexpr int SPEED_UPDATE{ 2 };	//更新速度
 	static constexpr bool LOOP{ false };	//ループ
 
-
 	//メンバ関数
-	CEffect_Brow();			//コンストラクタ
-	~CEffect_Brow() override;	//デストラクタ
+	CEffect_Brow();					//コンストラクタ
+	~CEffect_Brow() override;		//デストラクタ
 	HRESULT Init() override;		//初期化
 	void Uninit() override;			//終了
 	void Update() override;			//更新
@@ -40,6 +39,8 @@ public:
 	static CEffect_Brow* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
 
 private:
+
+	//変数
 	CAnimation m_Anim;	//アニメーション用の情報
 };
 

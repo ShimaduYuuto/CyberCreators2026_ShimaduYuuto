@@ -9,11 +9,10 @@
 #define _EFFECT_HITATTACK_H_ //２重インクルード防止のマクロ定義
 
 //ヘッダーのインクルード
-#include "objectbillboard.h"
-#include "animation.h"
+#include "effect_billboard.h"
 
 //ヒットアタックエフェクトクラス
-class CEffect_HitAttack : public CObjectBillboard
+class CEffect_HitAttack : public CEffect_Billboard
 {
 public:
 
@@ -38,9 +37,6 @@ public:
 
 	//生成
 	static CEffect_HitAttack* Create(D3DXVECTOR3 pos);
-
-private:
-	CAnimation m_Anim;	//アニメーション用の情報
 };
 
 #endif

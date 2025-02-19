@@ -9,11 +9,10 @@
 #define _EFFECT_JUSTGUARD_H_ //２重インクルード防止のマクロ定義
 
 //ヘッダーのインクルード
-#include "objectbillboard.h"
-#include "animation.h"
+#include "effect_billboard.h"
 
 //ジャストガードエフェクトクラス
-class CEffect_JustGuard : public CObjectBillboard
+class CEffect_JustGuard : public CEffect_Billboard
 {
 public:
 
@@ -38,9 +37,6 @@ public:
 
 	//生成
 	static CEffect_JustGuard* Create(D3DXVECTOR3 pos);
-
-private:
-	CAnimation m_Anim;	//アニメーション用の情報
 };
 
 #endif

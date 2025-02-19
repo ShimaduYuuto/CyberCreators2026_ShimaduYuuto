@@ -9,11 +9,10 @@
 #define _EFFECT_DEATH_H_ //２重インクルード防止のマクロ定義
 
 //ヘッダーのインクルード
-#include "objectbillboard.h"
-#include "animation.h"
+#include "effect_billboard.h"
 
 //死亡エフェクトクラス
-class CEffect_Death : public CObjectBillboard
+class CEffect_Death : public CEffect_Billboard
 {
 public:
 
@@ -37,10 +36,6 @@ public:
 
 	//生成
 	static CEffect_Death* Create(D3DXVECTOR3 pos);
-
-private:
-
-	CAnimation m_Anim;				//アニメーション用の情報
 };
 
 #endif

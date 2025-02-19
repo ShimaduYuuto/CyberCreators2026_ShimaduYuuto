@@ -16,14 +16,13 @@ const std::string CEffect_Guard::TEXTURE_PATH = "data\\TEXTURE\\barrier003.png";
 //コンストラクタ
 //============================
 CEffect_Guard::CEffect_Guard() :
-	m_Anim(),
 	m_bEnd(false),
 	m_nRatioInterpolationCount(0),
 	m_pTargetPos(nullptr)
 {
 	//情報の初期化
 	CAnimation::TextureInfo Info = { VERTICAL, HORIZONTAL, SPEED_UPDATE, LOOP };
-	m_Anim.SetTextureInfo(Info);
+	GetAnim().SetTextureInfo(Info);
 
 	//ゲームタグを設定
 	SetTag(CObject::TAG_GAME);
@@ -60,13 +59,8 @@ void CEffect_Guard::Uninit()
 //============================
 void CEffect_Guard::Update()
 {
-	//テクスチャ座標の更新
-	D3DXVECTOR2 UV = m_Anim.UpdateAnim();
-	SetTextureUV(
-		UV.x * m_Anim.GetTextureCount().nHorizontalAnimCount,
-		UV.x * (m_Anim.GetTextureCount().nHorizontalAnimCount + 1),
-		UV.y * m_Anim.GetTextureCount().nVerticalAnimCount,
-		UV.y * (m_Anim.GetTextureCount().nVerticalAnimCount + 1));
+	//基底の更新
+	CEffect_Billboard::Update();
 
 	//位置の設定
 	SetPos(*m_pTargetPos);

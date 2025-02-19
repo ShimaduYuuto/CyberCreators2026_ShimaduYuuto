@@ -9,11 +9,10 @@
 #define _EFFECT_GUARD_H_ //２重インクルード防止のマクロ定義
 
 //ヘッダーのインクルード
-#include "objectbillboard.h"
-#include "animation.h"
+#include "effect_billboard.h"
 
 //ガードエフェクトクラス
-class CEffect_Guard : public CObjectBillboard
+class CEffect_Guard : public CEffect_Billboard
 {
 public:
 
@@ -47,7 +46,7 @@ private:
 	//関数
 	void UpdateSizeRatio();	//サイズ倍率の更新
 
-	CAnimation m_Anim;				//アニメーション用の情報
+	//変数
 	int m_nRatioInterpolationCount;	//倍率の補間カウント
 	bool m_bEnd;					//終了するか
 	D3DXVECTOR3* m_pTargetPos;		//対象の位置

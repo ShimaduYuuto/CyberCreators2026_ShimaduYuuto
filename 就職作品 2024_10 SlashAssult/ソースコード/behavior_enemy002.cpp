@@ -452,7 +452,7 @@ CEnemyBehavior_AlterEgoAttack::CEnemyBehavior_AlterEgoAttack(CEnemy* enemy) : CE
 	}
 
 	//本体の設定
-	m_fRundam = CRandom::GetInstance()->GetRandom(-D3DX_PI, D3DX_PI);
+	m_fRundam = CRandom::GetRandom(-D3DX_PI, D3DX_PI);
 	enemy->SetPos(D3DXVECTOR3(sinf(m_fRundam) * LENGTH_ENEMY, 0.0f, cosf(m_fRundam) * LENGTH_ENEMY) + enemy->GetStartPos());	//位置の設定
 	enemy->SetMotion(CEnemy002::ENEMY002MOTION_CHARGESHOT);																		//モーションの設定
 

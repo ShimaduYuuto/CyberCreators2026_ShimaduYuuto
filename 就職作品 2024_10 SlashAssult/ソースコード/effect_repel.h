@@ -9,11 +9,10 @@
 #define _EFFECT_REPEL_H_ //２重インクルード防止のマクロ定義
 
 //ヘッダーのインクルード
-#include "objectbillboard.h"
-#include "animation.h"
+#include "effect_billboard.h"
 
 //弾くエフェクトクラス
-class CEffect_Repel : public CObjectBillboard
+class CEffect_Repel : public CEffect_Billboard
 {
 public:
 
@@ -29,8 +28,8 @@ public:
 
 
 	//メンバ関数
-	CEffect_Repel();			//コンストラクタ
-	~CEffect_Repel() override;	//デストラクタ
+	CEffect_Repel();				//コンストラクタ
+	~CEffect_Repel() override;		//デストラクタ
 	HRESULT Init() override;		//初期化
 	void Uninit() override;			//終了
 	void Update() override;			//更新
@@ -38,9 +37,6 @@ public:
 
 	//生成
 	static CEffect_Repel* Create(D3DXVECTOR3 pos);
-
-private:
-	CAnimation m_Anim;	//アニメーション用の情報
 };
 
 #endif

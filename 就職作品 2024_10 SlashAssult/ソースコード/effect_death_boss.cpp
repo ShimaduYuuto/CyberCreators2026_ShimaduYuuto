@@ -16,12 +16,11 @@ const std::string CEffect_Death_Boss::TEXTURE_PATH = "data\\TEXTURE\\death_boss0
 //コンストラクタ
 //============================
 CEffect_Death_Boss::CEffect_Death_Boss() :
-	m_Anim(),
 	m_TargetPos(nullptr)
 {
 	//情報の初期化
 	CAnimation::TextureInfo Info = { VERTICAL, HORIZONTAL, SPEED_UPDATE, LOOP };
-	m_Anim.SetTextureInfo(Info);
+	GetAnim().SetTextureInfo(Info);
 
 	//ゲームタグを設定
 	SetTag(CObject::TAG_GAME);
@@ -61,19 +60,8 @@ void CEffect_Death_Boss::Update()
 	//位置の設定
 	SetPos(*m_TargetPos);
 
-	//テクスチャ座標の更新
-	D3DXVECTOR2 UV = m_Anim.UpdateAnim();
-	SetTextureUV(
-		UV.x * m_Anim.GetTextureCount().nHorizontalAnimCount,
-		UV.x * (m_Anim.GetTextureCount().nHorizontalAnimCount + 1),
-		UV.y * m_Anim.GetTextureCount().nVerticalAnimCount,
-		UV.y * (m_Anim.GetTextureCount().nVerticalAnimCount + 1));
-
-	//終了
-	if (m_Anim.GetEnd())
-	{
-		Uninit();
-	}
+	//基底の更新
+	CEffect_Billboard::Update();
 }
 
 //============================

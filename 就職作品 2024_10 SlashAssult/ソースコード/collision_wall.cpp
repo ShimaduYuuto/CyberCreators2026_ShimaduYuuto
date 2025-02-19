@@ -18,7 +18,9 @@ const float CCollision_Wall::HEIGHT = 50.0f;									//高さ
 //============================
 //コンストラクタ
 //============================
-CCollision_Wall::CCollision_Wall(int nPriority) : CObjectCylinder(nPriority), m_bEnd(false), m_fAlpha(0.0f)
+CCollision_Wall::CCollision_Wall(int nPriority) : CObjectCylinder(nPriority),
+	m_bEnd(false),	//終了判定
+	m_fAlpha(0.0f)	//α値
 {
 
 }
@@ -39,6 +41,7 @@ HRESULT CCollision_Wall::Init()
 	//基底の初期化
 	CObjectCylinder::Init();
 
+	//設定
 	SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));	//頂点を透明に
 
 	return S_OK;

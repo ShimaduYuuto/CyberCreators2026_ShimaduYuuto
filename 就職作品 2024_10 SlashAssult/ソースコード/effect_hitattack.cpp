@@ -15,12 +15,11 @@ const std::string CEffect_HitAttack::TEXTURE_PATH = "data\\TEXTURE\\attack000.pn
 //============================
 //コンストラクタ
 //============================
-CEffect_HitAttack::CEffect_HitAttack() :
-	m_Anim()
+CEffect_HitAttack::CEffect_HitAttack()
 {
 	//情報の初期化
 	CAnimation::TextureInfo Info = {VERTICAL, HORIZONTAL, SPEED_UPDATE, LOOP};
-	m_Anim.SetTextureInfo(Info);
+	GetAnim().SetTextureInfo(Info);
 
 	//ゲームタグを設定
 	SetTag(CObject::TAG_GAME);
@@ -57,19 +56,8 @@ void CEffect_HitAttack::Uninit()
 //============================
 void CEffect_HitAttack::Update()
 {
-	//テクスチャ座標の更新
-	D3DXVECTOR2 UV = m_Anim.UpdateAnim();
-	SetTextureUV(
-		UV.x * m_Anim.GetTextureCount().nHorizontalAnimCount,
-		UV.x * (m_Anim.GetTextureCount().nHorizontalAnimCount + 1),
-		UV.y * m_Anim.GetTextureCount().nVerticalAnimCount,
-		UV.y * (m_Anim.GetTextureCount().nVerticalAnimCount + 1));
-
-	//終了
-	if (m_Anim.GetEnd())
-	{
-		Uninit();
-	}
+	//基底の更新
+	CEffect_Billboard::Update();
 }
 
 //============================

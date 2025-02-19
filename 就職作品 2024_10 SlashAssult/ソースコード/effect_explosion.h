@@ -29,6 +29,8 @@ public:
 	static CEffect_Explosion* Create(D3DXVECTOR3 pos);	//”š”­‚Ì¶¬
 
 private:
+
+	//•Ï”
 	float m_fSizeRate;			//”š”­‚ÌƒTƒCƒY”{—¦
 
 };

@@ -180,6 +180,7 @@
     <ClInclude Include="direction_boss.h" />
     <ClInclude Include="direction_boss_destroy.h" />
     <ClInclude Include="dot.h" />
+    <ClInclude Include="effect_billboard.h" />
     <ClInclude Include="effect_brow.h" />
     <ClInclude Include="effect_charge.h" />
     <ClInclude Include="effect_chargeshot.h" />
@@ -322,6 +323,7 @@
     <ClCompile Include="direction_boss.cpp" />
     <ClCompile Include="direction_boss_destroy.cpp" />
     <ClCompile Include="dot.cpp" />
+    <ClCompile Include="effect_billboard.cpp" />
     <ClCompile Include="effect_brow.cpp" />
     <ClCompile Include="effect_charge.cpp" />
     <ClCompile Include="effect_chargeshot.cpp" />

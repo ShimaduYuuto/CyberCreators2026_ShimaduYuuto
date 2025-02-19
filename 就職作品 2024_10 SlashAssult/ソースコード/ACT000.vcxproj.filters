@@ -585,6 +585,9 @@
     <ClInclude Include="random.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="effect_billboard.h">
+      <Filter>ヘッダー ファイル\effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -994,6 +997,9 @@
     </ClCompile>
     <ClCompile Include="objectcylinder.cpp">
       <Filter>ソース ファイル\object\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="effect_billboard.cpp">
+      <Filter>ソース ファイル\effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

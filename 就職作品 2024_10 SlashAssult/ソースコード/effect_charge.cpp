@@ -15,12 +15,11 @@ const std::string CEffect_Charge::TEXTURE_PATH = "data\\TEXTURE\\charge001.png";
 //============================
 //コンストラクタ
 //============================
-CEffect_Charge::CEffect_Charge() :
-	m_Anim()
+CEffect_Charge::CEffect_Charge()
 {
 	//情報の初期化
 	CAnimation::TextureInfo Info = { VERTICAL, HORIZONTAL, SPEED_UPDATE, LOOP };
-	m_Anim.SetTextureInfo(Info);
+	GetAnim().SetTextureInfo(Info);	//設定
 
 	//ゲームタグを設定
 	SetTag(CObject::TAG_GAME);
@@ -57,19 +56,8 @@ void CEffect_Charge::Uninit()
 //============================
 void CEffect_Charge::Update()
 {
-	//テクスチャ座標の更新
-	D3DXVECTOR2 UV = m_Anim.UpdateAnim();
-	SetTextureUV(
-		UV.x * m_Anim.GetTextureCount().nHorizontalAnimCount,
-		UV.x * (m_Anim.GetTextureCount().nHorizontalAnimCount + 1),
-		UV.y * m_Anim.GetTextureCount().nVerticalAnimCount,
-		UV.y * (m_Anim.GetTextureCount().nVerticalAnimCount + 1));
-
-	//終了
-	if (m_Anim.GetEnd())
-	{
-		Uninit();
-	}
+	//基底の更新
+	CEffect_Billboard::Update();
 }
 
 //============================
@@ -83,11 +71,13 @@ void CEffect_Charge::Draw()
 	//デバイスの取得
 	pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
+	//ライティングoff
 	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	//テクスチャ描画
 	CObjectBillboard::Draw(TEXTURE_PATH.c_str());
 
+	//ライティングon
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
