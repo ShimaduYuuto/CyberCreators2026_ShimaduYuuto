@@ -23,8 +23,8 @@ float Ratio(float value, float max);	//割合を算出
 #define FLOAT_ZERO (0.0f)
 
 //カラー初期化
-#define COLOR_RESET_ZERO (D3DXVECTOR3(0.0f,0.0f,0.0f,0.0f))
-#define COLOR_RESET_ONE (D3DXVECTOR3(1.0f,1.0f,1.0f,1.0f))
+#define COLOR_RESET_ZERO (D3DXCOLOR(0.0f,0.0f,0.0f,0.0f))
+#define COLOR_RESET_ONE (D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
 
 //頂点3D初期化
 #define VEC3_RESET_ZERO (D3DXVECTOR3(0.0f,0.0f,0.0f))

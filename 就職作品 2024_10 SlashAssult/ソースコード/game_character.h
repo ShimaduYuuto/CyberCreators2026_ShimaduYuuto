@@ -19,7 +19,9 @@ public:
 
 	//定数
 	static const float GRAVITY;					//重力の強さ
+	static const D3DXVECTOR3 COLLISION_OFFSET;	//当たり判定のオフセット
 	static constexpr float SIZE_RADIUS{ 30.0f };//サイズの半径
+	static constexpr int LIFE{ 10 };			//体力
 
 	//メンバ関数
 	CGame_Character(int nPriority = 3);			//コンストラクタ

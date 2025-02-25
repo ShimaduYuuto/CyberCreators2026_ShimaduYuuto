@@ -20,7 +20,7 @@ const D3DXVECTOR3 CGauge_PlayerLife::SIZE_GAUGE = { 173.0f, 20.0f, 0.0f };	//ƒQ
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 //============================
 CGauge_PlayerLife::CGauge_PlayerLife(int nPriority) : CObject2D(nPriority),
-	m_pGauge(nullptr)
+	m_pGauge(nullptr)	//ƒQ[ƒW‚Ìƒ|ƒCƒ“ƒ^
 {
 
 }

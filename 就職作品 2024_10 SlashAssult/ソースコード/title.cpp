@@ -15,6 +15,7 @@
 #include "model.h"
 #include "camera_title.h"
 #include "ui_gamestart.h"
+#include "fog.h"
 
 //============================
 //タイトルのコンストラクタ
@@ -31,10 +32,8 @@ CTitle::CTitle() :
 //============================
 CTitle::~CTitle()
 {
-	//フォグの設定
-	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
-	pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
-	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	//フォグの解除
+	CFog::GetInstance()->ClearFog();
 }
 
 //============================
@@ -62,13 +61,7 @@ HRESULT CTitle::Init()
 	CUi_GameStart::Create();
 
 	//フォグの設定
-	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
-	pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
-	pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);					//有効
-	pDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_EXP);		//フォグモードの設定
-	pDevice->SetRenderState(D3DRS_FOGCOLOR, D3DXCOLOR(0.7f, 0.7f, 0.7f, 0.1f));	//色の設定
-	float m_fFogDensity = 0.0005f;
-	pDevice->SetRenderState(D3DRS_FOGDENSITY, *(DWORD*)(&m_fFogDensity));
+	CFog::GetInstance()->SetFog();
 
 	//BGM
 	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_TITLE);

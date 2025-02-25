@@ -12,7 +12,8 @@
 #include "battleareamanager.h"
 
 //定数の設定
-const float CGame_Character::GRAVITY = 0.6f;			//重力の強さ
+const float CGame_Character::GRAVITY = 0.6f;											//重力の強さ
+const D3DXVECTOR3 CGame_Character::COLLISION_OFFSET = D3DXVECTOR3(0.0f, 30.0f, 0.0f);	//コリジョンのオフセット
 
 //============================
 //キャラクターのコンストラクタ
@@ -20,7 +21,7 @@ const float CGame_Character::GRAVITY = 0.6f;			//重力の強さ
 CGame_Character::CGame_Character(int nPriority) : CCharacter(nPriority)
 {
 	//各パラメータの初期化
-	m_nLife = 10;							//体力
+	m_nLife = LIFE;							//体力
 	m_bOnStand = false;						//立ち状態
 	m_fRadiusSize = SIZE_RADIUS;			//サイズの半径
 	m_bEnableGravity = true;				//重力を受ける
@@ -29,7 +30,7 @@ CGame_Character::CGame_Character(int nPriority) : CCharacter(nPriority)
 	//当たり判定の生成
 	if (m_pCollision == nullptr)
 	{
-		m_pCollision = CCollision::Create(GetSizeRadius(), D3DXVECTOR3(0.0f, 30.0f, 0.0f));
+		m_pCollision = CCollision::Create(GetSizeRadius(), COLLISION_OFFSET);
 	}
 
 	//ゲームタグを設定
@@ -213,6 +214,7 @@ bool CGame_Character::SetDamage(int damage, float angle)
 //============================
 void CGame_Character::SetCharacterDeath()
 {
+	//終了処理
 	Uninit();
 }
 

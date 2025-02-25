@@ -143,6 +143,7 @@ D3DXVECTOR3 CPlayerBehavior_Move::UpdateMove(CPlayer* player, D3DXVECTOR3& Rotgo
 	//動いたかの判定
 	if (bMove && player->GetOnStand())
 	{
+		//歩きモーションを設定
 		if (player->GetMotionState() != CPlayer::PLAYERMOTION_WALK)
 		{
 			//モーションの設定
@@ -151,6 +152,7 @@ D3DXVECTOR3 CPlayerBehavior_Move::UpdateMove(CPlayer* player, D3DXVECTOR3& Rotgo
 	}
 	else if (player->GetOnStand())	//地面に着いているなら
 	{
+		//ニュートラルモーションを設定
 		if (player->GetMotionState() != CPlayer::PLAYERMOTION_NORMAL)
 		{
 			//モーションの設定
@@ -485,9 +487,6 @@ CPlayerBehavior_Attack::CPlayerBehavior_Attack(CPlayer* player) :
 	SetCancelTime(START_CANCEL);		//キャンセル開始時間
 	SetAttackLength(ATTACK_LENGTH);		//攻撃の距離
 	SetOffsetPos(POS_OFFSET);			//オフセット位置
-
-	//敵の方向を向く
-	LookAtEnemy(player);
 
 	//SEを鳴らす
 	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_SWING);
@@ -846,6 +845,9 @@ void CPlayerBehavior_NormalAttack::Behavior(CPlayer* player)
 //============================
 CPlayerBehavior_NormalAttack000::CPlayerBehavior_NormalAttack000(CPlayer* player) : CPlayerBehavior_NormalAttack(player)
 {
+	//敵の方向を向く
+	LookAtEnemy(player);
+
 	//モーションの設定
 	player->SetMotion(CPlayer::PLAYERMOTION_ACTION);
 }

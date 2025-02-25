@@ -16,6 +16,7 @@
 #include "rank.h"
 #include "result_txtui.h"
 #include "camera_result.h"
+#include "fog.h"
 
 //定数
 const D3DXVECTOR3 CResult::TIME_POS = { SCREEN_WIDTH * 0.4f, 355.0f, 0.0f };
@@ -34,10 +35,8 @@ CResult::CResult() :
 //============================
 CResult::~CResult()
 {
-	//フォグの設定
-	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
-	pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
-	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	//フォグの解除
+	CFog::GetInstance()->ClearFog();
 }
 
 //============================
@@ -63,13 +62,7 @@ HRESULT CResult::Init()
 	CResult_Txtui::Create();
 
 	//フォグの設定
-	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
-	pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
-	pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);					//有効
-	pDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_EXP);		//フォグモードの設定
-	pDevice->SetRenderState(D3DRS_FOGCOLOR, D3DXCOLOR(0.7f, 0.7f, 0.7f, 0.1f));	//色の設定
-	float m_fFogDensity = 0.0005f;
-	pDevice->SetRenderState(D3DRS_FOGDENSITY, *(DWORD*)(&m_fFogDensity));
+	CFog::GetInstance()->SetFog();
 
 	//BGM
 	CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_RESULT);

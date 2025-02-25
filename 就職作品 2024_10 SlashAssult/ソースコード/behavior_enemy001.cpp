@@ -18,6 +18,7 @@
 //====================================
 CEnemyBehavior_Chase001::CEnemyBehavior_Chase001(CEnemy* enemy) : CEnemyBehavior_Chase(enemy)
 {
+	//キャラクター設定
 	enemy->SetMotion(CEnemy001::ENEMY001MOTION_WALK);	//モーションの設定
 
 	//固有の設定

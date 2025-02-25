@@ -412,38 +412,40 @@ void CCharacter::UpdatePos()
 void CCharacter::UpdateRot()
 {
 	//目的の向きに向かせる処理
-	if (m_Rot.y != m_GoalRot.y)
-	{
-		if (m_Rot.y >= D3DX_PI * 0.5f && m_GoalRot.y <= D3DX_PI * -0.5f)
-		{
-			m_Rot.y += AddRot(ROTATE_SPEED);
-			if (m_Rot.y > D3DX_PI)
-			{
-				m_Rot.y -= D3DX_PI * 2;
-			}
-		}
-		else if (m_GoalRot.y >= D3DX_PI * 0.5f && m_Rot.y <= D3DX_PI * -0.5f)
-		{
-			m_Rot.y -= AddRot(ROTATE_SPEED);
-			if (m_Rot.y < D3DX_PI)
-			{
-				m_Rot.y += D3DX_PI * 2;
-			}
-		}
-		else if (m_GoalRot.y - m_Rot.y > 0)
-		{
-			m_Rot.y += AddRot(ROTATE_SPEED);
-		}
-		else
-		{
-			m_Rot.y -= AddRot(ROTATE_SPEED);
-		}
+	if (m_Rot.y == m_GoalRot.y)
+	{//目的の向きを向いていたら抜ける
+		return;
+	}
 
-		//目的の向きと近くなったら補正
-		if (m_GoalRot.y - m_Rot.y < ROTATE_SPEED && m_GoalRot.y - m_Rot.y > -ROTATE_SPEED)
+	if (m_Rot.y >= D3DX_PI * 0.5f && m_GoalRot.y <= D3DX_PI * -0.5f)
+	{
+		m_Rot.y += AddRot(ROTATE_SPEED);
+		if (m_Rot.y > D3DX_PI)
 		{
-			m_Rot.y = m_GoalRot.y;
+			m_Rot.y -= D3DX_PI * 2;
 		}
+	}
+	else if (m_GoalRot.y >= D3DX_PI * 0.5f && m_Rot.y <= D3DX_PI * -0.5f)
+	{
+		m_Rot.y -= AddRot(ROTATE_SPEED);
+		if (m_Rot.y < D3DX_PI)
+		{
+			m_Rot.y += D3DX_PI * 2;
+		}
+	}
+	else if (m_GoalRot.y - m_Rot.y > 0)
+	{
+		m_Rot.y += AddRot(ROTATE_SPEED);
+	}
+	else
+	{
+		m_Rot.y -= AddRot(ROTATE_SPEED);
+	}
+
+	//目的の向きと近くなったら補正
+	if (m_GoalRot.y - m_Rot.y < ROTATE_SPEED && m_GoalRot.y - m_Rot.y > -ROTATE_SPEED)
+	{
+		m_Rot.y = m_GoalRot.y;
 	}
 }
 

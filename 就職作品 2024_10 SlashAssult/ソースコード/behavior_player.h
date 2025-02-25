@@ -156,6 +156,9 @@ public:
 	//攻撃のキー判定
 	bool TriggerAttack();
 
+	//敵の方向を向く
+	void LookAtEnemy(CPlayer* player);	
+
 private:
 
 	//関数
@@ -163,7 +166,6 @@ private:
 	void HitEnemyProcess(CPlayer* player, D3DXVECTOR3 pos);				//敵との当たり判定を確認
 	void HitBulletProcess(CPlayer* player, D3DXVECTOR3 pos);			//弾との当たり判定を確認
 	virtual void Damage(CPlayer* player, CEnemy* enemy, int damage);	//ダメージを与える
-	void LookAtEnemy(CPlayer* player);									//敵の方向を向く
 	bool CheckEnemyInFront(CPlayer* player, float targetangle, float radian);			//自分の前に敵がいるかを確認
 	void Effect(CPlayer* player);										//エフェクトの処理
 

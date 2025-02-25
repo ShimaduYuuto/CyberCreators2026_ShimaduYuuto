@@ -588,6 +588,9 @@
     <ClInclude Include="effect_billboard.h">
       <Filter>ヘッダー ファイル\effect</Filter>
     </ClInclude>
+    <ClInclude Include="fog.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1000,6 +1003,9 @@
     </ClCompile>
     <ClCompile Include="effect_billboard.cpp">
       <Filter>ソース ファイル\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="fog.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
