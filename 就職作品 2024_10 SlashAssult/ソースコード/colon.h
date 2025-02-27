@@ -1,18 +1,18 @@
 //================================
 //
-//dot.cppに必要な宣言[dot.h]
+//colon.cppに必要な宣言[colon.h]
 //Author:yuuto shimadu
 // 
 //================================
 
-#ifndef _DOT_H_ //このマクロ定義がされていなかったら
-#define _DOT_H_ //２重インクルード防止のマクロ定義
+#ifndef _COLON_H_ //このマクロ定義がされていなかったら
+#define _COLON_H_ //２重インクルード防止のマクロ定義
 
 //ヘッダーのインクルード
 #include "object2D.h"
 
-//ドットクラス
-class CDot : public CObject2D
+//コロンクラス
+class CColon : public CObject2D
 {
 public:
 
@@ -20,13 +20,13 @@ public:
 	static const std::string TEXTURE_PATH;	//テクスチャパス
 
 	//メンバ関数
-	CDot(int nPriority = 3);	//コンストラクタ
-	~CDot() override;			//デストラクタ
+	CColon(int nPriority = 5);	//コンストラクタ
+	~CColon() override;			//デストラクタ
 	HRESULT Init() override;	//初期化
 	void Uninit() override;		//終了
 	void Update() override;		//更新
 	void Draw() override;		//描画
-	static CDot* Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);	//生成
+	static CColon* Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);	//生成
 };
 
 #endif

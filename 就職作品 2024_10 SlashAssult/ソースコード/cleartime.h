@@ -17,14 +17,17 @@ class CClearTime
 {
 
 private:
+
 	//メンバ関数
 	CClearTime();								//コンストラクタ
 
 public:
 
 	//定数
-	static constexpr int TIME_NUM{6};			//タイムの桁数
+	static constexpr int TIME_NUM{6};				//タイムの桁数
+	static constexpr int NUM_FEW{ 3 };				//小数第何番目まで表示するか
 	static constexpr float NUM_SPACE{50.0f};		//数字の隙間
+	static constexpr float FEW_SPACE{ 20.0f };		//小数点の間の隙間
 
 	//インスタンスの生成
 	static CClearTime* GetInstance()
@@ -45,6 +48,8 @@ public:
 	void SetPos(D3DXVECTOR3 pos) { m_Pos = pos; }	//設定
 
 private:
+
+	//変数
 	CNumber* m_pNumber[TIME_NUM];			//タイムの桁数だけ確保
 	float m_fTime;							//現在のタイム
 	D3DXVECTOR3 m_Pos;						//位置

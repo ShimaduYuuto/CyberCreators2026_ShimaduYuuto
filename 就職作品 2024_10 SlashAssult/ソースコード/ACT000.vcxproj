@@ -175,6 +175,7 @@
     <ClInclude Include="collision.h" />
     <ClInclude Include="collision_view.h" />
     <ClInclude Include="collision_wall.h" />
+    <ClInclude Include="colon.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="direction.h" />
     <ClInclude Include="direction_boss.h" />
@@ -319,6 +320,7 @@
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="collision_view.cpp" />
     <ClCompile Include="collision_wall.cpp" />
+    <ClCompile Include="colon.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="direction.cpp" />
     <ClCompile Include="direction_boss.cpp" />

@@ -1,38 +1,36 @@
 //======================================
 //
-//	ドットの処理[dot.cpp]
+//	コロンの処理[colon.cpp]
 //	Author : Yuuto Shimadu
 //
 //======================================
 
 //ヘッダーのインクルード
-#include "dot.h"
-#include "manager.h"
-#include "game.h"
+#include "colon.h"
 
 //定数
-const std::string CDot::TEXTURE_PATH = "data\\TEXTURE\\dot000.png";
+const std::string CColon::TEXTURE_PATH = "data\\TEXTURE\\colon000.png";
 
 //============================
-//ドットのコンストラクタ
+//コロンのコンストラクタ
 //============================
-CDot::CDot(int nPriority) : CObject2D(nPriority)
+CColon::CColon(int nPriority) : CObject2D(nPriority)
 {
 
 }
 
 //============================
-//ドットのデストラクタ
+//コロンのデストラクタ
 //============================
-CDot::~CDot()
+CColon::~CColon()
 {
 
 }
 
 //============================
-//ドットの初期化
+//コロンの初期化
 //============================
-HRESULT CDot::Init()
+HRESULT CColon::Init()
 {
 	//初期化
 	CObject2D::Init();
@@ -41,46 +39,46 @@ HRESULT CDot::Init()
 }
 
 //============================
-//ドットの終了処理
+//コロンの終了処理
 //============================
-void CDot::Uninit()
+void CColon::Uninit()
 {
 	CObject2D::Uninit();
 }
 
 //============================
-//ドットの更新
+//コロンの更新
 //============================
-void CDot::Update()
+void CColon::Update()
 {
 	//更新処理
 	CObject2D::Update();
 }
 
 //============================
-//ドットの描画
+//コロンの描画
 //============================
-void CDot::Draw()
+void CColon::Draw()
 {
 	//描画処理
 	CObject2D::Draw(TEXTURE_PATH.c_str());
 }
 
 //============================
-//ドットのクリエイト
+//コロンのクリエイト
 //============================
-CDot* CDot::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+CColon* CColon::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
 	//ポインタ用の変数
-	CDot* pDot;
+	CColon* pColon;
 
 	//メモリの確保
-	pDot = new CDot;
+	pColon = new CColon;
 
 	//初期化
-	pDot->Init();
-	pDot->SetPos(pos);	//位置
-	pDot->SetSize(size);	//サイズ
+	pColon->Init();
+	pColon->SetPos(pos);	//位置
+	pColon->SetSize(size);	//サイズ
 
-	return pDot;
+	return pColon;
 }
