@@ -85,7 +85,6 @@ private:
 	bool CheckUpdateKeyboard(CPlayer* player, D3DXVECTOR3& Rotgoal, D3DXVECTOR3* move);	//キーボードで更新されたかを確認
 	bool CheckUpdateStick(bool pressed);												//スティックで更新されたかを確認
 	void UpdateStickMove(D3DXVECTOR3& Rotgoal, D3DXVECTOR3* move);						//スティック移動での更新
-	void ChangeMotion();
 };
 
 //==========================
@@ -97,7 +96,7 @@ public:
 
 	//定数
 	static constexpr float DASH_SPEED{ 14.0f };		//ダッシュの速度
-	static constexpr float STOP_LENGYH{ 70.0f };	//止まる距離
+	static constexpr float STOP_LENGTH{ 70.0f };	//止まる距離
 	static constexpr float RATIO_LINEAR_INTERPOLATION{ 0.08f };	//線形補間の割合
 
 	//メンバ関数
@@ -158,6 +157,9 @@ public:
 
 	//敵の方向を向く
 	void LookAtEnemy(CPlayer* player);	
+
+	//キャンセル判定の取得
+	bool GetCancelJudge() { return m_bCancel; }
 
 private:
 

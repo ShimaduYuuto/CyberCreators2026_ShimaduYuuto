@@ -41,7 +41,7 @@ bool TriggerJump(CPlayer* player)
 //=========================
 bool TriggerAttack()
 {
-	if (CManager::GetInstance()->GetMouse()->GetTrigger(CInputMouse::MOUSEBUTTON_LEFT)) return true;	//キーボードの判定
+	if (CManager::GetInstance()->GetMouse()->GetTrigger(CInputMouse::MOUSEBUTTON_LEFT)) return true;	//マウスの判定
 	if (CManager::GetInstance()->GetJoypad()->GetTrigger(CInputJoypad::JOYKEY_X)) return true;			//ジョイパッドの確認
 
 	return false;
@@ -257,7 +257,7 @@ bool CPlayerBehavior_Move::CheckUpdateStick(bool pressed)
 }
 
 //============================
-//スティックで更新されたか
+//スティックの更新
 //============================
 void CPlayerBehavior_Move::UpdateStickMove(D3DXVECTOR3& Rotgoal, D3DXVECTOR3* move)
 {
@@ -401,7 +401,7 @@ void CPlayerBehavior_Dash::Behavior(CPlayer* player)
 			player->SetGoalRot({ 0.0f, fAngle + D3DX_PI, 0.0f });
 
 			//敵から離れているならダッシュ
-			if (fLength > STOP_LENGYH)
+			if (fLength > STOP_LENGTH)
 			{
 				//初めて通るなら速度を算出
 				if (m_bFirst)
@@ -420,7 +420,7 @@ void CPlayerBehavior_Dash::Behavior(CPlayer* player)
 			}
 
 			//止まる距離になったら攻撃
-			if (fLength < STOP_LENGYH)
+			if (fLength < STOP_LENGTH)
 			{
 				//移動状態にする
 				SetNextBehavior(new CPlayerBehavior_DashAttack000(player));
@@ -1182,7 +1182,7 @@ void CPlayerBehavior_DashAttack::Cancel(CPlayer* player)
 	fLength = D3DXVec3Length(&Length);	//距離を算出
 
 	//攻撃の範囲外ならダッシュする
-	if (fLength > CPlayerBehavior_Dash::STOP_LENGYH)
+	if (fLength > CPlayerBehavior_Dash::STOP_LENGTH)
 	{
 		SetNextBehavior(new CPlayerBehavior_Move(player));
 	}
@@ -1214,8 +1214,15 @@ CPlayerBehavior_DashAttack000::CPlayerBehavior_DashAttack000(CPlayer* player) : 
 //============================
 void CPlayerBehavior_DashAttack000::NextBehavior(CPlayer* player)
 {
-	//次の攻撃の生成
-	SetNextBehavior(new CPlayerBehavior_DashAttack001(player));
+	//キャンセル時は次の攻撃
+	if (GetCancelJudge())
+	{
+		SetNextBehavior(new CPlayerBehavior_DashAttack001(player));
+	}
+	else
+	{//その他は移動を設定
+		SetNextBehavior(new CPlayerBehavior_Move(player));
+	}
 }
 
 //============================
@@ -1254,8 +1261,15 @@ CPlayerBehavior_DashAttack001::CPlayerBehavior_DashAttack001(CPlayer* player) : 
 //============================
 void CPlayerBehavior_DashAttack001::NextBehavior(CPlayer* player)
 {
-	//次の攻撃の生成
-	SetNextBehavior(new CPlayerBehavior_DashAttack000(player));
+	//キャンセル時は次の攻撃
+	if (GetCancelJudge())
+	{
+		SetNextBehavior(new CPlayerBehavior_DashAttack000(player));
+	}
+	else
+	{//その他は移動を設定
+		SetNextBehavior(new CPlayerBehavior_Move(player));
+	}
 }
 
 //============================

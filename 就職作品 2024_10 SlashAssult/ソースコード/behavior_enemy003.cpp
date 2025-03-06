@@ -16,6 +16,18 @@
 //======================================================================
 
 //====================================
+//コンストラクタ
+//====================================
+CEnemyBehavior_Standby003::CEnemyBehavior_Standby003(CEnemy* enemy) : 
+	m_nCoolTime(0)	//クールタイム
+{
+	//関数
+	enemy->SetMotion(CEnemy003::ENEMY003MOTION_NORMAL);	//モーション
+	enemy->SetCollisionProcess(true);					//当たり判定を行う
+	m_nCoolTime = COOL_TIME;							//クールタイム
+};
+
+//====================================
 //アクション(待機)
 //====================================
 void CEnemyBehavior_Standby003::Action(CEnemy* enemy)
@@ -43,6 +55,36 @@ void CEnemyBehavior_Standby003::NextAction(CEnemy* enemy)
 //======================================================================
 //チャージアタック
 //======================================================================
+
+//====================================
+//コンストラクタ
+//====================================
+CEnemyBehavior_Attack003::CEnemyBehavior_Attack003(CEnemy* enemy) : CEnemyBehavior_Attack(enemy)
+{
+	//設定
+	GetAttackInstanse()->SetCollisionTime(START_COLLISON_TIME);	//当たり判定が始まる時間
+	GetAttackInstanse()->SetEndTime(END_TIME);					//終了する時間
+	GetAttackInstanse()->SetDamageValue(DAMAGE_VALUE);			//ダメージ量
+	SetAttackLength(ATTACK_LENGTH);								//攻撃の距離
+	enemy->SetMotion(CEnemy003::ENEMY003MOTION_ACTION);			//モーション
+	enemy->SetCollisionProcess(false);							//当たり判定を行う
+};
+
+//====================================
+//アクション(攻撃)
+//====================================
+void CEnemyBehavior_Attack003::Action(CEnemy* enemy)
+{
+	CEnemyBehavior_Attack::Action(enemy);
+};
+
+//====================================
+//次のアクションを設定
+//====================================
+void CEnemyBehavior_Attack003::NextAction(CEnemy* enemy)
+{
+	SetNextAction(new CEnemyBehavior_Standby003(enemy));
+}
 
 //====================================
 //アクション(チャージアタック)
