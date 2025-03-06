@@ -22,7 +22,8 @@
 //====================================
 //コンストラクタ
 //====================================
-CEnemyBehavior_Standby::CEnemyBehavior_Standby(CEnemy* enemy) : m_nCoolTime(0)
+CEnemyBehavior_Standby::CEnemyBehavior_Standby(CEnemy* enemy) : 
+	m_nCoolTime(0)	//クールタイム
 {
 	//設定
 	enemy->SetMotion(CEnemy002::ENEMY002MOTION_NORMAL);	//モーション

@@ -17,14 +17,14 @@
 //コンストラクタ
 //============================
 CBattleArea::CBattleArea() :
-	m_EnemyList(),
-	m_fRadius(RADIUS),
-	m_pWall(nullptr),
-	m_Pos(),
-	m_nEnemyNum(0),
-	m_bEnd(false),
-	m_bEnteredArea(false),
-	m_Path()
+	m_EnemyList(),			//敵のリスト
+	m_fRadius(RADIUS),		//半径
+	m_pWall(nullptr),		//壁のポインタ
+	m_Pos(),				//位置
+	m_nEnemyNum(0),			//敵の数
+	m_bEnd(false),			//終了判定
+	m_bEnteredArea(false),	//エリアに入ったかの判定
+	m_Path()				//読み込むファイルパス
 {
 	
 }
@@ -41,8 +41,8 @@ CBattleArea::~CBattleArea()
 		m_pWall =  nullptr;
 	}
 
-	//結界を消す
-	CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+	//結界のリストから消す
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 	pGame->GetBarrierManager()->Erase();
 }
 
@@ -59,7 +59,7 @@ HRESULT CBattleArea::Init()
 //============================
 void CBattleArea::Uninit()
 {
-	m_bEnd = true;
+	m_bEnd = true;	//終了判定
 }
 
 //============================
@@ -101,7 +101,7 @@ void CBattleArea::Update()
 			m_bEnteredArea = true;
 			CBattleAreaManager::GetInstance()->SetCurrentBattleArea(this);	//現在のエリアとして登録
 
-			//ゲームの戦闘判定をfalseに変更
+			//ゲームの戦闘判定をtrueに変更
 			pGame->SetBattle(true);
 
 			//生成情報の読み込み
@@ -118,11 +118,12 @@ void CBattleArea::Update()
 //============================
 void CBattleArea::SpawnLoad(const char* path)
 {
+	//パスの確認
 	if (path == nullptr) assert("バトルエリアのパスが見つかりませんでした");
 
-	std::ifstream File(path);  // 読み込むファイルのパスを指定
-	std::string line;
-
+	std::ifstream File(path);	//読み込むファイルのパスを指定
+	std::string line;			//読み込み用
+	
 	if (!File)
 	{// 種類毎の情報のデータファイルが開けなかった場合、
 	 //処理を終了する

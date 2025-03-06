@@ -42,6 +42,8 @@ public:
 	virtual void SetParam() {};
 
 private:
+
+	//変数
 	bool m_bEndAction;		//終了判定
 	float m_fActionCount;	//カウント
 	float m_fEndTime;		//終了時間
@@ -73,6 +75,8 @@ public:
 	int GetDamageValue() { return m_fDamageValue; }					//取得
 
 private:
+
+	//変数
 	bool m_bHit;			//当たったかの判定
 	float m_fCollisionTime;	//当たり判定が発生する時間
 	int m_fDamageValue;		//与えるダメージ

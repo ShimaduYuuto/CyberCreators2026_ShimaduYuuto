@@ -30,7 +30,6 @@ public:
 	~CState_Player_Normal() {};					//デストラクタ
 
 	void UpdateState(CPlayer* player) override {};			//状態の更新
-	//bool SetDamage(CPlayer* player, int damage, float angle) override;	//ダメージの設定
 };
 
 #endif

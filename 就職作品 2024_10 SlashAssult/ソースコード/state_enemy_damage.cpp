@@ -14,7 +14,7 @@
 //====================================
 //コンストラクタ
 //====================================
-CState_Enemy_Damage::CState_Enemy_Damage(CEnemy* enemy)
+CState_Enemy_Damage::CState_Enemy_Damage(CEnemy* enemy) : CState_Enemy(enemy)
 {
 	//設定
 	SetAction(new CEnemyBehavior);		//空のアクション

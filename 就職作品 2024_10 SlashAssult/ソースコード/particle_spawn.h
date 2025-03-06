@@ -11,7 +11,7 @@
 //ヘッダーのインクルード
 #include "main.h"
 
-//パーティクルエディタークラス
+//パーティクルスポーンクラス
 class CParticle_Spawn
 {
 public:

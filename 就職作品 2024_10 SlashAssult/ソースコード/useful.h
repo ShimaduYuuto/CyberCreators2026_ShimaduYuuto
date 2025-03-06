@@ -16,7 +16,9 @@
 bool JudgeBallCollision(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, float length);	//円の当たり判定(位置、位置、判定する長さ)
 
 //計算系
-float Ratio(float value, float max);	//割合を算出
+float Ratio(float value, float max);								//割合を算出
+float CheckAngleDiff(float angle0, float angle1);					//二つの角度の角度差を算出
+float Vector3Distance(D3DXVECTOR3 pos0, D3DXVECTOR3 pos1);	//２点の距離を算出
 
 //0初期化用
 #define INT_ZERO (0)
@@ -54,9 +56,6 @@ bool TriggerDown();		//下を押したか
 bool TriggerRight();	//右を押したか
 bool TriggerLeft();		//左を押したか
 bool TriggerDecision();	//決定ボタンを押したか
-
-//２点の角度の差を算出
-float CheckAngleDiff(float angle0, float angle1);
 
 //上限値と下限値をそれぞれ比べる
 //template<typename T>

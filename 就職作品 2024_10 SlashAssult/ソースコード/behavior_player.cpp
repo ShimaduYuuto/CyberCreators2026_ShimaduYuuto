@@ -13,7 +13,6 @@
 #include "effect_hitattack.h"
 #include "effect_runsmoke.h"
 #include "state_player_normal.h"
-#include "state_player_counter.h"
 #include "state_player_guard.h"
 #include "particle_rush.h"
 
@@ -891,11 +890,11 @@ void CPlayerBehavior_NormalAttack001::Cancel(CPlayer* player)
 //コンストラクタ
 //============================
 CPlayerBehavior_NormalAttack002::CPlayerBehavior_NormalAttack002(CPlayer* player) : CPlayerBehavior_NormalAttack(player),
-	m_bChargeEnd(false),			//チャージ終了フラグ
-	m_fChargeRate(0.5f),			//チャージ倍率
-	m_fChargeAcceleration(0.0f),	//チャージ加速度
-	m_nCancelCount(0),				//キャンセルカウント
-	m_pEffect(nullptr)				//エフェクトのポインタ
+	m_bChargeEnd(false),				//チャージ終了フラグ
+	m_fChargeRate(FIRST_CHARGERATE),	//チャージ倍率
+	m_fChargeAcceleration(0.0f),		//チャージ加速度
+	m_nCancelCount(0),					//キャンセルカウント
+	m_pEffect(nullptr)					//エフェクトのポインタ
 {
 	//モーションの設定
 	player->SetMotion(player->PLAYERMOTION_ATTACKCHARGE);
@@ -931,7 +930,8 @@ CPlayerBehavior_NormalAttack002::~CPlayerBehavior_NormalAttack002()
 //============================
 void CPlayerBehavior_NormalAttack002::Behavior(CPlayer* player)
 {
-	if (!m_bChargeEnd)
+	//チャージが終わっているか
+	if (!m_bChargeEnd)	//終わっていないなら
 	{
 		//キャンセルカウントの加算
 		if (m_nCancelCount < ACCEPT_CANCELTIME)
@@ -1159,15 +1159,39 @@ void CPlayerBehavior_DashAttack::Behavior(CPlayer* player)
 		pGame->SetRushJudge(true);
 	}
 
-	//モデルパーツの取得
-	CModelparts* pModelParts = player->GetModelParts(15);
-
-	//オフセット位置の設定
-	D3DXVECTOR3 OffsetPos = { 0.0f, ORBIT_OFFSET_LENGTH, 0.0f };
-	D3DXVec3TransformCoord(&OffsetPos, &OffsetPos, &pModelParts->GetMtx());
-
 	//攻撃処理
 	CPlayerBehavior_Attack::Behavior(player);
+}
+
+//============================
+//キャンセル処理
+//============================
+void CPlayerBehavior_DashAttack::Cancel(CPlayer* player)
+{
+	//ゲームシーンの取得
+	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
+
+	//ロックオン相手の確認
+	if (pGame->GetLockon() == nullptr) return;
+	if (pGame->GetLockon()->GetTarget() == nullptr) return;
+
+	//ターゲットにダッシュ
+	D3DXVECTOR3 TagPos = pGame->GetLockon()->GetTarget()->GetPos();
+	D3DXVECTOR3 Length = TagPos - player->GetPos();
+	float fLength = sqrtf((Length.x * Length.x) + (Length.z * Length.z));
+	fLength = D3DXVec3Length(&Length);	//距離を算出
+
+	//攻撃の範囲外ならダッシュする
+	if (fLength > CPlayerBehavior_Dash::STOP_LENGYH)
+	{
+		SetNextBehavior(new CPlayerBehavior_Move(player));
+	}
+	else
+	{
+		//次の攻撃の生成
+		NextBehavior(player);	//次の攻撃を設定
+		SetRushContinue(true);	//ラッシュを続ける判定
+	}
 }
 
 //=================================================
@@ -1186,37 +1210,21 @@ CPlayerBehavior_DashAttack000::CPlayerBehavior_DashAttack000(CPlayer* player) : 
 }
 
 //============================
-//キャンセル処理
+//次の行動を設定
+//============================
+void CPlayerBehavior_DashAttack000::NextBehavior(CPlayer* player)
+{
+	//次の攻撃の生成
+	SetNextBehavior(new CPlayerBehavior_DashAttack001(player));
+}
+
+//============================
+//キャンセル時の処理
 //============================
 void CPlayerBehavior_DashAttack000::Cancel(CPlayer* player)
 {
-	//ゲームシーンの取得
-	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
-
-	//ロックオン相手の確認
-	if (pGame->GetLockon() != nullptr)
-	{
-		if (pGame->GetLockon()->GetTarget() != nullptr)
-		{
-			//ターゲットにダッシュ
-			D3DXVECTOR3 TagPos = pGame->GetLockon()->GetTarget()->GetPos();
-			D3DXVECTOR3 Length = TagPos - player->GetPos();
-			float fLength = sqrtf((Length.x * Length.x) + (Length.z * Length.z));
-			fLength = D3DXVec3Length(&Length);	//距離を算出
-
-			//攻撃の範囲外ならダッシュする
-			if (fLength > CPlayerBehavior_Dash::STOP_LENGYH)
-			{
-				SetNextBehavior(new CPlayerBehavior_Move(player));
-			}
-			else
-			{
-				//次の攻撃の生成
-				SetNextBehavior(new CPlayerBehavior_DashAttack001(player));
-				SetRushContinue(true);
-			}
-		}
-	}
+	//ダッシュ攻撃のキャンセル処理
+	CPlayerBehavior_DashAttack::Cancel(player);
 }
 
 //============================
@@ -1242,37 +1250,21 @@ CPlayerBehavior_DashAttack001::CPlayerBehavior_DashAttack001(CPlayer* player) : 
 }
 
 //============================
-//キャンセル処理
+//次の行動を設定
+//============================
+void CPlayerBehavior_DashAttack001::NextBehavior(CPlayer* player)
+{
+	//次の攻撃の生成
+	SetNextBehavior(new CPlayerBehavior_DashAttack000(player));
+}
+
+//============================
+//キャンセル時の処理
 //============================
 void CPlayerBehavior_DashAttack001::Cancel(CPlayer* player)
 {
-	//ゲームシーンの取得
-	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
-
-	//ロックオン相手の確認
-	if (pGame->GetLockon() != nullptr)
-	{
-		if (pGame->GetLockon()->GetTarget() != nullptr)
-		{
-			//ターゲットにダッシュ
-			D3DXVECTOR3 TagPos = pGame->GetLockon()->GetTarget()->GetPos();
-			D3DXVECTOR3 Length = TagPos - player->GetPos();
-			float fLength = sqrtf((Length.x * Length.x) + (Length.z * Length.z));
-			fLength = D3DXVec3Length(&Length);	//距離を算出
-
-			//攻撃の範囲外ならダッシュする
-			if (fLength > CPlayerBehavior_Dash::STOP_LENGYH)
-			{
-				SetNextBehavior(new CPlayerBehavior_Move(player));
-			}
-			else
-			{
-				//次の攻撃の生成
-				SetNextBehavior(new CPlayerBehavior_DashAttack000(player));
-				SetRushContinue(true);
-			}
-		}
-	}
+	//ダッシュ攻撃のキャンセル処理
+	CPlayerBehavior_DashAttack::Cancel(player);
 }
 
 //============================

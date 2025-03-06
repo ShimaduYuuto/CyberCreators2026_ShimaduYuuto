@@ -17,10 +17,7 @@ class CState_Player_Death : public CState_Player
 public:
 
 	//メンバ関数
-	CState_Player_Death(CPlayer* player);
-	/*{
-		SetEndTime(30);
-	};	*///コンストラクタ
+	CState_Player_Death(CPlayer* player);		///コンストラクタ
 	~CState_Player_Death() {};					//デストラクタ
 
 	//状態ごとの更新

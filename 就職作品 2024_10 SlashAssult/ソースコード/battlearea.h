@@ -17,9 +17,6 @@ class CBattleArea
 {
 public:
 
-	static constexpr float RADIUS_ENTEREDAREA{ 400.0f };	//エリアに入ったかを感知する半径
-	static constexpr float RADIUS{ 500.0f };				//半径
-
 	//メンバ関数
 	CBattleArea();		//コンストラクタ
 	virtual ~CBattleArea();		//デストラクタ
@@ -54,6 +51,10 @@ public:
 	void SetPath(const char* path) { m_Path = path; }
 
 private:
+
+	//定数
+	static constexpr float RADIUS_ENTEREDAREA{ 400.0f };	//エリアに入ったかを感知する半径
+	static constexpr float RADIUS{ 500.0f };				//半径
 
 	//メンバ変数
 	D3DXVECTOR3 m_Pos;				//位置

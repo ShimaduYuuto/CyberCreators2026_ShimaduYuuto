@@ -17,7 +17,7 @@ class CState_Enemy_Blow : public CState_Enemy
 public:
 
 	//定数
-	static constexpr float VALUE_BLOW = 10.0f;	//吹き飛ぶ値
+	static constexpr float VALUE_BLOW{ 10.0f };	//吹き飛ぶ値
 
 	//メンバ関数
 	CState_Enemy_Blow(CEnemy* enemy);		//コンストラクタ

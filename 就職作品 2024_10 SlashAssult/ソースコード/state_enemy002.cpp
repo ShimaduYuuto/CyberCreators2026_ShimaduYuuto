@@ -71,7 +71,7 @@ CState_Enemy002_Stick::CState_Enemy002_Stick(CEnemy* enemy) : CState_Enemy_Stick
 //====================================
 //コンストラクタ
 //====================================
-CState_Enemy002_Direction::CState_Enemy002_Direction(CEnemy* enemy) : m_nCount(0)
+CState_Enemy002_Direction::CState_Enemy002_Direction(CEnemy* enemy) : CState_Enemy(enemy), m_nCount(0)
 {
 	//設定
 	SetAction(new CEnemyBehavior_Direction(enemy));	//演出の行動
@@ -101,7 +101,7 @@ void CState_Enemy002_Direction::UpdateState(CEnemy* enemy)
 //====================================
 //コンストラクタ
 //====================================
-CState_Enemy002_Direction_Destroy::CState_Enemy002_Direction_Destroy(CEnemy* enemy)
+CState_Enemy002_Direction_Destroy::CState_Enemy002_Direction_Destroy(CEnemy* enemy) : CState_Enemy(enemy)
 {
 	//設定
 	SetAction(new CEnemyBehavior_Direction_Destroy(enemy));	//終了時間

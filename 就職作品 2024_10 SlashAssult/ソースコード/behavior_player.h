@@ -257,7 +257,8 @@ public:
 	static constexpr float MAX_RATE{ 100.0f };			//最大倍率
 	static constexpr int ACCEPT_CANCELTIME{ 10 };		//キャンセルを受け付ける時間
 	static constexpr float ACCELERATION_VALUE{ 0.1f };	//1フレームに加速度に加算する値
-	static const int END_TIME{ 20 };					//終了までの時間
+	static constexpr int END_TIME{ 20 };				//終了までの時間
+	static constexpr float FIRST_CHARGERATE{ 0.5f };	//最初のチャージ倍率
 
 	//メンバ関数
 	CPlayerBehavior_NormalAttack002(CPlayer* player);			//コンストラクタ
@@ -370,10 +371,12 @@ public:
 	static constexpr int START_CANCELTIME{ 10 };		//キャンセルが始める時間
 	static constexpr float ATTACK_LENGTH{ 75.0f };		//攻撃の距離
 
+	//関数
 	CPlayerBehavior_DashAttack() {}
 	CPlayerBehavior_DashAttack(CPlayer* player);	//コンストラクタ
 	~CPlayerBehavior_DashAttack() override;			//デストラクタ
 	void Behavior(CPlayer* player) override;		//行動
+	void Cancel(CPlayer* player) override;			//キャンセル時の処理
 
 	//ラッシュを続けるか
 	void SetRushContinue(bool set) { m_RushContinue = set; }	//設定
@@ -381,6 +384,7 @@ public:
 
 private:
 
+	//変数
 	bool m_RushContinue;	//ラッシュを続けるか
 };
 
@@ -391,15 +395,13 @@ class CPlayerBehavior_DashAttack000 : public CPlayerBehavior_DashAttack
 {
 public:
 
+	//関数
 	CPlayerBehavior_DashAttack000() {}
 	CPlayerBehavior_DashAttack000(CPlayer* player);		//コンストラクタ
-	~CPlayerBehavior_DashAttack000() override {}			//デストラクタ
-
-	//行動
-	void Behavior(CPlayer* player) override;
-
-	//キャンセル時の処理
-	void Cancel(CPlayer* player) override;
+	~CPlayerBehavior_DashAttack000() override {}		//デストラクタ
+	void Behavior(CPlayer* player) override;			//行動
+	void Cancel(CPlayer* player) override;				//キャンセル時の処理
+	void NextBehavior(CPlayer* player) override;		//次の行動
 };
 
 //==========================
@@ -409,15 +411,13 @@ class CPlayerBehavior_DashAttack001 : public CPlayerBehavior_DashAttack
 {
 public:
 
+	//関数
 	CPlayerBehavior_DashAttack001() {}
 	CPlayerBehavior_DashAttack001(CPlayer* player);		//コンストラクタ
-	~CPlayerBehavior_DashAttack001() override {}			//デストラクタ
-
-	//行動
-	void Behavior(CPlayer* player) override;
-
-	//キャンセル時の処理
-	void Cancel(CPlayer* player) override;
+	~CPlayerBehavior_DashAttack001() override {}		//デストラクタ
+	void Behavior(CPlayer* player) override;			//行動
+	void Cancel(CPlayer* player) override;				//キャンセル時の処理
+	void NextBehavior(CPlayer* player) override;		//次の行動
 };
 
 //==========================

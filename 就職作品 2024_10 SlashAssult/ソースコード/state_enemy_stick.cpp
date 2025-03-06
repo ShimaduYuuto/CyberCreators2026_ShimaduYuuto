@@ -14,7 +14,7 @@
 //====================================
 //コンストラクタ
 //====================================
-CState_Enemy_Stick::CState_Enemy_Stick(CEnemy* enemy)
+CState_Enemy_Stick::CState_Enemy_Stick(CEnemy* enemy) : CState_Enemy(enemy)
 {
 	//設定
 	SetAction(new CEnemyBehavior());									//空の行動

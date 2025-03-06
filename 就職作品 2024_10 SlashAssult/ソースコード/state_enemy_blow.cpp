@@ -16,7 +16,7 @@
 //====================================
 //コンストラクタ
 //====================================
-CState_Enemy_Blow::CState_Enemy_Blow(CEnemy* enemy)
+CState_Enemy_Blow::CState_Enemy_Blow(CEnemy* enemy) : CState_Enemy(enemy)
 {
 	//初期アクション
 	SetAction(new CEnemyBehavior());

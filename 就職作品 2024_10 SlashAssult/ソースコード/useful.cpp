@@ -50,6 +50,7 @@ float Ratio(float value, float max)
 //=============================================
 float CheckAngleDiff(float angle0, float angle1)
 {
+    //変数宣言
     float InterpolationAngle = angle0 - angle1;
 
     if (InterpolationAngle > D3DX_PI)
@@ -63,6 +64,22 @@ float CheckAngleDiff(float angle0, float angle1)
 
     //絶対値を返す
     return std::abs(InterpolationAngle);
+}
+
+//=============================================
+//二点の距離を算出
+//=============================================
+float Vector3Distance(D3DXVECTOR3 pos0, D3DXVECTOR3 pos1)
+{
+    //変数宣言
+    D3DXVECTOR3 Vec3Distance = pos1 - pos0; //２点のベクトル
+    float fDistance = 0.0f;                 //距離
+
+    //距離を算出
+    fDistance = D3DXVec3Length(&Vec3Distance);
+
+    //距離を返す
+    return fDistance; 
 }
 
 //==================================================================

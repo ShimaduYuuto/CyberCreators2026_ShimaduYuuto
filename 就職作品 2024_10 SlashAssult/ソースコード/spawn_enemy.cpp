@@ -13,9 +13,9 @@
 //コンストラクタ
 //============================
 CSpawn_Enemy::CSpawn_Enemy(int nPriority) : CObject(nPriority),
-	m_nCount(0),
-	m_pPaticleManager(nullptr),
-	m_EnemyType()
+	m_nCount(0),				//カウント
+	m_pPaticleManager(nullptr),	//パーティクルの制御をするポインタ
+	m_EnemyType()				//出現させる敵の種類
 {
 	//登録する敵の数を増やす
 	if (CBattleAreaManager::GetInstance()->GetCurrentBattleArea() != nullptr)
@@ -29,6 +29,7 @@ CSpawn_Enemy::CSpawn_Enemy(int nPriority) : CObject(nPriority),
 //============================
 CSpawn_Enemy::~CSpawn_Enemy()
 {
+	//パーティクルマネージャーの破棄
 	if (m_pPaticleManager != nullptr)
 	{
 		delete m_pPaticleManager;

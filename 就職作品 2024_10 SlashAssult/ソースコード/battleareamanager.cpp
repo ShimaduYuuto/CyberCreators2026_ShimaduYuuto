@@ -14,8 +14,8 @@
 //コンストラクタ
 //============================
 CBattleAreaManager::CBattleAreaManager() :
-	m_BattleAreaList(),
-	m_pCurrentBattleArea(nullptr)
+	m_BattleAreaList(),				//バトルエリアのリスト
+	m_pCurrentBattleArea(nullptr)	//現在のバトルエリアのポインタ
 {
 	//リストの初期化
 	m_BattleAreaList.clear();

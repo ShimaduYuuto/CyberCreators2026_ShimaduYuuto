@@ -15,10 +15,10 @@
 //コンストラクタ
 //============================
 CLockon::CLockon() : 
-	m_pTarget(nullptr),
-	m_pMark(nullptr),
-	m_LockonList(),
-	m_pRushUi(nullptr)
+	m_pTarget(nullptr),	//現在ターゲット対象のポインタ
+	m_pMark(nullptr),	//印のポインタ
+	m_LockonList(),		//ロックオン対象たちのリスト
+	m_pRushUi(nullptr)	//ラッシュ可能のUIを表示するポインタ
 {
 	m_LockonList.clear();
 }

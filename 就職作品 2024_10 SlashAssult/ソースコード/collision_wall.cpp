@@ -8,7 +8,6 @@
 //ヘッダーのインクルード
 #include "collision_wall.h"
 #include "manager.h"
-#include "game.h"
 
 //定数の初期化
 const std::string CCollision_Wall::FILEPATH = "data\\TEXTURE\\SmashMesh000.png";//テクスチャパス
@@ -19,8 +18,8 @@ const float CCollision_Wall::HEIGHT = 50.0f;									//高さ
 //コンストラクタ
 //============================
 CCollision_Wall::CCollision_Wall(int nPriority) : CObjectCylinder(nPriority),
-	m_bEnd(false),	//終了判定
-	m_fAlpha(0.0f)	//α値
+	m_bEnd(false),			//終了判定
+	m_fAlpha(FLOAT_ZERO)	//α値
 {
 
 }

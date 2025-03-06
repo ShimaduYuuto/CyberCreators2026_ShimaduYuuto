@@ -23,7 +23,6 @@ class CState_Enemy : public CState
 public:
 
 	//メンバ関数
-	CState_Enemy() : m_pAction(nullptr), m_pNextState(nullptr){};				//コンストラクタ
 	CState_Enemy(CEnemy* enemy) : m_pAction(nullptr), m_pNextState(nullptr) {};	//コンストラクタ
 	~CState_Enemy() override;													//デストラクタ
 

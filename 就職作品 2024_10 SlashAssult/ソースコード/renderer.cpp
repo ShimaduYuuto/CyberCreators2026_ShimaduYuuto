@@ -156,9 +156,6 @@ void CRenderer::Draw()
 	//描画開始
 	if (SUCCEEDED(m_pD3DDevice->BeginScene()))
 	{
-		//デバッグプロックの描画
-		//CManager::GetInstance()->GetDebugProc()->Draw();
-
 		//カメラの設定
 		CManager::GetInstance()->GetCamera()->SetCamera();
 

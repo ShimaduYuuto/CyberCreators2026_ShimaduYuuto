@@ -30,7 +30,6 @@ public:
 
 	//状態の更新
 	void UpdateState(CPlayer* player) override;	
-	//bool SetDamage(CPlayer* player, int damage, float angle) override;	//ダメージの設定
 
 private:
 

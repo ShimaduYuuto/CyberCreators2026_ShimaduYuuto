@@ -7,15 +7,16 @@
 
 //ヘッダーのインクルード
 #include "collision.h"
+#include "useful.h"
 
 //============================
 //コンストラクタ
 //============================
 CCollision::CCollision() : 
-	m_CollisionPos(),
-	m_fRadius(),
-	m_Pos(),
-	m_pCollisionView(nullptr)
+	m_CollisionPos(VEC3_RESET_ZERO),		//ローカル位置
+	m_fRadius(FLOAT_ZERO),					//半径
+	m_Pos(VEC3_RESET_ZERO),					//親の位置
+	m_pCollisionView(nullptr)				//コリジョンの可視化
 {
 
 }
@@ -67,6 +68,8 @@ void CCollision::Update(D3DXVECTOR3 offsetpos)
 {
 	//位置を算出
 	m_Pos = offsetpos + m_CollisionPos;
+
+	//デバック時に範囲を表示
 #if _DEBUG
 	m_pCollisionView->SetSize({ m_fRadius * 2.0f, m_fRadius * 2.0f, 0.0f });
 	m_pCollisionView->Update();
@@ -83,8 +86,8 @@ CCollision* CCollision::Create(float radius, D3DXVECTOR3 collisionpos)
 	pCollision = new CCollision;
 
 	//パラメータの代入
-	pCollision->m_fRadius = radius;
-	pCollision->m_CollisionPos = collisionpos;
+	pCollision->m_fRadius = radius;				//半径
+	pCollision->m_CollisionPos = collisionpos;	//ローカル位置
 
 	//初期化
 	pCollision->Init();

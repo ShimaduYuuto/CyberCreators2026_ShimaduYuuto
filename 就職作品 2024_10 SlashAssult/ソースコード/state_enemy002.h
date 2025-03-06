@@ -135,18 +135,14 @@ public:
 	static constexpr int TIME_END{ 300 };	//終了時間
 
 	//メンバ関数
-	CState_Enemy002_Direction() : m_nCount(0)
-	{
-		SetAction(new CEnemyBehavior());
-		SetEndTime(TIME_END);
-	};	//コンストラクタ
-
 	CState_Enemy002_Direction(CEnemy* enemy);	///コンストラクタ
 
 	//状態の更新
 	void UpdateState(CEnemy* enemy) override;
 
 private:
+
+	//変数
 	int m_nCount;	//カウント用
 };
 

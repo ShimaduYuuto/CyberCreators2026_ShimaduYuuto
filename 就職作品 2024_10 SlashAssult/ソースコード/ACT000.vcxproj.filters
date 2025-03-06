@@ -31,23 +31,11 @@
     <Filter Include="ソース ファイル\object">
       <UniqueIdentifier>{4fc0a658-3b1c-4c9a-9a9b-8bf5ebcca0be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\gimmick">
-      <UniqueIdentifier>{467a92b2-035c-4b02-b4e5-c1631b992bdc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\gimmick">
-      <UniqueIdentifier>{8fdc97c7-5ea5-40b1-9654-2ff4510eba56}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\scene">
       <UniqueIdentifier>{55f41be4-5b62-49b0-a821-e916bd546bde}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\scene">
       <UniqueIdentifier>{634baaaa-a1ea-4cd7-8735-1d64e94c6283}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\model">
-      <UniqueIdentifier>{755d2f65-5e7b-490a-9618-75a62156e9cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\model">
-      <UniqueIdentifier>{e2f00d66-c853-456a-aa23-0aa3e7a72fa7}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\battlearea">
       <UniqueIdentifier>{f4ce8a5d-fc8e-4371-939a-5bfd92d70097}</UniqueIdentifier>
@@ -60,24 +48,6 @@
     </Filter>
     <Filter Include="ソース ファイル\direction">
       <UniqueIdentifier>{28b7fe60-3a7a-401c-b851-0b99667f1d4c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\gauge">
-      <UniqueIdentifier>{5848a58b-dba9-4ed5-bfb7-fb04b52eb3c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\gauge">
-      <UniqueIdentifier>{1313ccea-128d-4573-8915-9eed95d8f3f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\particle">
-      <UniqueIdentifier>{a5d8ff53-b269-4fe2-8baf-56c17cf0d31f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\particle">
-      <UniqueIdentifier>{307fab94-0aab-412d-9633-a5dd4fca1c7e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\bullet">
-      <UniqueIdentifier>{3cf75829-3286-46e9-ad31-8e6239ac994e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\bullet">
-      <UniqueIdentifier>{a1d5b462-1a91-4d53-acaf-1d647bf7e635}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\debug">
       <UniqueIdentifier>{1ffa6de2-2b73-4cb2-abf1-739fba52f5d8}</UniqueIdentifier>
@@ -121,29 +91,11 @@
     <Filter Include="ソース ファイル\character\player">
       <UniqueIdentifier>{819e3257-c37b-464d-8893-2fbca0760546}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\barrier">
-      <UniqueIdentifier>{f89a7233-4c5d-44ee-954d-3ddf7c37b6cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\barrier">
-      <UniqueIdentifier>{812cba41-a0e0-486c-8b6b-b7182d0e255f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\ui">
-      <UniqueIdentifier>{b6884247-3848-4a67-956c-2831ef609e14}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\ui">
-      <UniqueIdentifier>{54ad98d2-c391-4785-b351-e8d19d058581}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\explosion">
       <UniqueIdentifier>{0e612e38-4f57-4e6a-9b10-033a13d084b6}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\explosion">
       <UniqueIdentifier>{f48903c0-6883-4cda-8cbf-e38a9e770af3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\modelparts">
-      <UniqueIdentifier>{54982071-86bf-40fe-adaa-02945d4cfffd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\modelparts">
-      <UniqueIdentifier>{42b15e71-d8cc-43c5-a4ab-df87bf1e3ebf}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\camera">
       <UniqueIdentifier>{27a090a6-cd25-42b9-80a7-9fd5d85e7671}</UniqueIdentifier>
@@ -162,6 +114,78 @@
     </Filter>
     <Filter Include="ソース ファイル\system">
       <UniqueIdentifier>{51233d4d-dd9c-4e48-9bed-df962c4e3b59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\object\2D">
+      <UniqueIdentifier>{8c7977ad-3210-475f-9b0e-fa366eec69cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\object\2D\ui">
+      <UniqueIdentifier>{b6884247-3848-4a67-956c-2831ef609e14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\object\2D\gauge">
+      <UniqueIdentifier>{5848a58b-dba9-4ed5-bfb7-fb04b52eb3c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\2D">
+      <UniqueIdentifier>{8cbd09cf-802f-4b36-8d62-1fca0e7e0c4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\2D\ui">
+      <UniqueIdentifier>{54ad98d2-c391-4785-b351-e8d19d058581}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\2D\gauge">
+      <UniqueIdentifier>{1313ccea-128d-4573-8915-9eed95d8f3f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\object\Xfile">
+      <UniqueIdentifier>{7dde417d-b736-4836-b47d-9b89232d5935}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\object\Xfile\model">
+      <UniqueIdentifier>{755d2f65-5e7b-490a-9618-75a62156e9cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\object\Xfile\modelparts">
+      <UniqueIdentifier>{54982071-86bf-40fe-adaa-02945d4cfffd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\object\Xfile\bullet">
+      <UniqueIdentifier>{3cf75829-3286-46e9-ad31-8e6239ac994e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\object\Xfile\gimmick">
+      <UniqueIdentifier>{467a92b2-035c-4b02-b4e5-c1631b992bdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\Xfile">
+      <UniqueIdentifier>{8df05db1-c426-4c36-a420-ac5741683588}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\Xfile\modelparts">
+      <UniqueIdentifier>{42b15e71-d8cc-43c5-a4ab-df87bf1e3ebf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\Xfile\model">
+      <UniqueIdentifier>{e2f00d66-c853-456a-aa23-0aa3e7a72fa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\Xfile\gimmick">
+      <UniqueIdentifier>{8fdc97c7-5ea5-40b1-9654-2ff4510eba56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\Xfile\bullet">
+      <UniqueIdentifier>{a1d5b462-1a91-4d53-acaf-1d647bf7e635}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\object\billboard">
+      <UniqueIdentifier>{b913456b-10da-4ad3-9d89-ee3203faf4c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\object\billboard\particle">
+      <UniqueIdentifier>{a5d8ff53-b269-4fe2-8baf-56c17cf0d31f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\billboard">
+      <UniqueIdentifier>{ea825a0e-3988-4469-ace6-87a09d483114}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\billboard\particle">
+      <UniqueIdentifier>{307fab94-0aab-412d-9633-a5dd4fca1c7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\object\3D">
+      <UniqueIdentifier>{2b5c7381-1f36-46ab-9a62-21ecbc486418}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\object\3D\barrier">
+      <UniqueIdentifier>{f89a7233-4c5d-44ee-954d-3ddf7c37b6cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\3D">
+      <UniqueIdentifier>{47387594-ea51-4fd1-886d-b48f0e5f92d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\3D\barrier">
+      <UniqueIdentifier>{812cba41-a0e0-486c-8b6b-b7182d0e255f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -192,9 +216,6 @@
     <ClInclude Include="animation.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="shadow.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="precompile.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -202,9 +223,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="state_player.h">
-      <Filter>ヘッダー ファイル\state\state_player</Filter>
-    </ClInclude>
-    <ClInclude Include="state_player_counter.h">
       <Filter>ヘッダー ファイル\state\state_player</Filter>
     </ClInclude>
     <ClInclude Include="state_player_damage.h">
@@ -339,32 +357,11 @@
     <ClInclude Include="object.h">
       <Filter>ヘッダー ファイル\object</Filter>
     </ClInclude>
-    <ClInclude Include="object2D.h">
-      <Filter>ヘッダー ファイル\object</Filter>
-    </ClInclude>
-    <ClInclude Include="object3D.h">
-      <Filter>ヘッダー ファイル\object</Filter>
-    </ClInclude>
-    <ClInclude Include="objectbillboard.h">
-      <Filter>ヘッダー ファイル\object</Filter>
-    </ClInclude>
-    <ClInclude Include="objectcylinder.h">
-      <Filter>ヘッダー ファイル\object</Filter>
-    </ClInclude>
-    <ClInclude Include="objectdome.h">
-      <Filter>ヘッダー ファイル\object</Filter>
-    </ClInclude>
-    <ClInclude Include="objectmesh.h">
-      <Filter>ヘッダー ファイル\object</Filter>
-    </ClInclude>
-    <ClInclude Include="objectX.h">
-      <Filter>ヘッダー ファイル\object</Filter>
-    </ClInclude>
     <ClInclude Include="gimmick.h">
-      <Filter>ヘッダー ファイル\gimmick</Filter>
+      <Filter>ヘッダー ファイル\object\Xfile\gimmick</Filter>
     </ClInclude>
     <ClInclude Include="explodingbarrel.h">
-      <Filter>ヘッダー ファイル\gimmick</Filter>
+      <Filter>ヘッダー ファイル\object\Xfile\gimmick</Filter>
     </ClInclude>
     <ClInclude Include="scene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
@@ -379,16 +376,16 @@
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
     <ClInclude Include="model.h">
-      <Filter>ヘッダー ファイル\model</Filter>
+      <Filter>ヘッダー ファイル\object\Xfile\model</Filter>
     </ClInclude>
     <ClInclude Include="venue.h">
-      <Filter>ヘッダー ファイル\model</Filter>
+      <Filter>ヘッダー ファイル\object\Xfile\model</Filter>
     </ClInclude>
     <ClInclude Include="tree.h">
-      <Filter>ヘッダー ファイル\model</Filter>
+      <Filter>ヘッダー ファイル\object\Xfile\model</Filter>
     </ClInclude>
     <ClInclude Include="fence.h">
-      <Filter>ヘッダー ファイル\model</Filter>
+      <Filter>ヘッダー ファイル\object\Xfile\model</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
       <Filter>ヘッダー ファイル\character\player</Filter>
@@ -412,28 +409,28 @@
       <Filter>ヘッダー ファイル\direction</Filter>
     </ClInclude>
     <ClInclude Include="gauge.h">
-      <Filter>ヘッダー ファイル\gauge</Filter>
+      <Filter>ヘッダー ファイル\object\2D\gauge</Filter>
     </ClInclude>
     <ClInclude Include="gauge_playerlife.h">
-      <Filter>ヘッダー ファイル\gauge</Filter>
+      <Filter>ヘッダー ファイル\object\2D\gauge</Filter>
     </ClInclude>
     <ClInclude Include="gauge_slow.h">
-      <Filter>ヘッダー ファイル\gauge</Filter>
+      <Filter>ヘッダー ファイル\object\2D\gauge</Filter>
     </ClInclude>
     <ClInclude Include="particle.h">
-      <Filter>ヘッダー ファイル\particle</Filter>
+      <Filter>ヘッダー ファイル\object\billboard\particle</Filter>
     </ClInclude>
     <ClInclude Include="particle_charge.h">
-      <Filter>ヘッダー ファイル\particle</Filter>
+      <Filter>ヘッダー ファイル\object\billboard\particle</Filter>
     </ClInclude>
     <ClInclude Include="particle_spawn.h">
-      <Filter>ヘッダー ファイル\particle</Filter>
+      <Filter>ヘッダー ファイル\object\billboard\particle</Filter>
     </ClInclude>
     <ClInclude Include="enemybullet.h">
-      <Filter>ヘッダー ファイル\bullet</Filter>
+      <Filter>ヘッダー ファイル\object\Xfile\bullet</Filter>
     </ClInclude>
     <ClInclude Include="enemybulletmanager.h">
-      <Filter>ヘッダー ファイル\bullet</Filter>
+      <Filter>ヘッダー ファイル\object\Xfile\bullet</Filter>
     </ClInclude>
     <ClInclude Include="debugproc.h">
       <Filter>ヘッダー ファイル\debug</Filter>
@@ -442,40 +439,40 @@
       <Filter>ヘッダー ファイル\debug</Filter>
     </ClInclude>
     <ClInclude Include="barrier.h">
-      <Filter>ヘッダー ファイル\barrier</Filter>
+      <Filter>ヘッダー ファイル\object\3D\barrier</Filter>
     </ClInclude>
     <ClInclude Include="barriermanager.h">
-      <Filter>ヘッダー ファイル\barrier</Filter>
+      <Filter>ヘッダー ファイル\object\3D\barrier</Filter>
     </ClInclude>
     <ClInclude Include="cleartime.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="dot.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="number.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="oldpaper.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="rank.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="result_bg.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="result_txtui.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="title_logo.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="ui_gameguide.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="ui_rushchance.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="character.h">
       <Filter>ヘッダー ファイル\character</Filter>
@@ -490,25 +487,25 @@
       <Filter>ヘッダー ファイル\explosion</Filter>
     </ClInclude>
     <ClInclude Include="lockonmark.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="modelparts.h">
-      <Filter>ヘッダー ファイル\modelparts</Filter>
+      <Filter>ヘッダー ファイル\object\Xfile\modelparts</Filter>
     </ClInclude>
     <ClInclude Include="shield.h">
-      <Filter>ヘッダー ファイル\modelparts</Filter>
+      <Filter>ヘッダー ファイル\object\Xfile\modelparts</Filter>
     </ClInclude>
     <ClInclude Include="enemymanager.h">
       <Filter>ヘッダー ファイル\character\enemy</Filter>
     </ClInclude>
     <ClInclude Include="gimmickmanager.h">
-      <Filter>ヘッダー ファイル\gimmick</Filter>
+      <Filter>ヘッダー ファイル\object\Xfile\gimmick</Filter>
     </ClInclude>
     <ClInclude Include="state.h">
       <Filter>ヘッダー ファイル\state</Filter>
     </ClInclude>
     <ClInclude Include="letterbox.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="camera.h">
       <Filter>ヘッダー ファイル\camera</Filter>
@@ -523,22 +520,22 @@
       <Filter>ヘッダー ファイル\camera</Filter>
     </ClInclude>
     <ClInclude Include="particle_rush.h">
-      <Filter>ヘッダー ファイル\particle</Filter>
+      <Filter>ヘッダー ファイル\object\billboard\particle</Filter>
     </ClInclude>
     <ClInclude Include="guard_knockback.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ui_gamestart.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="state_bullet_reflection.h">
-      <Filter>ヘッダー ファイル\bullet</Filter>
+      <Filter>ヘッダー ファイル\object\Xfile\bullet</Filter>
     </ClInclude>
     <ClInclude Include="state_bullet.h">
-      <Filter>ヘッダー ファイル\bullet</Filter>
+      <Filter>ヘッダー ファイル\object\Xfile\bullet</Filter>
     </ClInclude>
     <ClInclude Include="state_bullet_normal.h">
-      <Filter>ヘッダー ファイル\bullet</Filter>
+      <Filter>ヘッダー ファイル\object\Xfile\bullet</Filter>
     </ClInclude>
     <ClInclude Include="sky.h">
       <Filter>ヘッダー ファイル\object\mesh</Filter>
@@ -547,22 +544,22 @@
       <Filter>ヘッダー ファイル\object\mesh</Filter>
     </ClInclude>
     <ClInclude Include="select_continue.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="select_restart.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="select_title.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="pause_bg.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="pause_select.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="lifegauge.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="input.h">
       <Filter>ヘッダー ファイル\system</Filter>
@@ -588,11 +585,35 @@
     <ClInclude Include="effect_billboard.h">
       <Filter>ヘッダー ファイル\effect</Filter>
     </ClInclude>
-    <ClInclude Include="fog.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="colon.h">
-      <Filter>ヘッダー ファイル\ui</Filter>
+      <Filter>ヘッダー ファイル\object\2D\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="object2D.h">
+      <Filter>ヘッダー ファイル\object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="objectX.h">
+      <Filter>ヘッダー ファイル\object\Xfile</Filter>
+    </ClInclude>
+    <ClInclude Include="objectmesh.h">
+      <Filter>ヘッダー ファイル\object\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="objectcylinder.h">
+      <Filter>ヘッダー ファイル\object\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="objectdome.h">
+      <Filter>ヘッダー ファイル\object\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="objectbillboard.h">
+      <Filter>ヘッダー ファイル\object\billboard</Filter>
+    </ClInclude>
+    <ClInclude Include="object3D.h">
+      <Filter>ヘッダー ファイル\object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="shadow.h">
+      <Filter>ヘッダー ファイル\object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="fog.h">
+      <Filter>ヘッダー ファイル\system</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -620,9 +641,6 @@
     <ClCompile Include="animation.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="shadow.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="precompile.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -630,9 +648,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="state_player.cpp">
-      <Filter>ソース ファイル\state\state_player</Filter>
-    </ClCompile>
-    <ClCompile Include="state_player_counter.cpp">
       <Filter>ソース ファイル\state\state_player</Filter>
     </ClCompile>
     <ClCompile Include="state_player_damage.cpp">
@@ -679,9 +694,6 @@
     </ClCompile>
     <ClCompile Include="state_enemy003.cpp">
       <Filter>ソース ファイル\state\state_enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="behavior_character.cpp">
-      <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
     <ClCompile Include="behavior_enemy.cpp">
       <Filter>ソース ファイル\behavior</Filter>
@@ -758,23 +770,11 @@
     <ClCompile Include="object.cpp">
       <Filter>ソース ファイル\object</Filter>
     </ClCompile>
-    <ClCompile Include="object2D.cpp">
-      <Filter>ソース ファイル\object</Filter>
-    </ClCompile>
-    <ClCompile Include="object3D.cpp">
-      <Filter>ソース ファイル\object</Filter>
-    </ClCompile>
-    <ClCompile Include="objectbillboard.cpp">
-      <Filter>ソース ファイル\object</Filter>
-    </ClCompile>
-    <ClCompile Include="objectX.cpp">
-      <Filter>ソース ファイル\object</Filter>
-    </ClCompile>
     <ClCompile Include="gimmick.cpp">
-      <Filter>ソース ファイル\gimmick</Filter>
+      <Filter>ソース ファイル\object\Xfile\gimmick</Filter>
     </ClCompile>
     <ClCompile Include="explodingbarrel.cpp">
-      <Filter>ソース ファイル\gimmick</Filter>
+      <Filter>ソース ファイル\object\Xfile\gimmick</Filter>
     </ClCompile>
     <ClCompile Include="scene.cpp">
       <Filter>ソース ファイル\scene</Filter>
@@ -789,16 +789,16 @@
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="model.cpp">
-      <Filter>ソース ファイル\model</Filter>
+      <Filter>ソース ファイル\object\Xfile\model</Filter>
     </ClCompile>
     <ClCompile Include="venue.cpp">
-      <Filter>ソース ファイル\model</Filter>
+      <Filter>ソース ファイル\object\Xfile\model</Filter>
     </ClCompile>
     <ClCompile Include="tree.cpp">
-      <Filter>ソース ファイル\model</Filter>
+      <Filter>ソース ファイル\object\Xfile\model</Filter>
     </ClCompile>
     <ClCompile Include="fence.cpp">
-      <Filter>ソース ファイル\model</Filter>
+      <Filter>ソース ファイル\object\Xfile\model</Filter>
     </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>ソース ファイル\character\player</Filter>
@@ -822,25 +822,25 @@
       <Filter>ソース ファイル\direction</Filter>
     </ClCompile>
     <ClCompile Include="gauge.cpp">
-      <Filter>ソース ファイル\gauge</Filter>
+      <Filter>ソース ファイル\object\2D\gauge</Filter>
     </ClCompile>
     <ClCompile Include="gauge_playerlife.cpp">
-      <Filter>ソース ファイル\gauge</Filter>
+      <Filter>ソース ファイル\object\2D\gauge</Filter>
     </ClCompile>
     <ClCompile Include="gauge_slow.cpp">
-      <Filter>ソース ファイル\gauge</Filter>
+      <Filter>ソース ファイル\object\2D\gauge</Filter>
     </ClCompile>
     <ClCompile Include="particle.cpp">
-      <Filter>ソース ファイル\particle</Filter>
+      <Filter>ソース ファイル\object\billboard\particle</Filter>
     </ClCompile>
     <ClCompile Include="particle_spawn.cpp">
-      <Filter>ソース ファイル\particle</Filter>
+      <Filter>ソース ファイル\object\billboard\particle</Filter>
     </ClCompile>
     <ClCompile Include="enemybullet.cpp">
-      <Filter>ソース ファイル\bullet</Filter>
+      <Filter>ソース ファイル\object\Xfile\bullet</Filter>
     </ClCompile>
     <ClCompile Include="enemybulletmanager.cpp">
-      <Filter>ソース ファイル\bullet</Filter>
+      <Filter>ソース ファイル\object\Xfile\bullet</Filter>
     </ClCompile>
     <ClCompile Include="debugproc.cpp">
       <Filter>ソース ファイル\debug</Filter>
@@ -849,40 +849,40 @@
       <Filter>ソース ファイル\debug</Filter>
     </ClCompile>
     <ClCompile Include="barrier.cpp">
-      <Filter>ソース ファイル\barrier</Filter>
+      <Filter>ソース ファイル\object\3D\barrier</Filter>
     </ClCompile>
     <ClCompile Include="barriermanager.cpp">
-      <Filter>ソース ファイル\barrier</Filter>
+      <Filter>ソース ファイル\object\3D\barrier</Filter>
     </ClCompile>
     <ClCompile Include="cleartime.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="dot.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="number.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="oldpaper.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="rank.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="result_bg.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="result_txtui.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="ui_gameguide.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="ui_rushchance.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="title_logo.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="character.cpp">
       <Filter>ソース ファイル\character</Filter>
@@ -897,25 +897,25 @@
       <Filter>ソース ファイル\explosion</Filter>
     </ClCompile>
     <ClCompile Include="lockonmark.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="modelparts.cpp">
-      <Filter>ソース ファイル\modelparts</Filter>
+      <Filter>ソース ファイル\object\Xfile\modelparts</Filter>
     </ClCompile>
     <ClCompile Include="shield.cpp">
-      <Filter>ソース ファイル\modelparts</Filter>
+      <Filter>ソース ファイル\object\Xfile\modelparts</Filter>
     </ClCompile>
     <ClCompile Include="enemymanager.cpp">
       <Filter>ソース ファイル\character\enemy</Filter>
     </ClCompile>
     <ClCompile Include="gimmickmanager.cpp">
-      <Filter>ソース ファイル\gimmick</Filter>
+      <Filter>ソース ファイル\object\Xfile\gimmick</Filter>
     </ClCompile>
     <ClCompile Include="state.cpp">
       <Filter>ソース ファイル\state</Filter>
     </ClCompile>
     <ClCompile Include="letterbox.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="behavior_enemy002_alterego.cpp">
       <Filter>ソース ファイル\behavior</Filter>
@@ -933,7 +933,7 @@
       <Filter>ソース ファイル\camera</Filter>
     </ClCompile>
     <ClCompile Include="particle_rush.cpp">
-      <Filter>ソース ファイル\particle</Filter>
+      <Filter>ソース ファイル\object\billboard\particle</Filter>
     </ClCompile>
     <ClCompile Include="state_player_invincible.cpp">
       <Filter>ソース ファイル\state\state_player</Filter>
@@ -942,31 +942,31 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ui_gamestart.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="state_bullet_normal.cpp">
-      <Filter>ソース ファイル\bullet</Filter>
+      <Filter>ソース ファイル\object\Xfile\bullet</Filter>
     </ClCompile>
     <ClCompile Include="state_bullet_reflection.cpp">
-      <Filter>ソース ファイル\bullet</Filter>
+      <Filter>ソース ファイル\object\Xfile\bullet</Filter>
     </ClCompile>
     <ClCompile Include="pause_bg.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="pause_select.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="select_title.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="select_continue.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="select_restart.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="lifegauge.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="field.cpp">
       <Filter>ソース ファイル\object\mesh</Filter>
@@ -1007,11 +1007,26 @@
     <ClCompile Include="effect_billboard.cpp">
       <Filter>ソース ファイル\effect</Filter>
     </ClCompile>
-    <ClCompile Include="fog.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="colon.cpp">
-      <Filter>ソース ファイル\ui</Filter>
+      <Filter>ソース ファイル\object\2D\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="object2D.cpp">
+      <Filter>ソース ファイル\object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="objectX.cpp">
+      <Filter>ソース ファイル\object\Xfile</Filter>
+    </ClCompile>
+    <ClCompile Include="object3D.cpp">
+      <Filter>ソース ファイル\object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="objectbillboard.cpp">
+      <Filter>ソース ファイル\object\billboard</Filter>
+    </ClCompile>
+    <ClCompile Include="shadow.cpp">
+      <Filter>ソース ファイル\object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="fog.cpp">
+      <Filter>ソース ファイル\system</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

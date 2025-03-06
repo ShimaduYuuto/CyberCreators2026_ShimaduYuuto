@@ -13,7 +13,7 @@
 //====================================
 //コンストラクタ
 //====================================
-CState_Enemy_Normal::CState_Enemy_Normal(CEnemy* enemy)
+CState_Enemy_Normal::CState_Enemy_Normal(CEnemy* enemy) : CState_Enemy(enemy)
 {
 	//設定
 	enemy->SetEnableGravity(true);		//重力の影響を受ける

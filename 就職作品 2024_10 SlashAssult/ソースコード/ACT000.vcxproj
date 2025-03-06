@@ -278,7 +278,6 @@
     <ClInclude Include="state_enemy_stan.h" />
     <ClInclude Include="state_enemy_stick.h" />
     <ClInclude Include="state_player.h" />
-    <ClInclude Include="state_player_counter.h" />
     <ClInclude Include="state_player_damage.h" />
     <ClInclude Include="state_player_death.h" />
     <ClInclude Include="state_player_guard.h" />
@@ -303,7 +302,6 @@
     <ClCompile Include="barriermanager.cpp" />
     <ClCompile Include="battlearea.cpp" />
     <ClCompile Include="battleareamanager.cpp" />
-    <ClCompile Include="behavior_character.cpp" />
     <ClCompile Include="behavior_enemy.cpp" />
     <ClCompile Include="behavior_enemy000.cpp" />
     <ClCompile Include="behavior_enemy001.cpp" />
@@ -422,7 +420,6 @@
     <ClCompile Include="state_enemy_stan.cpp" />
     <ClCompile Include="state_enemy_stick.cpp" />
     <ClCompile Include="state_player.cpp" />
-    <ClCompile Include="state_player_counter.cpp" />
     <ClCompile Include="state_player_damage.cpp" />
     <ClCompile Include="state_player_death.cpp" />
     <ClCompile Include="state_player_guard.cpp" />

@@ -108,7 +108,6 @@ class CState_Enemy002_AlterEgo_Direction : public CState_Enemy002_Direction
 public:
 
 	//関数
-	CState_Enemy002_AlterEgo_Direction() {}													//コンストラクタ
 	CState_Enemy002_AlterEgo_Direction(CEnemy* enemy) : CState_Enemy002_Direction(enemy) {}	//コンストラクタ
 
 	//状態の更新

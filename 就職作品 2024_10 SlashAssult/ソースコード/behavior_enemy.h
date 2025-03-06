@@ -37,6 +37,8 @@ public:
 	virtual void NextAction(CEnemy* enemy) {}	//基底の関数
 
 private:
+
+	//変数
 	CEnemyBehavior* m_pNextAction;
 };
 
@@ -47,10 +49,6 @@ class CEnemyBehavior_Chase : public CEnemyBehavior
 {
 public:
 
-	//定数
-	static constexpr float VALUE_MOVE = 1.0f;			//移動量
-	static constexpr float LENGTH_CHANGEATTACK = 35.0f;	//攻撃する距離
-
 	//関数
 	CEnemyBehavior_Chase(CEnemy* enemy);	//コンストラクタ
 
@@ -58,6 +56,10 @@ public:
 	void NextAction(CEnemy* enemy) override {}	//次の行動を確定
 
 private:
+
+	//定数
+	static constexpr float VALUE_MOVE = 1.0f;			//移動量
+	static constexpr float LENGTH_CHANGEATTACK = 35.0f;	//攻撃する距離
 
 	//関数
 	void LookAtPlayer(CEnemy* enemy);	//プレイヤーの方向を向く
@@ -72,9 +74,6 @@ private:
 class CEnemyBehavior_Attack : public CEnemyBehavior
 {
 public:
-
-	//定数
-	static constexpr float POS_LENGTH{ 20.0f };	//攻撃の発生する距離
 
 	//コンストラクタとデストラクタ
 	CEnemyBehavior_Attack(CEnemy* enemy);
@@ -92,6 +91,9 @@ public:
 	float GetAttackLength() { return m_fAttackLength; }					//取得
 
 private:
+
+	//定数
+	static constexpr float POS_LENGTH{ 20.0f };	//攻撃の発生する距離
 
 	void CheckCollision(CEnemy* enemy);	//当たり判定の確認
 	bool IsCheckCollision();			//当たり判定の処理を行うか

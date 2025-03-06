@@ -56,6 +56,7 @@ public:
 
 private:
 
+	//•Ï”
 	int m_nDisappearTime;	//Á‚¦‚éŠÔ
 };
 
