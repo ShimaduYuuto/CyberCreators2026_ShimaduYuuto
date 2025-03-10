@@ -25,14 +25,12 @@ class CPlayerBehavior
 public:
 
 	//コンストラクタとデストラクタ
-	CPlayerBehavior() : m_pNextBehavior(nullptr) {}
 	CPlayerBehavior(CPlayer* player) : m_pNextBehavior(nullptr) {}
 	virtual ~CPlayerBehavior() 
 	{
-		//メモリの破棄
+		//行動のポインタの破棄
 		if (m_pNextBehavior != nullptr)
 		{
-			//delete m_pNextBehavior;
 			m_pNextBehavior = nullptr;
 		}
 	}
@@ -48,7 +46,7 @@ public:
 	virtual void NextBehavior(CPlayer* player) {}
 
 	//次のアクションを確定する
-	virtual void NextAction(CPlayer* player) {}	//基底の関数
+	virtual void NextAction(CPlayer* player) {}
 
 private:
 
@@ -69,7 +67,7 @@ public:
 	static constexpr float JUMP_SPEED{ 14 };		//ジャンプの速度
 
 	//メンバ関数
-	CPlayerBehavior_Move() {}						//コンストラクタ
+	//CPlayerBehavior_Move() {}						//コンストラクタ
 	CPlayerBehavior_Move(CPlayer* player);			//コンストラクタ
 	~CPlayerBehavior_Move() {}						//デストラクタ
 
@@ -100,7 +98,6 @@ public:
 	static constexpr float RATIO_LINEAR_INTERPOLATION{ 0.08f };	//線形補間の割合
 
 	//メンバ関数
-	CPlayerBehavior_Dash() {}						//コンストラクタ
 	CPlayerBehavior_Dash(CPlayer* player);			//コンストラクタ
 
 	//行動
@@ -127,7 +124,7 @@ public:
 	static constexpr float ORBIT_OFFSET_LENGTH{ 50.0f };//軌跡のオフセットの距離
 
 	//関数
-	CPlayerBehavior_Attack();						//コンストラクタ
+	//CPlayerBehavior_Attack();						//コンストラクタ
 	CPlayerBehavior_Attack(CPlayer* player);		//コンストラクタ
 	~CPlayerBehavior_Attack() override;				//デストラクタ
 
@@ -189,11 +186,12 @@ class CPlayerBehavior_NormalAttack : public CPlayerBehavior_Attack
 {
 public:
 
+	//定数
 	static const int END_TIME{ 40 };			//終了までの時間
 	static const int END_MOVE{ 10 };			//移動する時間
 	static constexpr float VALUE_MOVE{ 0.5f };	//移動量
 
-	CPlayerBehavior_NormalAttack() {}	
+	//関数
 	CPlayerBehavior_NormalAttack(CPlayer* player) : CPlayerBehavior_Attack(player)
 	{
 		SetEndTime(END_TIME);
@@ -210,8 +208,8 @@ public:
 class CPlayerBehavior_NormalAttack000 : public CPlayerBehavior_NormalAttack
 {
 public:
+
 	//メンバ関数
-	CPlayerBehavior_NormalAttack000() {};					//コンストラクタ
 	CPlayerBehavior_NormalAttack000(CPlayer* player);		//コンストラクタ
 	~CPlayerBehavior_NormalAttack000() override {}			//デストラクタ
 
@@ -233,7 +231,6 @@ class CPlayerBehavior_NormalAttack001 : public CPlayerBehavior_NormalAttack
 {
 public:
 	//メンバ関数
-	CPlayerBehavior_NormalAttack001() {}						//コンストラクタ
 	CPlayerBehavior_NormalAttack001(CPlayer* player);			//コンストラクタ
 	~CPlayerBehavior_NormalAttack001() override {}				//デストラクタ
 
@@ -264,7 +261,6 @@ public:
 
 	//メンバ関数
 	CPlayerBehavior_NormalAttack002(CPlayer* player);			//コンストラクタ
-
 	~CPlayerBehavior_NormalAttack002() override;				//デストラクタ
 
 	//行動
@@ -295,8 +291,8 @@ public:
 	static constexpr int START_COLLISION{5};	//コリジョンの判定を始めるカウント
 	static constexpr int START_CANCELTIME{10};	//キャンセルが始める時間
 
-	CPlayerBehavior_Arial() {}
-	CPlayerBehavior_Arial(CPlayer* player) 
+	//関数
+	CPlayerBehavior_Arial(CPlayer* player) : CPlayerBehavior_Attack(player)
 	{
 		//パラメータの設定
 		SetCancelTime(START_CANCELTIME);	//キャンセル
@@ -316,7 +312,7 @@ class CPlayerBehavior_Arial000 : public CPlayerBehavior_Arial
 {
 public:
 
-	CPlayerBehavior_Arial000() {}
+	//関数
 	CPlayerBehavior_Arial000(CPlayer* player);		//コンストラクタ
 	~CPlayerBehavior_Arial000() override {}			//デストラクタ
 
@@ -334,7 +330,7 @@ class CPlayerBehavior_Arial001 : public CPlayerBehavior_Arial
 {
 public:
 
-	CPlayerBehavior_Arial001() {}
+	//関数
 	CPlayerBehavior_Arial001(CPlayer* player);		//コンストラクタ
 	~CPlayerBehavior_Arial001() override {}			//デストラクタ
 
@@ -352,7 +348,7 @@ class CPlayerBehavior_Arial002 : public CPlayerBehavior_Arial
 {
 public:
 
-	CPlayerBehavior_Arial002() {}
+	//関数
 	CPlayerBehavior_Arial002(CPlayer* player);		//コンストラクタ
 	~CPlayerBehavior_Arial002() override {}			//デストラクタ
 
@@ -374,7 +370,6 @@ public:
 	static constexpr float ATTACK_LENGTH{ 75.0f };		//攻撃の距離
 
 	//関数
-	CPlayerBehavior_DashAttack() {}
 	CPlayerBehavior_DashAttack(CPlayer* player);	//コンストラクタ
 	~CPlayerBehavior_DashAttack() override;			//デストラクタ
 	void Behavior(CPlayer* player) override;		//行動
@@ -398,7 +393,6 @@ class CPlayerBehavior_DashAttack000 : public CPlayerBehavior_DashAttack
 public:
 
 	//関数
-	CPlayerBehavior_DashAttack000() {}
 	CPlayerBehavior_DashAttack000(CPlayer* player);		//コンストラクタ
 	~CPlayerBehavior_DashAttack000() override {}		//デストラクタ
 	void Behavior(CPlayer* player) override;			//行動
@@ -414,7 +408,6 @@ class CPlayerBehavior_DashAttack001 : public CPlayerBehavior_DashAttack
 public:
 
 	//関数
-	CPlayerBehavior_DashAttack001() {}
 	CPlayerBehavior_DashAttack001(CPlayer* player);		//コンストラクタ
 	~CPlayerBehavior_DashAttack001() override {}		//デストラクタ
 	void Behavior(CPlayer* player) override;			//行動
@@ -440,6 +433,8 @@ public:
 	void Behavior(CPlayer* player) override;
 
 private:
+
+	//変数
 	int m_nStiffnessCount;		//発動硬直時のカウント
 	bool m_bJustGuard;			//ジャストガードをしたか
 	bool m_bStiffening;			//硬直中か

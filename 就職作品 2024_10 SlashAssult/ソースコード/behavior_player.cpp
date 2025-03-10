@@ -65,7 +65,7 @@ bool TriggerDash()
 //=========================
 //コンストラクタ
 //=========================
-CPlayerBehavior_Move::CPlayerBehavior_Move(CPlayer* player)
+CPlayerBehavior_Move::CPlayerBehavior_Move(CPlayer* player) : CPlayerBehavior(player)
 {
 	player->SetEnableGravity(true);	//重力を受ける
 }
@@ -350,7 +350,7 @@ void CPlayerBehavior_Move::Action(CPlayer* player)
 //============================
 //コンストラクタ
 //============================
-CPlayerBehavior_Dash::CPlayerBehavior_Dash(CPlayer* player) :
+CPlayerBehavior_Dash::CPlayerBehavior_Dash(CPlayer* player) : CPlayerBehavior(player),
 	m_bFirst(true),
 	m_DashSpeed()
 {
@@ -450,28 +450,7 @@ void CPlayerBehavior_Dash::Behavior(CPlayer* player)
 //============================
 //コンストラクタ
 //============================
-CPlayerBehavior_Attack::CPlayerBehavior_Attack() :
-	m_fAttackLength(0.0f),				//攻撃の距離
-	m_HitEnemy(),						//ヒットした敵のリスト
-	m_nCancelStartTime(0),				//キャンセル時間
-	m_nCollisionlTime(0),				//当たり判定の発生時間
-	m_nEndCount(0),						//終了カウント
-	m_nEndTime(0),						//終了時間
-	m_OffsetPos({0.0f, 0.0f, 0.0f}),	//オフセット位置
-	m_bCancel(false)					//キャンセル判定
-{
-	//パラメータの設定
-	SetEndTime(END_TIME);				//終了時間
-	SetCollisionTime(START_COLLISION);	//当たり判定の時間
-	SetCancelTime(START_CANCEL);		//キャンセル開始時間
-	SetAttackLength(ATTACK_LENGTH);		//攻撃の距離
-	SetOffsetPos(POS_OFFSET);			//オフセット位置
-}
-
-//============================
-//コンストラクタ
-//============================
-CPlayerBehavior_Attack::CPlayerBehavior_Attack(CPlayer* player) :
+CPlayerBehavior_Attack::CPlayerBehavior_Attack(CPlayer* player) : CPlayerBehavior(player),
 	m_fAttackLength(0.0f),		//攻撃の距離
 	m_HitEnemy(),				//ヒットした敵のリスト
 	m_nCancelStartTime(0),		//キャンセル時間
@@ -1033,7 +1012,7 @@ void CPlayerBehavior_NormalAttack002::Damage(CPlayer* player, CEnemy* enemy, int
 //============================
 //コンストラクタ
 //============================
-CPlayerBehavior_Arial000::CPlayerBehavior_Arial000(CPlayer* player)
+CPlayerBehavior_Arial000::CPlayerBehavior_Arial000(CPlayer* player) : CPlayerBehavior_Arial(player)
 {
 	//基本の設定
 	player->SetMotion(CPlayer::PLAYERMOTION_ARIAL000);	//モーション
@@ -1066,7 +1045,7 @@ void CPlayerBehavior_Arial000::Behavior(CPlayer* player)
 //============================
 //コンストラクタ
 //============================
-CPlayerBehavior_Arial001::CPlayerBehavior_Arial001(CPlayer* player)
+CPlayerBehavior_Arial001::CPlayerBehavior_Arial001(CPlayer* player) : CPlayerBehavior_Arial(player)
 {
 	//モーションの設定
 	player->SetMotion(CPlayer::PLAYERMOTION_ARIAL001);
@@ -1097,7 +1076,7 @@ void CPlayerBehavior_Arial001::Behavior(CPlayer* player)
 //============================
 //コンストラクタ
 //============================
-CPlayerBehavior_Arial002::CPlayerBehavior_Arial002(CPlayer* player)
+CPlayerBehavior_Arial002::CPlayerBehavior_Arial002(CPlayer* player) : CPlayerBehavior_Arial(player)
 {
 	//モーションの設定
 	player->SetMotion(CPlayer::PLAYERMOTION_ARIAL002);
@@ -1178,7 +1157,7 @@ void CPlayerBehavior_DashAttack::Cancel(CPlayer* player)
 	//ターゲットにダッシュ
 	D3DXVECTOR3 TagPos = pGame->GetLockon()->GetTarget()->GetPos();
 	D3DXVECTOR3 Length = TagPos - player->GetPos();
-	float fLength = sqrtf((Length.x * Length.x) + (Length.z * Length.z));
+	float fLength = 0.0;
 	fLength = D3DXVec3Length(&Length);	//距離を算出
 
 	//攻撃の範囲外ならダッシュする
@@ -1297,7 +1276,8 @@ void CPlayerBehavior_DashAttack001::Behavior(CPlayer* player)
 //============================
 //コンストラクタ
 //============================
-CPlayerBehavior_Guard::CPlayerBehavior_Guard(CPlayer* player) : m_nStiffnessCount(0)
+CPlayerBehavior_Guard::CPlayerBehavior_Guard(CPlayer* player) : CPlayerBehavior(player), 
+	m_nStiffnessCount(0)
 {
 	//基本の処理
 	player->SetMotion(CPlayer::PLAYERMOTION_GUARD);	//モーション

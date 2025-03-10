@@ -50,7 +50,7 @@ CEnemy::~CEnemy()
 	if (CManager::GetInstance()->GetScene()->GetMode() == CManager::GetInstance()->GetScene()->MODE_GAME)
 	{
 		//ゲームシーンの取得
-		CGame* pGame = (CGame*)CManager::GetInstance()->GetScene();
+		CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 		//マネージャーから削除
 		if (pGame->GetEnemyManager() != nullptr)
@@ -58,6 +58,7 @@ CEnemy::~CEnemy()
 			pGame->GetEnemyManager()->Erase(this);
 		}
 
+		//ロックオンのリストから削除
 		if (pGame->GetLockon() != nullptr)
 		{
 			pGame->GetLockon()->Erase(this);

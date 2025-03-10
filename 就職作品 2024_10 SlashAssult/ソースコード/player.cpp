@@ -26,9 +26,9 @@ const std::string CPlayer::FILEPATH = "data\\MODEL\\player001.x";
 //プレイヤーのコンストラクタ
 //============================
 CPlayer::CPlayer(int nPriority) : CGame_Character(nPriority),
-	m_pLifeGauge(nullptr),
-	m_pState(nullptr),
-	m_bGuard(false)
+	m_pLifeGauge(nullptr),	//体力ゲージのポインタ
+	m_pState(nullptr),		//状態のポインタ
+	m_bGuard(false)			//ガードの判定
 {
 	//状態の設定
 	m_pState = new CState_Player_Normal(this);

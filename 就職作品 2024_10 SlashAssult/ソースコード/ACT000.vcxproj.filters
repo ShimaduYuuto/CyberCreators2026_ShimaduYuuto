@@ -73,24 +73,6 @@
     <Filter Include="ソース ファイル\state\state_enemy">
       <UniqueIdentifier>{3f70bc02-b3c8-4356-95c0-ad8f64ee1830}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\character">
-      <UniqueIdentifier>{a37569c0-163f-4b2f-9227-6c011ce5510b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\character\player">
-      <UniqueIdentifier>{f6b0ac45-d73e-401e-a6e0-969fa940f716}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\character\enemy">
-      <UniqueIdentifier>{22d78199-e9a5-4f60-99bb-416cbdef36be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\character">
-      <UniqueIdentifier>{8c187e42-33b3-4692-a34b-baa55c664faa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\character\enemy">
-      <UniqueIdentifier>{5df8d9cc-88a3-4348-a95c-1fd85e0708ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\character\player">
-      <UniqueIdentifier>{819e3257-c37b-464d-8893-2fbca0760546}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\explosion">
       <UniqueIdentifier>{0e612e38-4f57-4e6a-9b10-033a13d084b6}</UniqueIdentifier>
     </Filter>
@@ -186,6 +168,24 @@
     </Filter>
     <Filter Include="ソース ファイル\object\3D\barrier">
       <UniqueIdentifier>{812cba41-a0e0-486c-8b6b-b7182d0e255f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\character">
+      <UniqueIdentifier>{8c187e42-33b3-4692-a34b-baa55c664faa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\character\enemy">
+      <UniqueIdentifier>{5df8d9cc-88a3-4348-a95c-1fd85e0708ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\character\player">
+      <UniqueIdentifier>{819e3257-c37b-464d-8893-2fbca0760546}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\object\character">
+      <UniqueIdentifier>{a37569c0-163f-4b2f-9227-6c011ce5510b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\object\character\player">
+      <UniqueIdentifier>{f6b0ac45-d73e-401e-a6e0-969fa940f716}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\object\character\enemy">
+      <UniqueIdentifier>{22d78199-e9a5-4f60-99bb-416cbdef36be}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -337,22 +337,22 @@
       <Filter>ヘッダー ファイル\effect</Filter>
     </ClInclude>
     <ClInclude Include="enemy.h">
-      <Filter>ヘッダー ファイル\character\enemy</Filter>
+      <Filter>ヘッダー ファイル\object\character\enemy</Filter>
     </ClInclude>
     <ClInclude Include="enemy000.h">
-      <Filter>ヘッダー ファイル\character\enemy</Filter>
+      <Filter>ヘッダー ファイル\object\character\enemy</Filter>
     </ClInclude>
     <ClInclude Include="enemy001.h">
-      <Filter>ヘッダー ファイル\character\enemy</Filter>
+      <Filter>ヘッダー ファイル\object\character\enemy</Filter>
     </ClInclude>
     <ClInclude Include="enemy002.h">
-      <Filter>ヘッダー ファイル\character\enemy</Filter>
+      <Filter>ヘッダー ファイル\object\character\enemy</Filter>
     </ClInclude>
     <ClInclude Include="enemy002_alterego.h">
-      <Filter>ヘッダー ファイル\character\enemy</Filter>
+      <Filter>ヘッダー ファイル\object\character\enemy</Filter>
     </ClInclude>
     <ClInclude Include="enemy003.h">
-      <Filter>ヘッダー ファイル\character\enemy</Filter>
+      <Filter>ヘッダー ファイル\object\character\enemy</Filter>
     </ClInclude>
     <ClInclude Include="object.h">
       <Filter>ヘッダー ファイル\object</Filter>
@@ -388,10 +388,10 @@
       <Filter>ヘッダー ファイル\object\Xfile\model</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
-      <Filter>ヘッダー ファイル\character\player</Filter>
+      <Filter>ヘッダー ファイル\object\character\player</Filter>
     </ClInclude>
     <ClInclude Include="title_player.h">
-      <Filter>ヘッダー ファイル\character\player</Filter>
+      <Filter>ヘッダー ファイル\object\character\player</Filter>
     </ClInclude>
     <ClInclude Include="battlearea.h">
       <Filter>ヘッダー ファイル\battlearea</Filter>
@@ -475,10 +475,10 @@
       <Filter>ヘッダー ファイル\object\2D\ui</Filter>
     </ClInclude>
     <ClInclude Include="character.h">
-      <Filter>ヘッダー ファイル\character</Filter>
+      <Filter>ヘッダー ファイル\object\character</Filter>
     </ClInclude>
     <ClInclude Include="game_character.h">
-      <Filter>ヘッダー ファイル\character</Filter>
+      <Filter>ヘッダー ファイル\object\character</Filter>
     </ClInclude>
     <ClInclude Include="explosionmanager.h">
       <Filter>ヘッダー ファイル\explosion</Filter>
@@ -496,7 +496,7 @@
       <Filter>ヘッダー ファイル\object\Xfile\modelparts</Filter>
     </ClInclude>
     <ClInclude Include="enemymanager.h">
-      <Filter>ヘッダー ファイル\character\enemy</Filter>
+      <Filter>ヘッダー ファイル\object\character\enemy</Filter>
     </ClInclude>
     <ClInclude Include="gimmickmanager.h">
       <Filter>ヘッダー ファイル\object\Xfile\gimmick</Filter>
@@ -750,22 +750,22 @@
       <Filter>ソース ファイル\effect</Filter>
     </ClCompile>
     <ClCompile Include="enemy.cpp">
-      <Filter>ソース ファイル\character\enemy</Filter>
+      <Filter>ソース ファイル\object\character\enemy</Filter>
     </ClCompile>
     <ClCompile Include="enemy000.cpp">
-      <Filter>ソース ファイル\character\enemy</Filter>
+      <Filter>ソース ファイル\object\character\enemy</Filter>
     </ClCompile>
     <ClCompile Include="enemy001.cpp">
-      <Filter>ソース ファイル\character\enemy</Filter>
+      <Filter>ソース ファイル\object\character\enemy</Filter>
     </ClCompile>
     <ClCompile Include="enemy002.cpp">
-      <Filter>ソース ファイル\character\enemy</Filter>
+      <Filter>ソース ファイル\object\character\enemy</Filter>
     </ClCompile>
     <ClCompile Include="enemy002_alterego.cpp">
-      <Filter>ソース ファイル\character\enemy</Filter>
+      <Filter>ソース ファイル\object\character\enemy</Filter>
     </ClCompile>
     <ClCompile Include="enemy003.cpp">
-      <Filter>ソース ファイル\character\enemy</Filter>
+      <Filter>ソース ファイル\object\character\enemy</Filter>
     </ClCompile>
     <ClCompile Include="object.cpp">
       <Filter>ソース ファイル\object</Filter>
@@ -801,10 +801,10 @@
       <Filter>ソース ファイル\object\Xfile\model</Filter>
     </ClCompile>
     <ClCompile Include="player.cpp">
-      <Filter>ソース ファイル\character\player</Filter>
+      <Filter>ソース ファイル\object\character\player</Filter>
     </ClCompile>
     <ClCompile Include="title_player.cpp">
-      <Filter>ソース ファイル\character\player</Filter>
+      <Filter>ソース ファイル\object\character\player</Filter>
     </ClCompile>
     <ClCompile Include="battlearea.cpp">
       <Filter>ソース ファイル\battlearea</Filter>
@@ -885,10 +885,10 @@
       <Filter>ソース ファイル\object\2D\ui</Filter>
     </ClCompile>
     <ClCompile Include="character.cpp">
-      <Filter>ソース ファイル\character</Filter>
+      <Filter>ソース ファイル\object\character</Filter>
     </ClCompile>
     <ClCompile Include="game_character.cpp">
-      <Filter>ソース ファイル\character</Filter>
+      <Filter>ソース ファイル\object\character</Filter>
     </ClCompile>
     <ClCompile Include="explosion.cpp">
       <Filter>ソース ファイル\explosion</Filter>
@@ -906,7 +906,7 @@
       <Filter>ソース ファイル\object\Xfile\modelparts</Filter>
     </ClCompile>
     <ClCompile Include="enemymanager.cpp">
-      <Filter>ソース ファイル\character\enemy</Filter>
+      <Filter>ソース ファイル\object\character\enemy</Filter>
     </ClCompile>
     <ClCompile Include="gimmickmanager.cpp">
       <Filter>ソース ファイル\object\Xfile\gimmick</Filter>

@@ -82,6 +82,7 @@ public:
 	static CPlayer* Create();	//Playerの生成
 private:
 
+	//関数
 	void CollisionJudge();	//コリジョンの判定
 	void CollisionBarrier();//結界の当たり判定
 	void CollisionGimmick();//ギミックの当たり判定
