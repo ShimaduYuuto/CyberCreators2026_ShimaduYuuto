@@ -1099,7 +1099,7 @@ void CPlayerBehavior_Arial002::Behavior(CPlayer* player)
 //コンストラクタ
 //============================
 CPlayerBehavior_DashAttack::CPlayerBehavior_DashAttack(CPlayer* player) : CPlayerBehavior_Attack(player),
-	m_RushContinue(false)
+	m_RushContinue(false)	//ラッシュを続けるかの判定
 {
 	//パラメータの設定
 	SetCancelTime(START_CANCELTIME);	//キャンセル
@@ -1109,7 +1109,7 @@ CPlayerBehavior_DashAttack::CPlayerBehavior_DashAttack(CPlayer* player) : CPlaye
 
 	//ラッシュ判定をゲームシーンに設定
 	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
-	pGame->SetRushJudge(true);
+	pGame->SetRushJudge(true);	//判定をtrueに
 }
 
 //============================
@@ -1119,7 +1119,7 @@ CPlayerBehavior_DashAttack::~CPlayerBehavior_DashAttack()
 {
 	//ラッシュ判定をゲームシーンに設定
 	if (!m_RushContinue)
-	{
+	{//判定をfalseに
 		CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 		pGame->SetRushJudge(false);
 	}
@@ -1130,14 +1130,6 @@ CPlayerBehavior_DashAttack::~CPlayerBehavior_DashAttack()
 //============================
 void CPlayerBehavior_DashAttack::Behavior(CPlayer* player)
 {
-	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
-
-	//ラッシュ判定の確認
-	if (!pGame->GetRushJudge())
-	{
-		pGame->SetRushJudge(true);
-	}
-
 	//攻撃処理
 	CPlayerBehavior_Attack::Behavior(player);
 }
@@ -1151,8 +1143,16 @@ void CPlayerBehavior_DashAttack::Cancel(CPlayer* player)
 	CGame* pGame = dynamic_cast<CGame*>(CManager::GetInstance()->GetScene());
 
 	//ロックオン相手の確認
-	if (pGame->GetLockon() == nullptr) return;
-	if (pGame->GetLockon()->GetTarget() == nullptr) return;
+	if (pGame->GetLockon() == nullptr)
+	{
+		SetNextBehavior(new CPlayerBehavior_Move(player));
+		return;
+	}
+	if (pGame->GetLockon()->GetTarget() == nullptr) 
+	{ 
+		SetNextBehavior(new CPlayerBehavior_Move(player));
+		return; 
+	}
 
 	//ターゲットにダッシュ
 	D3DXVECTOR3 TagPos = pGame->GetLockon()->GetTarget()->GetPos();
@@ -1277,7 +1277,7 @@ void CPlayerBehavior_DashAttack001::Behavior(CPlayer* player)
 //コンストラクタ
 //============================
 CPlayerBehavior_Guard::CPlayerBehavior_Guard(CPlayer* player) : CPlayerBehavior(player), 
-	m_nStiffnessCount(0)
+	m_nStiffnessCount(0)	//発動硬直のカウント
 {
 	//基本の処理
 	player->SetMotion(CPlayer::PLAYERMOTION_GUARD);	//モーション
