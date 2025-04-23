@@ -112,9 +112,6 @@
     <Filter Include="ソース ファイル\object\2D\ui">
       <UniqueIdentifier>{54ad98d2-c391-4785-b351-e8d19d058581}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\object\2D\gauge">
-      <UniqueIdentifier>{1313ccea-128d-4573-8915-9eed95d8f3f8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\object\Xfile">
       <UniqueIdentifier>{7dde417d-b736-4836-b47d-9b89232d5935}</UniqueIdentifier>
     </Filter>
@@ -186,6 +183,9 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\object\character\enemy">
       <UniqueIdentifier>{22d78199-e9a5-4f60-99bb-416cbdef36be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\2D\ui\gauge">
+      <UniqueIdentifier>{1313ccea-128d-4573-8915-9eed95d8f3f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -822,13 +822,13 @@
       <Filter>ソース ファイル\direction</Filter>
     </ClCompile>
     <ClCompile Include="gauge.cpp">
-      <Filter>ソース ファイル\object\2D\gauge</Filter>
+      <Filter>ソース ファイル\object\2D\ui\gauge</Filter>
     </ClCompile>
     <ClCompile Include="gauge_playerlife.cpp">
-      <Filter>ソース ファイル\object\2D\gauge</Filter>
+      <Filter>ソース ファイル\object\2D\ui\gauge</Filter>
     </ClCompile>
     <ClCompile Include="gauge_slow.cpp">
-      <Filter>ソース ファイル\object\2D\gauge</Filter>
+      <Filter>ソース ファイル\object\2D\ui\gauge</Filter>
     </ClCompile>
     <ClCompile Include="particle.cpp">
       <Filter>ソース ファイル\object\billboard\particle</Filter>

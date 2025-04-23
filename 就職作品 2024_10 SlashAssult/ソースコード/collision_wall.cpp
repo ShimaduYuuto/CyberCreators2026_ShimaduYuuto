@@ -152,7 +152,7 @@ bool CCollision_Wall::GetHit(D3DXVECTOR3& pos, float radius)
 	float fTargetRadius = radius;		//ターゲット半径
 
 	//中心点からの距離を算出
-	D3DXVECTOR3 Vec3Length = WallPos - TargetPos;	//位置
+	D3DXVECTOR3 Vec3Length = WallPos - TargetPos;										//位置
 	float fLength = sqrtf(Vec3Length.x * Vec3Length.x + Vec3Length.z * Vec3Length.z);	//距離を算出
 	float fAngle = atan2f(Vec3Length.x, Vec3Length.z);									//角度を算出
 

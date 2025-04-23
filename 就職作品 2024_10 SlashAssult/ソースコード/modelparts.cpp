@@ -73,16 +73,15 @@ void CModelparts::Draw()
 void CModelparts::Draw(int damagestate, int damagecount)
 {
 	//ローカル変数宣言
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
-	D3DXMATRIX mtxRot, mtxTrans;										//計算用マトリックス
-	D3DMATERIAL9 matDef;												//現在のマテリアル保存用
-	D3DXMATERIAL* pMat;													//マテリアルデータへのポインタ
-	D3DXMATRIX mtxWorld = GetMtx();										//マトリックスの取得
-	D3DXVECTOR3 pos = GetPos();											//位置の取得
-	D3DXVECTOR3 rot = GetRot();											//向きの取得
-
-	//Xファイルの読み込み
-	CXfile* pCXfile = CManager::GetInstance()->GetXfile();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();				//デバイスの取得
+	D3DXMATRIX mtxRot, mtxTrans;																	//計算用マトリックス
+	D3DMATERIAL9 matDef;																			//現在のマテリアル保存用
+	D3DXMATERIAL* pMat;																				//マテリアルデータへのポインタ
+	D3DXMATRIX mtxWorld = GetMtx();																	//マトリックスの取得
+	D3DXVECTOR3 pos = GetPos();																		//位置の取得
+	D3DXVECTOR3 rot = GetRot();																		//向きの取得
+	CXfile* pCXfile = CManager::GetInstance()->GetXfile();											//Xファイルの読み込み
+	CXfile::XFileInfo XfileInfo = pCXfile->GetAddress(pCXfile->Regist(m_ModelPartsName.c_str()));	//Xファイルの情報
 
 	//ワールドの初期化
 	D3DXMatrixIdentity(&mtxWorld);
@@ -122,13 +121,13 @@ void CModelparts::Draw(int damagestate, int damagecount)
 	pDevice->GetMaterial(&matDef);
 
 	//マテリアルデータへのポインタを取得
-	pMat = (D3DXMATERIAL*)pCXfile->GetAddress(pCXfile->Regist(m_ModelPartsName.c_str())).pBuffmat->GetBufferPointer();
+	pMat = (D3DXMATERIAL*)XfileInfo.pBuffmat->GetBufferPointer();
 
 	//テクスチャの数をカウント
 	int nTextureCount = 0;
 
 	//マテリアルの数だけ周回
-	for (int nCntMat = 0; nCntMat < (int)pCXfile->GetAddress(pCXfile->Regist(m_ModelPartsName.c_str())).dwNumMat; nCntMat++)
+	for (int nCntMat = 0; nCntMat < (int)XfileInfo.dwNumMat; nCntMat++)
 	{
 		//透明度を反映
 		pMat[nCntMat].MatD3D.Diffuse.a = m_fAlpha;
@@ -140,7 +139,7 @@ void CModelparts::Draw(int damagestate, int damagecount)
 		if (pMat[nCntMat].pTextureFilename != NULL)
 		{
 			//テクスチャの設定
-			pDevice->SetTexture(0, pCXfile->GetAddress(pCXfile->Regist(m_ModelPartsName.c_str())).pTexture[nTextureCount]);
+			pDevice->SetTexture(0, XfileInfo.pTexture[nTextureCount]);
 
 			//テクスチャ用のカウントを進める
 			nTextureCount++;
@@ -152,7 +151,7 @@ void CModelparts::Draw(int damagestate, int damagecount)
 		}
 
 		//ゲームシーンのオブジェクト(パーツ)の描画
-		pCXfile->GetAddress(pCXfile->Regist(m_ModelPartsName.c_str())).pMesh->DrawSubset(nCntMat);
+		XfileInfo.pMesh->DrawSubset(nCntMat);
 	}
 
 	//保存していたマテリアルを戻す

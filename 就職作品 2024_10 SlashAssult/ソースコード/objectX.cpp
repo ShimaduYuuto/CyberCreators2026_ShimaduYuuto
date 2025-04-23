@@ -62,14 +62,13 @@ void CObjectX::Update()
 void CObjectX::Draw()
 {
 	//ローカル変数宣言
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
-	D3DXMATRIX mtxRot, mtxTrans, mtxScale;								//計算用マトリックス
-	D3DMATERIAL9 matDef;												//現在のマテリアル保存用
-	D3DXMATERIAL* pMat;													//マテリアルデータへのポインタ
-	D3DXVECTOR3 Pos = GetPos();											//位置の取得
-
-	//Xファイルの読み込み
-	CXfile* pCXfile = CManager::GetInstance()->GetXfile();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();				//デバイスの取得
+	D3DXMATRIX mtxRot, mtxTrans, mtxScale;															//計算用マトリックス
+	D3DMATERIAL9 matDef;																			//現在のマテリアル保存用
+	D3DXMATERIAL* pMat;																				//マテリアルデータへのポインタ
+	D3DXVECTOR3 Pos = GetPos();																		//位置の取得
+	CXfile* pCXfile = CManager::GetInstance()->GetXfile();											//Xファイルの読み込み
+	CXfile::XFileInfo XfileInfo =  pCXfile->GetAddress(pCXfile->Regist(CObjectX::FILEPATH.c_str()));//Xファイルの情報
 
 	//ワールドの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
@@ -96,13 +95,13 @@ void CObjectX::Draw()
 	pDevice->GetMaterial(&matDef);
 
 	//マテリアルデータへのポインタを取得
-	pMat = (D3DXMATERIAL*)pCXfile->GetAddress(pCXfile->Regist(CObjectX::FILEPATH.c_str())).pBuffmat->GetBufferPointer();
+	pMat = (D3DXMATERIAL*)XfileInfo.pBuffmat->GetBufferPointer();
 
 	//テクスチャの数をカウント
 	int nTextureCount = 0;
 
 	//マテリアルの数だけ周回
-	for (int nCntMat = 0; nCntMat < (int)pCXfile->GetAddress(pCXfile->Regist(CObjectX::FILEPATH.c_str())).dwNumMat; nCntMat++)
+	for (int nCntMat = 0; nCntMat < (int)XfileInfo.dwNumMat; nCntMat++)
 	{
 		//マテリアルの設定
 		pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
@@ -111,7 +110,7 @@ void CObjectX::Draw()
 		if (pMat[nCntMat].pTextureFilename != NULL)
 		{
 			//テクスチャの設定
-			pDevice->SetTexture(0, pCXfile->GetAddress(pCXfile->Regist(CObjectX::FILEPATH.c_str())).pTexture[nTextureCount]);
+			pDevice->SetTexture(0, XfileInfo.pTexture[nTextureCount]);
 
 			//テクスチャ用のカウントを進める
 			nTextureCount++;
@@ -123,7 +122,7 @@ void CObjectX::Draw()
 		}
 
 		//オブジェクトX(パーツ)の描画
-		pCXfile->GetAddress(pCXfile->Regist(CObjectX::FILEPATH.c_str())).pMesh->DrawSubset(nCntMat);
+		XfileInfo.pMesh->DrawSubset(nCntMat);
 	}
 
 	//保存していたマテリアルを戻す
@@ -139,14 +138,13 @@ void CObjectX::Draw()
 void CObjectX::Draw(const char* pfilepath)
 {
 	//ローカル変数宣言
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
-	D3DXMATRIX mtxRot, mtxTrans, mtxScale;								//計算用マトリックス
-	D3DMATERIAL9 matDef;												//現在のマテリアル保存用
-	D3DXMATERIAL* pMat;													//マテリアルデータへのポインタ
-	D3DXVECTOR3 Pos = GetPos();											//位置の取得
-
-	//Xファイルの読み込み
-	CXfile* pCXfile = CManager::GetInstance()->GetXfile();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();				//デバイスの取得
+	D3DXMATRIX mtxRot, mtxTrans, mtxScale;															//計算用マトリックス
+	D3DMATERIAL9 matDef;																			//現在のマテリアル保存用
+	D3DXMATERIAL* pMat;																				//マテリアルデータへのポインタ
+	D3DXVECTOR3 Pos = GetPos();																		//位置の取得
+	CXfile* pCXfile = CManager::GetInstance()->GetXfile();											//Xファイルの読み込み
+	CXfile::XFileInfo XfileInfo = pCXfile->GetAddress(pCXfile->Regist(pfilepath));					//Xファイルの情報
 
 	//ワールドの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
@@ -170,13 +168,13 @@ void CObjectX::Draw(const char* pfilepath)
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
 	//マテリアルデータへのポインタを取得
-	pMat = (D3DXMATERIAL*)pCXfile->GetAddress(pCXfile->Regist(pfilepath)).pBuffmat->GetBufferPointer();
+	pMat = (D3DXMATERIAL*)XfileInfo.pBuffmat->GetBufferPointer();
 
 	//テクスチャの数をカウント
 	int nTextureCount = 0;
 
 	//マテリアルの数だけ周回
-	for (int nCntMat = 0; nCntMat < (int)pCXfile->GetAddress(pCXfile->Regist(pfilepath)).dwNumMat; nCntMat++)
+	for (int nCntMat = 0; nCntMat < (int)XfileInfo.dwNumMat; nCntMat++)
 	{
 		//現在のマテリアルを取得
 		pDevice->GetMaterial(&matDef);
@@ -191,7 +189,7 @@ void CObjectX::Draw(const char* pfilepath)
 		if (pMat[nCntMat].pTextureFilename != NULL)
 		{
 			//テクスチャの設定
-			pDevice->SetTexture(0, pCXfile->GetAddress(pCXfile->Regist(pfilepath)).pTexture[nTextureCount]);
+			pDevice->SetTexture(0, XfileInfo.pTexture[nTextureCount]);
 
 			//テクスチャ用のカウントを進める
 			nTextureCount++;
@@ -203,7 +201,7 @@ void CObjectX::Draw(const char* pfilepath)
 		}
 
 		//オブジェクトX(パーツ)の描画
-		pCXfile->GetAddress(pCXfile->Regist(pfilepath)).pMesh->DrawSubset(nCntMat);
+		XfileInfo.pMesh->DrawSubset(nCntMat);
 
 		//保存していたマテリアルを戻す
 		pDevice->SetMaterial(&matDef);
